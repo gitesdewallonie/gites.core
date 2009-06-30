@@ -1,0 +1,22 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+           i18n_domain="gites.core">
+
+  <genericsetup:registerProfile
+      name="default"
+      title="gites.core"
+      directory="profiles/default"
+      description="Extension profile for gites.core"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:upgradeStep
+      title="gites core 0.1"
+      description=""
+      handler=".migrations.to_0_1.migrate"
+      destination="0.1"
+      profile="gites.core:default"
+      />
+
+</configure>
+
