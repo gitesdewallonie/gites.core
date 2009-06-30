@@ -1,25 +1,9 @@
 <configure xmlns="http://namespaces.zope.org/zope"
            xmlns:five="http://namespaces.zope.org/five"
-           xmlns:cmf="http://namespaces.zope.org/cmf"
-           i18n_domain="gites">
+           i18n_domain="gites.core">
 
   <five:registerPackage package="." initialize=".initialize" />
-  <adapter
-      for="gites.core.interfaces.IHebergementFolder
-           zope.publisher.interfaces.http.IHTTPRequest"
-      provides="zope.publisher.interfaces.IPublishTraverse"
-      factory=".traversal.HebergementFolderTraversable" />
 
   <include file="profiles.zcml" />
-
-  <include package=".adapters"/>
-  <include package=".browser"/>
-  <include package=".flash"/>
-
-  <cmf:registerDirectory name="gitescore_templates"/>
-  <utility provides="lovely.memcached.interfaces.IMemcachedClient"
-           factory=".memcached.memcachedClient" />
-
-  <subscriber handler="lovely.memcached.event.invalidateCache"/>
 
 </configure>

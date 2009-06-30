@@ -1,17 +1,5 @@
 <?xml version="1.0"?>
 <object name="portal_types" meta_type="Plone Types Tool">
  <object name="HebergementFolder"
-     meta_type="Factory-based Type Information with dynamic views"/>
- <object name="BoutiqueItem"
-     meta_type="Factory-based Type Information with dynamic views"/>
- <object name="DerniereMinute"
-     meta_type="Factory-based Type Information with dynamic views"/>
- <object name="IdeeSejourFolder"
-     meta_type="Factory-based Type Information with dynamic views"/>
- <object name="IdeeSejour"
-     meta_type="Factory-based Type Information with dynamic views"/>
- <object name="SejourFute"
-     meta_type="Factory-based Type Information with dynamic views"/>
- <object name="Vignette"
     meta_type="Factory-based Type Information with dynamic views"/>
 </object>
