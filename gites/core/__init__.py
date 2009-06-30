@@ -1,5 +1,6 @@
 #NOCHECK
 import logging
+import patches
 logger = logging.getLogger('gites.core')
 logger.debug('Installing Product')
 
