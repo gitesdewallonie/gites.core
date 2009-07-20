@@ -12,12 +12,25 @@ import logging
 from zope.interface import implementedBy
 from zope.interface import directlyProvides
 from zope.interface import directlyProvidedBy
-
+from zExceptions import NotFound
 
 from Products.CMFCore.utils import getToolByName
 from gites.core.content.hebergementfolder import HebergementFolder
+from gites.core.content.boutiqueitem import BoutiqueItem
+from gites.core.content.derniereminute import DerniereMinute
+from gites.core.content.ideesejour import IdeeSejour
+from gites.core.content.ideesejourfolder import IdeeSejourFolder
+from gites.core.content.sejourfute import SejourFute
+from gites.core.content.vignette import Vignette
 
-BASE = {'HebergementFolder': HebergementFolder}
+BASE = {'HebergementFolder': HebergementFolder,
+        'BoutiqueItem': BoutiqueItem,
+        'DerniereMinute': DerniereMinute,
+        'IdeeSejour': IdeeSejour,
+        'IdeeSejourFolder': IdeeSejourFolder,
+        'SejourFute': SejourFute,
+        'Vignette': Vignette}
+
 TYPES_TO_MIGRATE = BASE.keys()
 
 
@@ -35,7 +48,16 @@ def migrateType(portal, typename):
     remove references to previous objects
     """
     ct = getToolByName(portal, 'portal_catalog')
-    objects = [b.getObject() for b in ct(portal_type=typename)]
+    objects = []
+    for brain in ct(portal_type=typename, Language='all'):
+        try:
+            foundObject = brain.getObject()
+        except NotFound:
+            pass
+        except AttributeError:
+            pass
+        else:
+            objects.append(foundObject)
     for object in objects:
         oldInterfaces = directlyProvidedBy(object)
         oldClass = object.__class__
