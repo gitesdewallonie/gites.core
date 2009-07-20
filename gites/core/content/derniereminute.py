@@ -28,10 +28,8 @@ __author__ = """Jean Francois Roche <jfroche@pyxel.be>"""
 __docformat__ = 'plaintext'
 
 from AccessControl import ClassSecurityInfo
-from zope.interface import implements
 from gites.core.config import PROJECTNAME
 from gites.core.widgets import DBReferenceWidget
-from gites.core.content.interfaces import IDerniereMinute
 from Products.ATContentTypes.content.folder import ATFolder
 from z3c.sqlalchemy import getSAWrapper
 from Products.LinguaPlone.public import (Schema, TextField, RichWidget,
@@ -52,7 +50,7 @@ schema = Schema((
             label='Text',
             label_msgid='GitesContent_label_text',
             description_msgid='GitesContent_help_text',
-            i18n_domain='gites',
+            i18n_domain='GitesContent',
         ),
         default_output_type='text/html',
         required=0
@@ -66,7 +64,7 @@ schema = Schema((
             label='Category',
             label_msgid='GitesContent_label_category',
             description_msgid='GitesContent_help_category',
-            i18n_domain='gites',
+            i18n_domain='GitesContent',
         ),
         required=1,
         multiValued=0,
@@ -82,7 +80,7 @@ schema = Schema((
             label='Hebergementsconcernes',
             label_msgid='GitesContent_label_hebergementsConcernes',
             description_msgid='GitesContent_help_hebergementsConcernes',
-            i18n_domain='gites',
+            i18n_domain='GitesContent',
         ),
         multiValued=0
     ),
@@ -95,7 +93,7 @@ schema = Schema((
             description="Date a laquelle la derniere minute - promotion est publie",
             label_msgid='GitesContent_label_startDate',
             description_msgid='GitesContent_help_startDate',
-            i18n_domain='gites',
+            i18n_domain='GitesContent',
         ),
         required=1,
         show_hm=False,
@@ -111,7 +109,7 @@ schema = Schema((
             label='Enddate',
             label_msgid='GitesContent_label_endDate',
             description_msgid='GitesContent_help_endDate',
-            i18n_domain='gites',
+            i18n_domain='GitesContent',
         ),
         required=1,
         show_hm=False,
@@ -127,7 +125,7 @@ schema = Schema((
             label='Eventstartdate',
             label_msgid='GitesContent_label_eventStartDate',
             description_msgid='GitesContent_help_eventStartDate',
-            i18n_domain='gites',
+            i18n_domain='GitesContent',
         ),
         languageIndependent=1,
         required=1
@@ -141,7 +139,7 @@ schema = Schema((
             label="Fin de l evenement",
             label_msgid='GitesContent_label_eventEndDate',
             description_msgid='GitesContent_help_eventEndDate',
-            i18n_domain='gites',
+            i18n_domain='GitesContent',
         ),
         languageIndependent=1,
         required=1
@@ -174,7 +172,6 @@ class DerniereMinute(ATFolder):
     """
     """
     security = ClassSecurityInfo()
-    implements(IDerniereMinute)
     __implements__ = (getattr(ATFolder, '__implements__', ()))
 
     # This name appears in the 'add' box
@@ -279,7 +276,7 @@ class DerniereMinute(ATFolder):
             wrapper = getSAWrapper('gites_wallons')
             Hebergements = wrapper.getMapper('hebergement')
             session = wrapper.session
-            hebergement = session.query(Hebergements).filter(Hebergements.heb_pk==self.getHebergementsConcernes()[0]).one()
+            hebergement = session.query(Hebergements).selectfirst_by(Hebergements.c.heb_pk==self.getHebergementsConcernes()[0])
             return hebergement.__of__(self.hebergement)
         else:
             return None

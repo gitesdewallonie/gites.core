@@ -3,6 +3,11 @@
            i18n_domain="gites.core">
 
   <five:registerPackage package="." initialize=".initialize" />
+  <adapter
+      for="gites.core.interfaces.IHebergementFolder
+           zope.publisher.interfaces.http.IHTTPRequest"
+      provides="zope.publisher.interfaces.IPublishTraverse"
+      factory=".traversal.HebergementFolderTraversable" />
 
   <include file="profiles.zcml" />
 

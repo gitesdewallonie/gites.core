@@ -4,7 +4,7 @@
    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
  <property name="title">Vignette</property>
  <property name="description"></property>
- <property name="content_icon">image_icon.gif</property>
+ <property name="content_icon">folder.gif</property>
  <property name="content_meta_type">Vignette</property>
  <property name="product">gites.core</property>
  <property name="factory">addVignette</property>

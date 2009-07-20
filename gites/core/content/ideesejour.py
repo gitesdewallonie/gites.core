@@ -10,8 +10,6 @@ $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 from AccessControl import ClassSecurityInfo
 from gites.core.config import PROJECTNAME
 from gites.core.widgets import DBReferenceWidget
-from zope.interface import implements
-from gites.core.content.interfaces import IIdeeSejour
 from Products.ATContentTypes.content.folder import ATFolder
 from Products.LinguaPlone.public import (Schema, TextField, RichWidget,
                                          ImageField, ImageWidget,
@@ -28,7 +26,7 @@ schema = Schema((
             label='Text',
             label_msgid='GitesContent_label_text',
             description_msgid='GitesContent_help_text',
-            i18n_domain='gites',
+            i18n_domain='GitesContent',
         ),
         default_output_type='text/html'
     ),
@@ -38,7 +36,7 @@ schema = Schema((
         widget=ImageWidget(
             label='Logo',
             label_msgid='GitesContent_label_logo',
-            i18n_domain='gites',
+            i18n_domain='GitesContent',
         ),
         storage=AttributeStorage()
     ),
@@ -51,7 +49,7 @@ schema = Schema((
             description="Liste des hebergements concernes par cet idee sejour",
             label_msgid='GitesContent_label_hebergements',
             description_msgid='GitesContent_help_hebergements',
-            i18n_domain='gites',
+            i18n_domain='GitesContent',
         ),
         multiValued=1
     ),
@@ -80,7 +78,6 @@ class IdeeSejour(ATFolder):
     """
     """
     security = ClassSecurityInfo()
-    implements(IIdeeSejour)
     __implements__ = (getattr(ATFolder, '__implements__', ()))
 
     # This name appears in the 'add' box

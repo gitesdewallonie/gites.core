@@ -7,13 +7,9 @@ Copyright by Affinitic sprl
 
 $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
-from sqlalchemy import select, and_
 from AccessControl import ClassSecurityInfo
 from gites.core.config import PROJECTNAME
 from gites.core.widgets import DBReferenceWidget
-from zope.interface import implements
-from z3c.sqlalchemy import getSAWrapper
-from gites.core.content.interfaces import ISejourFute
 from Products.ATContentTypes.content.folder import ATFolder
 from Products.LinguaPlone.public import (Schema, TextField, TextAreaWidget,
                                          RichWidget, LinesField, DateTimeField,
@@ -29,7 +25,7 @@ schema = Schema((
             label='Description',
             label_msgid='GitesContent_label_description',
             description_msgid='GitesContent_help_description',
-            i18n_domain='gites',
+            i18n_domain='GitesContent',
         )
     ),
 
@@ -43,7 +39,7 @@ schema = Schema((
             label='Text',
             label_msgid='GitesContent_label_text',
             description_msgid='GitesContent_help_text',
-            i18n_domain='gites',
+            i18n_domain='GitesContent',
         ),
         default_output_type='text/html',
         required=1
@@ -58,7 +54,7 @@ schema = Schema((
             label='Maisonstourisme',
             label_msgid='GitesContent_label_maisonsTourisme',
             description_msgid='GitesContent_help_maisonsTourisme',
-            i18n_domain='gites',
+            i18n_domain='GitesContent',
         ),
         multiValued=1
     ),
@@ -71,7 +67,7 @@ schema = Schema((
             label='Hebergementsconcernes',
             label_msgid='GitesContent_label_hebergementsConcernes',
             description_msgid='GitesContent_help_hebergementsConcernes',
-            i18n_domain='gites',
+            i18n_domain='GitesContent',
         ),
         multiValued=1
     ),
@@ -85,7 +81,7 @@ schema = Schema((
             label='Startdate',
             label_msgid='GitesContent_label_startDate',
             description_msgid='GitesContent_help_startDate',
-            i18n_domain='gites',
+            i18n_domain='GitesContent',
         ),
         required=1,
         show_hm=False,
@@ -102,7 +98,7 @@ schema = Schema((
             label='Enddate',
             label_msgid='GitesContent_label_endDate',
             description_msgid='GitesContent_help_endDate',
-            i18n_domain='gites',
+            i18n_domain='GitesContent',
         ),
         required=1,
         languageIndependent=1
@@ -134,12 +130,10 @@ SejourFute_schema = ATFolder.schema.copy() + \
     schema.copy()
 ##/code-section after-schema
 
-
 class SejourFute(ATFolder):
     """
     """
     security = ClassSecurityInfo()
-    implements(ISejourFute)
     __implements__ = (getattr(ATFolder, '__implements__', ()))
 
     # This name appears in the 'add' box
@@ -203,26 +197,6 @@ class SejourFute(ATFolder):
     def getImages(self):
         return self.objectValues('ATImage')
 
-    related_heb_pks = None
-
-    def getHebPks(self):
-        if self.related_heb_pks is None:
-            hebs = [int(heb_pk) for heb_pk in self.getHebergementsConcernes()]
-            maisonTourismes = [int(i) for i in self.getMaisonsTourisme()]
-            wrapper = getSAWrapper('gites_wallons')
-            MaisonTourisme = wrapper.getMapper('maison_tourisme')
-            Commune = wrapper.getMapper('commune')
-            Hebergement = wrapper.getMapper('hebergement')
-            session = wrapper.session
-            query = select([Hebergement.heb_pk])
-            query.append_whereclause(and_(Commune.com_pk == Hebergement.heb_com_fk,
-                                          Commune.com_mais_fk == MaisonTourisme.mais_pk,
-                                          MaisonTourisme.mais_pk.in_(maisonTourismes)))
-            hebIds = session.execute(query).fetchall()
-            hebs.extend([heb.heb_pk for heb in hebIds])
-            self.related_heb_pks = list(set(hebs))
-        return self.related_heb_pks
-
     security.declareProtected("View", 'post_validate')
 
     def post_validate(self, REQUEST=None, errors=None):
@@ -230,7 +204,6 @@ class SejourFute(ATFolder):
 
         End date must be after start date
         """
-        self.related_heb_pks = None
         rstartDate = REQUEST.get('startDate', None)
         rendDate = REQUEST.get('endDate', None)
         from DateTime import DateTime
