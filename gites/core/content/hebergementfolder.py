@@ -84,7 +84,7 @@ class HebergementFolder(ATFolder):
         wrapper = getSAWrapper('gites_wallons')
         Hebergement = wrapper.getMapper('hebergement')
         session = wrapper.session
-        hebergements = session.query(Hebergement).select()
+        hebergements = session.query(Hebergement).all()
         self.known_gites_id = PersistentDict()
         for hebergement in hebergements:
             nom = hebergement.heb_nom
@@ -104,7 +104,7 @@ class HebergementFolder(ATFolder):
         wrapper = getSAWrapper('gites_wallons')
         TypesHeb = wrapper.getMapper('type_heb')
         session = wrapper.session
-        typesHebs = session.query(TypesHeb).select()
+        typesHebs = session.query(TypesHeb).all()
         self.known_types_id = PersistentDict()
         for typeHeb in typesHebs:
             nom = typeHeb.type_heb_nom
@@ -165,7 +165,7 @@ class HebergementFolder(ATFolder):
         wrapper = getSAWrapper('gites_wallons')
         Commune = wrapper.getMapper('commune')
         session = wrapper.session
-        communes = session.query(Commune).select()
+        communes = session.query(Commune).all()
         self.known_communes_id = PersistentDict()
         for commune in communes:
             nom = commune.com_nom
