@@ -9,7 +9,7 @@ $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
 import re
 from zope.publisher.interfaces.http import IHTTPRequest
-from zope.component import adapts, getMultiAdapter
+from zope.component import adapts, getMultiAdapter, queryMultiAdapter
 from zope.app.publisher.browser import getDefaultViewName
 from ZPublisher.BaseRequest import DefaultPublishTraverse
 from gites.core.interfaces import IHebergementFolder
@@ -25,16 +25,6 @@ class HebergementFolderTraversable(DefaultPublishTraverse):
     def isInt(self, name):
         m = re.compile(r'^([+-])?\d+$')
         return bool(m.match(name))
-
-    def getHebergementByPk(self, heb_pk):
-        """
-        retourne un hebergement selon sa pk
-        table hebergement
-        """
-        wrapper = getSAWrapper('gites_wallons')
-        session = wrapper.session
-        Hebergement = wrapper.getMapper('hebergement')
-        return session.query(Hebergement).get(heb_pk)
 
     def publishTraverse(self, request, name):
         """Interpret any remaining names on the traversal stack as keywords
@@ -73,22 +63,82 @@ class HebergementFolderTraversable(DefaultPublishTraverse):
             # last name is another keyword
             keywords.append(name)
 
-        if len(keywords) == 0:
+        #if len(keywords) == 0:
             # No keywords given, just a view specified. Create a view for the
             # topic container.
-            context = self.context
-        else:
-            if self.isInt(name):
-                context = self.getHebergementByPk(int(name))
-                if context is None:
-                    raise NotFound
-                else:
-                    context = context.__of__(self.context)
+        #    context = self.context
+        #else:
+        return self.getContext(name, keywords, view_name)
 
-        view_name = view_name or getDefaultViewName(context, request,
+    def getHebergementByPk(self, heb_pk):
+        """
+        retourne un hebergement selon sa pk
+        table hebergement
+        """
+        wrapper = getSAWrapper('gites_wallons')
+        session = wrapper.session
+        Hebergement = wrapper.getMapper('hebergement')
+        return session.query(Hebergement).get(heb_pk)
+
+    def getDefaultViewForObject(self, obj, view_name):
+        obj = obj.__of__(self.context)
+        view_name = view_name or getDefaultViewName(obj, self.request,
                                                     self.context)
-        view = getMultiAdapter((context, request), name=view_name)
+        view = getMultiAdapter((obj, self.request), name=view_name)
         return view.__of__(self.context)
+
+    def getContext(self, name, sub, view_name):
+        if self.isInt(name):
+            context = self.getHebergementByPk(int(name))
+            if context is None:
+                raise NotFound
+            return self.getDefaultViewForObject(context, view_name)
+        lenSub = len(sub)
+        if sub:
+            if lenSub == 2 and sub[1] in self.context.known_communes_id \
+               and sub[0] in self.context.known_types_id:
+                # /hebergement/gites/villlers/
+                #              NAME * SUB[0]
+                #
+                # affichage type de gites pour ville
+                #
+                wrapper = getSAWrapper('gites_wallons')
+                session = wrapper.session
+                typeHeb = self.context.known_types_id.get(sub[0])
+                commune = self.context.known_communes_id.get(sub[1])
+                Commune = wrapper.getMapper('commune')
+                TypeHebs = wrapper.getMapper('type_heb')
+                typeHeb = session.query(TypeHebs).get(int(typeHeb))
+                commune = session.query(Commune).get(int(commune))
+                return queryMultiAdapter((typeHeb.__of__(self.context),
+                                          commune.__of__(self.context),
+                                          self.request), name='index.html').__of__(self.context)
+
+            elif lenSub >= 3 and \
+                    sub[1] in self.context.known_communes_id \
+                    and sub[0] in self.context.known_types_id \
+                    and sub[2] in self.context.known_gites_id:
+                # /hebergement/gites/villlers/les-roches
+                #              NAME * SUB[0]* SUB[1]
+                # affichage d un gite
+                pk = self.context.known_gites_id.get(name, None)
+                hebergement = self.getHebergementByPk(int(pk))
+                if lenSub == 3:
+                    return self.getDefaultViewForObject(hebergement, view_name)
+                else:
+                    page = sub[2]
+                    return queryMultiAdapter((hebergement.__of__(self.context),
+                                              self.request), name=page).__of__(self.context)
+
+        elif name in self.context.known_types_id:
+            # /hebergement/gites/
+            #              NAME
+            # affichage type d un gite
+            typeHeb = self.context.known_types_id.get(name)
+            typeHeb = self.getTypeHebByPk(int(typeHeb))
+            return queryMultiAdapter((typeHeb.__of__(self.context),
+                                      self.request), name='index.html').__of__(self.context)
+        return None
 
     def nextName(self):
         """Pop the next name off of the traversal stack.
