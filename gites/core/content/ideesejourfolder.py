@@ -9,6 +9,8 @@ $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
 from AccessControl import ClassSecurityInfo
 from gites.core.config import PROJECTNAME
+from zope.interface import implements
+from gites.core.content.interfaces import IIdeeSejourFolder
 from Products.LinguaPlone.public import (Schema, TextField, RichWidget,
                                          ImageField,
                                          ImageWidget, AttributeStorage,
@@ -30,7 +32,6 @@ schema = Schema((
         ),
         default_output_type='text/html'
     ),
-
     ImageField(
         name='logo',
         widget=ImageWidget(
@@ -57,6 +58,7 @@ class IdeeSejourFolder(OrderedBaseFolder):
     """
     """
     security = ClassSecurityInfo()
+    implements(IIdeeSejourFolder)
     __implements__ = (getattr(OrderedBaseFolder, '__implements__', ()))
 
     # This name appears in the 'add' box

@@ -20,15 +20,3 @@ class IIdeeSejourFolder(Interface):
     """
     Idee Sejour Folder marker interface
     """
-
-
-class IDerniereMinute(Interface):
-    """
-    Derniere Minute marker interface
-    """
-
-
-class ISejourFute(Interface):
-    """
-    Sejour Fute marker interface
-    """
