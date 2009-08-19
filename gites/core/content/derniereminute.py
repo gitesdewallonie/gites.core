@@ -276,7 +276,7 @@ class DerniereMinute(ATFolder):
             wrapper = getSAWrapper('gites_wallons')
             Hebergements = wrapper.getMapper('hebergement')
             session = wrapper.session
-            hebergement = session.query(Hebergements).selectfirst_by(Hebergements.c.heb_pk==self.getHebergementsConcernes()[0])
+            hebergement = session.query(Hebergements).filter(Hebergements.heb_pk==self.getHebergementsConcernes()[0]).one()
             return hebergement.__of__(self.hebergement)
         else:
             return None
