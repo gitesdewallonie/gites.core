@@ -10,5 +10,17 @@
       allowed_interface=".interfaces.IDBReferenceWidgetView"
       />
 
+  <browser:page
+      for="gites.core.content.interfaces.IIdeeSejour"
+      name="idee_sejour_view"
+      permission="zope.Public"
+      template="templates/idee_sejour.pt"/>
+
+  <browser:page
+      for="gites.core.content.interfaces.IIdeeSejourFolder"
+      name="idee_sejour_folder_view"
+      permission="zope.Public"
+      template="templates/idee_sejour_folder.pt"/>
+
 </configure>
 

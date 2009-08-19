@@ -8,18 +8,18 @@
  <property name="content_meta_type">IdeeSejourFolder</property>
  <property name="product">gites.core</property>
  <property name="factory">addIdeeSejourFolder</property>
- <property name="immediate_view">view</property>
+ <property name="immediate_view">idee_sejour_folder_view</property>
  <property name="global_allow">True</property>
  <property name="filter_content_types">False</property>
  <property name="allow_discussion">False</property>
- <property name="default_view">view</property>
+ <property name="default_view">idee_sejour_folder_view</property>
  <property name="default_view_fallback">False</property>
  <alias from="(Default)" to="(dynamic view)"/>
  <alias from="edit" to="base_edit"/>
  <alias from="sharing" to="@@sharing"/>
- <alias from="view" to="(selected layout)"/>
+ <alias from="view" to="idee_sejour_folder_view"/>
  <action title="View" action_id="view" category="object"
-    condition_expr="python:1" url_expr="string:${object_url}" visible="True">
+     condition_expr="" url_expr="string:${object_url}/idee_sejour_folder_view" visible="True">
   <permission value="View"/>
  </action>
  <action title="Edit" action_id="edit" category="object"
