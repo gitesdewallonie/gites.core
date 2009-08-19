@@ -1,0 +1,157 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="atreferencebrowserwidget">
+
+  <head><title></title></head>
+
+  <body>
+
+    <metal:view_macro define-macro="view">
+      <tal:define define="refs  string:AB"
+                  condition="refs">
+      </tal:define>
+    </metal:view_macro>
+
+    <metal:edit_macro define-macro="edit">
+      <metal:use use-macro="field_macro | here/widgets/field/macros/edit">
+          <div metal:fill-slot="widget_body"
+             tal:define="view here/@@dbreferencewidget_view;
+                         multiVal python:test(field.multiValued, 1, 0);
+                         show_path          field/widget/show_path|nothing;
+                         portal_path        python: '/'.join(context.portal_url.getPortalObject().getPhysicalPath());
+                         fieldName fieldName;
+                         fieldRealName field/getName;
+                         uids python:same_type(value, []) and value or [value];
+                         types_param string:;
+                         ">
+
+          <input type="hidden"
+                             value=""
+                             tal:condition="python:not field.required and multiVal"
+                             tal:attributes="name string:$fieldName:default:list"
+                 />
+          <tal:single tal:condition="not: multiVal" >
+              <tal:value tal:condition="python:value and value[0] != '()'">
+                      <input size="" 
+                             type="text" 
+                             value="" 
+                             id="" 
+                             tal:attributes="value
+                             python:view.searchItem(widget.table, value[0], widget.unique_column, widget.default_columns);
+                                             tabindex tabindex/next;
+                                             size python:test(widget.size=='', 30, widget.size);
+                                             id string:${fieldName}_label" readonly="readonly" />
+              </tal:value>
+              <input id=""
+                     size="50"
+                     type="text"
+                     value="Aucune référence selectionnée. Cliquez sur le bouton 'browse' pour en selectionner un"
+                     readonly="readonly"
+                     i18n:attributes="value label_no_reference_set;"
+                     tal:condition="python:not value or value[0] == '()'"
+                     tal:attributes="id string:${fieldName}_label"/>
+              <input type="hidden"
+                     value=""
+                     name=""
+                     tal:condition="python:value and value[0] != '()'"
+                     tal:attributes="name fieldName;
+                                     value python:value[0];
+                                     id string:${fieldName}" />
+
+              <input type="hidden"
+                     value=""
+                     name=""
+                     tal:condition="python:not value or value[0] == '()'"
+                     tal:attributes="name fieldName;
+                                     value value;
+                                     id string:${fieldName}" />
+          </tal:single>
+
+          <tal:multi tal:condition="multiVal"
+                     tal:define="targets uids">
+              <div style="float: left">
+                <select multiple="multiple"
+                        tabindex=""
+                        tal:attributes="name string:${fieldName}:list;
+                                        id string:${fieldName};
+                                        tabindex tabindex/next;">
+                  <tal:b tal:repeat="set targets">
+                    <tal:block tal:repeat="elem set">
+                        <option value=""
+                                selected="selected"
+                                tal:define="title python:view.searchItem(widget.table, elem,widget.unique_column, widget.default_columns)"
+                                tal:attributes="value elem"
+                                tal:content="title">
+                            option
+                        </option>
+                  </tal:block>
+                  </tal:b>
+                </select>
+              </div>
+              <div style="float: left; margin-left: 2em;"
+                   tal:condition="field/widget/allow_sorting | nothing"
+                   class="reference-widget-sorting">
+                  <input style="width: 100pt"
+                         type="button"
+                         i18n:attributes="value label_move_top;"
+                         value="Move top"
+                         tal:attributes="onclick string:var el = document.getElementById('$fieldName');; var pos = el.selectedIndex;; entry_to_top(el, pos);;"
+                  />
+                  <br/>
+                  <input style="width: 100pt"
+                         type="button"
+                         i18n:attributes="value label_move_up;"
+                         value="Move up"
+                         tal:attributes="onclick string:var el = document.getElementById('$fieldName');; var pos = el.selectedIndex;; entry_up(el, pos);;"
+                  />
+                  <br/>
+                  <input style="width: 100pt"
+                         type="button"
+                         i18n:attributes="value label_move_down;"
+                         value="Move down"
+                         tal:attributes="onclick string:var el = document.getElementById('$fieldName');; var pos = el.selectedIndex;; entry_down(el, pos);;"
+                  />
+                  <br/>
+                  <input style="width: 100pt"
+                         type="button"
+                         i18n:attributes="value label_move_bottom;"
+                         value="Move bottom"
+                         tal:attributes="onclick string:var el = document.getElementById('$fieldName');; var pos = el.selectedIndex;; entry_to_bottom(el, pos);;"
+                  />
+              </div>
+          </tal:multi>
+          <div style="clear: both"
+               tal:define="startup_directory python:here.referencebrowser_startupDirectory ('');
+                           global at_url at_url|python:'/'.join(here.getPhysicalPath())">
+              <input type="button"
+                     class="searchButton"
+                     value="Browse..."
+                     onClick=""
+                     i18n:attributes="value label_browse;"
+                     tal:attributes="onClick string:javascript:dbreferencebrowser_openBrowser('${startup_directory}','${fieldName}', '${at_url}', '${fieldRealName}')" />
+              <input type="button"
+                     class="destructive"
+                     value="Remove reference"
+                     onClick=""
+                     i18n:attributes="value label_remove_reference;"
+                     tal:condition="not: multiVal"
+                     tal:attributes="onClick string:javascript:dbreferencebrowser_removeReference('${fieldName}', ${multiVal})" />
+              <input type="button"
+                     class="destructive"
+                     value="Remove selected items"
+                     onClick=""
+                     i18n:attributes="value label_remove_selected_items;"
+                     tal:condition="multiVal"
+                     tal:attributes="onClick string:javascript:dbreferencebrowser_removeReference('${fieldName}', ${multiVal})" />
+          </div>
+        </div>
+
+      </metal:use>
+    </metal:edit_macro>
+    <metal:search_macro define-macro="search">
+      <div metal:use-macro="here/widgets/reference/macros/edit"></div>
+    </metal:search_macro>
+  </body>
+</html>

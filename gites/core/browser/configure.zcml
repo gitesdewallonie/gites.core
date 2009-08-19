@@ -1,0 +1,14 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           i18n_domain="gites.core">
+
+  <browser:page
+      for="*"
+      name="dbreferencewidget_view"
+      class=".dbreferencewidgetview.DBReferenceWidgetView"
+      permission="zope.Public"
+      allowed_interface=".interfaces.IDBReferenceWidgetView"
+      />
+
+</configure>
+

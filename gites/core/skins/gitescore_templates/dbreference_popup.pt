@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="atreferencebrowserwidget">
+
+<head tal:define="ztu modules/ZTUtils;">
+    <title tal:content="here/title_or_id">Title or Id</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"
+          tal:define="charset here/portal_properties/site_properties/default_charset;
+                      dummy python:request.RESPONSE.setHeader('Content-Type', 'text/html;;charset=%s' % charset)"
+          tal:attributes="content string:text/html;;charset=${charset}" />
+    <tal:styles define="view context/@@plone|nothing"
+                replace="structure provider:plone.resourceregistries.styles" />
+
+    <style type="text/css" media="all" 
+           tal:condition="not: exists:here/portal_css"
+           tal:define="current_skin python: request.get(here.portal_skins.getRequestVarname(),'');
+           skin_query python:(current_skin and ('?' + ztu.make_query(skin=current_skin))) or ''"
+           tal:content="string: @import url(${here/portal_url}/plone.css${skin_query});">
+    </style>
+    <script language="javascript" type="text/javascript">
+         function showMessage(message) {
+            element = document.getElementById('message');
+            element.style.display='block';
+            inner = document.getElementById('messageTitle');
+            inner.innerHTML = message;
+         }
+         function submitHistoryForm() {
+             var form = document.history;
+             var path = form.path.options[form.path.selectedIndex].value;
+             form.action = path;
+             form.submit();
+         }
+
+    </script>
+</head>
+    <body class="popup atrefbrowser" onload="focus();self.name='referencebrowser_popup'" style="margin: 4px;padding:0.5em;" 
+          tal:define="border_color here/base_properties/globalBorderColor;
+                      at_url python:here.REQUEST.get('at_url');
+                      view here/@@dbreferencewidget_view;
+                      fieldName python:here.REQUEST.get('fieldName');
+                      fieldRealName python:here.REQUEST.get('fieldRealName');
+                      at_obj python:here.restrictedTraverse(at_url);
+                      field python:at_obj.Schema()[fieldRealName];
+                      widget python:field.widget;
+                      multi python:test(field.multiValued, '1', '0');
+                      title python:widget.Label(at_obj);
+                      description python:widget.Description(at_obj);
+                      search_index python:here.REQUEST.get('search_index', None);
+                      show_indexes python:1;
+                      search_text python:here.REQUEST.get('searchValue', '');
+                      dummy python:here.REQUEST.set(search_index, search_text);
+                      available_indexes widget/available_columns|python:{};
+                      allow_search python:1;
+                      allow_browse python:0;
+                      show_review_state python:0;
+                      exact_match python:test(here.REQUEST.get('exact_match', False), True, False) ;
+                      image_method widget/image_method|string:;
+                      restrict_browsing_to_startup_directory widget/restrict_browsing_to_startup_directory|python: True;
+                      base_query python:widget.getBaseQuery(at_obj, field);
+                      allowed_types base_query/portal_type;
+                      only_for_review_states python:0;
+                      history_length python:10;
+                      dummy python: not allowed_types and base_query.pop('portal_type');
+                      force_close_on_insert python:1;
+                      search_catalog widget/search_catalog|string:portal_catalog;
+                      close_window python:test(multi==0,0, test(force_close_on_insert, 0, 1));
+                      getInfoFor python: context.portal_workflow.getInfoFor;
+                      b_size python:20;
+                      b_start python:0;
+                      b_start request/b_start | b_start;
+                      unique_column widget/unique_column;
+                      allow_non_exact_match widget/allow_non_exact_match;
+                      Batch python:modules['Products.CMFPlone'].Batch;">
+
+        <div style="text-align:right; position: absolute; top: 1.4em; right: 1.0em;">
+           <a href="javascript:history.back()" i18n:translate="referencebrowser_back">back</a>
+           |
+           <a href="javascript:window.close()" i18n:translate="referencebrowser_close">close window</a>
+        </div>
+    
+        <h2 tal:content="title" />
+        <p class="formHelp"
+             style="font-size:105%"
+             tal:content="structure description"/>
+
+        <!-- Search form -->
+        <form action="search"
+              method="post"
+              name="search"
+              style="padding-bottom:0em;"
+              tal:condition="allow_search"
+              tal:define="DateTime python:modules['DateTime'].DateTime;
+                          indexes python:view.getSearchIndex(widget.table);"
+              tal:attributes="action string:${here/absolute_url}/${template/getId}">
+            <fieldset>
+            <legend i18n:translate="referencebrowser_search_terms">Search</legend>
+
+            <tal:base_query tal:condition="base_query/keys|nothing">
+                <tal:alter_request tal:define="dummy python: request.form.update(base_query);"/>
+            </tal:base_query>
+
+            <div class="field" tal:condition="show_indexes">
+                <label i18n:translate="referencebrowser_search_index_label">Search index</label><br/>
+                <select name="search_index" 
+                        style=""
+                        id="indexSelector"
+                        tal:attributes="style string:font-family:${here/base_properties/fontFamily};;font-size:100%;">
+                    <tal:indexes tal:repeat="index indexes">
+                        <tal:filter tal:condition="python:(available_indexes!={}) or available_indexes=={}">
+                            <option value=""
+                                    selected=""
+                                    tal:attributes="value index;
+                                                    selected python:test(index==search_index, 'selected', '')"
+                                    tal:content=   "python:available_indexes[index]"
+                                    tal:condition= "python:available_indexes.has_key(index)"/>
+
+                            <option value=""
+                                    selected=""
+                                    tal:attributes="value index;
+                                                    selected python:test(index==search_index, 'selected', '')"
+                                    tal:content=   "index"
+                                    tal:condition= "python:not available_indexes.has_key(index)"/>                                        
+                        </tal:filter>
+                    </tal:indexes>
+                </select>
+            </div>
+            <div class="field">
+              <label>
+                <input type="checkbox"
+                       name="exact_match"
+                       tal:condition="allow_non_exact_match"
+                       tal:attributes="checked python:test(exact_match,'1',None)"/> Exact match
+              </label>
+            </div>
+
+            <div class="field">
+                <label i18n:translate="referencebrowser_search_term">Search terms</label><br/>
+                <input type="text"
+                       id="searchGadget"
+                       name="searchValue"
+                       size="25"
+                       tabindex=""
+                       value=""
+                       tal:attributes="value search_text;"
+                       />
+                <input tabindex=""
+                       class="searchButton"
+                       type="submit"
+                       name="submit"
+                       value="Search"
+                       i18n:domain="plone"
+                       i18n:attributes="value label_search;"
+                       />                       
+            </div>
+            <!-- add these to make sure that after a search result, we still have these paremeters -->
+            <input type="hidden" name="fieldName" value="" tal:attributes="value fieldName" />
+            <input type="hidden" name="fieldRealName" value="" tal:attributes="value fieldRealName" />
+            <input type="hidden" name="at_url" value="" tal:attributes="value at_url" />
+            </fieldset>
+        </form>
+        <div id="message" class="portalMessage" style="display:none;margin-top:0px;">
+           <span i18n:translate="referencebrowser_text_added_reference">Added reference to:</span>&nbsp;<span id="messageTitle"></span>
+        </div>
+        <!-- actual list of objects, either searchresults or folder contents -->
+        <tal:block tal:define="query_results python:search_text and
+        [view.search(widget.table, search_index, search_text, {},
+        exact_match)];">
+            <div style="border-top:1px solid black;border-bottom:1px solid black;"
+                     tal:attributes="style string:border-top:1px solid ${border_color};;
+                                           border-bottom:1px solid ${border_color};;
+                                           margin-bottom:1em;;padding:0.2em 0 0.1em 0;;
+                                           margin-top:1.5em;;"
+                     tal:condition="python:((search_text!='' or not allow_browse) and query_results!=[])">
+                <span i18n:translate="referencebrowser_heading_search_results">Search results</span>
+            </div>
+            <!-- breadcrums -->
+               <div style="border-top:1px solid black;border-bottom:1px solid black;"
+                     tal:attributes="style string:border-top:1px solid ${border_color};;
+                                           border-bottom:1px solid ${border_color};;
+                                           margin-bottom:1em;;padding:0.2em 0 0.1em 0;;margin-top:1.5em;"
+                     tal:condition= "python:search_text=='' and allow_browse"
+                     tal:define=    "portal here/portal_url/getPortalObject;
+                                     putils nocall:portal/plone_utils;
+                                     crumbs python:putils.createBreadCrumbs(here);
+                                     crumbs python: test(True, context.referencebrowser_filterBreadCrumbs(crumbs, ''), crumbs); 
+                                     isRTL python:here.restrictedTraverse('@@plone').isRightToLeft(domain='plone');
+                                     parents request/PARENTS;
+                                     nil python: parents.reverse();">
+                                     
+                <img tal:attributes="src string:${here/portal_url}/logoIcon.gif"/>
+                <tal:if condition="not: restrict_browsing_to_startup_directory">
+                    <a i18n:translate="tabs_home"
+                       tal:attributes="href string:${portal/absolute_url}/${template/getId}?fieldName=${fieldName}&amp;fieldRealName=${fieldRealName}&amp;at_url=${at_url}">
+                        Home
+                    </a>
+
+                    <span tal:condition="crumbs" class="breadcrumbSeparator">
+                        <tal:ltr condition="not: isRTL">&rarr;</tal:ltr> 
+                        <tal:rtl condition="isRTL">&larr;</tal:rtl> 
+                    </span>                
+                </tal:if>
+
+ 
+                <tal:crums tal:repeat="crumb crumbs">            
+
+                    <a tal:attributes="href string:${crumb/absolute_url}/${template/getId}?fieldName=${fieldName}&amp;fieldRealName=${fieldRealName}&amp;at_url=${at_url}">
+                        <span tal:content="string: ${crumb/Title}">
+                            Breadcrumb Title
+                        </span>
+                    </a>
+
+                    <span tal:condition="not: repeat/crumb/end"
+                          class="breadcrumbSeparator">
+                        <tal:ltr condition="not: isRTL">&rarr;</tal:ltr> 
+                        <tal:rtl condition="isRTL">&larr;</tal:rtl> 
+                    </span>                                 
+
+                </tal:crums>
+             
+
+            </div>
+        
+           <!-- object list -->
+           <tal:noresults tal:condition="python:(search_text!='' or not allow_browse) and query_results==[]">
+               <p i18n:translate="referencebrowser_no_items_found">No items found.</p>
+           </tal:noresults>
+           <tal:list tal:define="checkPermission python: here.portal_membership.checkPermission;
+                                 folder_contents here/listFolderContents|python:[];
+                                 results python: test(search_text!='' or not allow_browse, query_results, []); 
+                                 batch python: Batch(results, b_size, int(b_start), orphan=1);">
+                <table class="group" 
+                          width="100%" 
+                          cellspacing="0" 
+                          cellpadding="2"
+                          tal:condition="batch">
+                    <tbody>
+
+                        <tr>
+                                <tal:bcl tal:repeat="columnTitle python:widget.viewable_columns.values()">
+                                      <span tal:content="columnTitle"/>
+                                </tal:bcl>
+                        </tr>
+                        <tal:results tal:repeat="items batch">
+                          <tal:res tal:repeat="item items">
+                            <tal:row  tal:define="uid python:getattr(item, unique_column);
+                                                  item_referenceable python:((allowed_types and (item.portal_type in allowed_types)) or not allowed_types);
+                                                  has_uid python:1;
+                                                  referenceable python:1;
+                                                  color here/base_properties/discreetColor;">
+
+                                <tr tal:define="oddrow repeat/item/odd" 
+                                    tal:attributes="class python:test(oddrow, 'even', 'odd')">
+                                    <tal:bcl tal:repeat="column python:widget.viewable_columns.keys()">
+                                      <td>
+                                          <strong tal:content="python:getattr(item,column)"/>
+                                      </td>
+                                    </tal:bcl>
+
+
+                                    <td width="25%" 
+                                        nowrap="nowrap" 
+                                        style="text-align:right"
+                                        tal:define="title python:view.safeTitle(getattr(item, widget.default_columns))">
+                                        <tal:referenceable tal:condition="referenceable">
+                                            <a href=""
+                                                onclick=""
+                                                tal:attributes="href string: #;
+                                                                onclick string: window.opener.referencebrowser_setReference('${fieldName}', '${uid}', '${title}', ${multi});; if (0==${close_window}) {window.close()} else {showMessage('${title}')};; ;">
+                                                <strong i18n:translate="referencebrowser_insert_reference">insert</strong>
+                                            </a>
+                                            |
+                                            <a href="" target="_blank"
+                                                tal:condition="widget/view_url"
+                                                tal:attributes="href python:widget.view_url % {'uid':uid};">
+                                                <strong i18n:translate="referencebrowser_view">view</strong>
+                                            </a>
+                                        </tal:referenceable>
+                                    </td>
+                                </tr>
+                            </tal:row>
+                          </tal:res>
+                        </tal:results>
+                    </tbody>
+                </table>
+                <div metal:use-macro="here/batch_macros/macros/navigation" />
+            </tal:list>
+        </tal:block>
+        <div style="text-align:right;margin-top:1em;margin-bottom:2em;">
+           <a href="javascript:history.back()" i18n:translate="referencebrowser_back">back</a>
+           |
+           <a href="javascript:window.close()" i18n:translate="referencebrowser_close">close window</a>
+        </div>        
+    </body>
+</html>

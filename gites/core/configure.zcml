@@ -1,5 +1,6 @@
 <configure xmlns="http://namespaces.zope.org/zope"
            xmlns:five="http://namespaces.zope.org/five"
+           xmlns:cmf="http://namespaces.zope.org/cmf"
            i18n_domain="gites.core">
 
   <five:registerPackage package="." initialize=".initialize" />
@@ -10,5 +11,10 @@
       factory=".traversal.HebergementFolderTraversable" />
 
   <include file="profiles.zcml" />
+
+  <include package=".adapters"/>
+  <include package=".browser"/>
+
+  <cmf:registerDirectory name="gitescore_templates"/>
 
 </configure>
