@@ -20,7 +20,7 @@ class RelationAwareSearch(object):
             column = getattr(mapper, columnName)
             query = session.query(contextClass).join([relation])
 
-        if exactMatch or searchTerm.isdigit():
+        if exactMatch:
             return query.filter(column==searchTerm)
         else:
             return query.filter(column.ilike("%%%s%%" % searchTerm))

@@ -1,5 +1,5 @@
 <configure xmlns="http://namespaces.zope.org/zope"
-           i18n_domain="gites">
+           i18n_domain="gites.core">
 
   <adapter
       for="gites.db.interfaces.IMaisonTourisme"
