@@ -121,12 +121,14 @@ class HebergementFolderTraversable(DefaultPublishTraverse):
                 # /hebergement/gites/villlers/les-roches
                 #              NAME * SUB[0]* SUB[1]
                 # affichage d un gite
+                if lenSub > 3:
+                    page = name
+                    name = sub[-2]
                 pk = self.context.known_gites_id.get(name, None)
                 hebergement = self.getHebergementByPk(int(pk))
                 if lenSub == 3:
                     return self.getDefaultViewForObject(hebergement, view_name)
                 else:
-                    page = sub[2]
                     return queryMultiAdapter((hebergement.__of__(self.context),
                                               self.request), name=page).__of__(self.context)
 

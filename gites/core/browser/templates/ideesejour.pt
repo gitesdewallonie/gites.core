@@ -4,18 +4,16 @@
       i18n:domain="gites">
 <body>
 
-<link metal:fill-slot="head_slot" rel="image_src"
-      href="" tal:attributes="href view/getVignetteURL" /> 
-
 <div metal:fill-slot="main">
   <tal:main tal:define="text context/getText;
                         hebergements view/getHebergements;
                         number python:len(hebergements);">
-    <div id="viewlet-above-content" tal:content="structure provider:plone.abovecontenttitle" />
+
     <h1 tal:content="object_title" class="documentFirstHeading">
       Title or id
     </h1>
 
+    <div metal:use-macro="here/document_actions/macros/document_actions"/>
     <a href=""
         class="link-parent"
         tal:define="parent_url python:here.navigationParent(here, template_id)"

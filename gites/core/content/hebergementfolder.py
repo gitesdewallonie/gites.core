@@ -177,7 +177,7 @@ class HebergementFolder(ATFolder):
             self.known_communes_id[id] = commune.com_pk
 
     security.declareProtected("Modify portal content", 'updateHebergement')
-    def update(self, REQUEST):
+    def update(self, REQUEST=None):
         """
         """
         self.updateHebergement()

@@ -28,8 +28,10 @@ __author__ = """Jean Francois Roche <jfroche@pyxel.be>"""
 __docformat__ = 'plaintext'
 
 from AccessControl import ClassSecurityInfo
+from zope.interface import implements
 from gites.core.config import PROJECTNAME
 from gites.core.widgets import DBReferenceWidget
+from gites.core.content.interfaces import IDerniereMinute
 from Products.ATContentTypes.content.folder import ATFolder
 from z3c.sqlalchemy import getSAWrapper
 from Products.LinguaPlone.public import (Schema, TextField, RichWidget,
@@ -172,6 +174,7 @@ class DerniereMinute(ATFolder):
     """
     """
     security = ClassSecurityInfo()
+    implements(IDerniereMinute)
     __implements__ = (getattr(ATFolder, '__implements__', ()))
 
     # This name appears in the 'add' box

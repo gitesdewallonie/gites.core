@@ -1,5 +1,6 @@
 <configure xmlns="http://namespaces.zope.org/zope"
            xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:grok="http://namespaces.zope.org/grok"
            i18n_domain="gites.core">
 
   <browser:page
@@ -10,17 +11,13 @@
       allowed_interface=".interfaces.IDBReferenceWidgetView"
       />
 
-  <browser:page
-      for="gites.core.content.interfaces.IIdeeSejour"
-      name="idee_sejour_view"
-      permission="zope.Public"
-      template="templates/idee_sejour.pt"/>
+  <grok:grok package="."/>
 
   <browser:page
-      for="gites.core.content.interfaces.IIdeeSejourFolder"
-      name="idee_sejour_folder_view"
+      for="gites.core.content.interfaces.IDerniereMinute"
+      name="derniere_minute_view"
       permission="zope.Public"
-      template="templates/idee_sejour_folder.pt"/>
+      template="templates/derniere_minute.pt"/>
 
 </configure>
 

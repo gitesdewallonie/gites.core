@@ -4,17 +4,13 @@
       i18n:domain="gites">
 <body>
 
-  <link metal:fill-slot="head_slot" rel="image_src"
-        href="" tal:attributes="href view/getVignetteURL" /> 
-
   <div metal:fill-slot="main"
     tal:define="text context/getText;
                 path python:'/'.join(context.getPhysicalPath())">
-    <div id="viewlet-above-content" tal:content="structure provider:plone.abovecontenttitle" />
         <h1 tal:content="object_title" class="documentFirstHeading">
           Title or id
         </h1>
-
+    <div metal:use-macro="here/document_actions/macros/document_actions"/>
         <p class="documentDescription"
            tal:content="here/Description"
            tal:condition="here/Description">
@@ -29,7 +25,8 @@
             <span class="visualClear">
               <div tal:define="hebergements view/getHebergements;
                                number python:len(hebergements);">
-                <h1 i18n:translate="gites_a_proximite"><span i18n:name="number" tal:replace="number"/> Gites et Chambres d'hôtes à proximité </h1>
+                <h1 tal:condition="python:number>1" i18n:translate="gites_a_proximite"><span i18n:name="number" tal:replace="number"/> Gites et Chambres d'hôtes à proximité </h1>
+                <h1 tal:condition="python:number<1" i18n:translate="gite_a_proximite"><span i18n:name="number" tal:replace="number"/> Gite ou Chambre d'hôtes à proximité </h1>
                 <span i18n:translate="selectionnez_titre_pour_trier">Sélectionnez le titre d'une colonne pour trier les résultats.</span>
                 <!-- listing des hebergement concerne -->
                 <center>
