@@ -5,14 +5,15 @@
 <body>
 
 <div metal:fill-slot="main">
-  <tal:main tal:define="view context/@@idees_sejours_view">
-    <div metal:use-macro="here/document_actions/macros/document_actions">
-        Document Actions
-    </div>
+  <tal:main>
 
     <h1 i18n:translate="heading_sejour_fute">
         <span i18n:name="sitename" tal:omit-tag="" tal:content="here/Title">Portal title</span>
       </h1>
+    <div metal:use-macro="here/document_actions/macros/document_actions">
+        Document Actions
+    </div>
+
         <a href=""
            class="link-parent"
            tal:define="parent_url python:here.navigationParent(here, template_id)"
@@ -25,19 +26,22 @@
     <div class="stx"
          tal:define="text python: here.description"
          tal:condition="text"
-         tal:attributes="class python:test(here.Format() in ('text/structured',
-                                               'text/x-rst', ), 'stx', 'plain')">
+         tal:attributes="class python:here.Format() in ('text/structured',
+                                               'text/x-rst', ) and 'stx' or 'plain'">
         <div tal:replace="structure text" />
     </div>
 
       <div class="idee_sejours_container">
         <fieldset tal:repeat="sejour view/getAvailableSejourInFolder">
            <div tal:define="sejour_url python: '/'.join(sejour.getPhysicalPath());
-                            vignette python:view.getRandomVignette(sejour_url)[0]"
+                            vignette python:view.getRandomVignette(sejour_url)"
                  id="div_idee_sejours">
-            <p id="logo">
-               <a href="" tal:attributes="href sejour/absolute_url">
-                   <img src="" tal:attributes="src string:${vignette/getURL}/image_thumb"/><br />
+            <p id="logo"
+               tal:condition="vignette">
+               <a href=""
+                  tal:define="vign python:vignette[0]"
+                  tal:attributes="href sejour/absolute_url">
+                   <img src="" tal:attributes="src string:${vig/getURL}/image_thumb"/><br />
                </a>
             </p>
 

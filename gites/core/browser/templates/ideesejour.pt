@@ -5,15 +5,15 @@
 <body>
 
 <div metal:fill-slot="main">
-  <tal:main tal:define="view context/@@idees_sejours_view;
-                        text context/getText;
+  <tal:main tal:define="text context/getText;
                         hebergements view/getHebergements;
                         number python:len(hebergements);">
-    <div metal:use-macro="here/document_actions/macros/document_actions"/>
 
     <h1 tal:content="object_title" class="documentFirstHeading">
       Title or id
     </h1>
+
+    <div metal:use-macro="here/document_actions/macros/document_actions"/>
     <a href=""
         class="link-parent"
         tal:define="parent_url python:here.navigationParent(here, template_id)"
@@ -40,7 +40,7 @@
 
     <div class="stx"
          tal:condition="text"
-         tal:attributes="class python:test(here.Format() in ('text/structured', 'text/x-rst', ), 'stx', 'plain')">
+         tal:attributes="class python:here.Format() in ('text/structured', 'text/x-rst', ) and 'stx' or 'plain'">
       <div tal:replace="structure text" />
     </div>
 

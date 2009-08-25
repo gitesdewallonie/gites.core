@@ -27,8 +27,8 @@ class DBReferenceWidgetView(BrowserView):
         wrapper = getSAWrapper('gites_wallons')
         session = wrapper.session
         table = wrapper.getMapper(tableName)
-        column = getattr(table.c, uniqueColumn)
-        result = session.query(table).select_by(column==pk)
+        column = getattr(table, uniqueColumn)
+        result = session.query(table).filter(column==pk)
         if result:
             result = result[0]
             if not hasattr(result, prettyColumn):

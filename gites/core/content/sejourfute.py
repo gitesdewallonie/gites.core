@@ -10,6 +10,8 @@ $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 from AccessControl import ClassSecurityInfo
 from gites.core.config import PROJECTNAME
 from gites.core.widgets import DBReferenceWidget
+from zope.interface import implements
+from gites.core.content.interfaces import ISejourFute
 from Products.ATContentTypes.content.folder import ATFolder
 from Products.LinguaPlone.public import (Schema, TextField, TextAreaWidget,
                                          RichWidget, LinesField, DateTimeField,
@@ -134,6 +136,7 @@ class SejourFute(ATFolder):
     """
     """
     security = ClassSecurityInfo()
+    implements(ISejourFute)
     __implements__ = (getattr(ATFolder, '__implements__', ()))
 
     # This name appears in the 'add' box
