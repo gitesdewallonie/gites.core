@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from sets import Set
-from sqlalchemy import select, and_
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from z3c.sqlalchemy import getSAWrapper
 from zope.interface import implements
@@ -32,55 +30,6 @@ class CartesVocabulary(object):
 CartesVocabularyFactory = CartesVocabulary()
 
 
-class CommuneVocabulary(object):
-    """
-    Vocabulaire pour la commune
-    """
-    implements(IVocabularyFactory)
-
-    def __call__(self, context, name=None):
-        """
-        return the commune vocabulary in the db
-        """
-        wrapper = getSAWrapper('gites_wallons')
-
-        communeTable = wrapper.getMapper('commune')
-        proprioTable = wrapper.getMapper('proprio')
-        hebergementTable = wrapper.getMapper('hebergement')
-
-        result = select([communeTable.com_nom],
-                        and_(and_(communeTable.com_pk == hebergementTable.heb_com_fk,
-                                  hebergementTable.heb_site_public == '1'),
-                             and_(hebergementTable.heb_pro_fk == proprioTable.pro_pk,
-                                  proprioTable.pro_etat == True))).distinct().execute().fetchall()
-        communes = [c.com_nom for c in result]
-
-        result = select([hebergementTable.heb_localite],
-                        and_(hebergementTable.heb_site_public == '1',
-                             and_(hebergementTable.heb_pro_fk == proprioTable.pro_pk,
-                                  proprioTable.pro_etat == True))).distinct().execute().fetchall()
-        localites = [l.heb_localite for l in result]
-
-        communesLocalites = list(Set(communes + localites))
-        communesLocalites.sort()
-
-        entites_items = []
-        blankTerm = SimpleTerm(value='-1', token='-1', title=' ')
-        entites_items.append(blankTerm)
-        for entite in communesLocalites:
-            try:
-                term= SimpleTerm(value=entite,
-                                 token=entite,
-                                 title=entite)
-            except:
-                pass
-            else:
-                entites_items.append(term)
-        return SimpleVocabulary(entites_items)
-
-CommuneVocabularyFactory = CommuneVocabulary()
-
-
 class ProvinceVocabulary(object):
     """
     Vocabulaire pour la province
@@ -96,7 +45,7 @@ class ProvinceVocabulary(object):
         table = wrapper.getMapper('provinces')
         provinces = session.query(table).order_by(table.prov_nom)
         provinces_items = []
-        blankTerm = SimpleTerm(value='-1', token='-1', title=' ')
+        blankTerm = SimpleTerm(value=-1, token=-1, title=' ')
         provinces_items.append(blankTerm)
         for province in provinces:
             term= SimpleTerm(value=int(province.prov_pk),
@@ -168,7 +117,7 @@ class ClassificationVocabulary(object):
         classification_items = []
         blankTerm = SimpleTerm(value=-1, token=-1, title=' ')
         classification_items.append(blankTerm)
-        for value in xrange(1, 6): #classification de 1 a 5
+        for value in xrange(1, 5): #classification de 1 a 4
             term= SimpleTerm(value=value,
                              token=value,
                              title=str(value))

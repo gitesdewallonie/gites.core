@@ -3,6 +3,8 @@
            xmlns:grok="http://namespaces.zope.org/grok"
            i18n_domain="gites.core">
 
+  <grok:grok package="."/>
+
   <browser:page
       for="*"
       name="dbreferencewidget_view"
@@ -11,13 +13,31 @@
       allowed_interface=".interfaces.IDBReferenceWidgetView"
       />
 
-  <grok:grok package="."/>
-
   <browser:page
       for="gites.core.content.interfaces.IDerniereMinute"
       name="derniere_minute_view"
       permission="zope.Public"
       template="templates/derniere_minute.pt"/>
+
+  <utility
+      name="gitescontent.provinces"
+      component=".vocabulary.ProvinceVocabularyFactory"/>
+
+  <utility
+      name="gitescontent.typehebergement"
+      component=".vocabulary.TypeHebVocabularyFactory"/>
+
+  <utility
+      name="gitescontent.groupedtypehebergement"
+      component=".vocabulary.GroupedTypeHebVocabularyFactory"/>
+
+  <utility
+      name="gitescontent.classification"
+      component=".vocabulary.ClassificationVocabularyFactory"/>
+
+  <utility
+      name="gites.Cartes"
+      component=".vocabulary.CartesVocabularyFactory"/>
 
 </configure>
 
