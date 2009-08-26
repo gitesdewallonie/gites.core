@@ -19,7 +19,8 @@ def setupgites(context):
         return
     logger.debug('Setup gites core')
     portal = context.getSite()
-    createFolder(portal, "zone-membre", "Zone Membre", True)
+    sejourFuteFolder = createFolder(portal, "zone-membre", "Zone Membre", True)
+
     setupProprioPlacefulWorkflow(portal)
 
 
@@ -34,7 +35,7 @@ def setupProprioPlacefulWorkflow(portal):
                                   ['intranet_workflow'])
     policy.setChainForPortalTypes(['Document'], ['intranet_workflow'])
     policy.setChainForPortalTypes(['Event'], ['intranet_workflow'])
-    policy.setChainForPortalTypes(['News Item'], ['intranet_workflow'])
+    policy.setChainForPortalTypes(['News'], ['intranet_workflow'])
     policy.setChainForPortalTypes(['File'], ['intranet_workflow'])
     policy.setChainForPortalTypes(['Image'], ['intranet_workflow'])
     policy.setChainForPortalTypes(['Folder'], ['intranet_folder_workflow'])
@@ -45,4 +46,3 @@ def setupProprioPlacefulWorkflow(portal):
         zoneMembrePolicy = getattr(zoneMembreFolder, WorkflowPolicyConfig_id)
         zoneMembrePolicy.setPolicyBelow('proprio_policy')
         zoneMembrePolicy.setPolicyIn('proprio_policy')
-    zoneMembreFolder.reindexObjectSecurity()
