@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<import-steps>
+  <import-step id="gites.core.various"
+               version="20090826-01"
+               handler="gites.core.setuphandlers.setupgites"
+               title="GitesCore: miscellaneous import steps">
+  </import-step>
+</import-steps>
