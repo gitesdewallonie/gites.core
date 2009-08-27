@@ -10,6 +10,16 @@ $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 from Products.CMFCore.utils import getToolByName
 
 
+def createPage(parentFolder, documentId, documentTitle):
+    if documentId not in parentFolder.objectIds():
+        parentFolder.invokeFactory('Document', documentId, title=documentTitle)
+    document = getattr(parentFolder, documentId)
+    #By default, created page are written in English
+    #XXX bug here : document.setLanguage('en')
+    publishObject(document)
+    return document
+
+
 def createFolder(parentFolder, folderId, folderTitle, excludeNav):
     if folderId not in parentFolder.objectIds():
         parentFolder.invokeFactory('Folder', folderId, title=folderTitle, excludeFromNav=excludeNav)
