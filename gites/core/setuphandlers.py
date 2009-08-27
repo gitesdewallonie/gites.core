@@ -20,7 +20,6 @@ def setupgites(context):
     logger.debug('Setup gites core')
     portal = context.getSite()
     sejourFuteFolder = createFolder(portal, "zone-membre", "Zone Membre", True)
-
     setupProprioPlacefulWorkflow(portal)
 
 
@@ -46,3 +45,4 @@ def setupProprioPlacefulWorkflow(portal):
         zoneMembrePolicy = getattr(zoneMembreFolder, WorkflowPolicyConfig_id)
         zoneMembrePolicy.setPolicyBelow('proprio_policy')
         zoneMembrePolicy.setPolicyIn('proprio_policy')
+    zoneMembreFolder.reindexObjectSecurity()
