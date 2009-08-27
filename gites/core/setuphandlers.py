@@ -35,7 +35,7 @@ def setupProprioPlacefulWorkflow(portal):
                                   ['intranet_workflow'])
     policy.setChainForPortalTypes(['Document'], ['intranet_workflow'])
     policy.setChainForPortalTypes(['Event'], ['intranet_workflow'])
-    policy.setChainForPortalTypes(['News'], ['intranet_workflow'])
+    policy.setChainForPortalTypes(['News Item'], ['intranet_workflow'])
     policy.setChainForPortalTypes(['File'], ['intranet_workflow'])
     policy.setChainForPortalTypes(['Image'], ['intranet_workflow'])
     policy.setChainForPortalTypes(['Folder'], ['intranet_folder_workflow'])
