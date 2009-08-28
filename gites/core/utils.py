@@ -7,7 +7,12 @@ Copyright by Affinitic sprl
 
 $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
+from zope.component import getUtility
 from Products.CMFCore.utils import getToolByName
+from plone.portlets.interfaces import IPortletManager
+from plone.portlets.interfaces import IPortletAssignmentMapping
+from plone.app.portlets.portlets import classic
+from zope.component import getMultiAdapter
 
 
 def createPage(parentFolder, documentId, documentTitle):
@@ -37,3 +42,34 @@ def publishObject(obj):
     if portal_workflow.getInfoFor(obj, 'review_state') in ['visible', 'private']:
         portal_workflow.doActionFor(obj, 'publish')
     return
+
+
+def setupClassicPortlet(folder, template, column):
+    #Add classic portlet (using template) to folder
+    manager = getManager(folder, column)
+    assignments = getMultiAdapter((folder, manager), IPortletAssignmentMapping)
+
+    assignment = classic.Assignment(template=template, macro='portlet')
+    if template in assignments:
+        del assignments[template]
+    assignments[template] = assignment
+
+
+def getManager(folder, column):
+    if column == 'left':
+        manager = getUtility(IPortletManager, name=u'plone.leftcolumn', context=folder)
+    else:
+        manager = getUtility(IPortletManager, name=u'plone.rightcolumn', context=folder)
+    return manager
+
+
+def clearColumnPortlets(folder, column):
+    manager = getManager(folder, column)
+    assignments = getMultiAdapter((folder, manager), IPortletAssignmentMapping)
+    for portlet in assignments:
+        del assignments[portlet]
+
+
+def clearPortlets(folder):
+    clearColumnPortlets(folder, 'left')
+    clearColumnPortlets(folder, 'right')
