@@ -15,10 +15,11 @@ from plone.app.portlets.portlets import classic
 from zope.component import getMultiAdapter
 
 
-def createPage(parentFolder, documentId, documentTitle):
+def createPage(parentFolder, documentId, documentTitle, excludeNav=False):
     if documentId not in parentFolder.objectIds():
         parentFolder.invokeFactory('Document', documentId, title=documentTitle)
     document = getattr(parentFolder, documentId)
+    document.exclude_from_nav=excludeNav
     #By default, created page are written in English
     #XXX bug here : document.setLanguage('en')
     publishObject(document)
