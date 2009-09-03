@@ -44,7 +44,7 @@ schema = Schema((
         widget=RichWidget(
             label='Text',
             label_msgid='GitesContent_label_text',
-            i18n_domain='GitesContent',
+            i18n_domain='gites',
         ),
         default_output_type='text/html',
         required=1
@@ -55,7 +55,7 @@ schema = Schema((
         widget=ImageWidget(
             label='Photo',
             label_msgid='GitesContent_label_photo',
-            i18n_domain='GitesContent',
+            i18n_domain='gites',
         ),
         required=1,
         storage=AttributeStorage()
