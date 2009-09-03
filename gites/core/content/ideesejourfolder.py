@@ -30,7 +30,7 @@ schema = Schema((
             description="Describe the sejour folder here",
             label_msgid='GitesContent_label_description',
             description_msgid='GitesContent_help_description',
-            i18n_domain='GitesContent',
+            i18n_domain='gites',
         ),
         default_output_type='text/html'
     ),
@@ -39,7 +39,7 @@ schema = Schema((
         widget=ImageWidget(
             label='Logo',
             label_msgid='GitesContent_label_logo',
-            i18n_domain='GitesContent',
+            i18n_domain='gites',
         ),
         storage=AttributeStorage()
     ),

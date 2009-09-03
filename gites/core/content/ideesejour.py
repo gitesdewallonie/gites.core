@@ -28,7 +28,7 @@ schema = Schema((
             label='Text',
             label_msgid='GitesContent_label_text',
             description_msgid='GitesContent_help_text',
-            i18n_domain='GitesContent',
+            i18n_domain='gites',
         ),
         default_output_type='text/html'
     ),
@@ -38,7 +38,7 @@ schema = Schema((
         widget=ImageWidget(
             label='Logo',
             label_msgid='GitesContent_label_logo',
-            i18n_domain='GitesContent',
+            i18n_domain='gites',
         ),
         storage=AttributeStorage()
     ),
@@ -51,7 +51,7 @@ schema = Schema((
             description="Liste des hebergements concernes par cet idee sejour",
             label_msgid='GitesContent_label_hebergements',
             description_msgid='GitesContent_help_hebergements',
-            i18n_domain='GitesContent',
+            i18n_domain='gites',
         ),
         multiValued=1
     ),

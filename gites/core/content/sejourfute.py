@@ -27,7 +27,7 @@ schema = Schema((
             label='Description',
             label_msgid='GitesContent_label_description',
             description_msgid='GitesContent_help_description',
-            i18n_domain='GitesContent',
+            i18n_domain='gites',
         )
     ),
 
@@ -41,7 +41,7 @@ schema = Schema((
             label='Text',
             label_msgid='GitesContent_label_text',
             description_msgid='GitesContent_help_text',
-            i18n_domain='GitesContent',
+            i18n_domain='gites',
         ),
         default_output_type='text/html',
         required=1
@@ -56,7 +56,7 @@ schema = Schema((
             label='Maisonstourisme',
             label_msgid='GitesContent_label_maisonsTourisme',
             description_msgid='GitesContent_help_maisonsTourisme',
-            i18n_domain='GitesContent',
+            i18n_domain='gites',
         ),
         multiValued=1
     ),
@@ -69,7 +69,7 @@ schema = Schema((
             label='Hebergementsconcernes',
             label_msgid='GitesContent_label_hebergementsConcernes',
             description_msgid='GitesContent_help_hebergementsConcernes',
-            i18n_domain='GitesContent',
+            i18n_domain='gites',
         ),
         multiValued=1
     ),
@@ -83,7 +83,7 @@ schema = Schema((
             label='Startdate',
             label_msgid='GitesContent_label_startDate',
             description_msgid='GitesContent_help_startDate',
-            i18n_domain='GitesContent',
+            i18n_domain='gites',
         ),
         required=1,
         show_hm=False,
@@ -100,7 +100,7 @@ schema = Schema((
             label='Enddate',
             label_msgid='GitesContent_label_endDate',
             description_msgid='GitesContent_help_endDate',
-            i18n_domain='GitesContent',
+            i18n_domain='gites',
         ),
         required=1,
         languageIndependent=1
