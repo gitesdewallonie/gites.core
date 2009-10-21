@@ -24,6 +24,10 @@ setup(name='gites.core',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'z3c.sqlalchemy',
+          'gites.db',
+          'five.grok',
+          'z3c.amf',
           # -*- Extra requirements: -*-
       ],
       entry_points="""
