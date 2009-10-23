@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+<body>
+
+<div metal:fill-slot="main">
+    <div metal:use-macro="here/document_actions/macros/document_actions">
+        Document Actions
+    </div>
+    <div id="viewlet-above-content" tal:content="structure provider:plone.abovecontenttitle" />
+    <h1 i18n:domain="gites" i18n:translate="idees_sejours">
+        Idées séjours
+    </h1>
+        <a href=""
+           class="link-parent"
+           tal:define="parent_url python:here.navigationParent(here, template_id)"
+           tal:condition="parent_url"
+           tal:attributes="href parent_url"
+           i18n:translate="go_to_parent_url">
+        Up one level
+        </a>
+
+        <p class="documentDescription"
+           tal:content="here/Description"
+           tal:condition="here/Description">
+            Description
+        </p>
+
+      <div class="idee_sejours_container"
+           tal:define="ideeTypes view/getIdeesTypes">
+        <fieldset tal:repeat="brain ideeTypes">
+          <div tal:define="ideeSejourType python:brain.getObject()"
+               id="div_idee_sejours">
+            <p tal:define="ideeSejourTypeUrl python: '/'.join(ideeSejourType.getPhysicalPath());
+                           vignette python:view.getRandomVignette(ideeSejourTypeUrl)[0]"
+               id="logo">
+                  <a href="" tal:attributes="href ideeSejourType/absolute_url">
+                     <img src="" tal:attributes="src string:${vignette/getURL}/image_thumb"/><br />
+                  </a>
+            </p>
+
+            <div id="info">
+               <a href="" tal:attributes="href ideeSejourType/absolute_url">
+                  <span id="title" tal:content="ideeSejourType/Title"/>
+                  <span id="description">
+                      <p tal:content="structure ideeSejourType/Description"/>
+                  </span>
+               </a>
+             </div>
+          </div>
+        </fieldset>
+      </div>
+
+</div>
+
+</body>
+</html>

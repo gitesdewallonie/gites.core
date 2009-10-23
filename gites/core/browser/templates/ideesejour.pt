@@ -8,7 +8,7 @@
   <tal:main tal:define="text context/getText;
                         hebergements view/getHebergements;
                         number python:len(hebergements);">
-
+    <div id="viewlet-above-content" tal:content="structure provider:plone.abovecontenttitle" />
     <h1 tal:content="object_title" class="documentFirstHeading">
       Title or id
     </h1>
