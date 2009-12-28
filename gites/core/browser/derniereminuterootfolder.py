@@ -64,10 +64,9 @@ class DerniereMinuteRootFolder(grok.View):
     def getLastHebergements(self):
         wrapper = getSAWrapper('gites_wallons')
         session = wrapper.session
-        Hebergement = wrapper.getMapper('hebergement')
-        query = session.query(Hebergement)
-        query = query.filter(Hebergement.heb_site_public == '1')
-        query = query.order_by(desc(Hebergement.heb_pk))
+        table = wrapper.getMapper('hebergement')
+        query = session.query(table)
+        query = query.order_by(desc(table.heb_pk))
         query = query.limit(10)
         results = [hebergement.__of__(self.context.hebergement) for hebergement in query.all()]
         return results

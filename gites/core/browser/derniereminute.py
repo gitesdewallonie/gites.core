@@ -37,7 +37,3 @@ class DerniereMinuteView(grok.View):
 
     def getText(self):
         return self.context.getText()
-
-    def getTypeHebergement(self):
-        language = self.request.get('LANGUAGE', 'en')
-        return self.context.getHebergement().type.getTitle(language)
