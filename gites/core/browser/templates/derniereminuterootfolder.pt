@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="gites">
+
+<body >
+
+<div metal:fill-slot="main">
+    <div metal:use-macro="here/document_actions/macros/document_actions">
+        Document Actions
+    </div>
+
+    <h1 i18n:translate="dernieres_minutes">
+        Dernières minutes
+    </h1>
+
+  <br /><br />
+  <div class="lastminute-fieldset-container">
+    <fieldset>
+        <legend i18n:translate="dernieres_minutes">Dernières minutes</legend>
+            <center tal:define="lastminutes view/getLastDernieresMinutes">
+               <metal:macro
+                        use-macro="here/hebergement_macro/macros/lastminutes_table" />
+              </center>
+
+    </fieldset>
+
+    <fieldset>
+        <legend i18n:translate="promotions">Promotions</legend>
+            <center tal:define="promotions view/getLastPromotions">
+               <metal:macro
+                        use-macro="here/hebergement_macro/macros/promotions_table" />
+              </center>
+
+    </fieldset>
+
+    <fieldset>
+        <legend i18n:translate="nouveaux_hebergements">Nouveaux hebergements</legend>
+            <center tal:define="hebergements view/getLastHebergements">
+               <metal:macro
+                        use-macro="here/hebergement_table/macros/hebergement_table" />
+              </center>
+
+    </fieldset>
+
+  </div>
+</div>
+</body>
+</html>

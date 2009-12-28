@@ -19,6 +19,11 @@
       permission="zope.Public"
       template="templates/derniere_minute.pt"/>
 
+  <browser:defaultView
+      name="derniere_minute_root_folder"
+      for="gites.skin.interfaces.IDerniereMinuteRootFolder"
+      />
+
   <utility
       name="gitescontent.provinces"
       component=".vocabulary.ProvinceVocabularyFactory"/>
