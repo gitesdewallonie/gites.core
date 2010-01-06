@@ -66,7 +66,7 @@ class DerniereMinuteRootFolder(grok.View):
         session = wrapper.session
         Hebergement = wrapper.getMapper('hebergement')
         query = session.query(Hebergement)
-        query = query.filter(Hebergement.heb_etat == '1')
+        query = query.filter(Hebergement.heb_site_public == '1')
         query = query.order_by(desc(Hebergement.heb_pk))
         query = query.limit(10)
         results = [hebergement.__of__(self.context.hebergement) for hebergement in query.all()]
