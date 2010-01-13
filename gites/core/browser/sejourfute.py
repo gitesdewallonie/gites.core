@@ -32,12 +32,17 @@ class SejourFute(grok.View):
         """
         wrapper = getSAWrapper('gites_wallons')
         Hebergements = wrapper.getMapper('hebergement')
+        Proprio = wrapper.getMapper('proprio')
         MaisonTourisme = wrapper.getMapper('maison_tourisme')
         session = wrapper.session
 
         hebList = [int(i) for i in self.context.getHebergementsConcernes()]
         maisonTourismes = [int(i) for i in self.context.getMaisonsTourisme()]
-        hebergements = session.query(Hebergements).filter(Hebergements.heb_pk.in_(hebList)).all()
+        query = session.query(Hebergements).join('proprio')
+        query = query.filter(Hebergements.heb_pk.in_(hebList))
+        query = query.filter(Hebergements.heb_site_public == '1')
+        query = query.filter(Proprio.pro_etat == True)
+        hebergements = query.all()
         for maisonTourisme in maisonTourismes:
             maison = session.query(MaisonTourisme).get(maisonTourisme)
             for commune in maison.commune:

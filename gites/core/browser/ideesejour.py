@@ -30,10 +30,14 @@ class IdeeSejour(grok.View):
         """
         wrapper = getSAWrapper('gites_wallons')
         Hebergements = wrapper.getMapper('hebergement')
+        Proprio = wrapper.getMapper('proprio')
         session = wrapper.session
         hebList = [int(i) for i in self.context.getHebergements()]
-        hebergements = session.query(Hebergements).filter(Hebergements.heb_pk.in_(hebList))
-        hebergements = list(set(hebergements))
+        query = session.query(Hebergements).join('proprio')
+        query = query.filter(Hebergements.heb_pk.in_(hebList))
+        query = query.filter(Hebergements.heb_site_public == '1')
+        query = query.filter(Proprio.pro_etat == True)
+        hebergements = list(set(query))
         hebergements.sort(lambda x, y: cmp(x.heb_nom, y.heb_nom))
         hebergements = [hebergement.__of__(self.context.hebergement) for hebergement in hebergements]
         return hebergements
