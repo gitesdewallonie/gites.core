@@ -5,3 +5,4 @@ import derniereminute
 import ideesejourfolder
 import ideesejour
 import sejourfute
+import vignette
