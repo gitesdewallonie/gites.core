@@ -13,7 +13,6 @@
       Title or id
     </h1>
 
-    <div metal:use-macro="here/document_actions/macros/document_actions"/>
     <a href=""
         class="link-parent"
         tal:define="parent_url python:here.navigationParent(here, template_id)"
