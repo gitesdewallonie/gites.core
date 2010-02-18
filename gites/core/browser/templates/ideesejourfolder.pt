@@ -10,9 +10,6 @@
     <h1 i18n:translate="heading_sejour_fute">
         <span i18n:name="sitename" tal:omit-tag="" tal:content="here/Title">Portal title</span>
       </h1>
-    <div metal:use-macro="here/document_actions/macros/document_actions">
-        Document Actions
-    </div>
 
         <a href=""
            class="link-parent"

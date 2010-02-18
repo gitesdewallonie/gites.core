@@ -6,9 +6,6 @@
 <body >
 
 <div metal:fill-slot="main">
-    <div metal:use-macro="here/document_actions/macros/document_actions">
-        Document Actions
-    </div>
 
     <h1 i18n:translate="dernieres_minutes">
         Dernières minutes
