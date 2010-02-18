@@ -6,7 +6,7 @@
 <body >
 
 <div metal:fill-slot="main">
-
+    <div id="viewlet-above-content" tal:content="structure provider:plone.abovecontenttitle" />
     <h1 i18n:translate="dernieres_minutes">
         Dernières minutes
     </h1>
