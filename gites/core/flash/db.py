@@ -65,6 +65,7 @@ class FlashGitesView(BrowserView):
         wrapper = getSAWrapper('gites_wallons')
         Hebergement = wrapper.getMapper('hebergement')
         TypeHebergement =wrapper.getMapper('type_heb')
+        Proprio = wrapper.getMapper('type_heb')
         query = select([Hebergement.heb_pk,
                         TypeHebergement.type_heb_code,
                         TypeHebergement.type_heb_nom,
@@ -75,6 +76,9 @@ class FlashGitesView(BrowserView):
                         Hebergement.heb_cgt_cap_min,
                         Hebergement.heb_nom])
         query.append_whereclause(TypeHebergement.type_heb_pk==Hebergement.heb_typeheb_fk)
+        query.append_whereclause(Hebergement.heb_site_public == '1')
+        query.append_whereclause(Proprio.pro_pk==Hebergement.heb_pro_fk)
+        query.append_whereclause(Proprio.pro_etat == True)
         return self._adaptsSAResults(query.execute().fetchall())
 
     def getHebergementUrl(self, heb_pk):
