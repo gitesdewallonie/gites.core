@@ -65,7 +65,7 @@ class FlashGitesView(BrowserView):
         wrapper = getSAWrapper('gites_wallons')
         Hebergement = wrapper.getMapper('hebergement')
         TypeHebergement =wrapper.getMapper('type_heb')
-        Proprio = wrapper.getMapper('type_heb')
+        Proprio = wrapper.getMapper('proprio')
         query = select([Hebergement.heb_pk,
                         TypeHebergement.type_heb_code,
                         TypeHebergement.type_heb_nom,
