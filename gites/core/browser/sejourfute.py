@@ -50,5 +50,7 @@ class SejourFute(grok.View):
         # unique !
         hebergements = list(set(hebergements))
         hebergements.sort(lambda x, y: cmp(x.heb_nom, y.heb_nom))
-        hebergements = [hebergement.__of__(self.context.hebergement) for hebergement in hebergements]
+        hebergements = [hebergement.__of__(self.context.hebergement) for hebergement in hebergements \
+                        if hebergement.heb_site_public == '1' \
+                           and hebergement.proprio.pro_etat == True]
         return hebergements
