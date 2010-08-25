@@ -48,6 +48,7 @@ class CommuneVocabulary(object):
         communeTable = wrapper.getMapper('commune')
         proprioTable = wrapper.getMapper('proprio')
         hebergementTable = wrapper.getMapper('hebergement')
+
         result = select([communeTable.com_nom],
                         and_(and_(communeTable.com_pk == hebergementTable.heb_com_fk,
                                   hebergementTable.heb_site_public == '1'),
@@ -55,8 +56,6 @@ class CommuneVocabulary(object):
                                   proprioTable.pro_etat == True))).distinct().execute().fetchall()
         communes = [c.com_nom for c in result]
 
-        hebergementTable = wrapper.getMapper('hebergement')
-        proprioTable = wrapper.getMapper('proprio')
         result = select([hebergementTable.heb_localite],
                         and_(hebergementTable.heb_site_public == '1',
                              and_(hebergementTable.heb_pro_fk == proprioTable.pro_pk,
