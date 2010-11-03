@@ -26,8 +26,7 @@
             <span class="visualClear">
               <div tal:define="hebergements view/getHebergements;
                                number python:len(hebergements);">
-                <h1 tal:condition="python:number>1" i18n:translate="gites_a_proximite"><span i18n:name="number" tal:replace="number"/> Gites et Chambres d'hôtes à proximité </h1>
-                <h1 tal:condition="python:number<1" i18n:translate="gite_a_proximite"><span i18n:name="number" tal:replace="number"/> Gite ou Chambre d'hôtes à proximité </h1>
+                <h1 i18n:translate="gites_a_proximite"><span i18n:name="number" tal:replace="number"/> Gites et Chambres d'hôtes à proximité </h1>
                 <span i18n:translate="selectionnez_titre_pour_trier">Sélectionnez le titre d'une colonne pour trier les résultats.</span>
                 <!-- listing des hebergement concerne -->
                 <center>
