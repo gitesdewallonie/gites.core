@@ -33,24 +33,14 @@ class SejourFute(grok.View):
         wrapper = getSAWrapper('gites_wallons')
         Hebergements = wrapper.getMapper('hebergement')
         Proprio = wrapper.getMapper('proprio')
-        MaisonTourisme = wrapper.getMapper('maison_tourisme')
         session = wrapper.session
 
-        hebList = [int(i) for i in self.context.getHebergementsConcernes()]
-        maisonTourismes = [int(i) for i in self.context.getMaisonsTourisme()]
+        relatedHebs = self.context.getHebPks()
         query = session.query(Hebergements).join('proprio')
-        query = query.filter(Hebergements.heb_pk.in_(hebList))
+        query = query.filter(Hebergements.heb_pk.in_(relatedHebs))
         query = query.filter(Hebergements.heb_site_public == '1')
         query = query.filter(Proprio.pro_etat == True)
+        query = query.order_by(Hebergements.heb_nom)
         hebergements = query.all()
-        for maisonTourisme in maisonTourismes:
-            maison = session.query(MaisonTourisme).get(maisonTourisme)
-            for commune in maison.commune:
-                hebergements += list(commune.relatedHebergement)
-        # unique !
-        hebergements = list(set(hebergements))
-        hebergements.sort(lambda x, y: cmp(x.heb_nom, y.heb_nom))
-        hebergements = [hebergement.__of__(self.context.hebergement) for hebergement in hebergements \
-                        if hebergement.heb_site_public == '1' \
-                           and hebergement.proprio.pro_etat == True]
+        hebergements = [hebergement.__of__(self.context.hebergement) for hebergement in hebergements]
         return hebergements
