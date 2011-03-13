@@ -220,7 +220,7 @@ class SejourFute(ATFolder):
                                           MaisonTourisme.mais_pk.in_(maisonTourismes)))
             hebIds = session.execute(query).fetchall()
             hebs.extend([heb.heb_pk for heb in hebIds])
-            self.related_heb_pks = hebs
+            self.related_heb_pks = list(set(hebs))
         return self.related_heb_pks
 
     security.declareProtected("View", 'post_validate')
