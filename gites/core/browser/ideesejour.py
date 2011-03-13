@@ -37,9 +37,7 @@ class IdeeSejour(grok.View):
         query = query.filter(Hebergements.heb_pk.in_(hebList))
         query = query.filter(Hebergements.heb_site_public == '1')
         query = query.filter(Proprio.pro_etat == True)
-        hebergements = list(set(query))
-        hebergements.sort(lambda x, y: cmp(x.heb_nom, y.heb_nom))
-        hebergements = [hebergement.__of__(self.context.hebergement) for hebergement in hebergements \
-                        if hebergement.heb_site_public == '1' \
-                           and hebergement.proprio.pro_etat == True]
+        query = query.order_by(Hebergements.heb_nom)
+        hebergements = query.all()
+        hebergements = [hebergement.__of__(self.context.hebergement) for hebergement in hebergements]
         return hebergements
