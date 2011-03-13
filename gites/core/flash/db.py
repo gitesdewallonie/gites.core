@@ -11,6 +11,7 @@ from Products.Five import BrowserView
 from z3c.sqlalchemy import getSAWrapper
 from sqlalchemy import select
 from zope.component import queryMultiAdapter
+from plone.memoize import forever
 
 
 class FlashGitesView(BrowserView):
@@ -24,6 +25,7 @@ class FlashGitesView(BrowserView):
             items.append(heb)
         return items
 
+    @forever.memoize
     def getMaisonsDuTourisme(self):
         wrapper = getSAWrapper('gites_wallons')
         MaisonTouristique = wrapper.getMapper('maison_tourisme')
@@ -35,6 +37,7 @@ class FlashGitesView(BrowserView):
                         MaisonTouristique.mais_id])
         return self._adaptsSAResults(query.execute().fetchall())
 
+    @forever.memoize
     def getInfosTouristiques(self):
         wrapper = getSAWrapper('gites_wallons')
         InfoTouristique = wrapper.getMapper('info_touristique')
@@ -48,6 +51,7 @@ class FlashGitesView(BrowserView):
         query.append_whereclause(TypeInfoTouristique.typinfotour_pk==InfoTouristique.infotour_type_infotour_fk)
         return self._adaptsSAResults(query.execute().fetchall())
 
+    @forever.memoize
     def getInfosPratiques(self):
         wrapper = getSAWrapper('gites_wallons')
         InfoPratique = wrapper.getMapper('info_pratique')
@@ -61,6 +65,7 @@ class FlashGitesView(BrowserView):
         query.append_whereclause(InfoPratique.infoprat_type_infoprat_fk==TypeInfoPratique.typinfoprat_pk)
         return self._adaptsSAResults(query.execute().fetchall())
 
+    @forever.memoize
     def getHebergements(self):
         wrapper = getSAWrapper('gites_wallons')
         Hebergement = wrapper.getMapper('hebergement')
@@ -81,6 +86,7 @@ class FlashGitesView(BrowserView):
         query.append_whereclause(Proprio.pro_etat == True)
         return self._adaptsSAResults(query.execute().fetchall())
 
+    @forever.memoize
     def getHebergementUrl(self, heb_pk):
         wrapper = getSAWrapper('gites_wallons')
         session = wrapper.session
