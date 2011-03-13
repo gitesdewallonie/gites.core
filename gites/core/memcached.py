@@ -22,7 +22,7 @@ DEPENDENCIES = {}
 def memcachedClient():
     servers = os.environ.get(
         "MEMCACHE_SERVER", "127.0.0.1:11211").split(",")
-    return MemcachedClient(servers, defaultNS=u'gdw',
+    return MemcachedClient(servers, defaultNS=u'cerise',
                            defaultAge=86400)
 
 
