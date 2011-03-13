@@ -7,10 +7,12 @@ Copyright by Affinitic sprl
 
 $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
+from sqlalchemy import select, and_
 from AccessControl import ClassSecurityInfo
 from gites.core.config import PROJECTNAME
 from gites.core.widgets import DBReferenceWidget
 from zope.interface import implements
+from z3c.sqlalchemy import getSAWrapper
 from gites.core.content.interfaces import ISejourFute
 from Products.ATContentTypes.content.folder import ATFolder
 from Products.LinguaPlone.public import (Schema, TextField, TextAreaWidget,
@@ -132,6 +134,7 @@ SejourFute_schema = ATFolder.schema.copy() + \
     schema.copy()
 ##/code-section after-schema
 
+
 class SejourFute(ATFolder):
     """
     """
@@ -200,6 +203,26 @@ class SejourFute(ATFolder):
     def getImages(self):
         return self.objectValues('ATImage')
 
+    related_heb_pks = None
+
+    def getHebPks(self):
+        if self.related_heb_pks is None:
+            hebs = [int(heb_pk) for heb_pk in self.getHebergementsConcernes()]
+            maisonTourismes = [int(i) for i in self.getMaisonsTourisme()]
+            wrapper = getSAWrapper('gites_wallons')
+            MaisonTourisme = wrapper.getMapper('maison_tourisme')
+            Commune = wrapper.getMapper('commune')
+            Hebergement = wrapper.getMapper('hebergement')
+            session = wrapper.session
+            query = select([Hebergement.heb_pk])
+            query.append_whereclause(and_(Commune.com_pk == Hebergement.heb_com_fk,
+                                          Commune.com_mais_fk == MaisonTourisme.mais_pk,
+                                          MaisonTourisme.mais_pk.in_(maisonTourismes)))
+            hebIds = session.execute(query).fetchall()
+            hebs.extend([heb.heb_pk for heb in hebIds])
+            self.related_heb_pks = hebs
+        return self.related_heb_pks
+
     security.declareProtected("View", 'post_validate')
 
     def post_validate(self, REQUEST=None, errors=None):
@@ -207,6 +230,7 @@ class SejourFute(ATFolder):
 
         End date must be after start date
         """
+        self.related_heb_pks = None
         rstartDate = REQUEST.get('startDate', None)
         rendDate = REQUEST.get('endDate', None)
         from DateTime import DateTime
