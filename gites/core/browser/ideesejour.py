@@ -8,12 +8,17 @@ Copyright by Affinitic sprl
 $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
 from five import grok
+from gites.core.memcached import cache
 from gites.core.content.interfaces import IIdeeSejour
 from zope.interface import Interface
 from z3c.sqlalchemy import getSAWrapper
 
 grok.context(Interface)
 grok.templatedir('templates')
+
+
+def cacheKey(meth, self):
+    return (self.context.getId())
 
 
 class IdeeSejour(grok.View):
@@ -24,10 +29,8 @@ class IdeeSejour(grok.View):
     grok.name('idee_sejour_view')
     grok.require('zope2.View')
 
-    def getHebergements(self):
-        """
-        return the list of hebergement available in the current idee sejour
-        """
+    @cache(cacheKey, lifetime=3600)
+    def getHebs(self):
         wrapper = getSAWrapper('gites_wallons')
         Hebergements = wrapper.getMapper('hebergement')
         Proprio = wrapper.getMapper('proprio')
@@ -38,6 +41,16 @@ class IdeeSejour(grok.View):
         query = query.filter(Hebergements.heb_site_public == '1')
         query = query.filter(Proprio.pro_etat == True)
         query = query.order_by(Hebergements.heb_nom)
-        hebergements = query.all()
-        hebergements = [hebergement.__of__(self.context.hebergement) for hebergement in hebergements]
-        return hebergements
+        hebs = []
+        for heb in query.all():
+            heb.commune
+            heb.type
+            heb.epis
+            hebs.append(heb)
+        return hebs
+
+    def getHebergements(self):
+        """
+        return the list of hebergement available in the current idee sejour
+        """
+        return [hebergement.__of__(self.context.hebergement) for hebergement in self.getHebs()]
