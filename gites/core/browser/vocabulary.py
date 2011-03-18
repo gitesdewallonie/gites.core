@@ -43,7 +43,6 @@ class CommuneVocabulary(object):
         return the commune vocabulary in the db
         """
         wrapper = getSAWrapper('gites_wallons')
-        session = wrapper.session
 
         communeTable = wrapper.getMapper('commune')
         proprioTable = wrapper.getMapper('proprio')
@@ -69,10 +68,14 @@ class CommuneVocabulary(object):
         blankTerm = SimpleTerm(value='-1', token='-1', title=' ')
         entites_items.append(blankTerm)
         for entite in communesLocalites:
-            term= SimpleTerm(value=entite,
-                             token=entite,
-                             title=entite)
-            entites_items.append(term)
+            try:
+                term= SimpleTerm(value=entite,
+                                 token=entite,
+                                 title=entite)
+            except:
+                pass
+            else:
+                entites_items.append(term)
         return SimpleVocabulary(entites_items)
 
 CommuneVocabularyFactory = CommuneVocabulary()
