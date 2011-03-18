@@ -28,9 +28,6 @@ setup(name='gites.core',
           'gites.db',
           'five.grok',
           'z3c.amf',
-          # -*- Extra requirements: -*-
-      ],
-      entry_points="""
-      # -*- Entry points: -*-
-      """,
-      )
+          'zope.ramcache',
+          'lovely.memcached',
+      ])
