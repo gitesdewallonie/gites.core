@@ -86,7 +86,6 @@ class FlashGitesView(BrowserView):
         query.append_whereclause(Proprio.pro_etat == True)
         return self._adaptsSAResults(query.execute().fetchall())
 
-    @forever.memoize
     def getHebergementUrl(self, heb_pk):
         wrapper = getSAWrapper('gites_wallons')
         session = wrapper.session
