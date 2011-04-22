@@ -12,6 +12,7 @@ from gites.core.memcached import cache
 from gites.core.content.interfaces import IIdeeSejour
 from zope.interface import Interface
 from z3c.sqlalchemy import getSAWrapper
+from Products.CMFCore.utils import getToolByName
 
 grok.context(Interface)
 grok.templatedir('templates')
@@ -54,3 +55,14 @@ class IdeeSejour(grok.View):
         return the list of hebergement available in the current idee sejour
         """
         return [hebergement.__of__(self.context.hebergement) for hebergement in self.getHebs()]
+
+    def getVignetteURL(self):
+        """
+        Return vignette URL for an idee sejour
+        """
+        cat = getToolByName(self.context, 'portal_catalog')
+        path = '/'.join(self.context.getPhysicalPath())
+        results = cat.searchResults(portal_type='Vignette',
+                                    path={'query': path})
+        if results:
+            return results[0].getURL()
