@@ -4,6 +4,9 @@
       i18n:domain="gites">
 <body>
 
+<link metal:fill-slot="head_slot" rel="image_src"
+      href="" tal:attributes="href view/getVignetteURL" /> 
+
 <div metal:fill-slot="main">
   <tal:main tal:define="text context/getText;
                         hebergements view/getHebergements;
