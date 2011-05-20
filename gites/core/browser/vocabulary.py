@@ -168,7 +168,7 @@ class ClassificationVocabulary(object):
         classification_items = []
         blankTerm = SimpleTerm(value=-1, token=-1, title=' ')
         classification_items.append(blankTerm)
-        for value in xrange(1, 5): #classification de 1 a 4
+        for value in xrange(1, 6): #classification de 1 a 5
             term= SimpleTerm(value=value,
                              token=value,
                              title=str(value))
