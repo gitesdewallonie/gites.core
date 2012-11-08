@@ -17,9 +17,5 @@
   <include package=".flash"/>
 
   <cmf:registerDirectory name="gitescore_templates"/>
-  <utility provides="lovely.memcached.interfaces.IMemcachedClient"
-           factory=".memcached.memcachedClient" />
-
-  <subscriber handler="lovely.memcached.event.invalidateCache"/>
 
 </configure>
