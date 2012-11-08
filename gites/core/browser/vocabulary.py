@@ -5,7 +5,7 @@ from sqlalchemy import select, and_
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from z3c.sqlalchemy import getSAWrapper
 from zope.interface import implements
-from zope.app.schema.vocabulary import IVocabularyFactory
+from zope.schema.interfaces import IVocabularyFactory
 from zope.component import queryMultiAdapter
 
 CARDS = ['carte01.jpg']
