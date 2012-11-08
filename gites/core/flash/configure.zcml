@@ -6,13 +6,13 @@
            xmlns:flash="http://namespaces.zope.org/flash"
            i18n_domain="gites">
 
-     <flash:view
+     <!-- flash:view
         for="Products.CMFPlone.interfaces.IPloneSiteRoot"
         methods="getHebergements getInfosPratiques getInfosTouristiques getMaisonsDuTourisme
                  getHebergementUrl"
         class=".db.FlashGitesView"
         permission="zope.Public"
-        />
+        / -->
 
 </configure>
 
