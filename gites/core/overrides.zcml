@@ -1,7 +1,0 @@
-<configure xmlns="http://namespaces.zope.org/zope"
-           i18n_domain="gites.core">
-
-   <utility component=".memcached.choose_cache"
-            provides="plone.memoize.interfaces.ICacheChooser"/>
-
-</configure>
