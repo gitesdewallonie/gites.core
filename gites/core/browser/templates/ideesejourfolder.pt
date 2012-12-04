@@ -13,7 +13,7 @@
 
         <a href=""
            class="link-parent"
-           tal:define="parent_url python:here.navigationParent(here, template_id)"
+           tal:define="parent_url python:here.navigationParent(here, template.getId())"
            tal:condition="parent_url"
            tal:attributes="href parent_url"
            i18n:translate="go_to_parent_url">

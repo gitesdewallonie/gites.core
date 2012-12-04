@@ -12,13 +12,13 @@
                         hebergements view/getHebergements;
                         number python:len(hebergements);">
     <div id="viewlet-above-content" tal:content="structure provider:plone.abovecontenttitle" />
-    <h1 tal:content="object_title" class="documentFirstHeading">
+    <h1 tal:content="context/@@plone_context_state/context/@@plone_context_state/object_title" class="documentFirstHeading">
       Title or id
     </h1>
 
     <a href=""
         class="link-parent"
-        tal:define="parent_url python:here.navigationParent(here, template_id)"
+        tal:define="parent_url python:here.navigationParent(here, template.getId())"
         tal:condition="parent_url"
         tal:attributes="href parent_url"
         i18n:translate="go_to_parent_url">
