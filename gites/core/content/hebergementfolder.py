@@ -94,7 +94,7 @@ class HebergementFolder(ATFolder):
                 if id in self.known_gites_id.keys():
                     id = self._createUniqueId(id, self.known_gites_id.keys())
                 hebergement.heb_id = id
-                session.update(hebergement)
+                session.add(hebergement)
             self.known_gites_id[id] = hebergement.heb_pk
 
     security.declareProtected("Modify portal content", 'updateType')
@@ -115,7 +115,7 @@ class HebergementFolder(ATFolder):
                 if id in self.known_types_id.keys():
                     id = self._createUniqueId(id, self.known_types_id.keys())
                 typeHeb.type_heb_id = id
-                session.update(typeHeb)
+                session.add(typeHeb)
             self.known_types_id[id] = pk
 
             nom = typeHeb.type_heb_nom_nl
@@ -125,7 +125,7 @@ class HebergementFolder(ATFolder):
                 if id in self.known_types_id.keys():
                     id = self._createUniqueId(id, self.known_types_id.keys())
                 typeHeb.type_heb_id_nl = id
-                session.update(typeHeb)
+                session.add(typeHeb)
             self.known_types_id[id] = pk
 
             nom = typeHeb.type_heb_nom_uk
@@ -135,7 +135,7 @@ class HebergementFolder(ATFolder):
                 if id in self.known_types_id.keys():
                     id = self._createUniqueId(id, self.known_types_id.keys())
                 typeHeb.type_heb_id_uk = id
-                session.update(typeHeb)
+                session.add(typeHeb)
             self.known_types_id[id] = pk
 
             id = typeHeb.type_heb_id_de
@@ -145,7 +145,7 @@ class HebergementFolder(ATFolder):
                 if id in self.known_types_id.keys():
                     id = self._createUniqueId(id, self.known_types_id.keys())
                 typeHeb.type_heb_id_de = id
-                session.update(typeHeb)
+                session.add(typeHeb)
             self.known_types_id[id] = pk
 
             nom = typeHeb.type_heb_nom_it
@@ -155,7 +155,7 @@ class HebergementFolder(ATFolder):
                 if id in self.known_types_id.keys():
                     id = self._createUniqueId(id, self.known_types_id.keys())
                 typeHeb.type_heb_id_it = id
-                session.update(typeHeb)
+                session.add(typeHeb)
             self.known_types_id[id] = pk
 
     security.declareProtected("Modify portal content", 'updateCommune')
@@ -173,7 +173,7 @@ class HebergementFolder(ATFolder):
             if not id:
                 id = ptool.normalizeString(nom)
                 commune.com_id = id
-                session.update(commune)
+                session.add(commune)
             self.known_communes_id[id] = commune.com_pk
 
     security.declareProtected("Modify portal content", 'updateHebergement')
