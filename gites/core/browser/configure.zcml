@@ -3,7 +3,14 @@
            xmlns:grok="http://namespaces.zope.org/grok"
            i18n_domain="gites">
 
-   <grok:grok package="."/>
+           <grok:grok package="."/>
+
+  <browser:page
+      for="*"
+      name="boutique_item_view"
+      template="templates/boutique_item_view.pt"
+      permission="zope.Public"
+      />
 
   <browser:page
       for="*"
