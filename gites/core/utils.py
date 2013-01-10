@@ -74,3 +74,16 @@ def clearColumnPortlets(folder, column):
 def clearPortlets(folder):
     clearColumnPortlets(folder, 'left')
     clearColumnPortlets(folder, 'right')
+
+
+def changeDocumentView(document, viewname):
+    if document.getLayout() != viewname:
+        document.setLayout(viewname)
+
+def addViewToType(portal, typename, templatename):
+    pt = getToolByName(portal, 'portal_types')
+    foldertype = getattr(pt, typename)
+    available_views = list(foldertype.getAvailableViewMethods(portal))
+    if not templatename in available_views:
+        available_views.append(templatename)
+        foldertype.manage_changeProperties(view_methods=available_views)

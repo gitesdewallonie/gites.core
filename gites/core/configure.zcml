@@ -1,7 +1,17 @@
 <configure xmlns="http://namespaces.zope.org/zope"
            xmlns:five="http://namespaces.zope.org/five"
            xmlns:cmf="http://namespaces.zope.org/cmf"
+           xmlns:meta="http://namespaces.zope.org/meta"
            i18n_domain="gites">
+
+  <meta:directives namespace="http://namespaces.zope.org/tales">
+
+    <meta:directive name="expressiontype"
+        schema="zope.browserpage.metadirectives.IExpressionTypeDirective"
+        handler="zope.browserpage.metaconfigure.expressiontype"
+        />
+
+  </meta:directives>
 
   <include package="five.grok" file="meta.zcml"/>
   <include package="five.grok"/>
@@ -12,6 +22,8 @@
            zope.publisher.interfaces.http.IHTTPRequest"
       provides="zope.publisher.interfaces.IPublishTraverse"
       factory=".traversal.HebergementFolderTraversable" />
+
+  <include package="affinitic.pwmanager" />
 
   <include file="profiles.zcml" />
 
