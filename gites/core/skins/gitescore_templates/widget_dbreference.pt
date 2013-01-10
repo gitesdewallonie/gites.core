@@ -40,7 +40,6 @@
                              id="" 
                              tal:attributes="value
                              python:view.searchItem(widget.table, value[0], widget.unique_column, widget.default_columns);
-                                             tabindex tabindex/next;
                                              size python:test(widget.size=='', 30, widget.size);
                                              id string:${fieldName}_label" readonly="readonly" />
               </tal:value>
@@ -73,10 +72,8 @@
                      tal:define="targets uids">
               <div style="float: left">
                 <select multiple="multiple"
-                        tabindex=""
                         tal:attributes="name string:${fieldName}:list;
-                                        id string:${fieldName};
-                                        tabindex tabindex/next;">
+                                        id string:${fieldName};">
                   <tal:b tal:repeat="set targets">
                     <tal:block tal:repeat="elem set">
                         <option value=""
@@ -123,7 +120,7 @@
               </div>
           </tal:multi>
           <div style="clear: both"
-               tal:define="startup_directory python:here.referencebrowser_startupDirectory ('');
+               tal:define="startup_directory context/absolute_url;
                            global at_url at_url|python:'/'.join(here.getPhysicalPath())">
               <input type="button"
                      class="searchButton"
