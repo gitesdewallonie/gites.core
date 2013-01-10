@@ -20,14 +20,15 @@ def setupgites(context):
     logger.debug('Setup gites core')
     portal = context.getSite()
     createFolder(portal, "zone-membre", "Zone Membre", True)
-    setupProprioPlacefulWorkflow(portal)
+#    setupProprioPlacefulWorkflow(portal)
+    setupGitesRDB(portal)
 
 
 def setupProprioPlacefulWorkflow(portal):
     placefulWorkflow = getToolByName(portal, 'portal_placeful_workflow')
     if not hasattr(placefulWorkflow, 'proprio_policy'):
         placefulWorkflow.manage_addWorkflowPolicy('proprio_policy',
-                                     'default_workflow_policy (Simple Policy)')
+                                                  'default_workflow_policy (Simple Policy)')
     zoneMembreFolder = getattr(portal, 'zone-membre')
     policy = placefulWorkflow.getWorkflowPolicyById('proprio_policy')
     policy.setChainForPortalTypes(zoneMembreFolder.getLocallyAllowedTypes(),
@@ -46,3 +47,12 @@ def setupProprioPlacefulWorkflow(portal):
         zoneMembrePolicy.setPolicyBelow('proprio_policy')
         zoneMembrePolicy.setPolicyIn('proprio_policy')
     zoneMembreFolder.reindexObjectSecurity()
+
+
+def setupGitesRDB(portal):
+    tt = getToolByName(portal, 'portal_types')
+    tt.constructContent('GitesRDBFolder',
+                        portal,
+                        'rope-folder',
+                        None,
+                        itemClass='gites.core.content.ideesejour.IdeeSejour')

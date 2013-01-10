@@ -4,5 +4,6 @@
                version="20090826-01"
                handler="gites.core.setuphandlers.setupgites"
                title="GitesCore: miscellaneous import steps">
+    <dependency step="types" />
   </import-step>
 </import-steps>

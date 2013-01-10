@@ -8,6 +8,7 @@ Copyright by Affinitic sprl
 $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
 from AccessControl import ClassSecurityInfo
+from collective.rope.baseatfolder import BaseFolderMixin
 from gites.core.config import PROJECTNAME
 from gites.core.widgets import DBReferenceWidget
 from zope.interface import implements
@@ -17,6 +18,8 @@ from Products.LinguaPlone.public import (Schema, TextField, RichWidget,
                                          ImageField, ImageWidget,
                                          AttributeStorage, LinesField,
                                          BaseFolderSchema, registerType)
+from gites.db.content.folder import GitesRDBFolder
+
 
 schema = Schema((
 
@@ -76,7 +79,7 @@ IdeeSejour_schema = ATFolder.schema.copy() + \
 
 ##/code-section after-schema
 
-class IdeeSejour(ATFolder):
+class IdeeSejour(BaseFolderMixin, ATFolder):
     """
     """
     security = ClassSecurityInfo()
@@ -114,3 +117,4 @@ class IdeeSejour(ATFolder):
     global_allow = 1
 
 registerType(IdeeSejour, PROJECTNAME)
+registerType(GitesRDBFolder, PROJECTNAME)

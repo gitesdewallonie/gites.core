@@ -21,4 +21,14 @@
 
   <cmf:registerDirectory name="gitescore_templates"/>
 
+
+  <adapter
+      for=".content.interfaces.IIdeeSejourFolder"
+      factory="collective.rope.basefolder.KeyIdSubobjectSupport"
+      provides="collective.rope.interfaces.IKeyIdSubobjectSupport" />
+
+  <utility
+      name="gites.RDBFolder"
+      component="gites.db.content.folder.GitesRDBFolderFactory"/>
+
 </configure>
