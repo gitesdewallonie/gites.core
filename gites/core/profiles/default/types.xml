@@ -16,4 +16,6 @@
     meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Gites Rope Folder"
     meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Package"
+    meta_type="Factory-based Type Information with dynamic views"/>
 </object>

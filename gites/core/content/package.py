@@ -4,19 +4,28 @@ gites.core
 
 Licensed under the GPL license, see LICENCE.txt for more details.
 Copyright by Affinitic sprl
-
-$Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
+from App.class_init import InitializeClass
 from AccessControl import ClassSecurityInfo
+from collective.rope.baseatfolder import BaseFolderMixin
 from gites.core.config import PROJECTNAME
 from gites.core.widgets import DBReferenceWidget
 from zope.interface import implements
-from gites.core.content.interfaces import IIdeeSejour
+from gites.core.content.interfaces import IPackage
+
+from Products.CMFCore.interfaces import IContentish
+from Products.Archetypes.interfaces import (IBaseFolder,
+                                            IBaseObject,
+                                            IReferenceable)
 from Products.ATContentTypes.content.folder import ATFolder
+
 from Products.LinguaPlone.public import (Schema, TextField, RichWidget,
                                          ImageField, ImageWidget,
                                          AttributeStorage, LinesField,
                                          BaseFolderSchema, registerType)
+
+from gites.db.content.folder import GitesRDBFolder
+
 
 schema = Schema((
 
@@ -48,7 +57,7 @@ schema = Schema((
         widget=DBReferenceWidget
         (
             label="Hebergements Concernes",
-            description="Liste des hebergements concernes par cet idee sejour",
+            description="Liste des hebergements concernes par ce package",
             label_msgid='GitesContent_label_hebergements',
             description_msgid='GitesContent_help_hebergements',
             i18n_domain='gites',
@@ -64,39 +73,40 @@ schema['hebergements'].widget.table = 'hebergement'
 schema['hebergements'].widget.unique_column = 'heb_pk'
 schema['hebergements'].widget.default_columns = 'heb_nom'
 schema['hebergements'].widget.viewable_columns = {'heb_nom': 'Nom'}
-schema['hebergements'].languageIndependent=True
+schema['hebergements'].languageIndependent = True
 ##/code-section after-local-schema
 
 ##code-section after-schema #fill in your manual code here
-IdeeSejour_schema = ATFolder.schema.copy() + \
-    schema.copy()
+Package_schema = BaseFolderMixin.schema.copy() + \
+                 BaseFolderSchema.copy() + \
+                 schema.copy()
 
 ##/code-section after-schema
 
-class IdeeSejour(ATFolder):
+
+class Package(BaseFolderMixin, ATFolder):
     """
     """
     security = ClassSecurityInfo()
-    implements(IIdeeSejour)
-    __implements__ = (getattr(ATFolder, '__implements__', ()))
+    implements(IPackage, IBaseFolder, IBaseObject, IReferenceable, IContentish)
 
     # This name appears in the 'add' box
-    archetype_name = 'IdeeSejour'
+    archetype_name = 'Package'
 
-    meta_type = 'IdeeSejour'
-    portal_type = 'IdeeSejour'
-    allowed_content_types = ['Vignette', 'ATImage', 'Vignette', 'Image']
+    meta_type = 'Package'
+    portal_type = 'Package'
+    allowed_content_types = ['Vignette']
     filter_content_types = 1
     global_allow = 0
-    #content_icon = 'IdeeSejour.gif'
-    immediate_view = 'idee_sejour'
-    default_view = 'idee_sejour'
-    suppl_views = ('idee_sejour_listing', )
-    typeDescription = "IdeeSejour"
-    typeDescMsgId = 'description_edit_ideesejour'
+    #content_icon = 'Package.gif'
+    immediate_view = 'package'
+    default_view = 'package'
+    suppl_views = ('package_listing', )
+    typeDescription = "Package"
+    typeDescMsgId = 'description_edit_package'
 
     actions = (
-       {'action': "string:${object_url}/idee_sejour",
+       {'action': "string:${object_url}/package",
         'category': "object",
         'id': 'view',
         'name': 'View',
@@ -105,8 +115,10 @@ class IdeeSejour(ATFolder):
     )
 
     _at_rename_after_creation = True
-    schema = IdeeSejour_schema
+    schema = Package_schema
     global_allow = 1
 
+InitializeClass(Package)
+registerType(Package, PROJECTNAME)
 
-registerType(IdeeSejour, PROJECTNAME)
+registerType(GitesRDBFolder, PROJECTNAME)

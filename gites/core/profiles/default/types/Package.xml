@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
-<object name="Gites Rope Folder"
+<object name="Package"
    meta_type="Factory-based Type Information with dynamic views"
    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
- <property name="title">Gites Rope Folder</property>
+ <property name="title" i18n:translate="">Package</property>
  <property name="description"></property>
  <property name="content_icon">folder.gif</property>
- <property name="content_meta_type">Gites Rope Folder</property>
- <property name="product"></property>
- <property name="factory">gites.RDBFolder</property>
+ <property name="content_meta_type">Package</property>
+ <property name="product">gites.core</property>
+ <property name="factory">addPackage</property>
  <property name="immediate_view">folder_listing</property>
  <property name="global_allow">True</property>
  <property name="filter_content_types">False</property>

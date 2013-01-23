@@ -33,9 +33,8 @@
 
   <cmf:registerDirectory name="gitescore_templates"/>
 
-
   <adapter
-      for=".content.interfaces.IIdeeSejourFolder"
+      for=".content.interfaces.IPackage"
       factory="collective.rope.basefolder.KeyIdSubobjectSupport"
       provides="collective.rope.interfaces.IKeyIdSubobjectSupport" />
 

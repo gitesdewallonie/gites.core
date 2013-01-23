@@ -51,8 +51,9 @@ def setupProprioPlacefulWorkflow(portal):
 
 def setupGitesRDB(portal):
     tt = getToolByName(portal, 'portal_types')
-    tt.constructContent('Gites Rope Folder',
-                        portal,
-                        'rope-folder',
-                        None,
-                        itemClass='gites.core.content.ideesejour.IdeeSejour')
+    if getattr(portal, 'rope-folder', None) is None:
+        tt.constructContent('Gites Rope Folder',
+                            portal,
+                            'rope-folder',
+                            None,
+                            itemClass='gites.core.content.package.Package')
