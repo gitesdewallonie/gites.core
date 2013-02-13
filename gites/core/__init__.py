@@ -19,10 +19,12 @@ def initialize(context):
         listTypes(PROJECTNAME),
         PROJECTNAME)
 
-    cmfutils.ContentInit(
-        PROJECTNAME + ' Content',
-        content_types=content_types,
-        permission=DEFAULT_ADD_CONTENT_PERMISSION,
-        extra_constructors=constructors,
-        fti=ftis,
-        ).initialize(context)
+    allTypes = zip(content_types, constructors)
+    for atype, constructor in allTypes:
+        kind = atype.archetype_name
+        cmfutils.ContentInit(
+            kind,
+            content_types=(atype,),
+            permission=DEFAULT_ADD_CONTENT_PERMISSION,
+            extra_constructors=(constructor,),
+            ).initialize(context)

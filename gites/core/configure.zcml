@@ -42,4 +42,9 @@
       name="gites.RDBFolder"
       component="gites.db.content.folder.GitesRDBFolderFactory"/>
 
+  <utility
+      component=".content.package.GDWPackageFactory"
+      name="gdw.package"
+      />
+
 </configure>

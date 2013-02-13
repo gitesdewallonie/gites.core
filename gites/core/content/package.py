@@ -5,9 +5,11 @@ gites.core
 Licensed under the GPL license, see LICENCE.txt for more details.
 Copyright by Affinitic sprl
 """
+from zope.component.factory import Factory
 from App.class_init import InitializeClass
 from AccessControl import ClassSecurityInfo
 from collective.rope.baseatfolder import BaseFolderMixin
+from collective.rope.basesimple import BaseSimpleItem
 from gites.core.config import PROJECTNAME
 from gites.core.widgets import DBReferenceWidget
 from zope.interface import implements
@@ -84,7 +86,7 @@ Package_schema = BaseFolderMixin.schema.copy() + \
 ##/code-section after-schema
 
 
-class Package(BaseFolderMixin, ATFolder):
+class Package(BaseFolderMixin, BaseSimpleItem, ATFolder):
     """
     """
     security = ClassSecurityInfo()
@@ -92,6 +94,8 @@ class Package(BaseFolderMixin, ATFolder):
 
     # This name appears in the 'add' box
     archetype_name = 'Package'
+    session_name = 'pg'
+    item_class = None
 
     meta_type = 'Package'
     portal_type = 'Package'
@@ -118,7 +122,17 @@ class Package(BaseFolderMixin, ATFolder):
     schema = Package_schema
     global_allow = 1
 
+
 InitializeClass(Package)
 registerType(Package, PROJECTNAME)
 
 registerType(GitesRDBFolder, PROJECTNAME)
+
+
+def _GDWPackageFactory(id, itemClass='', sessionName='', title=''):
+    ob = Package(id)
+    ob.title = str(title)
+    ob.item_class = Package
+    return ob
+
+GDWPackageFactory = Factory(_GDWPackageFactory)

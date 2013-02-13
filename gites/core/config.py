@@ -7,5 +7,5 @@ Copyright by Affinitic sprl
 
 $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
-PROJECTNAME = "GitesContent"
+PROJECTNAME = "gites.core"
 DEFAULT_ADD_CONTENT_PERMISSION = "Add portal content"
