@@ -2,6 +2,7 @@
 <metadata>
   <version>0.1</version>
   <dependencies>
+    <dependency>profile-Products.LinguaPlone:LinguaPlone</dependency>
     <dependency>profile-Products.CMFPlacefulWorkflow:CMFPlacefulWorkflow</dependency>
   </dependencies>
 </metadata>

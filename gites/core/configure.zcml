@@ -17,6 +17,7 @@
   <include package="five.grok"/>
 
   <five:registerPackage package="." initialize=".initialize" />
+
   <adapter
       for="gites.core.interfaces.IHebergementFolder
            zope.publisher.interfaces.http.IHTTPRequest"
@@ -24,7 +25,7 @@
       factory=".traversal.HebergementFolderTraversable" />
 
   <include package="affinitic.pwmanager" />
-
+  <include package="Products.LinguaPlone" />
   <include file="profiles.zcml" />
 
   <include package=".adapters"/>
