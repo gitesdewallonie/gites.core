@@ -21,7 +21,6 @@ def setupgites(context):
     portal = context.getSite()
     createFolder(portal, "zone-membre", "Zone Membre", True)
 #    setupProprioPlacefulWorkflow(portal)
-    setupGitesRDB(portal)
 
 
 def setupProprioPlacefulWorkflow(portal):
@@ -47,13 +46,3 @@ def setupProprioPlacefulWorkflow(portal):
         zoneMembrePolicy.setPolicyBelow('proprio_policy')
         zoneMembrePolicy.setPolicyIn('proprio_policy')
     zoneMembreFolder.reindexObjectSecurity()
-
-
-def setupGitesRDB(portal):
-    tt = getToolByName(portal, 'portal_types')
-    if getattr(portal, 'rope-folder', None) is None:
-        tt.constructContent('Gites Rope Folder',
-                            portal,
-                            'rope-folder',
-                            None,
-                            itemClass='gites.core.content.package.Package')
