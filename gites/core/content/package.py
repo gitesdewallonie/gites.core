@@ -5,7 +5,6 @@ gites.core
 Licensed under the GPL license, see LICENCE.txt for more details.
 Copyright by Affinitic sprl
 """
-from zope.component.factory import Factory
 from App.class_init import InitializeClass
 from AccessControl import ClassSecurityInfo
 from gites.core.config import PROJECTNAME
@@ -119,12 +118,3 @@ class Package(ATFolder):
 
 InitializeClass(Package)
 registerType(Package, PROJECTNAME)
-
-
-def _GDWPackageFactory(id, itemClass='', sessionName='', title=''):
-    ob = Package(id)
-    ob.title = str(title)
-    ob.item_class = Package
-    return ob
-
-GDWPackageFactory = Factory(_GDWPackageFactory)
