@@ -11,16 +11,14 @@ from gites.core.config import PROJECTNAME
 from gites.core.widgets import DBReferenceWidget
 from zope.interface import implements
 from gites.core.content.interfaces import IPackage
-
+from plone.app.folder import folder
 from Products.CMFCore.interfaces import IContentish
 from Products.Archetypes.interfaces import (IBaseFolder,
                                             IBaseObject,
                                             IReferenceable)
-from Products.ATContentTypes.content.folder import ATFolder
-
+from plone.app.blob.field import ImageField
 from Products.LinguaPlone.public import (Schema, TextField, RichWidget,
-                                         ImageField, ImageWidget,
-                                         AttributeStorage, LinesField,
+                                         ImageWidget, LinesField,
                                          registerType)
 
 
@@ -46,7 +44,6 @@ schema = Schema((
             label_msgid='GitesContent_label_logo',
             i18n_domain='gites',
         ),
-        storage=AttributeStorage()
     ),
 
     LinesField(
@@ -74,12 +71,12 @@ schema['hebergements'].languageIndependent = True
 ##/code-section after-local-schema
 
 ##code-section after-schema #fill in your manual code here
-Package_schema = schema.copy()
+Package_schema = folder.ATFolderSchema + schema.copy()
 
 ##/code-section after-schema
 
 
-class Package(ATFolder):
+class Package(folder.ATFolder):
     """
     """
     security = ClassSecurityInfo()
@@ -103,12 +100,12 @@ class Package(ATFolder):
     typeDescMsgId = 'description_edit_package'
 
     actions = (
-       {'action': "string:${object_url}/package",
-        'category': "object",
-        'id': 'view',
-        'name': 'View',
-        'permissions': ("View", ),
-        'condition': 'python:1'},
+        {'action': "string:${object_url}/package",
+         'category': "object",
+         'id': 'view',
+         'name': 'View',
+         'permissions': ("View", ),
+         'condition': 'python:1'},
     )
 
     _at_rename_after_creation = True
