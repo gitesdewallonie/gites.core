@@ -32,6 +32,5 @@ setup(name='gites.core',
           'affinitic.caching',
           'affinitic.pwmanager',
           'gites.db',
-          'collective.rope',
           'Products.LinguaPlone'
       ])

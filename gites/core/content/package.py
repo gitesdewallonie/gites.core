@@ -8,8 +8,6 @@ Copyright by Affinitic sprl
 from zope.component.factory import Factory
 from App.class_init import InitializeClass
 from AccessControl import ClassSecurityInfo
-from collective.rope.baseatfolder import BaseFolderMixin
-from collective.rope.basesimple import BaseSimpleItem
 from gites.core.config import PROJECTNAME
 from gites.core.widgets import DBReferenceWidget
 from zope.interface import implements
@@ -24,9 +22,7 @@ from Products.ATContentTypes.content.folder import ATFolder
 from Products.LinguaPlone.public import (Schema, TextField, RichWidget,
                                          ImageField, ImageWidget,
                                          AttributeStorage, LinesField,
-                                         BaseFolderSchema, registerType)
-
-from gites.db.content.folder import GitesRDBFolder
+                                         registerType)
 
 
 schema = Schema((
@@ -79,14 +75,12 @@ schema['hebergements'].languageIndependent = True
 ##/code-section after-local-schema
 
 ##code-section after-schema #fill in your manual code here
-Package_schema = BaseFolderMixin.schema.copy() + \
-                 BaseFolderSchema.copy() + \
-                 schema.copy()
+Package_schema = schema.copy()
 
 ##/code-section after-schema
 
 
-class Package(BaseFolderMixin, BaseSimpleItem, ATFolder):
+class Package(ATFolder):
     """
     """
     security = ClassSecurityInfo()
@@ -125,8 +119,6 @@ class Package(BaseFolderMixin, BaseSimpleItem, ATFolder):
 
 InitializeClass(Package)
 registerType(Package, PROJECTNAME)
-
-registerType(GitesRDBFolder, PROJECTNAME)
 
 
 def _GDWPackageFactory(id, itemClass='', sessionName='', title=''):
