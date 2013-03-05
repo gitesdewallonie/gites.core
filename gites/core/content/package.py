@@ -7,19 +7,21 @@ Copyright by Affinitic sprl
 """
 from App.class_init import InitializeClass
 from AccessControl import ClassSecurityInfo
-from gites.core.config import PROJECTNAME
 from zope.interface import implements
-from gites.core.content.interfaces import IPackage
 from plone.app.folder import folder
+from plone.app.blob.field import ImageField
 from Products.CMFCore.interfaces import IContentish
 from Products.Archetypes.interfaces import (IBaseFolder,
                                             IBaseObject,
                                             IReferenceable)
-from plone.app.blob.field import ImageField
 from Products import DataGridField
 from Products.LinguaPlone.public import (Schema, TextField, RichWidget,
                                          ImageWidget,
                                          TextAreaWidget, registerType)
+
+from gites.core.config import PROJECTNAME
+from gites.core.content.interfaces import IPackage
+from gites.core.browser.vocabulary import CriteriaVocabularyFactory
 
 
 schema = Schema((
@@ -63,7 +65,7 @@ schema = Schema((
         widget=DataGridField.DataGridWidget
         (
             columns={'criterion': DataGridField.SelectColumn(u'Criteria',
-                                                             vocabulary=''),
+                                                             vocabulary=CriteriaVocabularyFactory),
                      'value': DataGridField.CheckboxColumn(u'')}
         ),
     ),

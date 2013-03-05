@@ -6,6 +6,8 @@ from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from z3c.sqlalchemy import getSAWrapper
 from zope.interface import implements
 from zope.schema.interfaces import IVocabularyFactory
+from Products.Archetypes.interfaces import IVocabulary
+from Products.Archetypes.atapi import DisplayList
 from zope.component import queryMultiAdapter
 
 CARDS = ['carte01.jpg']
@@ -176,3 +178,24 @@ class ClassificationVocabulary(object):
         return SimpleVocabulary(classification_items)
 
 ClassificationVocabularyFactory = ClassificationVocabulary()
+
+
+class CriteriaVocabulary(object):
+    """
+    Vocabulaire Archetypes pour les critères
+    """
+    implements(IVocabulary)
+
+    def __call__(self, context, name=None):
+        """
+        return the criteria vocabulary
+        """
+        criteria_items = []
+        blankTerm = SimpleTerm(value=-1, token=-1, title=' ')
+        criteria_items.append(blankTerm)
+        return SimpleVocabulary(criteria_items)
+
+    def getDisplayList(self, instance):
+        return DisplayList([])
+
+CriteriaVocabularyFactory = CriteriaVocabulary()
