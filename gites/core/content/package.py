@@ -8,7 +8,6 @@ Copyright by Affinitic sprl
 from App.class_init import InitializeClass
 from AccessControl import ClassSecurityInfo
 from gites.core.config import PROJECTNAME
-from gites.core.widgets import DBReferenceWidget
 from zope.interface import implements
 from gites.core.content.interfaces import IPackage
 from plone.app.folder import folder
@@ -17,9 +16,9 @@ from Products.Archetypes.interfaces import (IBaseFolder,
                                             IBaseObject,
                                             IReferenceable)
 from plone.app.blob.field import ImageField
+from Products import DataGridField
 from Products.LinguaPlone.public import (Schema, TextField, RichWidget,
-                                         ImageWidget, LinesField,
-                                         registerType)
+                                         ImageWidget, registerType)
 
 
 schema = Schema((
@@ -46,28 +45,21 @@ schema = Schema((
         ),
     ),
 
-    LinesField(
-        name='hebergements',
-        widget=DBReferenceWidget
+    DataGridField.DataGridField(
+        name='criteria',
+        columns=('criterion', 'value'),
+        widget=DataGridField.DataGridWidget
         (
-            label="Hebergements Concernes",
-            description="Liste des hebergements concernes par ce package",
-            label_msgid='GitesContent_label_hebergements',
-            description_msgid='GitesContent_help_hebergements',
-            i18n_domain='gites',
+            columns={'criterion': DataGridField.SelectColumn(u'Criteria',
+                                                             vocabulary=''),
+                     'value': DataGridField.CheckboxColumn(u'')}
         ),
-        multiValued=1
     ),
 
 ),
 )
 
 ##code-section after-local-schema #fill in your manual code here
-schema['hebergements'].widget.table = 'hebergement'
-schema['hebergements'].widget.unique_column = 'heb_pk'
-schema['hebergements'].widget.default_columns = 'heb_nom'
-schema['hebergements'].widget.viewable_columns = {'heb_nom': 'Nom'}
-schema['hebergements'].languageIndependent = True
 ##/code-section after-local-schema
 
 ##code-section after-schema #fill in your manual code here

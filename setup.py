@@ -32,5 +32,6 @@ setup(name='gites.core',
           'affinitic.caching',
           'affinitic.pwmanager',
           'gites.db',
-          'Products.LinguaPlone'
+          'Products.LinguaPlone',
+          'Products.DataGridField'
       ])
