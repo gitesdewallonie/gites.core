@@ -18,16 +18,28 @@ from Products.Archetypes.interfaces import (IBaseFolder,
 from plone.app.blob.field import ImageField
 from Products import DataGridField
 from Products.LinguaPlone.public import (Schema, TextField, RichWidget,
-                                         ImageWidget, registerType)
+                                         ImageWidget,
+                                         TextAreaWidget, registerType)
 
 
 schema = Schema((
 
     TextField(
+        name='description',
+        widget=TextAreaWidget(
+            description="Description succinte du produit",
+            label='Description',
+            label_msgid='GitesContent_label_description',
+            description_msgid='GitesContent_help_description',
+            i18n_domain='gites',
+        )
+    ),
+
+    TextField(
         name='text',
         allowable_content_types=('text/plain', 'text/structured', 'text/html', 'application/msword'),
         widget=RichWidget(
-            description="Contenu de la description du type de sejour",
+            description="Description detaillee du produit",
             label='Text',
             label_msgid='GitesContent_label_text',
             description_msgid='GitesContent_help_text',
@@ -76,23 +88,21 @@ class Package(folder.ATFolder):
 
     # This name appears in the 'add' box
     archetype_name = 'Package'
-    session_name = 'pg'
-    item_class = None
 
     meta_type = 'Package'
     portal_type = 'Package'
-    allowed_content_types = ['Vignette']
+    allowed_content_types = ['Vignette', 'Image']
     filter_content_types = 1
-    global_allow = 0
+    global_allow = 1
     #content_icon = 'Package.gif'
-    immediate_view = 'package'
-    default_view = 'package'
-    suppl_views = ('package_listing', )
+    immediate_view = 'package_view'
+    default_view = 'package_view'
+    suppl_views = ()
     typeDescription = "Package"
     typeDescMsgId = 'description_edit_package'
 
     actions = (
-        {'action': "string:${object_url}/package",
+        {'action': "string:${object_url}/package_view",
          'category': "object",
          'id': 'view',
          'name': 'View',
@@ -101,8 +111,8 @@ class Package(folder.ATFolder):
     )
 
     _at_rename_after_creation = True
+
     schema = Package_schema
-    global_allow = 1
 
 
 InitializeClass(Package)

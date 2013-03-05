@@ -2,23 +2,23 @@
 <object name="Package"
    meta_type="Factory-based Type Information with dynamic views"
    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
- <property name="title" i18n:translate="">Package</property>
+ <property name="title">Package</property>
  <property name="description"></property>
  <property name="content_icon">folder.gif</property>
  <property name="content_meta_type">Package</property>
  <property name="product">gites.core</property>
  <property name="factory">addPackage</property>
- <property name="immediate_view">folder_listing</property>
+ <property name="immediate_view">package_view</property>
  <property name="global_allow">True</property>
- <property name="filter_content_types">False</property>
- <property name="allowed_content_types"/>
+ <property name="filter_content_types">True</property>
+ <property name="allowed_content_types">
+   <element value="Vignette"/>
+   <element value="Image"/>
+ </property>
  <property name="allow_discussion">False</property>
  <property name="default_view">folder_listing</property>
+ <property name="default_view_fallback">False</property>
  <property name="view_methods">
-  <element value="folder_summary_view"/>
-  <element value="folder_full_view"/>
-  <element value="folder_tabular_view"/>
-  <element value="atct_album_view"/>
   <element value="folder_listing"/>
  </property>
  <alias from="(Default)" to="(dynamic view)"/>
