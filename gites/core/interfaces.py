@@ -14,3 +14,14 @@ class IHebergementFolder(Interface):
     """
     Describe the folder containing all hebergement
     """
+
+
+class IHebergementsFetcher(Interface):
+    """
+    Interface to fetch context/view related hebergements
+    """
+
+    def __call__():
+        """
+        return a list of hebergement
+        """
