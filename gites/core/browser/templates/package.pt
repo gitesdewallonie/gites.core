@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="gites">
+<body>
+<div metal:fill-slot="main"
+     tal:define="text context/getText;">
+    <div id="viewlet-above-content" tal:content="structure provider:plone.abovecontenttitle" />
+    <h1 tal:content="context/@@plone_context_state/object_title" class="documentFirstHeading">
+          Title or id
+    </h1>
+        <p class="documentDescription"
+           tal:content="here/Description"
+           tal:condition="here/Description">
+            Description
+        </p>
+        <div class="stx"
+             tal:condition="text"
+             tal:attributes="class python:here.Format() in ('text/structured', 'text/x-rst', ) and 'stx' or 'plain'">
+            <div tal:replace="structure text" />
+            </div>
+            <br/>
+            <span class="visualClear">
+            <div id="heb-listing" tal:content="structure provider:gites.heblisting" />
+</div>
+</body>
+</html>

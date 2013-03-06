@@ -16,17 +16,17 @@
    <element value="Image"/>
  </property>
  <property name="allow_discussion">False</property>
- <property name="default_view">folder_listing</property>
+ <property name="default_view">package_view</property>
  <property name="default_view_fallback">False</property>
  <property name="view_methods">
-  <element value="folder_listing"/>
+  <element value="package_view"/>
  </property>
  <alias from="(Default)" to="(dynamic view)"/>
  <alias from="edit" to="atct_edit"/>
  <alias from="sharing" to="@@sharing"/>
  <alias from="view" to="(selected layout)"/>
  <action title="View" action_id="view" category="object" condition_expr=""
-    url_expr="string:${folder_url}/" visible="True"
+    url_expr="string:${folder_url}/package_view" visible="True"
     i18n:attributes="title">
   <permission value="View"/>
  </action>
