@@ -33,5 +33,6 @@ setup(name='gites.core',
           'affinitic.pwmanager',
           'gites.db',
           'Products.LinguaPlone',
-          'Products.DataGridField'
+          'Products.DataGridField',
+          'monet.mapsviewlet'
       ])
