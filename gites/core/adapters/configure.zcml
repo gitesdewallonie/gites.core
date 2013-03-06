@@ -1,4 +1,5 @@
 <configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:grok="http://namespaces.zope.org/grok"
            i18n_domain="gites">
 
   <adapter
@@ -13,5 +14,6 @@
       provides=".interfaces.ITableSearch"
       />
 
-</configure>
+  <grok:grok package=".hebergementsfetcher"/>
 
+</configure>
