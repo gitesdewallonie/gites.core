@@ -17,6 +17,7 @@ from Products.Archetypes.interfaces import (IBaseFolder,
                                             IBaseObject,
                                             IReferenceable)
 from Products import DataGridField
+from Products.ATContentTypes.content.folder import ATFolder
 from Products.LinguaPlone.public import (Schema, TextField, RichWidget,
                                          ImageWidget,
                                          TextAreaWidget, registerType)
@@ -85,7 +86,7 @@ schema = Schema((
 
     DataGridField.DataGridField(
         name='criteria',
-        schemata=u'Critères',
+        schemata=u'Criteres',
         columns=('criterion', 'value'),
         widget=DataGridField.DataGridWidget
         (
@@ -112,7 +113,7 @@ Package_schema.changeSchemataForField('endDate', 'dates')
 # # ##/code-section after-schema
 
 
-class Package(folder.ATFolder):
+class Package(ATFolder):
     """
     """
     security = ClassSecurityInfo()

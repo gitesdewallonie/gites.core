@@ -21,6 +21,13 @@ def setupgites(context):
     portal = context.getSite()
     createFolder(portal, "zone-membre", "Zone Membre", True)
 #    setupProprioPlacefulWorkflow(portal)
+    disableGlobalAddingForContentType(portal, 'GeoLocation')
+
+
+def disableGlobalAddingForContentType(portal, contentTypeName):
+    portal_types = portal.portal_types
+    contentType = portal_types[contentTypeName]
+    contentType.global_allow = False
 
 
 def setupProprioPlacefulWorkflow(portal):
