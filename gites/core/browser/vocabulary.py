@@ -25,9 +25,9 @@ class CartesVocabulary(object):
         """
         cartes = []
         for card in CARDS:
-            term= SimpleTerm(value=card,
-                             token=card,
-                             title=card)
+            term = SimpleTerm(value=card,
+                              token=card,
+                              title=card)
             cartes.append(term)
         return SimpleVocabulary(cartes)
 
@@ -71,9 +71,9 @@ class CommuneVocabulary(object):
         entites_items.append(blankTerm)
         for entite in communesLocalites:
             try:
-                term= SimpleTerm(value=entite,
-                                 token=entite,
-                                 title=entite)
+                term = SimpleTerm(value=entite,
+                                  token=entite,
+                                  title=entite)
             except:
                 pass
             else:
@@ -101,9 +101,9 @@ class ProvinceVocabulary(object):
         blankTerm = SimpleTerm(value='-1', token='-1', title=' ')
         provinces_items.append(blankTerm)
         for province in provinces:
-            term= SimpleTerm(value=int(province.prov_pk),
-                             token=int(province.prov_pk),
-                             title=province.prov_nom)
+            term = SimpleTerm(value=int(province.prov_pk),
+                              token=int(province.prov_pk),
+                              title=province.prov_nom)
             provinces_items.append(term)
         return SimpleVocabulary(provinces_items)
 
@@ -133,9 +133,9 @@ class TypeHebVocabulary(object):
         for typeHeb in typeHebs:
             if typeHeb.get('pk') == 0:
                 continue
-            term= SimpleTerm(value=int(typeHeb.get('pk')),
-                             token=int(typeHeb.get('pk')),
-                             title=typeHeb.get('name'))
+            term = SimpleTerm(value=int(typeHeb.get('pk')),
+                              token=int(typeHeb.get('pk')),
+                              title=typeHeb.get('name'))
             typeHebs_items.append(term)
         return SimpleVocabulary(typeHebs_items)
 
@@ -170,10 +170,10 @@ class ClassificationVocabulary(object):
         classification_items = []
         blankTerm = SimpleTerm(value=-1, token=-1, title=' ')
         classification_items.append(blankTerm)
-        for value in xrange(1, 6): #classification de 1 a 5
-            term= SimpleTerm(value=value,
-                             token=value,
-                             title=str(value))
+        for value in xrange(1, 6):  # classification de 1 a 5
+            term = SimpleTerm(value=value,
+                              token=value,
+                              title=str(value))
             classification_items.append(term)
         return SimpleVocabulary(classification_items)
 
@@ -186,16 +186,15 @@ class CriteriaVocabulary(object):
     """
     implements(IVocabulary)
 
-    def __call__(self, context, name=None):
-        """
-        return the criteria vocabulary
-        """
-        criteria_items = []
-        blankTerm = SimpleTerm(value=-1, token=-1, title=' ')
-        criteria_items.append(blankTerm)
-        return SimpleVocabulary(criteria_items)
-
     def getDisplayList(self, instance):
-        return DisplayList([])
+        wrapper = getSAWrapper('gites_wallons')
+        metadataTable = wrapper.getMapper('metadata')
+        query = select([metadataTable.met_pk,
+                        metadataTable.met_titre_fr],
+                        metadataTable.met_filterable == True)
+        query = query.order_by(metadataTable.met_titre_fr)
+        results = query.execute().fetchall()
+        criteria = [(str(r.met_pk), r.met_titre_fr) for r in results]
+        return DisplayList(criteria)
 
 CriteriaVocabularyFactory = CriteriaVocabulary()

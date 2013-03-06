@@ -11,6 +11,8 @@ from zope.interface import implements
 from plone.app.folder import folder
 from plone.app.blob.field import ImageField
 from Products.CMFCore.interfaces import IContentish
+from Products.Archetypes.Field import DateTimeField
+from Products.Archetypes.Widget import CalendarWidget
 from Products.Archetypes.interfaces import (IBaseFolder,
                                             IBaseObject,
                                             IReferenceable)
@@ -41,7 +43,7 @@ schema = Schema((
         name='text',
         allowable_content_types=('text/plain', 'text/structured', 'text/html', 'application/msword'),
         widget=RichWidget(
-            description="Description detaillee du produit",
+            description="Description détaillée du produit",
             label='Text',
             label_msgid='GitesContent_label_text',
             description_msgid='GitesContent_help_text',
@@ -59,12 +61,36 @@ schema = Schema((
         ),
     ),
 
+    DateTimeField(
+        name='startDate',
+        languageIndependent=True,
+        required=0,
+        widget=CalendarWidget(
+            label="Date de début de l'évenement",
+            description="Date de début servant de filtre pour les disponibilités des hébergements",
+        ),
+    ),
+
+    DateTimeField(
+        name='endDate',
+        languageIndependent=True,
+        required=0,
+        widget=CalendarWidget(
+            label="Date de fin de l'évenement",
+            description="Date de fin servant de filtre pour les disponibilités des hébergements",
+        ),
+    ),
+
     DataGridField.DataGridField(
         name='criteria',
+        schemata=u'Critères',
         columns=('criterion', 'value'),
         widget=DataGridField.DataGridWidget
         (
-            columns={'criterion': DataGridField.SelectColumn(u'Criteria',
+            label='Critères',
+            label_msgid='GitesContent_label_criteria',
+            i18n_domain='gites',
+            columns={'criterion': DataGridField.SelectColumn(u'Critères de sélection des hébergements pour ce produit',
                                                              vocabulary=CriteriaVocabularyFactory),
                      'value': DataGridField.CheckboxColumn(u'')}
         ),
@@ -78,8 +104,10 @@ schema = Schema((
 
 ##code-section after-schema #fill in your manual code here
 Package_schema = folder.ATFolderSchema + schema.copy()
-
-##/code-section after-schema
+Package_schema['location'].widget.visible = False
+Package_schema.changeSchemataForField('startDate', 'dates')
+Package_schema.changeSchemataForField('endDate', 'dates')
+# # ##/code-section after-schema
 
 
 class Package(folder.ATFolder):
