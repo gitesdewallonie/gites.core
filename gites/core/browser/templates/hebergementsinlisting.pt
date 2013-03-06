@@ -1,0 +1,4 @@
+<div class="hebergement"
+     tal:repeat="hebergement viewlet/hebergements">
+
+</div>
