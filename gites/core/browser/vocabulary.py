@@ -95,7 +95,7 @@ class ProvinceVocabulary(object):
         """
         wrapper = getSAWrapper('gites_wallons')
         session = wrapper.session
-        table = wrapper.getMapper('provinces')
+        table = wrapper.getMapper('province')
         provinces = session.query(table).order_by(table.prov_nom)
         provinces_items = []
         blankTerm = SimpleTerm(value='-1', token='-1', title=' ')
