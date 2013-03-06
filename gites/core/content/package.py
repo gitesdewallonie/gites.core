@@ -21,6 +21,8 @@ from Products.LinguaPlone.public import (Schema, TextField, RichWidget,
                                          ImageWidget,
                                          TextAreaWidget, registerType)
 
+from monet.mapsviewlet.interfaces import IMonetMapsEnabledContent
+
 from gites.core.config import PROJECTNAME
 from gites.core.content.interfaces import IPackage
 from gites.core.browser.vocabulary import CriteriaVocabularyFactory
@@ -114,7 +116,8 @@ class Package(folder.ATFolder):
     """
     """
     security = ClassSecurityInfo()
-    implements(IPackage, IBaseFolder, IBaseObject, IReferenceable, IContentish)
+    implements(IPackage, IBaseFolder, IBaseObject, IReferenceable, \
+               IContentish, IMonetMapsEnabledContent)
 
     # This name appears in the 'add' box
     archetype_name = 'Package'

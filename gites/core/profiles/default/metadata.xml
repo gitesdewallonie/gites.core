@@ -4,5 +4,7 @@
   <dependencies>
     <dependency>profile-Products.LinguaPlone:LinguaPlone</dependency>
     <dependency>profile-Products.CMFPlacefulWorkflow:CMFPlacefulWorkflow</dependency>
+    <dependency>profile-Products.DataGridField:default</dependency>
+    <dependency>profile-monet.mapsviewlet:default</dependency>
   </dependencies>
 </metadata>
