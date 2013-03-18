@@ -9,13 +9,15 @@ $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.atapi import Schema, BaseSchema, registerType
-from gites.core.config import PROJECTNAME
 from Products.ATContentTypes.content.folder import ATFolder
 from zope.interface import implements
-from gites.core.interfaces import IHebergementFolder
 from Products.CMFCore.utils import getToolByName
 from z3c.sqlalchemy import getSAWrapper
 from persistent.dict import PersistentDict
+
+from gites.core.config import PROJECTNAME
+from gites.core.interfaces import IHebergementFolder
+from gites.map.browser.interfaces import IMappableContent
 
 schema = Schema((
 
@@ -32,6 +34,7 @@ HebergementFolder_schema = BaseSchema.copy() + \
 HebergementFolder_schema = ATFolder.schema.copy() + \
     schema.copy()
 ##/code-section after-schema
+
 
 class HebergementFolder(ATFolder):
     """
@@ -59,7 +62,7 @@ class HebergementFolder(ATFolder):
     schema = HebergementFolder_schema
 
     ##code-section class-header #fill in your manual code here
-    implements(IHebergementFolder)
+    implements(IHebergementFolder, IMappableContent)
     ##/code-section class-header
 
     # Methods
