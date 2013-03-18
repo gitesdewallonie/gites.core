@@ -20,4 +20,4 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
     grok.adapts(IPackage, Interface, IBrowserRequest)
 
     def __call__(self):
-        import pdb;pdb.set_trace()
+        pass
