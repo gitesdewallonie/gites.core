@@ -1,0 +1,12 @@
+<div>
+        Nos Offres
+</div>
+<div style="display:table; table-layout:fixed;">
+    <tal:viewlets repeat="viewlet viewletmanager/viewlets">
+
+    <div style="display: table-cell;"><tal:viewlet tal:replace="structure python:viewlet.render()" />
+    </div>
+    </tal:viewlets>
+<br/>
+<br/>
+</div>
