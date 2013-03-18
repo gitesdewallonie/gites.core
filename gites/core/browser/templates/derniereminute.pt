@@ -1,0 +1,28 @@
+<div class="offre"
+    tal:define="offre viewlet/getRandomDerniereMinute;
+                hebergement offre/getHebergement;">
+    <div>
+        Dernière minute
+    </div>
+    <div>
+        <img src=""
+             tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/getVignette}"/><br />
+    </div>
+    <div tal:define="start python:viewlet.getNiceEventStartDate(offre);
+                     end python:viewlet.getNiceEventEndDate(offre);">
+        <a tal:attributes="href hebergement/@@url">
+            <tal:titre tal:replace="offre/pretty_title_or_id"/>
+        </a>
+        <br/>
+        <div id="capacite">
+            <img src="capacite.png"
+                 title="Capacité"
+                 alt="Capacité" />
+            <span tal:replace="string:${hebergement/heb_cgt_cap_min}/${hebergement/heb_cgt_cap_max}"/>
+        </div>
+        <div>
+            <span tal:replace="start" /> &rarr; <span tal:replace="end" />
+        </div>
+    </div>
+    <a tal:attributes="href viewlet/getAllDerniereMinuteLink">Toute nos dernières minutes</a>
+</div>

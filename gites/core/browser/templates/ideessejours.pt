@@ -1,0 +1,20 @@
+<div class="offre"
+     tal:define="offre viewlet/getRandomIdeesSejours">
+    <div>
+        Idées Séjours
+    </div>
+    <div tal:define="vignettes python:viewlet.getRandomVignette(offre.getPath())">
+        <tal:vign tal:repeat="vignette vignettes">
+            <img src=""
+                 tal:attributes="src string:${vignette/getURL}/image_thumb"/><br />
+        </tal:vign>
+    </div>
+    <div>
+        <a tal:attributes="href offre/getURL">
+            <tal:titre tal:replace="offre/pretty_title_or_id"/>
+        </a>
+        <br/>
+        <tal:desc tal:replace="offre/Description"/>
+    </div>
+    <a tal:attributes="href viewlet/getAllIdeesSejoursView">Toute nos idées séjour</a>
+</div>
