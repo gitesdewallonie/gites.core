@@ -1,0 +1,92 @@
+<div id="footer">
+    <div id="reseaux-sociaux">
+        <h2>Rejoignez-nous</h2>
+        <ul class="contact-ul">
+            <li>
+                <a href="http://www.facebook.com/" target="_blank">
+                    <img src="img/facebook.png" alt="facebook">
+                    Devenez fans sur facebook
+                </a>
+            </li>
+            <li>
+                <a href="http://www.twitter.com/" target="_blank">
+                    <img src="img/twitter.png" alt="twitter">
+                    Suivez-nous sur twitter
+                </a>
+            </li>
+            <li>
+                <a href="http://plus.google.com/" target="_blank">
+                    <img src="img/google.png" alt="google">
+                    Devenez fans sur Google+
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="img/rss.png" alt="rss">
+                    File RSS
+                </a>
+            </li>
+            <li>
+                <a href="http://www.youtube.com/" target="_blank">
+                    <img src="img/yotuube.png" alt="youtube">
+                    Regardez-nous sur youtube
+                </a>
+            </li>
+        </ul>
+    </div><!--reseaux-sociaux-->
+
+    <div id="contact">
+        <h2>Contactez-nous</h2>
+        Fédération des Gites de Wallonie asbl.<br />
+        Avenue Prince de Liège, 1/21<br />
+        B5100 Jambes (Namur) <br />
+        info@gitesdewallonie.<br />
+        Tel: 32(0) 81 311 800<br />
+        Fax: 32(0) 81 310 200<br />
+    </div><!--contact-->
+
+    <div id="destination-wallonie">
+        <h2>Destination Wallonie</h2>
+        <ul>
+            <li>Lorem ipsum dolor sit Amex</li>
+            <li>Lorem ipsum dolor sit Amex</li>
+            <li>Lorem ipsum dolor sit Amex</li>
+            <li>Lorem ipsum dolor sit Amex</li>
+            <li>Lorem ipsum dolor sit Amex</li>
+            <li>Lorem ipsum dolor sit Amex</li>
+        </ul>
+    </div><!--destination-wallonie-->
+
+    <div id="association">
+        <h2>L'association</h2>
+        <p>L'accueil est une valeur essentielle des 
+        Gîtes de Wallonie.</p>
+
+        <p>Un logement appartenant au réseau des 
+        Gîtes de Wallonie, c'est non seulement
+        un aménagement répondant aux normes
+        de confort moderne mais aussi et surtout
+        une tradition de l'accueil.</p>
+
+        <p>Débutant ou expérimenté, les propriétaires
+        qui nous font confiance bénéficient d'un
+        programme de formation continue et d'un
+        encadrement professionnel, depuis le
+        premier contact jusqu'à la promotion de
+        leur hébergement.</p>
+
+        <p>Objectif avoué :<br />
+        la satisfaction de chaque hôte!</p>
+    </div><!--association-->
+
+    <div id="autres-sites">
+        <h2>Nos autres sites</h2>
+        <ul>
+            <li>Allo chambre d'hôtes</li>
+            <li>BnBelgium</li>
+            <li>Notre documentation</li>
+            <li>Notre blog</li>
+        </ul>
+    </div><!--autres-sites-->
+
+</div><!--footer-->

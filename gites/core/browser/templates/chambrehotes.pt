@@ -1,0 +1,11 @@
+<div id="allo-chambre-hote">
+    <h3>Allo chambre d'hôtes</h3>
+    <img src="img/chambre.png" alt="chambre">
+    <p>A la recherche d'une chambre d'hôtes pour cette nuit?<br>
+    Avec Allo chambre d'hôtes, trouvez une chambre d'hôtes<br>
+    disponible ce soir à proximité de votre destination<br>
+    en Wallonie.</p>
+    <div class="plus-info">
+        <a href="#">Plus d'infos...</a>
+    </div>
+</div><!--allo-chambre-hote-->

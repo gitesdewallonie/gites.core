@@ -1,0 +1,82 @@
+<div style="text-align:center; width:100%">
+    Fédération des Gites de Wallonie asbl. 
+    © 2004 - 2013 - All rights reserved.
+    <br /> 
+    avenue Prince de Liège, 1/21
+    <br />
+    B5100 Jambes (Namur)
+    <br /> 
+    info@gitesdewallonie.be
+    <br />
+    Tel: 32(0) 81 311 800 - Fax: 32(0) 81 310 200 
+</div>
+<div style="display:table; table-layout:fixed; text-align:center; width:100%">
+    <div style="display: table-row;">
+        <div style="display: table-cell;">
+            <a href="http://www.eurogites.org/"
+                target="_blank"
+                title="Eurogites">
+                <img src="logo_eurogit.png"
+                        alt="logo_eurogit.png"
+                        title="" />
+            </a>
+            <br/>
+            <span class="partenaire-info">
+                Membre d'Eurogîtes<br />
+            </span>
+        </div>
+        <div style="display: table-cell;">
+            <a href="http://www.tourismewallonie.be/"
+                target="_blank"
+                title="Tourisme en Wallonie">
+                <img src="logo_wallonie.png"
+                        alt="logo_wallonie.png"
+                        title="" />
+            </a>
+            <br/>
+            <span class="partenaire-info">
+                Commissariat g&eacute;n&eacute;ral<br >
+                au Tourisme<br />
+                de la R&eacute;gion wallonne<br />
+            </span>
+        </div>
+        <div style="display: table-cell;">
+            <a href="http://www.wallonietourisme.be/"
+                target="_blank"
+                title="Wallonie-Bruxelles tourisme">
+                <img src="logo_wallonie_bruxelles_tourisme.png"
+                        alt="logo_wallonie_bruxelles_tourisme.png"
+                        title="" />
+            </a>
+            <br/>
+            <span class="partenaire-info">
+                Wallonie-Bruxelles
+                <br/>tourisme.
+            </span>
+        </div>
+        <div style="display: table-cell;">
+            <img src="logo_wallonie_europe_feder.gif"
+                    alt="logo_wallonie_europe_feder.gif"
+                    title="FEDER Programmation 2007-2013" />
+            <div class="partenaire-info">
+                <span id="titre-feder">
+                    FEDER<br />
+                    PROGRAMMATION 2007-2013<br />
+                </span>
+                <span id="texte-feder">
+                    Axe prioritaire 3:D&eacute;veloppement territorial
+                    &eacute;quilibr&eacute; et durable
+                    <br />
+                    Mesure 3.03 :Redynamisation urbaine et
+                    attractivit&eacute; du territoire
+                    <br />
+                    Le Fonds europ&eacute;en de d&eacute;veloppement
+                    <br />
+                    r&eacute;gional et la Wallonie investissent
+                    <br />
+                    dans votre avenir.
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
