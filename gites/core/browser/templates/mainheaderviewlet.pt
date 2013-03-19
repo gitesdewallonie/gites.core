@@ -23,7 +23,7 @@
                 <input type="checkbox"
                        name="chambre-hote"
                        id="chambre-hote"
-                       value=""/>
+                       value="" />
                 <label for="gite-meuble"
                        i18n:translate="chambre_hotes">Chambre d'hôtes</label>
             </div>
@@ -42,7 +42,7 @@
                        name="Date"
                        placeholder="Départ" />
             </div>
-            
+
             <div id="nbre-personne">
                 <input type="text"
                        size="3"
@@ -74,7 +74,7 @@
         <form action="#"
               method="post">
             <div id="nom-reference">
-                <label for="nom-reference" 
+                <label for="nom-reference"
                        i18n:translate="nom_ou_reference">Nom ou référence</label>
                 <input type="text"
                        id="nom-reference"

@@ -1,5 +1,8 @@
 <div id="top-header">
-    <div id="titre-site" i18n:translate="les_gites_de_wallonie">Les Gîtes de Wallonie</div>
+    <div id="titre-site"
+         i18n:translate="les_gites_de_wallonie">
+        Les Gîtes de Wallonie
+    </div>
     <div id="icone-reseaux-sociaux">
         <ul>
             <li>
