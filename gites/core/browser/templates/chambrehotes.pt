@@ -1,6 +1,6 @@
 <div id="allo-chambre-hote">
     <h3 i18n:translate="allo_chambre_hotes">Allo chambre d'hôtes</h3>
-    <img src="img/chambre.png" alt="chambre">
+    <img src="++theme++gites.theme/images/chambre.png" alt="chambre">
     <p>A la recherche d'une chambre d'hôtes pour cette nuit?<br>
     Avec Allo chambre d'hôtes, trouvez une chambre d'hôtes<br>
     disponible ce soir à proximité de votre destination<br>

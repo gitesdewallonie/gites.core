@@ -4,31 +4,31 @@
         <ul class="contact-ul">
             <li>
                 <a href="http://www.facebook.com/" target="_blank">
-                    <img src="img/facebook.png" alt="facebook">
+                    <img src="++theme++gites.theme/images/facebook.png" alt="facebook">
                     <span i18n:translate="fans_facebook">Devenez fans sur facebook</span>
                 </a>
             </li>
             <li>
                 <a href="http://www.twitter.com/" target="_blank">
-                    <img src="img/twitter.png" alt="twitter">
+                    <img src="++theme++gites.theme/images/twitter.png" alt="twitter">
                     <span i18n:translate="suivez_nous_twitter">Suivez-nous sur twitter</span>
                 </a>
             </li>
             <li>
                 <a href="http://plus.google.com/" target="_blank">
-                    <img src="img/google.png" alt="google">
+                    <img src="++theme++gites.theme/images/google.png" alt="google">
                     <span i18n:translate="fans_google">Devenez fans sur Google+</span>
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="img/rss.png" alt="rss">
+                    <img src="++theme++gites.theme/images/rss.png" alt="rss">
                     <span i18n:translate="file_rss">File RSS</span>
                 </a>
             </li>
             <li>
                 <a href="http://www.youtube.com/" target="_blank">
-                    <img src="img/yotuube.png" alt="youtube">
+                    <img src="++theme++gites.theme/images/youtube.png" alt="youtube">
                     <span i18n:translate="regardez_nous_youtube">Regardez-nous sur youtube</span>
                 </a>
             </li>

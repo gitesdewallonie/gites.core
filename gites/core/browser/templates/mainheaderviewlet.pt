@@ -4,21 +4,22 @@
     </div>
 
     <div id="je-recherche">
-        <h1 i18n:translate="je_cherche">Je cherche</h1>
-        <h2><a href="#" i18n:translate="recherche_avancee">Recherche avancée</a></h2>
+        <h2 i18n:translate="je_cherche">Je cherche</h2>
+        <h3><a href="#" i18n:translate="recherche_avancee">Recherche avancée</a></h3>
         <div class="break-float"></div>
 
         <form action="#"
               method="post">
-            <div id="gite-meuble">
+            <div id="zone-gite-meuble">
                 <input type="checkbox"
                        name="gite-meuble"
                        id="gite-meuble"
                        value=""
-                       checked="checked"/><label for="gite-meuble"
-                      i18n:translate="gites_et_meubles">Gîtes et meublés</label>
+                       checked="checked"/>
+                <label for="gite-meuble"
+                       i18n:translate="gites_et_meubles">Gîtes et meublés</label>
             </div>
-            <div id="chambre-hote">
+            <div id="zone-chambre-hote">
                 <input type="checkbox"
                        name="chambre-hote"
                        id="chambre-hote"
@@ -62,13 +63,14 @@
                 <input type="submit"
                        value="Trouver"
                        class="trouver"
-                       i18n:translate="trouver">
+                       i18n:translate="trouver" />
             </div>
         </form>
     </div><!--je cherche-->
 
     <div id="je-connais">
-        <h1 i18n:translate="je_connais">Je connais</h1>
+        <h2 i18n:translate="je_connais">Je connais</h2>
+        <div class="break-float"></div>
         <form action="#"
               method="post">
             <div id="nom-reference">
@@ -80,14 +82,18 @@
                        value=""
                        size="30" />
             </div>
-            <div class="submit">
-                <input type="submit" value="Trouver">
+            <div>
+                <input type="submit"
+                       value="Trouver"
+                       class="trouver"
+                       i18n:translate="trouver" />
             </div>
         </form>
     </div><!--je connais-->
 
     <div id="je-decouvre">
-        <h1 i18n:translate="je_decouvre">Je découvre</h1>
+        <h2 i18n:translate="je_decouvre">Je découvre</h2>
+        <div class="break-float"></div>
         <div id="giteetmeuble"><a href="#"></a></div>
         <div id="maisonhote"><a href="#"></a></div>
     </div><!--je decouvre-->
