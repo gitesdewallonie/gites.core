@@ -17,8 +17,8 @@
                 <a href="http://www.eurogites.org/"
                     target="_blank"
                     title="Eurogites">
-                    <img src="logo_eurogit.png"
-                            alt="logo_eurogit.png"
+                    <img src="++theme++gites.theme/images/logo_eurogit.png"
+                            alt=""
                             title="" />
                 </a>
                 <br/>
@@ -27,39 +27,11 @@
                 </span>
             </div>
             <div style="display: table-cell;">
-                <a href="http://www.tourismewallonie.be/"
-                    target="_blank"
-                    title="Tourisme en Wallonie">
-                    <img src="logo_wallonie.png"
-                            alt="logo_wallonie.png"
-                            title="" />
-                </a>
+                <img src="++theme++gites.theme/images/logo_wallonie_europe_feder.png"
+                        alt=""
+                        title="" />
                 <br/>
-                <span class="partenaire-info" i18n:translate="commissariat_general_tourisme">
-                    Commissariat g&eacute;n&eacute;ral<br >
-                    au Tourisme<br />
-                    de la R&eacute;gion wallonne<br />
-                </span>
-            </div>
-            <div style="display: table-cell;">
-                <a href="http://www.wallonietourisme.be/"
-                    target="_blank"
-                    title="Wallonie-Bruxelles tourisme">
-                    <img src="logo_wallonie_bruxelles_tourisme.png"
-                            alt="logo_wallonie_bruxelles_tourisme.png"
-                            title="" />
-                </a>
-                <br/>
-                <span class="partenaire-info" i18n:translate="wallonie_bruxelles_tourisme">
-                    Wallonie-Bruxelles
-                    <br/>tourisme.
-                </span>
-            </div>
-            <div style="display: table-cell;">
-                <img src="logo_wallonie_europe_feder.gif"
-                        alt="logo_wallonie_europe_feder.gif"
-                        title="FEDER Programmation 2007-2013" />
-                <div class="partenaire-info">
+                <span class="partenaire-info">
                     <span id="titre-feder">
                         FEDER<br />
                         PROGRAMMATION 2007-<span tal:replace="viewlet/getYear"/><br />
@@ -77,7 +49,36 @@
                         <br />
                         dans votre avenir.
                     </span>
-                </div>
+                </span>
+            </div>
+            <div style="display: table-cell;">
+                <a href="http://www.tourismewallonie.be/"
+                    target="_blank"
+                    title="Tourisme en Wallonie">
+                    <img src="++theme++gites.theme/images/logo_wallonie.gif"
+                            alt=""
+                            title="" />
+                </a>
+                <br/>
+                <span class="partenaire-info" i18n:translate="commissariat_general_tourisme">
+                    Commissariat g&eacute;n&eacute;ral<br >
+                    au Tourisme<br />
+                    de la R&eacute;gion wallonne<br />
+                </span>
+            </div>
+            <div style="display: table-cell;">
+                <a href="http://www.wallonietourisme.be/"
+                    target="_blank"
+                    title="Wallonie-Bruxelles tourisme">
+                    <img src="++theme++gites.theme/images/logo_wallonie_bruxelles_tourisme.png"
+                            alt=""
+                            title="FEDER Programmation 2007-2013" />
+                </a>
+                <br/>
+                <span class="partenaire-info" i18n:translate="wallonie_bruxelles_tourisme">
+                    Wallonie-Bruxelles
+                    <br/>tourisme.
+                </span>
             </div>
         </div>
     </div>

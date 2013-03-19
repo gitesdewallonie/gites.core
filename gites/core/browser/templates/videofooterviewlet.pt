@@ -1,9 +1,7 @@
 <div id="zone-video">
-<!--
     <iframe width="100%"
             height="800"
             tal:attributes="src viewlet/getUrl" 
             frameborder="0" 
             allowfullscreen></iframe>
--->
 </div><!--zone-video-->
