@@ -1,12 +1,7 @@
-<div>
-        Nos Offres
-</div>
-<div style="display:table; table-layout:fixed;">
+<div id="zone-offres">
+    <h2>Nos offres</h2>
     <tal:viewlets repeat="viewlet viewletmanager/viewlets">
-
-    <div style="display: table-cell;"><tal:viewlet tal:replace="structure python:viewlet.render()" />
-    </div>
+        <tal:viewlet tal:replace="structure python:viewlet.render()" />
     </tal:viewlets>
-<br/>
-<br/>
+    <div class="break-float"></div>
 </div>
