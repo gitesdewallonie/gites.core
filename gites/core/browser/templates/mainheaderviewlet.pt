@@ -5,31 +5,29 @@
 
     <div id="je-recherche">
         <h2 i18n:translate="je_cherche">Je cherche</h2>
-        <h3>
-            <a href="#" i18n:translate="recherche_avancee">Recherche avancée</a>
-        </h3>
-        
+        <h3><a href="#" i18n:translate="recherche_avancee">Recherche avancée</a></h3>
+        <div class="break-float"></div>
+
         <form action="#"
               method="post">
             <div id="gite-meuble">
-            <input type="checkbox"
-                   name="gite-meuble"
-                   id="gite-meuble"
-                   value=""
-                   checked="checked"/>
-                   <label for="gite-meuble"
-                          i18n:translate="gites_et_meubles">Gîtes et meublés</label>
+                <input type="checkbox"
+                       name="gite-meuble"
+                       id="gite-meuble"
+                       value=""
+                       checked="checked"/>
+                <label for="gite-meuble"
+                      i18n:translate="gites_et_meubles">Gîtes et meublés</label>
             </div>
-
             <div id="chambre-hote">
-            <input type="checkbox"
-                   name="chambre-hote"
-                   id="chambre-hote"
-                   value=""/>
-                   <label for="gite-meuble"
-                          i18n:translate="chambre_hotes">Chambre d'hôtes</label>
+                <input type="checkbox"
+                       name="chambre-hote"
+                       id="chambre-hote"
+                       value=""/>
+                <label for="gite-meuble"
+                       i18n:translate="chambre_hotes">Chambre d'hôtes</label>
             </div>
-
+            <div class="break-float"></div>
             <div id="date-start">
                 <input type="text"
                        size="9"
@@ -44,7 +42,7 @@
                        name="Date"
                        placeholder="Départ" />
             </div>
-
+            
             <div id="nbre-personne">
                 <input type="text"
                        size="3"
@@ -52,7 +50,7 @@
                        name="Date"
                        value="" />
             </div>
-
+            <div class="break-float"></div>
             <div id="proximite">
                 <input type="text"
                        size="40"
@@ -61,8 +59,10 @@
                        placeholder="A proximité de">
             </div>
 
-            <div class="submit">
-                <input type="submit" value="Trouver">
+            <div>
+                <input type="submit"
+                       value=""
+                       class="trouver">
             </div>
         </form>
     </div><!--je cherche-->
