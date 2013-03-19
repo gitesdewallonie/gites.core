@@ -1,5 +1,5 @@
 <div id="top-header">
-    <p class="titre-site">Les gîtes de wallonie</p>
+    <p class="titre-site" i18n:translate="les_gites_de_wallonie">Les gîtes de wallonie</p>
     <ul>
         <li class="android">
             <a href="http://www.android.com/" target="_blank"><div class="liens-icone-haut"></div></a>
@@ -32,10 +32,10 @@
 
     <div class="styled-select">
         <select>
-            <option>Francais</option>
-            <option>Neerlandais</option>
-            <option>Anglais</option>
-            <option>Italien</option>
+            <option><span i18n:translate="francais">Francais</span></option>
+            <option><span i18n:translate="neerlandais">Neerlandais</span></option>
+            <option><span i18n:translate="anglais">Anglais</span></option>
+            <option><span i18n:translate="italien">Italien</span></option>
         </select>
     </div>
 

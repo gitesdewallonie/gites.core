@@ -2,7 +2,7 @@
                          hebergement offre/getHebergement;"
              tal:condition="offre">
     <div id="derniere-minute">
-        <h3>Dernière minute</h3>
+        <h3 i18n:translate="derniere_minute">Dernière minute</h3>
         <a tal:attributes="href hebergement/@@url">
             <img tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/getVignette}"/>
         </a>
@@ -13,7 +13,7 @@
             <span tal:replace="string:${hebergement/heb_cgt_cap_min}/${hebergement/heb_cgt_cap_max}"/>
         </p>
         <div class="plus-info">
-            <a tal:attributes="href viewlet/getAllDerniereMinuteLink">Toutes nos dernières minutes </a>
+            <a tal:attributes="href viewlet/getAllDerniereMinuteLink"><span i18n:translate="toutes_nos_dernieres_minutes">Toutes nos dernières minutes</span></a>
         </div>
     </div><!--derniere-minute-->
 </tal:viewlet>
