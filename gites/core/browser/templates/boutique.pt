@@ -1,2 +1,14 @@
-<div class="offre">
-</div>
+<tal:viewlet tal:define="offre viewlet/getRandomBoutiqueItem"
+             tal:condition="offre">
+    <div id="la-boutique">
+        <h3>La boutique</h3>
+        <a tal:attributes="href offre/absolute_url">
+            <img src="" tal:replace="structure offre/getMiniPhoto"/>
+        </a>
+        <p><tal:desc tal:replace="offre/Description"/><br>
+        <div class="plus-info">
+            <a tal:attributes="href viewlet/getAllBoutiqueItemsView">Tous nos articles</a>
+        </div>
+    </div>
+</tal:viewlet>
+

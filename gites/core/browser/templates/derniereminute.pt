@@ -1,28 +1,19 @@
-<div class="offre"
-    tal:define="offre viewlet/getRandomDerniereMinute;
-                hebergement offre/getHebergement;">
-    <div>
-        Dernière minute
-    </div>
-    <div>
-        <img src=""
-             tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/getVignette}"/><br />
-    </div>
-    <div tal:define="start python:viewlet.getNiceEventStartDate(offre);
-                     end python:viewlet.getNiceEventEndDate(offre);">
+<tal:viewlet tal:define="offre viewlet/getRandomDerniereMinute;
+                         hebergement offre/getHebergement;"
+             tal:condition="offre">
+    <div id="derniere-minute">
+        <h3>Dernière minute</h3>
         <a tal:attributes="href hebergement/@@url">
-            <tal:titre tal:replace="offre/pretty_title_or_id"/>
+            <img tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/getVignette}"/>
         </a>
-        <br/>
-        <div id="capacite">
-            <img src="capacite.png"
-                 title="Capacité"
-                 alt="Capacité" />
+        <span class="bordeaux" tal:replace="offre/pretty_title_or_id" /><br>
+        <p class="red"><span tal:replace="python:viewlet.getNiceEventStartDate(offre)" /> &rarr; <span tal:replace="python:viewlet.getNiceEventEndDate(offre)" /></p>
+        <p><img src="img/bonhomme.png" class="bonhomme" alt="bonhomme"></p>
+        <p>
             <span tal:replace="string:${hebergement/heb_cgt_cap_min}/${hebergement/heb_cgt_cap_max}"/>
+        </p>
+        <div class="plus-info">
+            <a tal:attributes="href viewlet/getAllDerniereMinuteLink">Toutes nos dernières minutes </a>
         </div>
-        <div>
-            <span tal:replace="start" /> &rarr; <span tal:replace="end" />
-        </div>
-    </div>
-    <a tal:attributes="href viewlet/getAllDerniereMinuteLink">Toute nos dernières minutes</a>
-</div>
+    </div><!--derniere-minute-->
+</tal:viewlet>

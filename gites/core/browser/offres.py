@@ -44,6 +44,7 @@ class IdeesSejours(grok.Viewlet):
         utool = getToolByName(self.context, 'portal_url')
         return '%s/idee-sejour' % utool()
 
+    grok.order(10)
     grok.viewletmanager(OffresViewletManager)
 
 class DerniereMinute(grok.Viewlet):
@@ -98,14 +99,38 @@ class DerniereMinute(grok.Viewlet):
         utool = getToolByName(self.context, 'portal_url')
         return '%s/dernieres-minutes' % utool()
 
+    grok.order(20)
     grok.viewletmanager(OffresViewletManager)
 
 class ChambreHotes(grok.Viewlet):
 
+    grok.order(30)
     grok.viewletmanager(OffresViewletManager)
 
 class Boutique(grok.Viewlet):
 
+    def getRandomBoutiqueItem(self):
+        """
+        Get one random boutiqueItem
+        """
+        cat = getToolByName(self.context, 'portal_catalog')
+        results = cat.searchResults(portal_type=['BoutiqueItem'],
+                                    review_state='published')
+        results = list(results)
+        random.shuffle(results)
+        for boutiqueItem in results:
+            if "%s/" % boutiqueItem.getURL() not in self.request.URL and  boutiqueItem.getURL() != self.request.URL:
+                return boutiqueItem.getObject()
+        return None
+
+    def getAllBoutiqueItemsView(self):
+        """
+        Get the link to all boutique items
+        """
+        utool = getToolByName(self.context, 'portal_url')
+        return '%s/shop' % utool()
+
+    grok.order(40)
     grok.viewletmanager(OffresViewletManager)
 
 # register all viewlets in this viewlet manager:
