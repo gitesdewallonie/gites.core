@@ -6,8 +6,7 @@
          meta_type="Filesystem Directory View"
          directory="gites.core:skins/gitescore_templates"/>
 
- <skin-path name="GitesSkin"
-            based-on="Plone Default">
+ <skin-path name="Gites theme">
   <layer name="gitescore_templates"
          insert-after="custom"/>
  </skin-path>
