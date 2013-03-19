@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from five import grok
-from zope import interface, component
-from gites.core.interfaces import IHebergementsFetcher
+from zope import interface
 from Products.CMFCore.utils import getToolByName
 from DateTime import DateTime
 import random
@@ -14,6 +13,7 @@ class OffresViewletManager(grok.ViewletManager):
     grok.name('gites.offres')
 
 class IdeesSejours(grok.Viewlet):
+    grok.order(10)
 
     def getRandomVignette(self, sejour_url, amount=1):
         """
@@ -44,10 +44,8 @@ class IdeesSejours(grok.Viewlet):
         utool = getToolByName(self.context, 'portal_url')
         return '%s/idee-sejour' % utool()
 
-    grok.order(10)
-    grok.viewletmanager(OffresViewletManager)
-
 class DerniereMinute(grok.Viewlet):
+    grok.order(20)
 
     def _getValidDerniereMinute(self):
         """
@@ -55,7 +53,6 @@ class DerniereMinute(grok.Viewlet):
         """
         cat = getToolByName(self.context, 'portal_catalog')
         dateNow = DateTime()
-        dateNow = DateTime(2012,1,1)
         results = cat.searchResults(portal_type='DerniereMinute',
                                          end={'query': dateNow,
                                               'range': 'min'},
@@ -71,17 +68,6 @@ class DerniereMinute(grok.Viewlet):
     def getNiceEventEndDate(self, obj):
         endDate = obj.getEventEndDate()
         return endDate.strftime("%d-%m")
-
-    def getRandomVignette(self, derniereMinuteUrl, amount=1):
-        """
-        Return a random vignette for a derniere minuet
-        """
-        cat = getToolByName(self.context, 'portal_catalog')
-        results = cat.searchResults(portal_type='Vignette',
-                                         path={'query': derniereMinuteUrl})
-        results = list(results)
-        random.shuffle(results)
-        return results[:amount]
 
     def getRandomDerniereMinute(self):
         """
@@ -99,15 +85,11 @@ class DerniereMinute(grok.Viewlet):
         utool = getToolByName(self.context, 'portal_url')
         return '%s/dernieres-minutes' % utool()
 
-    grok.order(20)
-    grok.viewletmanager(OffresViewletManager)
-
 class ChambreHotes(grok.Viewlet):
-
     grok.order(30)
-    grok.viewletmanager(OffresViewletManager)
 
 class Boutique(grok.Viewlet):
+    grok.order(40)
 
     def getRandomBoutiqueItem(self):
         """
@@ -129,9 +111,6 @@ class Boutique(grok.Viewlet):
         """
         utool = getToolByName(self.context, 'portal_url')
         return '%s/shop' % utool()
-
-    grok.order(40)
-    grok.viewletmanager(OffresViewletManager)
 
 # register all viewlets in this viewlet manager:
 grok.viewletmanager(OffresViewletManager)

@@ -1,42 +1,42 @@
 <div id="footer">
     <div id="reseaux-sociaux">
-        <h2>Rejoignez-nous</h2>
+        <h2 i18n:translate="rejoignez_nous">Rejoignez-nous</h2>
         <ul class="contact-ul">
             <li>
                 <a href="http://www.facebook.com/" target="_blank">
                     <img src="img/facebook.png" alt="facebook">
-                    Devenez fans sur facebook
+                    <span i18n:translate="fans_facebook">Devenez fans sur facebook</span>
                 </a>
             </li>
             <li>
                 <a href="http://www.twitter.com/" target="_blank">
                     <img src="img/twitter.png" alt="twitter">
-                    Suivez-nous sur twitter
+                    <span i18n:translate="suivez_nous_twitter">Suivez-nous sur twitter</span>
                 </a>
             </li>
             <li>
                 <a href="http://plus.google.com/" target="_blank">
                     <img src="img/google.png" alt="google">
-                    Devenez fans sur Google+
+                    <span i18n:translate="fans_google">Devenez fans sur Google+</span>
                 </a>
             </li>
             <li>
                 <a href="#">
                     <img src="img/rss.png" alt="rss">
-                    File RSS
+                    <span i18n:translate="file_rss">File RSS</span>
                 </a>
             </li>
             <li>
                 <a href="http://www.youtube.com/" target="_blank">
                     <img src="img/yotuube.png" alt="youtube">
-                    Regardez-nous sur youtube
+                    <span i18n:translate="regardez_nous_youtube">Regardez-nous sur youtube</span>
                 </a>
             </li>
         </ul>
     </div><!--reseaux-sociaux-->
 
     <div id="contact">
-        <h2>Contactez-nous</h2>
+        <h2 i18n:translate="contactez_nous">Contactez-nous</h2>
         Fédération des Gites de Wallonie asbl.<br />
         Avenue Prince de Liège, 1/21<br />
         B5100 Jambes (Namur) <br />
@@ -46,7 +46,7 @@
     </div><!--contact-->
 
     <div id="destination-wallonie">
-        <h2>Destination Wallonie</h2>
+        <h2 i18n:translate="destination_wallonie">Destination Wallonie</h2>
         <ul>
             <li>Lorem ipsum dolor sit Amex</li>
             <li>Lorem ipsum dolor sit Amex</li>
@@ -58,7 +58,8 @@
     </div><!--destination-wallonie-->
 
     <div id="association">
-        <h2>L'association</h2>
+        <h2 i18n:translate="association">L'association</h2>
+        <span i18n:translate="association_description">
         <p>L'accueil est une valeur essentielle des 
         Gîtes de Wallonie.</p>
 
@@ -77,10 +78,11 @@
 
         <p>Objectif avoué :<br />
         la satisfaction de chaque hôte!</p>
+        </span>
     </div><!--association-->
 
     <div id="autres-sites">
-        <h2>Nos autres sites</h2>
+        <h2 i18n:translate="nos_autres_sites">Nos autres sites</h2>
         <ul>
             <li>Allo chambre d'hôtes</li>
             <li>BnBelgium</li>

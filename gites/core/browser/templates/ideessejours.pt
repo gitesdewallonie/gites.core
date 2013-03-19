@@ -1,7 +1,7 @@
 <tal:viewlet tal:define="offre viewlet/getRandomIdeesSejours"
              tal:condition="offre">
     <div id="idee-sejour" tal:define="vignettes python:viewlet.getRandomVignette(offre.getPath())">
-        <h3>Idée séjours</h3>
+        <h3 i18n:translate="idees_sejours">Idées séjours</h3>
         <tal:vign tal:repeat="vignette vignettes">
             <a tal:attributes="href offre/getURL">
                 <img src="" tal:attributes="src string:${vignette/getURL}/image_thumb"/>
@@ -13,7 +13,7 @@
             <br>
         </p>
         <div class="plus-info">
-            <a tal:attributes="href viewlet/getAllIdeesSejoursView">Toutes nos idées séjour</a>
+            <a tal:attributes="href viewlet/getAllIdeesSejoursView"><span i18n:translate="toutes_nos_idees_sejour">Toutes nos idées séjour</span></a>
         </div>
     </div><!--idee-sejour-->
 </tal:viewlet>

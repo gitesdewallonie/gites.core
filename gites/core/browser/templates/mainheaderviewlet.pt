@@ -5,9 +5,9 @@
 
     <div id="je-recherche">
         <h2 id="RA">
-            <a href="#">Recherche avancée <img src="img/puce-fleche.png" alt="puce-flêche"></a>
+            <a href="#"><span i18n:translate="recherche_avancee">Recherche avancée</span> <img src="img/puce-fleche.png" alt="puce-flêche"></a>
         </h2>
-        <h3>Je cherche</h3>
+        <h3 i18n:translate="je_cherche">Je cherche</h3>
         <form action="#"
               method="post">
             <div id="gite-meuble">
@@ -16,7 +16,7 @@
                    id="gite-meuble"
                    value=""
                    checked="checked"/>
-            <label for="gite-meuble">Gîtes et meublés</label>
+                   <label for="gite-meuble"><span i18n:translate="gites_et_meubles">Gîtes et meublés</span></label>
             </div>
 
             <div id="chambre-hote">
@@ -24,7 +24,7 @@
                    name="chambre-hote"
                    id="chambre-hote"
                    value=""/>
-            <label for="gite-meuble">Chambre d'hôtes</label>
+                   <label for="gite-meuble"><span i18n:translate="chambre_hotes">Chambre d'hôtes</span></label>
             </div>
 
             <div id="date-start">
@@ -59,18 +59,17 @@
             </div>
 
             <div class="submit">
-                <input type="submit"
-                       value="Trouver" />
+                <input type="submit" value="Trouver">
             </div>
         </form>
     </div><!--je cherche-->
 
     <div id="je-connais">
-        <h1>Je connais</h1>
+        <h1 i18n:translate="je_connais">Je connais</h1>
         <form action="#"
               method="post">
             <div id="nom-reference">
-                <label for="nom-reference">Nom ou référence</label>
+                <label for="nom-reference"><span i18n:translate="nom_ou_reference">Nom ou référence</span></label>
                 <input type="text"
                        id="nom-reference"
                        name="nom-reference"
@@ -78,14 +77,13 @@
                        size="30" />
             </div>
             <div class="submit">
-                <input type="submit"
-                       value="Trouver" />
+                <input type="submit" value="Trouver">
             </div>
         </form>
     </div><!--je connais-->
 
     <div id="je-decouvre">
-        <h1>Je Trouve</h1>
+        <h1 i18n:translate="je_decouvre">Je découvre</h1>
         <div id="giteetmeuble"><a href="#"></a></div>
         <div id="maisonhote"><a href="#"></a></div>
     </div><!--je decouvre-->
