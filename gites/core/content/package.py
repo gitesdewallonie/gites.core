@@ -11,8 +11,9 @@ from zope.interface import implements
 from plone.app.folder import folder
 from plone.app.blob.field import ImageField
 from Products.CMFCore.interfaces import IContentish
-from Products.Archetypes.Field import DateTimeField
+from Products.Archetypes.Field import DateTimeField, LinesField
 from Products.Archetypes.Widget import CalendarWidget
+from plone.widgets.archetypes import ChosenWidget
 from Products.Archetypes.interfaces import (IBaseFolder,
                                             IBaseObject,
                                             IReferenceable)
@@ -98,6 +99,17 @@ schema = Schema((
                      'value': DataGridField.CheckboxColumn(u'')}
         ),
     ),
+    LinesField(
+        name='userCriteria',
+        multiValued=1,
+        vocabulary=CriteriaVocabularyFactory,
+        widget=ChosenWidget(
+            description="""Critères à choisir par l'utilisateur""",
+            label='User Criteria',
+            label_msgid='gites_core_package_usercriteria_label',
+            description_msgid='gites_core_packages_usercriteria_description',
+            i18n_domain='gites',
+        ))
 
 ),
 )
@@ -110,14 +122,13 @@ Package_schema = folder.ATFolderSchema + schema.copy()
 Package_schema['location'].widget.visible = False
 Package_schema.changeSchemataForField('startDate', 'dates')
 Package_schema.changeSchemataForField('endDate', 'dates')
-# # ##/code-section after-schema
 
 
 class Package(ATFolder):
     """
     """
     security = ClassSecurityInfo()
-    implements(IPackage, IBaseFolder, IBaseObject, IReferenceable, \
+    implements(IPackage, IBaseFolder, IBaseObject, IReferenceable,
                IContentish, IMonetMapsEnabledContent)
 
     # This name appears in the 'add' box
