@@ -12,6 +12,7 @@ grok.context(interface.Interface)
 class OffresViewletManager(grok.ViewletManager):
     grok.name('gites.offres')
 
+
 class IdeesSejours(grok.Viewlet):
     grok.order(10)
 
@@ -43,6 +44,7 @@ class IdeesSejours(grok.Viewlet):
         """
         utool = getToolByName(self.context, 'portal_url')
         return '%s/idee-sejour' % utool()
+
 
 class DerniereMinute(grok.Viewlet):
     grok.order(20)
@@ -85,6 +87,7 @@ class DerniereMinute(grok.Viewlet):
         utool = getToolByName(self.context, 'portal_url')
         return '%s/dernieres-minutes' % utool()
 
+
 class ChambreHotes(grok.Viewlet):
     grok.order(30)
 
@@ -111,6 +114,7 @@ class Boutique(grok.Viewlet):
         """
         utool = getToolByName(self.context, 'portal_url')
         return '%s/shop' % utool()
+
 
 # register all viewlets in this viewlet manager:
 grok.viewletmanager(OffresViewletManager)
