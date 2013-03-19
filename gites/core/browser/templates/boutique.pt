@@ -1,5 +1,5 @@
 <tal:viewlet tal:define="offre viewlet/getRandomBoutiqueItem"
-             tal:condition="offre">
+             tal:condition="python:offre is not None">
     <div id="la-boutique">
         <h3 i18n:translate="la_boutique">La boutique</h3>
         <a tal:attributes="href offre/absolute_url">

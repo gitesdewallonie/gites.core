@@ -1,7 +1,7 @@
-<tal:viewlet tal:define="offre viewlet/getRandomDerniereMinute;
-                         hebergement offre/getHebergement;"
-             tal:condition="offre">
-    <div id="derniere-minute">
+<tal:viewlet tal:define="offre viewlet/getRandomDerniereMinute;"
+             tal:condition="python:offre is not None">
+    <div id="derniere-minute"
+         tal:define="hebergement offre/getHebergement;">
         <h3 i18n:translate="derniere_minute">Dernière minute</h3>
         <a tal:attributes="href hebergement/@@url">
             <img tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/getVignette}"/>

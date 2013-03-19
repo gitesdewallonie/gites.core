@@ -1,5 +1,5 @@
 <tal:viewlet tal:define="offre viewlet/getRandomIdeesSejours"
-             tal:condition="offre">
+             tal:condition="python:offre is not None">
     <div id="idee-sejour" tal:define="vignettes python:viewlet.getRandomVignette(offre.getPath())">
         <h3 i18n:translate="idees_sejours">Idées séjours</h3>
         <tal:vign tal:repeat="vignette vignettes">

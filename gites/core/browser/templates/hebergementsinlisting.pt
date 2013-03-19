@@ -1,4 +1,24 @@
-<div class="hebergement"
+<div id="count">Voici les X premiers hébergements sur un total de Y</div>
+<fieldset class="hebergement"
+     i18n:domain="gites"
      tal:repeat="hebergement viewlet/hebergements">
-
-</div>
+  <div id="typetype">
+     <a href="" 
+        tal:attributes="href hebergement/@@url"
+        tal:content="hebergement/type/getType"/>
+  </div>
+  <div id="vignette">
+  </div>
+  <div id="title" tal:content="hebergement/heb_nom"/>
+  <div id="type" tal:content="hebergement/type/getTitle"/>
+  <div id="commune" tal:content="hebergement/commune/com_nom"/>
+  <div id="capacite" tal:content="hebergement/heb_cgt_cap_max"/> <div id="capacite" i18n:translate="capacite-unite">personnes</div>
+  <div id="nbr_chmbre" tal:content="hebergement/heb_cgt_nbre_chmbre"/> <div id="nbr_chmbre-label" i18n:translate="chambre">chambres</div>
+  <div id="epis" tal:repeat="epis hebergement/epis">
+        <div id="epis-nombre" tal:content="epis/heb_nombre_epis"/> <div id="epis-label" i18n:translate="epis">epis</div>
+  </div>
+  <div id="icon">
+    <div id="dog" tal:condition="hebergement/accept_dogs">Wouf</div>
+    <div id="smoker" tal:condition="hebergement/is_smoker">Fume</div>
+  </div>
+</fieldset>
