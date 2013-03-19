@@ -4,10 +4,11 @@
     </div>
 
     <div id="je-recherche">
-        <h2 id="RA">
-            <a href="#"><span i18n:translate="recherche_avancee">Recherche avancée</span> <img src="img/puce-fleche.png" alt="puce-flêche"></a>
-        </h2>
-        <h3 i18n:translate="je_cherche">Je cherche</h3>
+        <h2 i18n:translate="je_cherche">Je cherche</h2>
+        <h3>
+            <a href="#" i18n:translate="recherche_avancee">Recherche avancée</a>
+        </h3>
+        
         <form action="#"
               method="post">
             <div id="gite-meuble">
@@ -16,7 +17,8 @@
                    id="gite-meuble"
                    value=""
                    checked="checked"/>
-                   <label for="gite-meuble"><span i18n:translate="gites_et_meubles">Gîtes et meublés</span></label>
+                   <label for="gite-meuble"
+                          i18n:translate="gites_et_meubles">Gîtes et meublés</label>
             </div>
 
             <div id="chambre-hote">
@@ -24,7 +26,8 @@
                    name="chambre-hote"
                    id="chambre-hote"
                    value=""/>
-                   <label for="gite-meuble"><span i18n:translate="chambre_hotes">Chambre d'hôtes</span></label>
+                   <label for="gite-meuble"
+                          i18n:translate="chambre_hotes">Chambre d'hôtes</label>
             </div>
 
             <div id="date-start">
@@ -69,7 +72,8 @@
         <form action="#"
               method="post">
             <div id="nom-reference">
-                <label for="nom-reference"><span i18n:translate="nom_ou_reference">Nom ou référence</span></label>
+                <label for="nom-reference" 
+                       i18n:translate="nom_ou_reference">Nom ou référence</label>
                 <input type="text"
                        id="nom-reference"
                        name="nom-reference"

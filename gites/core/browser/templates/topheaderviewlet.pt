@@ -48,15 +48,5 @@
             </li>
         </ul>
     </div>
-
-    <div id="selecteur-langue">
-        <select>
-            <option><span i18n:translate="francais">Francais</span></option>
-            <option><span i18n:translate="neerlandais">Neerlandais</span></option>
-            <option><span i18n:translate="anglais">Anglais</span></option>
-            <option><span i18n:translate="italien">Italien</span></option>
-        </select>
-    </div>
-
-    <div class="break-float"></div>
+<div class="break-float"></div>
 </div><!--top-header-->
