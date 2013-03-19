@@ -1,0 +1,93 @@
+<div id="main-header">
+    <div id="logo">
+        <a href="#"></a>
+    </div>
+
+    <div id="je-recherche">
+        <h2 id="RA">
+            <a href="#">Recherche avancée <img src="img/puce-fleche.png" alt="puce-flêche"></a>
+        </h2>
+        <h3>Je cherche</h3>
+        <form action="#"
+              method="post">
+            <div id="gite-meuble">
+            <input type="checkbox"
+                   name="gite-meuble"
+                   id="gite-meuble"
+                   value=""
+                   checked="checked"/>
+            <label for="gite-meuble">Gîtes et meublés</label>
+            </div>
+
+            <div id="chambre-hote">
+            <input type="checkbox"
+                   name="chambre-hote"
+                   id="chambre-hote"
+                   value=""/>
+            <label for="gite-meuble">Chambre d'hôtes</label>
+            </div>
+
+            <div id="date-start">
+                <input type="text"
+                       size="9"
+                       maxlength="8"
+                       name="Date"
+                       placeholder="Arrivée" />
+            </div>
+            <div id="date-end">
+                <input type="text"
+                       size="9"
+                       maxlength="8"
+                       name="Date"
+                       placeholder="Départ" />
+            </div>
+
+            <div id="nbre-personne">
+                <input type="text"
+                       size="3"
+                       maxlength="2"
+                       name="Date"
+                       value="" />
+            </div>
+
+            <div id="proximite">
+                <input type="text"
+                       size="40"
+                       maxlength="12"
+                       name="Date"
+                       placeholder="A proximité de">
+            </div>
+
+            <div class="submit">
+                <input type="submit"
+                       value="Trouver" />
+            </div>
+        </form>
+    </div><!--je cherche-->
+
+    <div id="je-connais">
+        <h1>Je connais</h1>
+        <form action="#"
+              method="post">
+            <div id="nom-reference">
+                <label for="nom-reference">Nom ou référence</label>
+                <input type="text"
+                       id="nom-reference"
+                       name="nom-reference"
+                       value=""
+                       size="30" />
+            </div>
+            <div class="submit">
+                <input type="submit"
+                       value="Trouver" />
+            </div>
+        </form>
+    </div><!--je connais-->
+
+    <div id="je-decouvre">
+        <h1>Je Trouve</h1>
+        <div id="giteetmeuble"><a href="#"></a></div>
+        <div id="maisonhote"><a href="#"></a></div>
+    </div><!--je decouvre-->
+    <div class="break-float"></div>
+</div><!--main-header-->
