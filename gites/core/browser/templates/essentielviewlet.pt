@@ -1,4 +1,5 @@
-<div id="zone-essentiel">
+<div id="zone-essentiel"
+     tal:condition="viewlet/isMainPage">
     <p id="Lessentiel"></p>
     <h1 class="Zapfino" i18n:translate="essentiel_title">L’essentiel des gîtes de Wallonie c’est</h1>
     <div id="colonnes-gauche" i18n:translate="essentiel_description_left">
