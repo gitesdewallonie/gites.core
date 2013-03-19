@@ -1,36 +1,55 @@
 <div id="top-header">
-    <p class="titre-site" i18n:translate="les_gites_de_wallonie">Les gîtes de wallonie</p>
-    <ul>
-        <li class="android">
-            <a href="http://www.android.com/" target="_blank"><div class="liens-icone-haut"></div></a>
-        </li>
-        <li class="apple">
-            <a href="http://www.apple.com/be/" target="_blank"><div class="liens-icone-haut"></div></a>
-        </li>
-        <li class="rss">
-            <a href="#"><div class="liens-icone-haut"></div></a>
-        </li>
-        <li class="youtube">
-            <a href="http://www.youtube.com" target="_blank"><div class="liens-icone-haut"></div></a>
-        </li>
-        <li class="google">
-            <a href="https://plus.google.com/" target="_blank"><div class="liens-icone-haut"></div></a>
-        </li>
-        <li class="twitter">
-            <a href="https://twitter.com/"  target="_blank"> <div class="liens-icone-haut"></div></a>
-        </li>
-        <li class="facebook">
-            <a href="http://facebook.com" target="_blank"> <div class="liens-icone-haut"></div></a>
-        </li>
-        <li class="Pinterest">
-            <a href="http://www.pinterest.com" target="_blank"> <div class="liens-icone-haut"></div></a>
-        </li>
-        <li class="mail">
-            <a href="mailto:benolondero@gmail.com" target="_blank"><div class="liens-icone-haut"></div></a>
-        </li>
-    </ul>
+    <div id="titre-site" i18n:translate="les_gites_de_wallonie">Les Gîtes de Wallonie</div>
+    <div id="icone-reseaux-sociaux">
+        <ul>
+            <li>
+                <a href="http://www.android.com/"
+                   id="android"
+                   target="_blank"></a>
+            </li>
+            <li>
+                <a href="http://www.android.com/"
+                   id="apple"
+                   target="_blank"></a>
+            </li>
+            <li>
+                <a href="#"
+                   id="rss"></a>
+            </li>
+            <li>
+                <a href="http://www.youtube.com"
+                   id="iconyoutube"
+                   target="_blank"></a>
+            </li>
+            <li>
+                <a href="https://plus.google.com/"
+                   id="google"
+                   target="_blank"></a>
+            </li>
+            <li>
+                <a href="https://twitter.com/"
+                   id="twitter"
+                   target="_blank"></a>
+            </li>
+            <li>
+                <a href="http://facebook.com"
+                   id="facebook"
+                   target="_blank"></a>
+            </li>
+            <li>
+                <a href="http://www.pinterest.com"
+                   id="Pinterest"
+                   target="_blank"></a>
+            </li>
+            <li>
+                <a href="mailto:benolondero@gmail.com"
+                   id="mail"
+                   target="_blank"></a>
+            </li>
+        </ul>
+    </div>
 
-    <div class="styled-select">
+    <div id="selecteur-langue">
         <select>
             <option><span i18n:translate="francais">Francais</span></option>
             <option><span i18n:translate="neerlandais">Neerlandais</span></option>
