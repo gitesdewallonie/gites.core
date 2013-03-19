@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from five import grok
-from zope import interface, component
-from gites.core.interfaces import IHebergementsFetcher
+from zope import interface
 from Products.CMFCore.utils import getToolByName
 from DateTime import DateTime
 import random

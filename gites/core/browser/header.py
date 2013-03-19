@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from five import grok
-from zope import interface, component
+from zope import interface
 
 grok.templatedir('templates')
 grok.context(interface.Interface)
