@@ -4,10 +4,10 @@
     </div>
 
     <div id="je-recherche">
-        <h2 i18n:translate="je_cherche">Je cherche</h2>
-        <h3>
+        <h1 i18n:translate="je_cherche">Je cherche</h1>
+        <h2>
             <a href="#" i18n:translate="recherche_avancee">Recherche avancée</a>
-        </h3>
+        </h2>
         
         <form action="#"
               method="post">

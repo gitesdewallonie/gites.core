@@ -1,0 +1,32 @@
+<div id="zone-essentiel">
+    <p id="Lessentiel"></p>
+    <h1 class="Zapfino" i18n:translate="essentiel_title">L’essentiel des gîtes de Wallonie c’est</h1>
+    <div id="colonnes-gauche" i18n:translate="essentiel_description_left">
+    <p>Partie méridionale de la Belgique, la Wallonie est une région vallonnée,
+    au sud de laquelle se trouve l'Ardenne, poumon vert du pays, haut lieu
+    du tourisme écologique. On y parle le français et, à l’extrême est, l’allemand.</p>
+    <p>Elle est frontalière de la France, du Grand Duché de Luxembourg <br>et
+    de l’Allemagne.</p><br>
+    <p>
+    La Wallonie  offre une <b>multitude de paysages variés</b> qui s’étirent du Hainaut
+    à l’ouest jusqu’aux contreforts du massif de l’Eifel à l’est, le long de la frontière
+    allemande. Le <b>massif ardennais</b>, qui occupe une grande partie de la Wallonie,
+    dessine avec les lacs et rivières qui bordent la Meuse un territoire propice aux
+    <b>découvertes bucoliques</b>, aux activités et savoir-faire qui y sont liés.</p>
+    </div>
+    <div id="colonnes-droite" i18n:translate="essentiel_description_right">
+    <p>Profitez de nos <b>promotions pour partir</b> en week-end et  <b>vous évader</b> dans notre belle région du sud de la Belgique.</p>
+    <p>Découvrez la Wallonie ! Un prix attractif, une offre d'hébergements de qualité,
+    une cuisine authentique et un large choix d'activités nature ou culture, loisirs
+    ou thermalisme. La Wallonie, elle a tout pour vous séduire.</p>
+    <p>La <b>gastronomie wallonne</b> propose de nombreuses spécialités. Certes les gaufres,
+    les frites, le chocolat, les chicons (endives) sont des incontournables, mais on peut
+    également compter sur le jambon d'Ardenne, les truites de rivières et le Sirop de Liège.
+    Sans oublier de délicieux <b>fromages</b> et, bien sûr, une liste sans fin de brasseries
+    et de <b>bières</b> savoureuses.</p>
+    <p>Enfin, il n'y a pas que des bulles de houblon en Wallonie, il y a aussi de l'eau.
+    La région compte deux <b>villes thermales</b> : Spa et Chaudfontaine, qui produisent
+    des eaux de qualité, plates et gazeuses, mondialement reconnues.</p>
+    </div>
+    <div class="break-float"></div>
+</div><!--zone-essentiel-->
