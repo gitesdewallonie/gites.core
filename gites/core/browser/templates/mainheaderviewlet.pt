@@ -15,8 +15,7 @@
                        name="gite-meuble"
                        id="gite-meuble"
                        value=""
-                       checked="checked"/>
-                <label for="gite-meuble"
+                       checked="checked"/><label for="gite-meuble"
                       i18n:translate="gites_et_meubles">Gîtes et meublés</label>
             </div>
             <div id="chambre-hote">
@@ -61,8 +60,9 @@
 
             <div>
                 <input type="submit"
-                       value=""
-                       class="trouver">
+                       value="Trouver"
+                       class="trouver"
+                       i18n:translate="trouver">
             </div>
         </form>
     </div><!--je cherche-->
