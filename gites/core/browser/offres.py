@@ -69,17 +69,6 @@ class DerniereMinute(grok.Viewlet):
         endDate = obj.getEventEndDate()
         return endDate.strftime("%d-%m")
 
-    def getRandomVignette(self, derniereMinuteUrl, amount=1):
-        """
-        Return a random vignette for a derniere minuet
-        """
-        cat = getToolByName(self.context, 'portal_catalog')
-        results = cat.searchResults(portal_type='Vignette',
-                                         path={'query': derniereMinuteUrl})
-        results = list(results)
-        random.shuffle(results)
-        return results[:amount]
-
     def getRandomDerniereMinute(self):
         """
         Retourne 1 derniere minute au hasard
