@@ -11,8 +11,8 @@ from zope.interface import implements
 from plone.app.folder import folder
 from plone.app.blob.field import ImageField
 from Products.CMFCore.interfaces import IContentish
-from Products.Archetypes.Field import DateTimeField, LinesField
-from Products.Archetypes.Widget import CalendarWidget
+from Products.Archetypes.Field import DateTimeField, LinesField, BooleanField
+from Products.Archetypes.Widget import CalendarWidget, BooleanWidget
 from plone.widgets.archetypes import ChosenWidget
 from Products.Archetypes.interfaces import (IBaseFolder,
                                             IBaseObject,
@@ -62,6 +62,24 @@ schema = Schema((
             label='Logo',
             label_msgid='GitesContent_label_logo',
             i18n_domain='gites',
+        ),
+    ),
+
+    BooleanField(
+        name='showInCarousel',
+        languageIndependent=True,
+        default=False,
+        widget=BooleanWidget(
+            label='Afficher dans le Carousel',
+            description="Afficher le produit dans le Carousel de la page d'accueil",
+        ),
+    ),
+
+    ImageField(
+        name='carouselPhoto',
+        widget=ImageWidget(
+            label='Photo large',
+            description="Photo utilisée pour le Carousel de la page d'accueil",
         ),
     ),
 
