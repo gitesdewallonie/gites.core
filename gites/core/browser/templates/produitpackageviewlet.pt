@@ -1,15 +1,17 @@
 <div id="zone-produit-package">
-  <div id="photo">
-      <div id="zone-mice">
-          <ul>
-              <li><a href="#" id="mice" i18n:translate="mice">MICE</a></li>
-              <li><a href="#" id="city-trip" i18n:translate="city_trip">CITY-TRIP</a></li>
-              <li><a href="#" id="insolite" i18n:translate="insolite">INSOLITE</a></li>
-          </ul>
-      </div>
-      <div id="devenir-membre">
-          <a href="" i18n:translate="devenir_membre">Devenir membre</a>
-      </div>
-      <div class="break-float"></div>
-  </div>
+    <div id="zone-photo">
+        <div id="zone-packperm-membre">
+              <div id="zone-package-permanent">
+                  <ul>
+                      <li id="mice"><a href="#" i18n:translate="mice">MICE</a></li>
+                      <li id="city-trip"><a href="#" i18n:translate="city_trip">CITY-TRIP</a></li>
+                      <li id="insolite"><a href="#" i18n:translate="insolite">INSOLITE</a></li>
+                  </ul>
+              </div>
+              <div id="bouton-devenir-membre">
+                  <a href="" i18n:translate="devenir_membre">Devenir membre</a>
+              </div>
+              <div class="break-float"></div>
+        </div>
+    </div>
 </div>
