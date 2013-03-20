@@ -12,14 +12,18 @@ grok.context(interface.Interface)
 class FooterViewletManager(grok.ViewletManager):
     grok.name('gites.footer')
 
+
 class VideoFooterViewlet(grok.Viewlet):
     grok.order(10)
 
+    def available(self):
+        return self.isMainPage()
+
     def getUrl(self):
-        langage = u'fr'
-        if langage == u'fr':
+        language = self.request.get('LANGUAGE', 'fr')
+        if language == 'fr':
             return 'http://www.youtube.com/embed/mQNk9xSErBg'
-        elif langage == u'nl':
+        elif language == 'nl':
             return 'http://www.youtube.com/embed/BCJHP0T8g0k'
         else:
             return 'http://www.youtube.com/embed/qZ41Dpgqgds'
@@ -31,14 +35,17 @@ class VideoFooterViewlet(grok.Viewlet):
         else:
             return False
 
+
 class InfosFooterViewlet(grok.Viewlet):
     grok.order(20)
+
 
 class BannerFooterViewlet(grok.Viewlet):
     grok.order(30)
 
     def getYear(self):
-        return datetime.now().year;
+        return datetime.now().year
+
 
 # register all viewlets in this viewlet manager:
 grok.viewletmanager(FooterViewletManager)

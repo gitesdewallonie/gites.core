@@ -1,5 +1,5 @@
 <div id="zone-video"
-     tal:condition="viewlet/isMainPage">
+     tal:condition="viewlet/available">
     <iframe width="100%"
             height="800"
             tal:attributes="src viewlet/getUrl" 
