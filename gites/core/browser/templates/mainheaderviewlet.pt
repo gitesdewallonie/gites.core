@@ -30,14 +30,6 @@
             </div>
             <div class="break-float"></div>
             <div id="date-start">
-                <script type="text/javascript">
-                    $(function() {
-                            $(".datepicker").datepicker({
-                                showOn: "both",
-                                buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
-                                buttonImageOnly: true
-                                });})
-                </script>
                 <input name="form.toDate"
                        type="text"
                        size="9"
@@ -53,7 +45,15 @@
                        class="datepicker"
                        placeholder="Départ" />
             </div>
-
+            <script type="text/javascript">
+                (function($){
+                        $(".datepicker").datepicker({
+                            showOn: "both",
+                            buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
+                            buttonImageOnly: true
+                            });
+                 })(jQuery);
+            </script>
             <div id="nbre-personne">
                 <input type="text"
                        size="3"
