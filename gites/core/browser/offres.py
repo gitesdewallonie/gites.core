@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
+import random
 from five import grok
 from zope import interface
 from Products.CMFCore.utils import getToolByName
 from DateTime import DateTime
-import random
 
 grok.templatedir('templates')
 grok.context(interface.Interface)
@@ -90,6 +90,7 @@ class DerniereMinute(grok.Viewlet):
 
 class ChambreHotes(grok.Viewlet):
     grok.order(30)
+
 
 class Boutique(grok.Viewlet):
     grok.order(40)
