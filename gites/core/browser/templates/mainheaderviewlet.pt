@@ -103,11 +103,11 @@
         </form>
     </div><!--je connais-->
 
-    <div id="je-decouvre">
+    <div id="je-decouvre" tal:define="translate nocall:context/getTranslatedObjectUrl">
         <h2 i18n:translate="je_decouvre">Je découvre</h2>
         <div class="break-float"></div>
-        <div id="giteetmeuble"><a href="#"></a></div>
-        <div id="maisonhote"><a href="#"></a></div>
+        <a tal:attributes="href python:translate('hebergement')"><div id="giteetmeuble"/></a>
+        <a tal:attributes="href python:translate('hebergement')"><div id="maisonhote"/></a>
     </div><!--je decouvre-->
     <div class="break-float"></div>
 </div><!--main-header-->
