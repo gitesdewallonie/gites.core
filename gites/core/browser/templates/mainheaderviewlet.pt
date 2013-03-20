@@ -9,7 +9,8 @@
         <div class="break-float"></div>
 
         <form action="#"
-              method="post">
+              method="post"
+              tal:attributes="action string:${here/absolute_url}/basic_search.html">
             <div id="zone-gite-meuble">
                 <input type="checkbox"
                        name="gite-meuble"
@@ -29,17 +30,27 @@
             </div>
             <div class="break-float"></div>
             <div id="date-start">
-                <input type="text"
+                <script type="text/javascript">
+                    $(function() {
+                            $(".datepicker").datepicker({
+                                showOn: "both",
+                                buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
+                                buttonImageOnly: true
+                                });})
+                </script>
+                <input name="form.toDate"
+                       type="text"
                        size="9"
                        maxlength="8"
-                       name="Date"
+                       class="datepicker"
                        placeholder="Arrivée" />
             </div>
             <div id="date-end">
-                <input type="text"
+                <input name="form.fromDate"
+                       type="text"
                        size="9"
                        maxlength="8"
-                       name="Date"
+                       class="datepicker"
                        placeholder="Départ" />
             </div>
 
@@ -47,15 +58,15 @@
                 <input type="text"
                        size="3"
                        maxlength="2"
-                       name="Date"
+                       name="form.capacityMin"
                        value="" />
             </div>
             <div class="break-float"></div>
             <div id="proximite">
-                <input type="text"
+                <input name="form.communes"
+                       type="text"
                        size="40"
                        maxlength="12"
-                       name="Date"
                        placeholder="A proximité de">
             </div>
 
@@ -71,14 +82,15 @@
     <div id="je-connais">
         <h2 i18n:translate="je_connais">Je connais</h2>
         <div class="break-float"></div>
-        <form action="#"
-              method="post">
+        <form action=""
+              method="post"
+              tal:attributes="action string:${context/@@plone_portal_state/portal_url}/moteur_recherche_view/getHebergementByNameOrPk">
             <div id="nom-reference">
                 <label for="nom-reference"
                        i18n:translate="nom_ou_reference">Nom ou référence</label>
                 <input type="text"
                        id="nom-reference"
-                       name="nom-reference"
+                       name="reference"
                        value=""
                        size="30" />
             </div>

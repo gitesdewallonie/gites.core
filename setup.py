@@ -34,5 +34,6 @@ setup(name='gites.core',
           'gites.db',
           'Products.LinguaPlone',
           'Products.DataGridField',
-          'monet.mapsviewlet'
+          'monet.mapsviewlet',
+          'collective.js.jqueryui'
       ])
