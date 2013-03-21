@@ -9,8 +9,10 @@ grok.context(interface.Interface)
 class HeaderViewletManager(grok.ViewletManager):
     grok.name('gites.header')
 
+
 class TopHeaderViewlet(grok.Viewlet):
     grok.order(10)
+
 
 class MainHeaderViewlet(grok.Viewlet):
     grok.order(20)
@@ -18,7 +20,6 @@ class MainHeaderViewlet(grok.Viewlet):
     def getTranslatedObjectUrl(self, path):
         """
         """
-        portal = getToolByName(self.context, 'portal_url').getPortalObject()
         obj = self.context.restrictedTraverse(path)
         translatedObject = obj.getTranslation()
         if translatedObject:

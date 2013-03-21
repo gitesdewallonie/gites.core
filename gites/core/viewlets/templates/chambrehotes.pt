@@ -6,6 +6,9 @@
     disponible ce soir à proximité de votre destination<br>
     en Wallonie.</p>
     <div class="plus-info">
-        <a href="#"><span i18n:translate="plus_infos">Plus d'infos...</span></a>
+        <a href="http://www.allochambredhotes.be"
+           title="Allo chambre d'hôtes">
+            <span i18n:translate="plus_infos">Plus d'infos...</span>
+        </a>
     </div>
-</div><!--allo-chambre-hote-->
+</div>

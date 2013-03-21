@@ -12,7 +12,6 @@ from gites.core.content.interfaces import IDerniereMinute
 from zope.interface import Interface
 
 grok.context(Interface)
-grok.templatedir('templates')
 
 
 class DerniereMinuteView(grok.View):
@@ -41,3 +40,6 @@ class DerniereMinuteView(grok.View):
     def getTypeHebergement(self):
         language = self.request.get('LANGUAGE', 'en')
         return self.context.getHebergement().type.getTitle(language)
+
+    def render(self):
+        pass

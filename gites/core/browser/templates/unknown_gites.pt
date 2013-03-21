@@ -1,0 +1,18 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="gites">
+
+<body>
+
+<div metal:fill-slot="main">
+
+    <img src="o_alerte.png"/>
+    <span class="unknown_gites" 
+          i18n:translate="unknown_gites">La référence de l'hébergement 
+    <span i18n:name="heb_pk" 
+          tal:content="request/reference|nothing"/> n'est pas valide</span>
+    <br /><br />
+</div>
+</body>
+</html>

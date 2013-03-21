@@ -1,6 +1,7 @@
 <div id="main-header">
     <div id="logo">
-        <a href="#"></a>
+        <a href=""
+           tal:attributes="href string:${here/portal_url}"></a>
     </div>
 
     <div id="je-recherche">
@@ -90,7 +91,7 @@
                        i18n:translate="nom_ou_reference">Nom ou référence</label>
                 <input type="text"
                        id="nom-reference"
-                       name="nom-reference"
+                       name="reference"
                        value=""
                        size="30" />
             </div>
@@ -103,7 +104,7 @@
         </form>
     </div><!--je connais-->
 
-    <div id="je-decouvre" tal:define="translate nocall:context/getTranslatedObjectUrl">
+    <div id="je-decouvre" tal:define="translate nocall:viewlet/getTranslatedObjectUrl">
         <h2 i18n:translate="je_decouvre">Je découvre</h2>
         <div class="break-float"></div>
         <div id="gitemeuble"><a tal:attributes="href python:translate('hebergement')">Gites et meublés</a></div>
