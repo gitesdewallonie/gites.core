@@ -17,7 +17,6 @@ from plone.widgets.archetypes import ChosenWidget
 from Products.Archetypes.interfaces import (IBaseFolder,
                                             IBaseObject,
                                             IReferenceable)
-from Products import DataGridField
 from Products.ATContentTypes.content.folder import ATFolder
 from Products.LinguaPlone.public import (Schema, TextField, RichWidget,
                                          ImageWidget,
@@ -103,23 +102,22 @@ schema = Schema((
         ),
     ),
 
-    DataGridField.DataGridField(
+    LinesField(
         name='criteria',
         schemata=u'Criteres',
-        columns=('criterion', 'value'),
-        widget=DataGridField.DataGridWidget
-        (
-            label='Critères',
-            label_msgid='GitesContent_label_criteria',
+        vocabulary=CriteriaVocabularyFactory,
+        widget=ChosenWidget(
+            description="Critères du package",
+            label='Criteria',
+            label_msgid='gites_core_package_criteria_label',
+            description_msgid='gites_core_package_criteria_description',
             i18n_domain='gites',
-            columns={'criterion': DataGridField.SelectColumn(u'Critères de sélection des hébergements pour ce produit',
-                                                             vocabulary=CriteriaVocabularyFactory),
-                     'value': DataGridField.CheckboxColumn(u'')}
-        ),
+        )
     ),
     LinesField(
         name='userCriteria',
         multiValued=1,
+        schemata=u'Criteres',
         vocabulary=CriteriaVocabularyFactory,
         widget=ChosenWidget(
             description="""Critères à choisir par l'utilisateur""",
