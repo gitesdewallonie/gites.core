@@ -25,7 +25,7 @@
                        name="chambre-hote"
                        id="chambre-hote"
                        value="" />
-                <label for="gite-meuble"
+                <label for="chambre-hote"
                        i18n:translate="chambre_hotes">Chambre d'hôtes</label>
             </div>
             <div class="break-float"></div>
