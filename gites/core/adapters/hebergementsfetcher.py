@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import json
+from sqlalchemy import func
+from plone.memoize.instance import memoize
 from five import grok
 from sqlalchemy.orm import joinedload
 from zope.interface import Interface
@@ -23,6 +26,16 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
 class PackageHebergementFetcher(BaseHebergementsFetcher):
     grok.adapts(IPackage, Interface, IBrowserRequest)
 
+    @memoize
+    def request_filters(self):
+        request_body = self.request._file.read()
+        self.request._file.seek(0)
+        try:
+            data = json.loads(request_body)
+        except ValueError:
+            return []
+        return [key for key, value in data.get('data', {}).items() if value is True]
+
     @property
     def _query(self):
         query = session().query(Hebergement)
@@ -32,16 +45,21 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             joinedload('epis', innerjoin=True),
             FromCache('gdw'))
         subquery = session().query(LinkHebergementMetadata.heb_fk)
-        for criterion in self.context.getCriteria():
-            is_true = criterion.get('value') == '1'
-            subquery = subquery.filter(LinkHebergementMetadata.metadata_fk == criterion.get('criterion'))
-            subquery = subquery.filter(LinkHebergementMetadata.link_met_value == is_true)
+        criteria = set()
+        criteria = criteria.union(
+            self.context.getCriteria(),
+            self.request_filters())
+        subquery = subquery.filter(LinkHebergementMetadata.metadata_fk.in_(criteria))
+        subquery = subquery.filter(LinkHebergementMetadata.link_met_value == True)
+        subquery = subquery.group_by(LinkHebergementMetadata.heb_fk)
+        subquery = subquery.having(func.count() == len(criteria))
         subquery = subquery.subquery()
         query = query.filter(Hebergement.heb_pk == subquery.c.heb_fk)
         return query
 
     def __len__(self):
-        return self._query.count()
+        count = self._query.count()
+        return count
 
     def __call__(self):
         return self._query.all()

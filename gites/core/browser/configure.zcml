@@ -5,6 +5,12 @@
 
   <grok:grok package="."/>
 
+  <browser:resourceDirectory
+      name="gdwcore"
+      directory="resources/"
+      permission="zope2.View"
+      />
+
   <browser:page
       for="*"
       name="boutique_item_view"

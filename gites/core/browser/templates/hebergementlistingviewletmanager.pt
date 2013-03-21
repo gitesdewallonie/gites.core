@@ -1,0 +1,4 @@
+<div ng-app="listing"
+     ng-controller="SearchCtrl"
+     class="list-container" angular-html-bind="listcontainer">
+</div>
