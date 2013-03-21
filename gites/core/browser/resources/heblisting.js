@@ -43,7 +43,6 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
             $scope.status = status;
         });
     };
-    $scope.update();
 
     $scope.goToPage = function(page){
 	 $scope.page = page;

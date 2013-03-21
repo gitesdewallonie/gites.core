@@ -30,12 +30,14 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
 
     @memoize
     def request_parameters(self):
+        if self.request._file is None:
+            return {}
         request_body = self.request._file.read()
         self.request._file.seek(0)
         try:
             return json.loads(request_body)
         except ValueError:
-            return []
+            return {}
 
     def selected_keywords(self):
         data = self.request_parameters()
