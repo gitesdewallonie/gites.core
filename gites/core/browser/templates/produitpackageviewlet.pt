@@ -19,12 +19,8 @@
                                              alt package/Title;
                                              title package/Title">
                         <div class="carousel-caption">
-                            <h4>
-                                <span tal:replace="package/Title" />
-                            </h4>
-                            <p>
-                                <span tal:replace="package/Description" />
-                            </p>
+                            <h4><span tal:replace="package/Title" /></h4>
+                            <p><span tal:replace="package/Description" /></p>
                         </div>
                     </a>
                 </div>

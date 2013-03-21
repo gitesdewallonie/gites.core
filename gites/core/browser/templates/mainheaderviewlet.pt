@@ -85,12 +85,12 @@
         <form action=""
               method="post"
               tal:attributes="action string:${context/@@plone_portal_state/portal_url}/moteur_recherche_view/getHebergementByNameOrPk">
-            <div id="nom-reference">
+            <div id="nom-ou-reference">
                 <label for="nom-reference"
                        i18n:translate="nom_ou_reference">Nom ou référence</label>
                 <input type="text"
                        id="nom-reference"
-                       name="reference"
+                       name="nom-reference"
                        value=""
                        size="30" />
             </div>
@@ -106,9 +106,8 @@
     <div id="je-decouvre" tal:define="translate nocall:context/getTranslatedObjectUrl">
         <h2 i18n:translate="je_decouvre">Je découvre</h2>
         <div class="break-float"></div>
-
-         <div id="gitemeuble"><a tal:attributes="href python:translate('hebergement')"></a></div>
-         <div id="maisonhote"><a tal:attributes="href python:translate('hebergement')"></a></div>
+        <div id="gitemeuble"><a tal:attributes="href python:translate('hebergement')">Gites et meublés</a></div>
+        <div id="maisonhote"><a tal:attributes="href python:translate('hebergement')">Chambre d'hôte</a></div>
     </div><!--je decouvre-->
     <div class="break-float"></div>
 </div><!--main-header-->
