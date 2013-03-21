@@ -3,11 +3,13 @@ from five import grok
 from Acquisition import Explicit
 from zope import interface, component
 from affinitic.db.cache import FromCache
+from zope.contentprovider.interfaces import IContentProvider
+from plone.memoize.instance import memoize
 from gites.db import session
 from gites.db.content import Metadata
 from gites.core.content.interfaces import IPackage
 from gites.core.interfaces import IHebergementsFetcher
-from zope.contentprovider.interfaces import IContentProvider
+from gites.locales import GitesMessageFactory as _
 
 grok.templatedir('templates')
 grok.context(interface.Interface)
@@ -39,6 +41,7 @@ class HebergementListingForm(grok.Viewlet):
         query = session().query(Metadata).filter(Metadata.met_pk.in_(userCriteria))
         return query.all()
 
+    @memoize
     def count_hebs(self, metadata_id):
         fetcher = component.getMultiAdapter((self.context, self.view,
                                             self.request),
@@ -66,8 +69,25 @@ class HebergementsInListing(grok.Viewlet):
     def hebergements(self):
         return self._fetcher()
 
+    @memoize
     def count(self):
         return len(self._fetcher)
+
+    def pages(self):
+        return range(self.count() / self._fetcher.batch_size + 1)
+
+    def batch_start(self):
+        return self._fetcher.batch_start
+
+    def batch_end(self):
+        return self._fetcher.batch_end
+
+    def sort_items(self):
+        return {'distance': _('Distance'),
+                'pers_numbers': _("Nombre de personnes"),
+                'room_count': _("Nombre de chambre"),
+                'epis': _(u"Épis"),
+                'heb_type': _(u"Type d'hébergement")}
 
 
 class HebergementListingViewletManager(grok.ViewletManager):

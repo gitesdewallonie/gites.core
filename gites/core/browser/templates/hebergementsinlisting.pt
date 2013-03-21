@@ -1,9 +1,27 @@
-<div id="count">Voici les X premiers hébergements sur un total de Y</div>
+<div id="batch">
+<tal:pages tal:repeat="page_number viewlet/pages">
+  <a href="" 
+     tal:content="page_number"
+     tal:attributes="ng-click string:goToPage(${page_number})" ng-click="goToPage(2)"/> 
+</tal:pages>
+</div>
+
+<div id="sort">
+<select ng-model="sort" ng-change="update()">
+<tal:sort tal:repeat="sort_item python:viewlet.sort_items().items()">
+<option value="" tal:attributes="value python:sort_item[0]" tal:content="python:sort_item[1]"/>
+</tal:sort>
+</select>
+</div>
+
+<div id="count" i18n:translate="heb_count">Hébergement <span i18n:name="" tal:replace="viewlet/batch_start"/> à
+<span i18n:name="heb_number" tal:replace="viewlet/batch_end"/> sur un total de <span i18n:name="heb_number_total" tal:replace="viewlet/count"/></div>
+
 <fieldset class="hebergement"
      i18n:domain="gites"
      tal:repeat="hebergement viewlet/hebergements">
   <div id="typetype">
-     <a href="" 
+     <a href=""
         tal:attributes="href hebergement/@@url"
         tal:content="hebergement/type/getType"/>
   </div>

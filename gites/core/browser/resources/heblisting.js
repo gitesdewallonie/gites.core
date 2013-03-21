@@ -1,3 +1,5 @@
+'use strict';
+
 $.fn.spin = function (opts) {
     this.each(function () {
         var $this = $(this),
@@ -17,10 +19,21 @@ $.fn.spin = function (opts) {
 
 var app = angular.module('listing', ["ngSanitize"]);
 app.controller('SearchCtrl', function($scope, $http, $compile) {
-    $scope.url = 'update_listing'; // The url of our search
-    $scope.keywords = {};
+
+    var init = function() {
+        $scope.page = 0;
+	$scope.url = 'update_listing'; // The url of our search
+	$scope.keywords = {};
+	$scope.sort = ''
+    };
+
+    // initialize values
+    init();
+
     $scope.update = function() {
-        $http.post($scope.url, { "data" : $scope.keywords}).
+        $http.post($scope.url, {'keywords': $scope.keywords,
+	                        'page': $scope.page,
+	                        'sort': $scope.sort}).
         success(function(data, status) {
             $scope.status = status;
             $scope.listcontainer = data;
@@ -31,6 +44,11 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
         });
     };
     $scope.update();
+
+    $scope.goToPage = function(page){
+	 $scope.page = page;
+	 $scope.update();
+    }
 });
 
 app.directive('angularHtmlBind', function($compile) {
