@@ -1,6 +1,7 @@
 <div id="main-header">
     <div id="logo">
-        <a href="#"></a>
+        <a href=""
+           tal:attributes="href string:${here/portal_url}"></a>
     </div>
 
     <div id="je-recherche">

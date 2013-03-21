@@ -45,11 +45,12 @@
                    target="_blank"></a>
             </li>
             <li>
-                <a href="mailto:benolondero@gmail.com"
+                <a href=""
                    id="mail"
-                   target="_blank"></a>
+                   tal:attributes="href string:${here/portal_url}/contact-info">
+                </a>
             </li>
         </ul>
     </div>
 <div class="break-float"></div>
-</div><!--top-header-->
+</div>

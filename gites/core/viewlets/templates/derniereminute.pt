@@ -15,5 +15,5 @@
         <div class="plus-info">
             <a tal:attributes="href viewlet/getAllDerniereMinuteLink"><span i18n:translate="toutes_nos_dernieres_minutes">Toutes nos dernières minutes</span></a>
         </div>
-    </div><!--derniere-minute-->
+    </div>
 </tal:viewlet>
