@@ -1,0 +1,185 @@
+<table id="moteur-recherche"
+       cellspacing="0"
+       cellpadding="4"
+       i18n:domain="gites">
+      <tr bgcolor="#f9e7c6">
+         <td>
+            <div id="moteur-form">
+                <div id="moteur-simple" tal:condition="python: 'search.html' not in view.request.URL" comment="XXX TEMPORARY">
+                    <form action="" 
+                          method="post"
+                          id="zc.page.browser_form"
+                          enctype="multipart/form-data"
+                          tal:attributes="action string:${here/absolute_url}/basic_search.html">
+
+                      <table border="0" align="center">
+                          <tr>
+                              <td colspan="2">
+                                  <div id="type">
+                                     <label i18n:translate="label_recherche" class="label-recherche">Je cherche</label><br />
+                                     <select name="form.hebergementType">
+                                        <tal:requete tal:repeat="type here/@@moteur_recherche_view/getGroupedHebergementTypes">
+                                           <span tal:define="cle type/pk">
+                                              <span tal:condition="python:cle==0">
+                                                 <option value="-1"></option>
+                                              </span>
+                                              <span tal:condition="python:cle!=0">
+                                                 <option tal:attributes="value cle"
+                                                         i18n:translate=""
+                                                         tal:content="type/name">Type d'hébergement</option>
+                                              </span>
+                                           </span>
+                                        </tal:requete>
+                                     </select>
+                                   </div>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td id="pour" align="right">
+                                   <label class="label-recherche" i18n:translate="label_nombre_personnes">Nombre de personnes :</label>
+                              </td>
+                              <td align="left">
+                                     <input type="text"
+                                            id="form.capacityMin" 
+                                            name="form.capacityMin"
+                                            value=""
+                                            size="4" />
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="widget" align="right">
+                                 <label i18n:translate="" class="label-recherche">Sejour du</label>
+                              </td>
+                              <td>
+                                 <input id="form.fromDate" 
+                                        class="textType" 
+                                        type="text" 
+                                        value="" 
+                                        size="12" 
+                                        name="form.fromDate"/>
+                                 <input id="form.fromDate_trigger" type="button" value="..."/>
+                                 <script type="text/javascript">
+                                    Calendar.setup({
+                                    inputField: 'form.fromDate',
+                                    button: 'form.fromDate_trigger',
+                                    ifFormat: '%d/%m/%Y'
+                                    });
+                                 </script>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td class="widget"  align="right">
+                                  <label i18n:translate="" class="label-recherche">Sejour au</label>
+                              </td>
+                              <td>
+                                  <input id="form.toDate" 
+                                         class="textType" 
+                                         type="text" 
+                                         value="" 
+                                         size="12" 
+                                         name="form.toDate"/>
+                                  <input id="form.toDate_trigger" 
+                                         type="button" 
+                                         value="..."/>
+                                  <script type="text/javascript">
+                                          Calendar.setup({
+                                          inputField: 'form.toDate',
+                                          button: 'form.toDate_trigger',
+                                          ifFormat: '%d/%m/%Y'
+                                          });
+                                  </script>
+                              </td>
+                          </tr>
+                          <tr>
+                            <td colspan="2">
+                               <div id="chercher">
+                                <input type="hidden" 
+                                       name="form.provinces" 
+                                       value="-1"/>
+                                <input type="hidden" 
+                                       name="form.communes" 
+                                       value="-1"/>
+                                <input type="hidden" 
+                                       name="form.classification" 
+                                       value="-1"/>
+                                <input type="hidden" 
+                                       name="form.smokers" 
+                                       value=""/>
+                                <input type="hidden" 
+                                       name="form.animals" 
+                                       value=""/>
+                                <input type="hidden" 
+                                       name="form.roomAmount" 
+                                       value=""/>
+
+                                <input type="submit" 
+                                       i18n:attributes="value action_search;" 
+                                       value="Rechercher" 
+                                       id="form.actions.search" 
+                                       name="form.actions.search" />
+                               </div>
+                            </td>
+                          </tr>
+                      </table>
+
+                    </form>
+                </div>
+         </td>
+         <td rowspan="5" valign="top">
+            <div id="moteur-facebook" align="center">
+              <iframe src="http://www.facebook.com/plugins/likebox.php?id=378914593933&amp;width=420&amp;connections=14&amp;stream=false&amp;header=false&amp;height=255"
+                      scrolling="no" frameborder="0" style="border:1px solid #476D84; overflow:hidden; width:420px; height:255px;" allowTransparency="false">
+              </iframe>
+            </div>
+         </td>
+      </tr>
+      <tr bgcolor="#f9e7c6" height="32px;">
+         <td>
+           <div id="moteur-ref">
+                <form action=""
+                      method="post"
+                      tal:attributes="action string:${context/@@plone_portal_state/portal_url}/moteur_recherche_view/getHebergementByNameOrPk">
+                  <div id="ref_pk">
+                      <label i18n:translate="label_reference"
+                             class="label-recherche">Référence :</label>
+                      <input type="text"
+                             name="reference"
+                             value=""
+                             size="14" />
+                      <input type="submit" value="GO" />
+                  </div>
+               </form>
+           </div>
+         </td>
+      </tr>
+      <tr bgcolor="#f9e7c6" height="107px">
+         <td align="center" valign="middle">
+          <div class="moteur-box">
+            <div id="moteur-carte">
+               <div id="btn-carto1">
+                  
+                  <a href=""
+                     i18n:translate="recherche_cartographique"
+                     tal:attributes="href string:${context/absolute_url}/map">
+                     recherche cartographique
+                  </a>
+               </div>
+            </div>
+           </div>
+         </td>
+      </tr>
+      <tr bgcolor="#f9e7c6" height="32px;">
+         <td align="center">
+          <div class="moteur-box">
+            <div id="moteur-avance">
+               <a href=""
+                  i18n:translate="recherche_avancee"
+                  tal:attributes="href string:${context/@@plone_portal_state/portal_url}/search.html">recherche avanc&eacute;e</a>
+           </div>
+          </div>
+       </td>
+     </tr>
+      <tr bgcolor="#f9e7c6">
+         <td>&nbsp;</td>
+     </tr>
+</table>

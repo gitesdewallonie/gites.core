@@ -1,0 +1,56 @@
+<tal:main metal:define-macro="hebergement_table">
+    <span tal:define="nosorting nosorting | nothing;
+                      thclass python: (nosorting and 'nosort' or 'sort')">
+              <table class="listing" width="95%"
+                     tal:condition="hebergements">
+                <thead>
+                  <th class="nosort">&nbsp;</th>
+                  <th i18n:translate="nom_hebergement" class="" tal:attributes="class thclass">Nom </th>
+                  <th i18n:translate="type_hebergement" class="" tal:attributes="class thclass">Type</th>
+                  <th i18n:translate="localite_hebergement" class="" tal:attributes="class thclass">Localit&eacute;</th>
+                  <th i18n:translate="epis_hebergement" class="" tal:attributes="class thclass">Classification</th>
+                  <th class="" tal:attributes="class thclass">
+                    <span id="capacite">
+                      <img src="capacite.png"
+                           title="Capacité"
+                           alt="Capacité"
+                           i18n:attributes="alt capacite; title capacite" />
+                  </th>
+                  <th class="" tal:attributes="class thclass">
+                      <img src="lit_double.png"
+                           title="Nombre de chambres"
+                           alt="Nombre de chambres"
+                           i18n:attributes="alt nombre-chambres; title nombre-chambres" />
+                  </th>
+                </thead>
+                <tbody>
+                  <tal:loop tal:repeat="hebergement hebergements">
+                      <tr tal:define="oddrow repeat/hebergement/odd;
+                                      heb_url hebergement/@@url;
+                                      hebergementView nocall:hebergement/@@hebergement_view;
+                                      hebergementIcons hebergement/@@hebergement_icons;"
+                          tal:attributes="class python:test(oddrow, 'draggable even', 'draggable odd');">
+                        <td><a href="" tal:attributes="href heb_url"> <img src="" border="0" tal:attributes="src string:${context/@@plone_portal_state/portal_url}/vignettes_heb/${hebergement/getVignette}" /></a></td>
+                        <td><a href="" tal:attributes="href heb_url" tal:content="hebergement/heb_nom"></a></td>
+                        <td tal:content="hebergementView/getTypeHebergement"/>
+                        <td tal:content="hebergement/heb_localite"/>
+                        <td>
+                            <div id="nbrEpis" 
+                                 tal:content="structure hebergementIcons/getEpis">
+                                <span i18n:translate="epis">Les épis</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span tal:content="hebergement/heb_cgt_cap_min" />/<span tal:content="hebergement/heb_cgt_cap_max" />
+                        </td>
+                        <td class="centered-column" tal:content="hebergement/heb_cgt_nbre_chmbre"/>
+                        </tr>
+                  </tal:loop>
+                </tbody>
+              </table>
+    </span>
+
+              <div i18n:translate="not_hebergement_correspondant"
+                   class="error"
+                   tal:condition="not:hebergements">Il n'y a aucun h&eacute;bergement correspondant &agrave; ces crit&egrave;res</div>
+</tal:main>

@@ -1,0 +1,43 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:five="http://namespaces.zope.org/five"
+           i18n_domain="gites">
+
+   <browser:page
+        for="gites.db.interfaces.IHebergement"
+        class=".hebergement.HebergementView"
+        name="hebergement_view"
+        template="templates/hebergement.pt"
+        permission="zope.Public"
+        />
+
+   <browser:page
+        for="gites.db.interfaces.IHebergement"
+        class=".hebergement.HebergementIconsView"
+        name="hebergement_icons"
+        permission="zope.Public"
+        allowed_interface=".interfaces.IHebergementIconsView"
+        />
+
+  <browser:defaultView
+      for="gites.db.interfaces.IHebergement"
+      name="hebergement_view" />
+
+  <browser:page
+      for="gites.db.interfaces.IHebergement"
+      name="url"
+      class=".hebergement.HebergementAbsoluteURL"
+      permission="zope.Public"
+      allowed_interface="zope.traversing.browser.interfaces.IAbsoluteURL"
+      />
+
+  <view
+      for="gites.db.interfaces.IHebergement"
+      factory=".hebergement.HebergementAbsoluteURL"
+      type="zope.publisher.interfaces.http.IHTTPRequest"
+      permission="zope.Public"
+      provides="zope.traversing.browser.interfaces.IAbsoluteURL"
+      />
+
+</configure>
+

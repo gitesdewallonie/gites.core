@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="gites">
+
+<body>
+
+<div metal:fill-slot="main" tal:define="hebergements view/selectedHebergements">
+
+ <span tal:define="nbr python:len(hebergements)">
+  <h1>
+    <span tal:replace="nbr" />
+    <span i18n:translate="hebergements_correspondent" tal:condition="python: int(nbr)>1"> h&eacute;bergements correspondent &agrave; votre recherche.</span>
+    <span i18n:translate="hebergement_correspond" tal:condition="python: int(nbr)<=1"> h&eacute;bergement correspond &agrave; votre recherche.</span>
+  </h1>
+  <div>
+   <span tal:condition="python: int(nbr)>0" i18n:translate="selectionnez_titre_pour_trier">
+     S&eacute;lectionnez le titre d&acute;une colonne pour trier les r&eacute;sultats.
+    </span>
+    <center>
+      <metal:macro use-macro="here/hebergement_table/macros/hebergement_table" />
+    </center>
+  </div>
+ </span>
+
+</div>
+</body>
+</html>

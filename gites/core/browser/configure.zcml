@@ -3,6 +3,7 @@
            xmlns:grok="http://namespaces.zope.org/grok"
            i18n_domain="gites">
 
+  <include file="hebergement.zcml"/>
   <grok:grok package="."/>
 
   <browser:resourceDirectory
@@ -35,6 +36,21 @@
   <browser:defaultView
       name="derniere_minute_root_folder"
       for="gites.skin.interfaces.IDerniereMinuteRootFolder"
+      />
+
+  <browser:page
+      for="*"
+      name="moteur_recherche_view"
+      class=".moteur_recherche.MoteurRecherche"
+      permission="zope.Public"
+      allowed_interface=".interfaces.IMoteurRecherche"
+      />
+
+   <browser:page
+      for="*"
+      name="unknown_gites"
+      permission="zope.Public"
+      template="templates/unknown_gites.pt"
       />
 
   <utility
