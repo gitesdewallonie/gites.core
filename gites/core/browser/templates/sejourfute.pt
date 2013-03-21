@@ -5,7 +5,7 @@
 <body>
 
   <link metal:fill-slot="head_slot" rel="image_src"
-        href="" tal:attributes="href view/getVignetteURL" /> 
+        href="" tal:attributes="href view/getVignetteURL" />
 
   <div metal:fill-slot="main"
     tal:define="text context/getText;

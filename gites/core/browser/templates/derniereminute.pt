@@ -1,6 +1,6 @@
 <tal:viewlet tal:define="offre viewlet/getRandomDerniereMinute;"
              tal:condition="python:offre is not None">
-    <div id="derniere-minute"
+    <div id="zone-derniere-minute"
          tal:define="hebergement offre/getHebergement;">
         <h3 i18n:translate="derniere_minute">Dernière minute</h3>
         <a tal:attributes="href hebergement/@@url">
