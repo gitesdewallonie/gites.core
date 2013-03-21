@@ -64,6 +64,10 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 	 $scope.goToPage(0);
     }
 
+    $scope.updateKeywords = function() {
+	 $scope.goToPage(0);
+    }
+
 });
 
 app.directive('angularHtmlBind', function($compile) {
