@@ -17,20 +17,28 @@ $.fn.spin = function (opts) {
     return this;
 };
 
-var app = angular.module('listing', ["ngSanitize"]);
-app.controller('SearchCtrl', function($scope, $http, $compile) {
+var app = angular.module('listing', ['ngSanitize', 'ngCookies']);
+app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 
     var init = function() {
-        $scope.page = 0;
+        $scope.page = $cookieStore.get('listing_page', 0);
 	$scope.url = 'update_listing'; // The url of our search
-	$scope.keywords = {};
-	$scope.sort = ''
+        $scope.keywords = {};
+        var page_cookie = $cookieStore.get('listing_keywords');
+	if ( page_cookie ) {
+	    $scope.keywords = page_cookie;
+	}
+	$scope.sort = $cookieStore.get('listing_sort', '');
     };
 
     // initialize values
     init();
 
     $scope.update = function() {
+	if ( $scope.keywords ) {
+            $cookieStore.put('listing_keywords', $scope.keywords);
+	};
+        $cookieStore.put('listing_sort', $scope.sort);
         $http.post($scope.url, {'keywords': $scope.keywords,
 	                        'page': $scope.page,
 	                        'sort': $scope.sort}).
@@ -44,10 +52,18 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
         });
     };
 
+    $scope.update();
+
     $scope.goToPage = function(page){
 	 $scope.page = page;
+         $cookieStore.put('listing_page', page);
 	 $scope.update();
     }
+
+    $scope.updateSort = function() {
+	 $scope.goToPage(0);
+    }
+
 });
 
 app.directive('angularHtmlBind', function($compile) {

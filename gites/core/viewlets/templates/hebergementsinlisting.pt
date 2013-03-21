@@ -7,7 +7,7 @@
 </div>
 
 <div id="sort">
-<select ng-model="sort" ng-change="update()">
+<select ng-model="sort" ng-change="updateSort()">
 <tal:sort tal:repeat="sort_item python:viewlet.sort_items().items()">
 <option value="" tal:attributes="value python:sort_item[0]" tal:content="python:sort_item[1]"/>
 </tal:sort>
