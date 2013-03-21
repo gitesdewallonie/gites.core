@@ -6,21 +6,17 @@
     <div id="icone-reseaux-sociaux">
         <ul>
             <li>
-                <a href="http://www.android.com/"
+                <a href="https://play.google.com/store/apps/details?id=be.gitesdewallonie.allochambresdhotes"
                    id="android"
                    target="_blank"></a>
             </li>
             <li>
-                <a href="http://www.apple.com/"
+                <a href="http://itunes.apple.com/be/app/allo-chambre-dhotes/id509470840?mt=8"
                    id="apple"
                    target="_blank"></a>
             </li>
             <li>
-                <a href="#"
-                   id="rss"></a>
-            </li>
-            <li>
-                <a href="http://www.youtube.com"
+                <a href="http://www.youtube.com/user/GitesDeWallonie"
                    id="iconyoutube"
                    target="_blank"></a>
             </li>
@@ -35,7 +31,7 @@
                    target="_blank"></a>
             </li>
             <li>
-                <a href="http://facebook.com"
+                <a href="https://www.facebook.com/GitesdeWallonie"
                    id="facebook"
                    target="_blank"></a>
             </li>
