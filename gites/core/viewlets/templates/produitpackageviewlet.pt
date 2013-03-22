@@ -39,7 +39,7 @@
                   </ul>
               </div>
               <div id="bouton-devenir-membre"
-                   tal:define="translate nocall:context/getTranslatedObjectUrl">
+                   tal:define="translate nocall:here/@@getTranslatedObjectUrl">
                   <a href=""
                      tal:attributes="href python:translate('association/devenir-membre')"
                      i18n:translate="devenir_membre">Devenir membre</a>
