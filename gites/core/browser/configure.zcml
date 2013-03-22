@@ -12,6 +12,14 @@
       permission="zope2.View"
       />
 
+  <browser:page
+      for="*"
+      name="getTranslatedObjectUrl"
+      attribute="getTranslatedObjectUrl"
+      class=".translations.Translate"
+      permission="zope.Public"
+      />
+
    <browser:page
       for="*"
       name="blog_newsletter_subscribe"
@@ -61,6 +69,15 @@
       permission="zope.Public"
       template="templates/unknown_gites.pt"
       />
+
+  <adapter
+      for="gites.db.interfaces.ITypeHebergement
+           gites.db.interfaces.ICommune
+           zope.publisher.interfaces.browser.IDefaultBrowserLayer"
+     factory=".typehebcommune.TypeHebCommuneView"
+     provides=".interfaces.ITypeHebCommuneView"
+     name="index.html"
+     />
 
   <utility
       name="gitescontent.communes"
