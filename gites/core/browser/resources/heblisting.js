@@ -22,7 +22,8 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 
     var init = function() {
         $scope.page = $cookieStore.get('listing_page', 0);
-	$scope.url = 'update_listing'; // The url of our search
+	$scope.listing_url = 'update_listing'; // The url of our search
+	$scope.map_listing_url = 'update_map_listing'; // The url of our search
         $scope.keywords = {};
         var page_cookie = $cookieStore.get('listing_keywords');
 	if ( page_cookie ) {
@@ -34,22 +35,28 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
     // initialize values
     init();
 
+    $scope.updateMap = function() {
+        $http.post($scope.map_listing_url, {'keywords': $scope.keywords,
+	                        'page': $scope.page,
+	                        'sort': $scope.sort}).
+        success(function(data, status) {
+	    googleMapAPI.updateHebergementsMarkers(data);
+        })
+    };
+
     $scope.update = function() {
 	if ( $scope.keywords ) {
             $cookieStore.put('listing_keywords', $scope.keywords);
 	};
         $cookieStore.put('listing_sort', $scope.sort);
-        $http.post($scope.url, {'keywords': $scope.keywords,
+        $http.post($scope.listing_url, {'keywords': $scope.keywords,
 	                        'page': $scope.page,
 	                        'sort': $scope.sort}).
         success(function(data, status) {
             $scope.status = status;
             $scope.listcontainer = data;
         })
-        .
-        error(function(data, status) {
-            $scope.status = status;
-        });
+	$scope.updateMap();
     };
 
     $scope.update();
