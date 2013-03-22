@@ -9,7 +9,7 @@
                              ng-model string:keywords['${filter/met_pk}'];
                              disabled not:heb_count"
              ng-click="updateKeywords()"
-             /> <span tal:replace="filter/met_titre_fr"/> (<span tal:replace="heb_count"/>)
+             /> <span tal:replace="filter/Title"/> (<span tal:replace="heb_count"/>)
      </tal:inputs>
   </label><br/>
 </form>
