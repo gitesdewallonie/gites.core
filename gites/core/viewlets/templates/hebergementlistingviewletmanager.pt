@@ -1,4 +1,5 @@
-<div ng-app="listing"
+<div id="listing-result"
+     ng-app="listing"
      ng-controller="SearchCtrl"
      class="list-container" angular-html-bind="listcontainer">
     <tal:viewlet tal:repeat="viewlet viewletmanager/viewlets">

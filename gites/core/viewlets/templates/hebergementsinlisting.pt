@@ -1,48 +1,57 @@
 <div id="batch">
-<a href=""
-   tal:condition="not:viewlet/is_first_page"
-   ng-click="goToPreviousPage()">Précédent</a>
-<tal:pages tal:repeat="page_number viewlet/pages">
-  <a href="" 
-     tal:content="page_number"
-     tal:attributes="ng-click string:goToPage(${page_number})" ng-click="goToPage(2)"/> 
-</tal:pages>
-<a href=""
-   tal:condition="not:viewlet/is_last_page"
-   ng-click="goToNextPage()">Suivant</a>
+    <a href=""
+       tal:condition="not:viewlet/is_first_page"
+       ng-click="goToPreviousPage()">Précédent</a>
+    <tal:pages tal:repeat="page_number viewlet/pages">
+        <a href=""
+           tal:content="page_number"
+           tal:attributes="ng-click string:goToPage(${page_number})" ng-click="goToPage(2)"/>
+    </tal:pages>
+    <a href=""
+       tal:condition="not:viewlet/is_last_page"
+       ng-click="goToNextPage()">Suivant</a>
 </div>
 
 <div id="sort">
-<select ng-model="sort" ng-change="updateSort()">
-<tal:sort tal:repeat="sort_item python:viewlet.sort_items().items()">
-<option value="" tal:attributes="value python:sort_item[0]" tal:content="python:sort_item[1]"/>
-</tal:sort>
-</select>
+    <select ng-model="sort" ng-change="updateSort()">
+        <tal:sort tal:repeat="sort_item python:viewlet.sort_items().items()">
+            <option value="" tal:attributes="value python:sort_item[0]" tal:content="python:sort_item[1]"/>
+        </tal:sort>
+    </select>
 </div>
 
 <div id="count" i18n:translate="heb_count">Hébergement <span i18n:name="" tal:replace="viewlet/batch_start"/> à
-<span i18n:name="heb_number" tal:replace="viewlet/batch_end"/> sur un total de <span i18n:name="heb_number_total" tal:replace="viewlet/count"/></div>
+    <span i18n:name="heb_number" tal:replace="viewlet/batch_end"/>
+    sur un total de
+    <span i18n:name="heb_number_total" tal:replace="viewlet/count"/>
+</div>
 
-<fieldset class="hebergement"
+<div class="hebergement"
      i18n:domain="gites"
      tal:repeat="hebergement viewlet/hebergements">
-  <div id="typetype">
-     <a href=""
-        tal:attributes="href hebergement/@@url"
-        tal:content="hebergement/type/getType"/>
-  </div>
-  <div id="vignette">
-  </div>
-  <div id="title" tal:content="hebergement/heb_nom"/>
-  <div id="type" tal:content="hebergement/type/getTitle"/>
-  <div id="commune" tal:content="hebergement/commune/com_nom"/>
-  <div id="capacite" tal:content="hebergement/heb_cgt_cap_max"/> <div id="capacite" i18n:translate="capacite-unite">personnes</div>
-  <div id="nbr_chmbre" tal:content="hebergement/heb_cgt_nbre_chmbre"/> <div id="nbr_chmbre-label" i18n:translate="chambre">chambres</div>
-  <div id="epis" tal:repeat="epis hebergement/epis">
-        <div id="epis-nombre" tal:content="epis/heb_nombre_epis"/> <div id="epis-label" i18n:translate="epis">epis</div>
-  </div>
-  <div id="icon">
-    <div id="dog" tal:condition="hebergement/accept_dogs">Wouf</div>
-    <div id="smoker" tal:condition="hebergement/is_smoker">Fume</div>
-  </div>
-</fieldset>
+    <div id="typetype">
+        <a href=""
+           tal:attributes="href hebergement/@@url"
+           tal:content="hebergement/type/getType"></a>
+    </div>
+    <div id="vignette"></div>
+    <div id="title" tal:content="hebergement/heb_nom"></div>
+    <div id="type" tal:content="hebergement/type/getTitle"></div>
+    <div id="commune" tal:content="hebergement/commune/com_nom"></div>
+    <div id="capacite" tal:content="hebergement/heb_cgt_cap_max"></div>
+    <div id="capacite" i18n:translate="capacite-unite">personnes</div>
+
+    <div id="nbr_chmbre" tal:content="hebergement/heb_cgt_nbre_chmbre"></div>
+
+    <div id="nbr_chmbre-label" i18n:translate="chambre">chambres</div>
+
+    <div id="epis" tal:repeat="epis hebergement/epis">
+        <div id="epis-nombre" tal:content="epis/heb_nombre_epis"/> 
+        <div id="epis-label" i18n:translate="epis">epis</div>
+    </div>
+
+    <div id="icon">
+        <div id="dog" tal:condition="hebergement/accept_dogs">Wouf</div>
+        <div id="smoker" tal:condition="hebergement/is_smoker">Fume</div>
+    </div>
+</div>
