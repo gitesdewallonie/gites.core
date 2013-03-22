@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from five import grok
+from zope.interface import implements
+from .interfaces import IPackageView
 from Products.CMFCore.utils import getToolByName
 
 from gites.core.content.interfaces import IPackage
@@ -11,6 +13,7 @@ class Package(grok.View):
     """
     View on Idee Sejour
     """
+    implements(IPackageView)
     grok.context(IPackage)
     grok.name('package_view')
     grok.require('zope2.View')

@@ -46,10 +46,11 @@
              tal:condition="text"
              tal:attributes="class python:here.Format() in ('text/structured', 'text/x-rst', ) and 'stx' or 'plain'">
             <div tal:replace="structure text" />
-        </div>
-        <br/>
-        <span class="visualClear">
-        <div id="heb-listing" tal:content="structure provider:gites.heblisting" />
+            </div>
+            <br/>
+            <span class="visualClear">
+            <div id="heb-listing" tal:content="structure provider:gites.heblisting" />
+    <div id="viewlet-below-content" tal:content="structure provider:plone.belowcontentbody" />
 </div>
 </body>
 </html>

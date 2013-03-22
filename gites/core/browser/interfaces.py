@@ -100,6 +100,28 @@ class IHebergementIconsView(Interface):
         """
 
 
+class ITypeHebCommuneView(Interface):
+    """
+    Vue sur un type d hebergement et une commune
+    """
+
+    def typeHebergementName():
+        """
+        Get the hebergement type title translated
+        """
+
+    def communeName():
+        """
+        Get the name of the commune
+        """
+
+    def getHebergements():
+        """
+        Return the concerned hebergements in this Town for the selected
+        type of hebergement
+        """
+
+
 class IMoteurRecherche(Interface):
 
     def getHebergementByNameOrPk(reference):
@@ -116,6 +138,12 @@ class IMoteurRecherche(Interface):
         """
         retourne les deux groupes de types d hebergements
         """
+
+
+class IPackageView(Interface):
+    """
+    view on a package
+    """
 
 
 class ISendMail(Interface):
