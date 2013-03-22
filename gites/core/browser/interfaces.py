@@ -116,3 +116,19 @@ class IMoteurRecherche(Interface):
         """
         retourne les deux groupes de types d hebergements
         """
+
+
+class ISendMail(Interface):
+    """
+    Send Mail
+    """
+
+    def sendBlogSubscriptionMail():
+        """
+        envoi des informations d'inscription à la newsletter du blog
+        """
+
+    def sendMailToProprio():
+        """
+        Envoi un mail au proprio via le site
+        """

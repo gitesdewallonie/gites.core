@@ -12,6 +12,15 @@
       permission="zope2.View"
       />
 
+   <browser:page
+      for="*"
+      name="blog_newsletter_subscribe"
+      permission="zope.Public"
+      allowed_interface=".interfaces.ISendMail"
+      class=".SendMail.SendMail"
+      attribute="sendBlogSubscriptionMail"
+      />
+
   <browser:page
       for="*"
       name="boutique_item_view"

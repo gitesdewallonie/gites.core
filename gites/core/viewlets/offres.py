@@ -29,7 +29,7 @@ class IdeesSejours(grok.Viewlet):
 
     def getRandomIdeesSejours(self):
         cat = getToolByName(self.context, 'portal_catalog')
-        results = cat.searchResults(portal_type=['IdeeSejour'],
+        results = cat.searchResults(portal_type=['Package'],
                                     review_state='published')
         results = list(results)
         random.shuffle(results)
