@@ -1,9 +1,15 @@
 <div id="batch">
+<a href=""
+   tal:condition="not:viewlet/is_first_page"
+   ng-click="goToPreviousPage()">Précédent</a>
 <tal:pages tal:repeat="page_number viewlet/pages">
   <a href="" 
      tal:content="page_number"
      tal:attributes="ng-click string:goToPage(${page_number})" ng-click="goToPage(2)"/> 
 </tal:pages>
+<a href=""
+   tal:condition="not:viewlet/is_last_page"
+   ng-click="goToNextPage()">Suivant</a>
 </div>
 
 <div id="sort">

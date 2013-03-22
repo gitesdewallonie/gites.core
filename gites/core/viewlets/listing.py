@@ -82,6 +82,12 @@ class HebergementsInListing(grok.Viewlet):
     def batch_end(self):
         return self._fetcher.batch_end
 
+    def is_last_page(self):
+        return self._fetcher.selected_page() == len(self.pages()) - 1
+
+    def is_first_page(self):
+        return self._fetcher.selected_page() == 0
+
     def sort_items(self):
         return {'distance': _('Distance'),
                 'pers_numbers': _("Nombre de personnes"),

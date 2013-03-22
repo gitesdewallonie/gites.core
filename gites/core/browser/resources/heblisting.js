@@ -54,6 +54,17 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 
     $scope.update();
 
+    $scope.goToNextPage = function(){
+	 $scope.page++
+	 $scope.goToPage($scope.page);
+    }
+
+    $scope.goToPreviousPage = function(){
+         $scope.page--;
+	 $scope.goToPage($scope.page);
+    }
+
+
     $scope.goToPage = function(page){
 	 $scope.page = page;
          $cookieStore.put('listing_page', page);
