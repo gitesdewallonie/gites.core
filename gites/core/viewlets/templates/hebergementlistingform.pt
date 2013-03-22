@@ -2,19 +2,21 @@
      style="display:none;"></div>
 <div id="menu-selection">
     <form>
-        <label tal:repeat="filter viewlet/filters"></label>
-        <tal:inputs tal:define="heb_count python:viewlet.count_hebs(filter.met_pk)">
-            <input type="checkbox"
-                   id=""
-                   value="foo"
-                   ng-model="keywords['foo']"
-                   class="input-medium search-query"
-                   tal:attributes="value filter/met_id;
-                                   ng-model string:keywords['${filter/met_pk}'];
-                                   disabled not:heb_count"
-                   ng-click="updateKeywords()" /> 
-            <span tal:replace="filter/Title"/> 
-            (<span tal:replace="heb_count"/>)
-        </tal:inputs>
+        <tal:block tal:repeat="filter viewlet/filters">
+            <tal:inputs tal:define="heb_count python:viewlet.count_hebs(filter.met_pk)">
+                <label></label>
+                <input type="checkbox"
+                       id=""
+                       value="foo"
+                       ng-model="keywords['foo']"
+                       class="input-medium search-query"
+                       tal:attributes="value filter/met_id;
+                                       ng-model string:keywords['${filter/met_pk}'];
+                                       disabled not:heb_count"
+                       ng-click="updateKeywords()" /> 
+                <span tal:replace="filter/Title"/> 
+                (<span tal:replace="heb_count"/>)
+            </tal:inputs>
+        </tal:block>
     </form>
 </div>
