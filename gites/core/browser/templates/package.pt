@@ -39,6 +39,7 @@
             <br/>
             <span class="visualClear">
             <div id="heb-listing" tal:content="structure provider:gites.heblisting" />
+    <div id="viewlet-below-content" tal:content="structure provider:plone.belowcontentbody" />
 </div>
 </body>
 </html>

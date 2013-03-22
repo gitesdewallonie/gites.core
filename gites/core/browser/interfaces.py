@@ -116,3 +116,9 @@ class IMoteurRecherche(Interface):
         """
         retourne les deux groupes de types d hebergements
         """
+
+
+class IPackageView(Interface):
+    """
+    view on a package
+    """
