@@ -53,7 +53,6 @@ class HebergementFolderTraversable(DefaultPublishTraverse):
             name = self.nextName()
         # Determine view
         view_name = None
-        context = None
         if name.startswith('@@'):
             # A view has explicitly been requested, so make that the
             # view_name (stripping off the leading @@ which causes view
@@ -131,15 +130,6 @@ class HebergementFolderTraversable(DefaultPublishTraverse):
                 else:
                     return queryMultiAdapter((hebergement.__of__(self.context),
                                               self.request), name=page).__of__(self.context)
-
-        elif name in self.context.known_types_id:
-            # /hebergement/gites/
-            #              NAME
-            # affichage type d un gite
-            typeHeb = self.context.known_types_id.get(name)
-            typeHeb = self.getTypeHebByPk(int(typeHeb))
-            return queryMultiAdapter((typeHeb.__of__(self.context),
-                                      self.request), name='index.html').__of__(self.context)
         return None
 
     def nextName(self):
