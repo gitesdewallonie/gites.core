@@ -33,8 +33,10 @@
           Title or id
     </h1>
         <div id="largephoto">
-            <img src=""
-                 tal:attributes="src view/getVignetteURL" />
+            <img src="" title="" alt=""
+                 tal:attributes="src string: ${context/absolute_url}/largePhoto;
+                                 alt context/Title;
+                                 title context/Title">
         </div>
         <p class="documentDescription"
            tal:content="here/Description"

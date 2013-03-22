@@ -15,7 +15,7 @@
                     <a href=""
                        tal:attributes="href package/absolute_url">
                         <img src="" title="" alt=""
-                             tal:attributes="src string: ${package/absolute_url}/carouselPhoto;
+                             tal:attributes="src string: ${package/absolute_url}/largePhoto;
                                              alt package/Title;
                                              title package/Title">
                         <div class="carousel-caption">
@@ -38,8 +38,11 @@
                       <li id="insolite"><a href="#" i18n:translate="insolite">INSOLITE</a></li>
                   </ul>
               </div>
-              <div id="bouton-devenir-membre">
-                  <a href="" i18n:translate="devenir_membre">Devenir membre</a>
+              <div id="bouton-devenir-membre"
+                   tal:define="translate nocall:context/getTranslatedObjectUrl">
+                  <a href=""
+                     tal:attributes="href python:translate('association/devenir-membre')"
+                     i18n:translate="devenir_membre">Devenir membre</a>
               </div>
               <div class="break-float"></div>
         </div>

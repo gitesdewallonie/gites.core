@@ -104,7 +104,7 @@
         </form>
     </div><!--je connais-->
 
-    <div id="je-decouvre" tal:define="translate nocall:viewlet/getTranslatedObjectUrl">
+    <div id="je-decouvre" tal:define="translate nocall:context/getTranslatedObjectUrl">
         <h2 i18n:translate="je_decouvre">Je découvre</h2>
         <div class="break-float"></div>
         <div id="gitemeuble"><a tal:attributes="href python:translate('hebergement')">Gites et meublés</a></div>
