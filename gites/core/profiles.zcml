@@ -26,5 +26,13 @@
       profile="gites.core:default"
       />
 
+  <genericsetup:upgradeStep
+      title="gites core 0.3"
+      description=""
+      handler=".migrations.to_0_3.migrate"
+      destination="0.3"
+      profile="gites.core:default"
+      />
+
 </configure>
 

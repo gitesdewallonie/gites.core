@@ -2,6 +2,7 @@
       lang="en"
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="gites">
+
       <metal:javascript_head_slot fill-slot="javascript_head_slot">
         <script type="text/javascript"
                 src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
@@ -14,11 +15,16 @@
         <script type="text/javascript"
                 tal:attributes="src string:$portal_url/++resource++gdwcore/heblisting.js"></script>
       </metal:javascript_head_slot>
+
       <metal:css fill-slot="css_slot">
         <link rel="stylesheet"
               type="text/css"
               tal:attributes="href string:$portal_url/++resource++gdwcore/heblisting.css" />
       </metal:css>
+
+      <link metal:fill-slot="head_slot" rel="image_src"
+            href="" tal:attributes="href view/getVignetteURL" />
+
 <body>
 <div metal:fill-slot="main"
      tal:define="text context/getText;">
@@ -26,6 +32,10 @@
     <h1 tal:content="context/@@plone_context_state/object_title" class="documentFirstHeading">
           Title or id
     </h1>
+        <div id="largephoto">
+            <img src=""
+                 tal:attributes="src view/getVignetteURL" />
+        </div>
         <p class="documentDescription"
            tal:content="here/Description"
            tal:condition="here/Description">

@@ -26,23 +26,23 @@
         </p>
 
       <div class="idee_sejours_container"
-           tal:define="ideeTypes view/getIdeesTypes">
-        <fieldset tal:repeat="brain ideeTypes">
-          <div tal:define="ideeSejourType python:brain.getObject()"
+           tal:define="package view/getPackages">
+        <fieldset tal:repeat="brain package">
+          <div tal:define="packageObject python:brain.getObject()"
                id="div_idee_sejours">
-            <p tal:define="ideeSejourTypeUrl python: '/'.join(ideeSejourType.getPhysicalPath());
-                           vignette python:view.getRandomVignette(ideeSejourTypeUrl)[0]"
-               id="logo">
-                  <a href="" tal:attributes="href ideeSejourType/absolute_url">
+            <p tal:define="packageObjectUrl python: '/'.join(packageObject.getPhysicalPath());
+                           vignette python:view.getVignette(packageObjectUrl)"
+               id="logo-package">
+                  <a href="" tal:attributes="href packageObject/absolute_url">
                      <img src="" tal:attributes="src string:${vignette/getURL}/image_thumb"/><br />
                   </a>
             </p>
 
             <div id="info">
-               <a href="" tal:attributes="href ideeSejourType/absolute_url">
-                  <span id="title" tal:content="ideeSejourType/Title"/>
+               <a href="" tal:attributes="href packageObject/absolute_url">
+                  <span id="title" tal:content="packageObject/Title"/>
                   <span id="description">
-                      <p tal:content="structure ideeSejourType/Description"/>
+                      <p tal:content="structure packageObject/Description"/>
                   </span>
                </a>
              </div>

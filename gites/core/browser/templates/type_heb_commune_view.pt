@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="gites">
+<body>
+
+<div metal:fill-slot="main">
+
+  <h1>
+    <span tal:content="view/typeHebergementName"/> <span i18n:translate="in_location">in</span> <span tal:content="view/communeName"/>
+  </h1>
+  <div tal:define="hebergements view/getHebergements">
+
+  <center>
+  <metal:macro use-macro="here/hebergement_table/macros/hebergement_table" />
+  </center>
+  </div>
+
+</div>
+
+</body>
+</html>

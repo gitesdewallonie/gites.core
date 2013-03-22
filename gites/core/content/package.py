@@ -55,15 +55,6 @@ schema = Schema((
         default_output_type='text/html'
     ),
 
-    ImageField(
-        name='logo',
-        widget=ImageWidget(
-            label='Logo',
-            label_msgid='GitesContent_label_logo',
-            i18n_domain='gites',
-        ),
-    ),
-
     BooleanField(
         name='showInCarousel',
         languageIndependent=True,
@@ -75,10 +66,11 @@ schema = Schema((
     ),
 
     ImageField(
-        name='carouselPhoto',
+        name='largePhoto',
+        required=1,
         widget=ImageWidget(
             label='Photo large',
-            description="Photo utilisée pour le Carousel de la page d'accueil",
+            description="Photo utilisée dans le descriptif du produit et pour le Carousel de la page d'accueil",
         ),
     ),
 
