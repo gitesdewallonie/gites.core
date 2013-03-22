@@ -105,6 +105,7 @@ schema = Schema((
     LinesField(
         name='criteria',
         schemata=u'Criteres',
+        languageIndependent=True,
         vocabulary=CriteriaVocabularyFactory,
         widget=ChosenWidget(
             description="Critères du package",
@@ -118,6 +119,7 @@ schema = Schema((
         name='userCriteria',
         multiValued=1,
         schemata=u'Criteres',
+        languageIndependent=True,
         vocabulary=CriteriaVocabularyFactory,
         widget=ChosenWidget(
             description="""Critères à choisir par l'utilisateur""",
