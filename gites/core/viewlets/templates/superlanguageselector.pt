@@ -1,0 +1,30 @@
+<tal:language tal:condition="viewlet/available">
+<dl class="actionMenu" id="languageselector"
+    tal:define="languages viewlet/languages;
+                portal_url viewlet/portal_url;">
+      <dt class="actionMenuHeader">
+        <tal:language repeat="lang languages">
+          <tal:def tal:define="selected lang/selected">
+            <a href=""
+               tal:define="name lang/native|lang/name"
+               tal:condition="selected"
+               tal:attributes="href lang/url;
+                               title name"
+               tal:content="name" />
+          </tal:def>
+        </tal:language>
+      </dt>
+      <dd class="actionMenuContent">
+        <tal:language repeat="lang languages">
+          <tal:def tal:define="selected lang/selected">
+            <a href=""
+               tal:define="name lang/native|lang/name"
+               tal:condition="not: selected"
+               tal:attributes="href lang/url;
+                               title name"
+               tal:content="name" />
+          </tal:def>
+        </tal:language>
+      </dd>
+</dl>
+</tal:language>
