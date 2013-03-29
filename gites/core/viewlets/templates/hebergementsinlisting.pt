@@ -1,5 +1,5 @@
 <div id="listing-result-block">
-<div id="batch">
+<div id="listing-result-batch">
     <a href=""
        tal:condition="not:viewlet/is_first_page"
        ng-click="goToPreviousPage()">Précédent</a>
@@ -13,6 +13,7 @@
        ng-click="goToNextPage()">Suivant</a>
 </div>
 
+
 <div id="sort">
     <select ng-model="sort" ng-change="updateSort()">
         <tal:sort tal:repeat="sort_item python:viewlet.sort_items().items()">
@@ -21,11 +22,19 @@
     </select>
 </div>
 
-<div id="count" i18n:translate="heb_count">Hébergement <span i18n:name="" tal:replace="viewlet/batch_start"/> à
+<div class="break-float"></div>
+
+
+<div id="listing--result-count"
+     i18n:translate="heb_count">
+    Hébergement
+    <span i18n:name="" tal:replace="viewlet/batch_start"/>
+    à
     <span i18n:name="heb_number" tal:replace="viewlet/batch_end"/>
     sur un total de
     <span i18n:name="heb_number_total" tal:replace="viewlet/count"/>
 </div>
+
 
 <div class="hebergement-listing-detail"
      i18n:domain="gites"
@@ -35,7 +44,7 @@
            tal:attributes="href hebergement/@@url"
            tal:content="hebergement/type/getType"></a>
     </div>
-    <div id="vignette"></div>
+    <div id="vignette"><img src="vignette.png" /></div>
     <div id="title" tal:content="hebergement/heb_nom"></div>
     <div id="type" tal:content="hebergement/type/getTitle"></div>
     <div id="commune" tal:content="hebergement/commune/com_nom"></div>
