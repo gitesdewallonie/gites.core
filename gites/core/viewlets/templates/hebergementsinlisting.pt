@@ -26,9 +26,9 @@
     <span i18n:name="heb_number_total" tal:replace="viewlet/count"/>
 </div>
 
-<div class="hebergement"
-     i18n:domain="gites"
+<div i18n:domain="gites"
      tal:repeat="hebergement viewlet/hebergements">
+    <div class="hebergement-listing">
     <div id="typetype">
         <a href=""
            tal:attributes="href hebergement/@@url"
@@ -38,20 +38,21 @@
     <div id="title" tal:content="hebergement/heb_nom"></div>
     <div id="type" tal:content="hebergement/type/getTitle"></div>
     <div id="commune" tal:content="hebergement/commune/com_nom"></div>
-    <div id="capacite" tal:content="hebergement/heb_cgt_cap_max"></div>
-    <div id="capacite" i18n:translate="capacite-unite">personnes</div>
+    <div id="capacite-max" tal:content="hebergement/heb_cgt_cap_max"></div>
+    <div id="capacite-unite" i18n:translate="capacite-unite">personnes</div>
 
-    <div id="nbr_chmbre" tal:content="hebergement/heb_cgt_nbre_chmbre"></div>
+    <div id="chambre-nbre" tal:content="hebergement/heb_cgt_nbre_chmbre"></div>
 
-    <div id="nbr_chmbre-label" i18n:translate="chambre">chambres</div>
+    <div id="chambre-nbre-label" i18n:translate="chambre">chambres</div>
 
     <div id="epis" tal:repeat="epis hebergement/epis">
-        <div id="epis-nombre" tal:content="epis/heb_nombre_epis"/> 
-        <div id="epis-label" i18n:translate="epis">epis</div>
+        <div id="epis-nbre" tal:content="epis/heb_nombre_epis"/>
+        <div id="epis-nbre-label" i18n:translate="epis">epis</div>
     </div>
 
-    <div id="icon">
-        <div id="dog" tal:condition="hebergement/accept_dogs">Wouf</div>
-        <div id="smoker" tal:condition="hebergement/is_smoker">Fume</div>
+    <div id="icon-confort">
+        <div id="icon-confort-dog" tal:condition="hebergement/accept_dogs">Wouf</div>
+        <div id="icon-confort-smoker" tal:condition="hebergement/is_smoker">Fume</div>
     </div>
+    </div><!--hebergement-listing-->
 </div>

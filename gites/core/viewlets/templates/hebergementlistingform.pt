@@ -13,8 +13,8 @@
                        tal:attributes="value filter/met_id;
                                        ng-model string:keywords['${filter/met_pk}'];
                                        disabled not:heb_count"
-                       ng-click="updateKeywords()" /> 
-                <span tal:replace="filter/Title"/> 
+                       ng-click="updateKeywords()" />
+                <span tal:replace="filter/Title"/>
                 (<span tal:replace="heb_count"/>)
             </tal:inputs>
         </tal:block>
