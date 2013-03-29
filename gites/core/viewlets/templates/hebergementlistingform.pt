@@ -1,12 +1,12 @@
 <div id="spin"
      style="display:none;"></div>
-<div id="menu-selection">
+<div id="listing-result-gite-theme">
     <form>
         <tal:block tal:repeat="filter viewlet/filters">
             <tal:inputs tal:define="heb_count python:viewlet.count_hebs(filter.met_pk)">
-                <label></label>
                 <input type="checkbox"
-                       id=""
+                       id="gite-theme"
+                       name="gite-theme"
                        value="foo"
                        ng-model="keywords['foo']"
                        class="input-medium search-query"
@@ -14,8 +14,11 @@
                                        ng-model string:keywords['${filter/met_pk}'];
                                        disabled not:heb_count"
                        ng-click="updateKeywords()" />
-                <span tal:replace="filter/Title"/>
-                (<span tal:replace="heb_count"/>)
+                <label for="gite-theme">
+                    <span tal:replace="filter/Title"/>
+                    (<span tal:replace="heb_count"/>)
+                </label>
+                <br />
             </tal:inputs>
         </tal:block>
     </form>

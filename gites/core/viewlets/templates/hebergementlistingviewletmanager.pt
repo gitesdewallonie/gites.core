@@ -1,8 +1,10 @@
 <div id="listing-result"
      ng-app="listing"
      ng-controller="SearchCtrl"
-     class="list-container" angular-html-bind="listcontainer">
+     class="list-container"
+     angular-html-bind="listcontainer">
     <tal:viewlet tal:repeat="viewlet viewletmanager/viewlets">
         <div tal:replace="structure viewlet/render"/>
     </tal:viewlet>
+    <div class="break-float"></div>
 </div>

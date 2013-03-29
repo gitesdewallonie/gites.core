@@ -1,3 +1,4 @@
+<div id="listing-result-block">
 <div id="batch">
     <a href=""
        tal:condition="not:viewlet/is_first_page"
@@ -26,9 +27,9 @@
     <span i18n:name="heb_number_total" tal:replace="viewlet/count"/>
 </div>
 
-<div i18n:domain="gites"
+<div class="hebergement-listing-detail"
+     i18n:domain="gites"
      tal:repeat="hebergement viewlet/hebergements">
-    <div class="hebergement-listing">
     <div id="typetype">
         <a href=""
            tal:attributes="href hebergement/@@url"
@@ -54,5 +55,10 @@
         <div id="icon-confort-dog" tal:condition="hebergement/accept_dogs">Wouf</div>
         <div id="icon-confort-smoker" tal:condition="hebergement/is_smoker">Fume</div>
     </div>
-    </div><!--hebergement-listing-->
 </div>
+<div class="break-float"></div>
+</div><!--listing-result-block-->
+<div id="break-float"></div>
+
+
+
