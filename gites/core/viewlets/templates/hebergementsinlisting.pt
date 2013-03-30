@@ -36,13 +36,15 @@
 </div>
 
 
-<div class="hebergement-listing-detail"
-     i18n:domain="gites"
-     tal:repeat="hebergement viewlet/hebergements">
+<div tal:repeat="hebergement viewlet/hebergements">
+<div i18n:domain="gites"
+     tal:define="typeHeb hebergement/type/getType"
+     tal:attributes="class python: typeHeb=='gites' and 'hebergement-gite-listing-detail' or
+'hebergement-chambre-listing-detail'">
     <div id="typetype">
         <a href=""
            tal:attributes="href hebergement/@@url"
-           tal:content="hebergement/type/getType"></a>
+           tal:content="typeHeb"></a>
     </div>
     <div id="vignette"><img src="vignette.png" /></div>
     <div id="title" tal:content="hebergement/heb_nom"></div>
@@ -65,8 +67,8 @@
         <div id="icon-confort-smoker" tal:condition="hebergement/is_smoker">Fume</div>
     </div>
 </div>
-<div class="break-float"></div>
-</div><!--listing-result-block-->
+</div><!--attributes-->
+</div><!--repeat-->
 <div id="break-float"></div>
 
 
