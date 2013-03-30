@@ -42,7 +42,8 @@
      tal:attributes="class python: typeHeb=='gites' and 'hebergement-gite-listing-detail' or
 'hebergement-chambre-listing-detail'">
     <div id="typetype">
-        <span tal:content="typeHeb" />
+        <span tal:content="typeHeb"
+              class="texte-vertical" />
 
         <div class="btn-loupe-listing">
             <a href=""
