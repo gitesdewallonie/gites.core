@@ -42,9 +42,12 @@
      tal:attributes="class python: typeHeb=='gites' and 'hebergement-gite-listing-detail' or
 'hebergement-chambre-listing-detail'">
     <div id="typetype">
-        <a href=""
-           tal:attributes="href hebergement/@@url"
-           tal:content="typeHeb"></a>
+        <span tal:content="typeHeb" />
+
+        <div class="btn-loupe-listing">
+            <a href=""
+               tal:attributes="href hebergement/@@url"></a>
+        </div>
     </div>
     <div id="vignette"><img src="vignette.png" /></div>
     <div id="title" tal:content="hebergement/heb_nom"></div>
