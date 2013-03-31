@@ -46,7 +46,6 @@
     <div id="typetype">
         <span tal:content="typeHeb"
               class="texte-vertical" />
-
         <div class="btn-loupe-listing">
             <a href=""
                tal:attributes="href hebergement/@@url"></a>
@@ -67,7 +66,8 @@
     <div id="info-bloc-inf">
     <div id="capacite-max"
          i18n:translate="capacite-unite">
-         <span tal:content="hebergement/heb_cgt_cap_max" />
+         <span tal:content="hebergement/heb_cgt_cap_max"
+               class="nombre" />
         personnes
     </div>
 
@@ -80,17 +80,27 @@
     <div id="nbre-epis"
          tal:repeat="epis hebergement/epis">
         <div id="epis-nbre"
-             tal:content="epis/heb_nombre_epis"/>
-        <div id="epis-nbre-label"
-             i18n:translate="epis">epis</div>
+             i18n:translate="epis">
+          <span tal:content="epis/heb_nombre_epis"
+                class="nombre" />
+          epis
+        </div>
     </div>
 
     <div id="icon-confort">
         <div id="icon-confort-dog"
-             tal:condition="hebergement/accept_dogs">Wouf</div>
+             tal:define="dog hebergement/accept_dogs"
+             tal:attributes="class python: dog and 'dog' or 'no-dog'">
+        </div>
+
         <div id="icon-confort-smoker"
-             tal:condition="hebergement/is_smoker">Fume</div>
+             tal:condition="hebergement/is_smoker"
+             tal:define="smoker hebergement/is_smoker"
+             tal:attributes="class python: smoker and 'smoke' or 'no-smoke'">
+        </div>
     </div>
+
+    <span tal:content="hebergement/heb_pk" class="reference" />
 
     <div id="commune"
          tal:content="hebergement/commune/com_nom"></div>
