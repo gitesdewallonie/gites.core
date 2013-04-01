@@ -3,179 +3,228 @@
       lang="en"
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="gites">
-  <body>dd
+<body>
     <metal:block fill-slot="style_slot">
-      <link rel="stylesheet"
-            href="++resource++timeframe.css"
-            type="text/css"
-            media="screen"
-            title="timeframe"
-            charset="utf-8" />
+        <link rel="stylesheet"
+              href="++resource++timeframe.css"
+              type="text/css"
+              media="screen"
+              title="timeframe"
+              charset="utf-8" />
 
-      <script type="text/javascript"
-              charset="utf-8"
-              src="++resource++prototype16.js"></script>
+        <script type="text/javascript"
+                charset="utf-8"
+                src="++resource++prototype16.js"></script>
 
-      <script type="text/javascript"
-              charset="utf-8"
-              src="++resource++gitetimeframe.js"></script>
+        <script type="text/javascript"
+                charset="utf-8"
+                src="++resource++gitetimeframe.js"></script>
 
-      <script type="text/javascript"
-              charset="utf-8"
-              tal:condition="view/showCalendar"
-              tal:content="view/calendarJS" />
+        <script type="text/javascript"
+                charset="utf-8"
+                tal:condition="view/showCalendar"
+                tal:content="view/calendarJS"></script>
 
-      <script type="text/javascript"
-              src=""
-              charset="utf-8"
-              tal:attributes="src string:${here/portal_url}/++theme++gites.theme/accordeon/jquery.accordionza.min.js"></script>
+        <script type="text/javascript"
+                src=""
+                charset="utf-8"
+                tal:attributes="src string:${here/portal_url}/++theme++gites.theme/accordeon/jquery.accordionza.min.js"></script>
 
-      <script type="text/javascript"
-              src=""
-              charset="utf-8"
-              tal:attributes="src string:${here/portal_url}/++theme++gites.theme/accordeon/script.js"></script>
-
-
+        <script type="text/javascript"
+                src=""
+                charset="utf-8"
+                tal:attributes="src string:${here/portal_url}/++theme++gites.theme/accordeon/script.js"></script>
     </metal:block>
-    <div metal:fill-slot="content-core">
-
-      <div tal:define="heb context; hebergementIcons context/@@hebergement_icons; redirection view/redirectInactive;">
-
+<div metal:fill-slot="content-core">
+    <div tal:define="heb context; hebergementIcons context/@@hebergement_icons; redirection view/redirectInactive;">
         <!-- Bannière titre + info -->
         <div style="display:table; table-layout:fixed;">
-        <span tal:content="heb/heb_nom" />|
-        <div style="display: table-cell;"
-             tal:condition="python:heb.type.type_heb_code == 'MV'">
-             Clés |
-        <br />
-        <tal:for repeat="epis heb/epis">
-          <span tal:content="epis/heb_nombre_epis" />
-        </tal:for>
-        <tal:if condition="python:len(heb.epis)==0">
-          <span>-</span>
-        </tal:if></div>
-        <div style="display: table-cell;"
-             tal:condition="python:heb.type.type_heb_code != 'MV'">
-             Epis |
-        <br />
-        <tal:for repeat="epis heb/epis">
-          <span tal:content="epis/heb_nombre_epis" />
-        </tal:for>
-        <tal:if condition="python:len(heb.epis)==0">
-          <span>-</span>
-        </tal:if></div>
-        <div style="display: table-cell;">Personnes |
-        <br />
-        <span tal:content="string: ${heb/heb_cgt_cap_min}/${heb/heb_cgt_cap_max}" /></div>
-        <div style="display: table-cell;">Chambres |
-        <br />
-        <span tal:content="heb/heb_cgt_nbre_chmbre" /></div>
-        <div style="display: table-cell;">Lit 1 personne |
-        <br />
-        <span tal:content="heb/heb_lit_1p" /></div>
-        <div style="display: table-cell;">Lit 2 personnes |
-        <br />
-        <span tal:content="heb/heb_lit_2p" /></div>
-        <div style="display: table-cell;">Lits supérposés |
-        <br />
-        <span tal:content="heb/heb_lit_sup" /></div>
-        <div style="display: table-cell;">Lit enfant |
-        <br />
-        <span tal:content="heb/heb_lit_enf" /></div>
-        <div style="display: table-cell;">N° |
-        <br />
-        <span tal:content="heb/heb_pk" /></div>
-        <br />
-        <div style="display: table-cell;">Thèmes
-        <br />
-        <tal:repeat repeat="theme python:view.getHebMetadatasByType('themes')">
-            <span tal:content="theme/title" />
-        </tal:repeat>
-        </div></div>
+            <span tal:content="heb/heb_nom" />|
+            <div style="display: table-cell;"
+                 tal:condition="python:heb.type.type_heb_code == 'MV'">
+                Clés |
+                <br />
+                <tal:for repeat="epis heb/epis">
+                    <span tal:content="epis/heb_nombre_epis" />
+                </tal:for>
+                <tal:if condition="python:len(heb.epis)==0">
+                    <span>-</span>
+                </tal:if>
+            </div>
+            <div style="display: table-cell;"
+                 tal:condition="python:heb.type.type_heb_code != 'MV'">
+                 Epis |
+            <br />
+            <tal:for repeat="epis heb/epis">
+              <span tal:content="epis/heb_nombre_epis" />
+            </tal:for>
+            <tal:if condition="python:len(heb.epis)==0">
+              <span>-</span>
+            </tal:if>
+            </div>
+            <div style="display: table-cell;">Personnes |
+                <br />
+                <span tal:content="string: ${heb/heb_cgt_cap_min}/${heb/heb_cgt_cap_max}" />
+            </div>
+            <div style="display: table-cell;">Chambres |
+                <br />
+                <span tal:content="heb/heb_cgt_nbre_chmbre" />
+            </div>
+            <div style="display: table-cell;">Lit 1 personne |
+                <br />
+                <span tal:content="heb/heb_lit_1p" />
+            </div>
+            <div style="display: table-cell;">Lit 2 personnes |
+                <br />
+                <span tal:content="heb/heb_lit_2p" />
+            </div>
+            <div style="display: table-cell;">Lits supérposés |
+                <br />
+                <span tal:content="heb/heb_lit_sup" />
+            </div>
+            <div style="display: table-cell;">Lit enfant |
+                <br />
+                <span tal:content="heb/heb_lit_enf" />
+            </div>
+            <div style="display: table-cell;">N° |
+                <br />
+                <span tal:content="heb/heb_pk" />
+            </div>
+            <br />
+            <div style="display: table-cell;">Thèmes
+                <br />
+                <tal:repeat repeat="theme python:view.getHebMetadatasByType('themes')">
+                    <span tal:content="theme/title" />
+                </tal:repeat>
+            </div>
+        </div>
         <br />
         <br />
 
         <ul id="descriptif-accordeon">
-        <!-- ACCUEIL -->
+            <!-- ACCUEIL -->
             <li class="slide1">
                 <div class="slide_handle"><div></div></div>
                 <div class="slide_content">
                     <h2>Accueil</h2>
                 <div style="display:table; table-layout:fixed;">
-                  <div style="display: table-cell;">
-                    <img src=""
-                         tal:attributes="src string:${here/photos_heb/absolute_url}/${heb/heb_code_gdw}00.jpg" />
-                  </div>
-                  <div style="display: table-cell;"
-                       tal:condition="view/showCalendar">
-                    <div id="calendars"></div>
-                    <input type="hidden"
-                           id="reset" />
-                    <input type="hidden"
-                           name="start"
-                           value=""
-                           id="start" />
-                    <input type="hidden"
-                           name="end"
-                           value=""
-                           id="end" />
-                  </div>
-                  <div style="display: table-cell;"
-                       tal:condition="python:heb.type.type_heb_code not in 'CH, MH, CHECR'">
+                      <div style="display: table-cell;">
+                        <img src=""
+                             tal:attributes="src string:${here/photos_heb/absolute_url}/${heb/heb_code_gdw}00.jpg" />
+                      </div>
+                      <div style="display: table-cell;"
+                           tal:condition="view/showCalendar">
+                        <div id="calendars"></div>
+                        <input type="hidden"
+                               id="reset" />
+                        <input type="hidden"
+                               name="start"
+                               value=""
+                               id="start" />
+                        <input type="hidden"
+                               name="end"
+                               value=""
+                               id="end" />
+                </div>
 
-                    <div style="display: table-cell;">Période
-                    <br />Basse Saison
-                    <br />Moyenne Saison
-                    <br />Haute Saison
-                    <br />3 nuits
-                    <br />4 nuits
-                    <br />Fin d'année
-                    <br />Garantie
-                    <br />Charge
-                    <br />Taxe de séjour
-                    <br />Divers
-                    <br /></div>
-                    <div style="display: table-cell;">| WE
-                    <br />| 
-                    <span tal:content="heb/heb_tarif_we_bs" />
-                    <br />| 
-                    <span tal:content="heb/heb_tarif_we_ms" />
-                    <br />| 
-                    <span tal:content="heb/heb_tarif_we_hs" />
-                    <br />| 
-                    <span tal:content="heb/heb_tarif_we_3n" />
-                    <br />| 
-                    <span tal:content="heb/heb_tarif_we_4n" />
-                    <br />| ---
-                    <br />| 
-                    <span tal:content="heb/heb_tarif_garantie" />
-                    <br />
-                    <span tal:condition="exists: heb/heb_tarif_charge">|
-                    <span tal:content="heb/heb_iarif_charge" />
-                    <span tal:content="view/getHebergementCharge" />
-                    <br /></span>
-                    <span tal:condition="not: exists: heb/heb_tarif_charge">
-                    | ---
-                    <br /></span>|
-                    <span tal:content="heb/heb_taxe_montant" />
-                    <br />|
-                    <span tal:content="heb/heb_tarif_divers" />
-                    <br /></div>
-                    <div style="display: table-cell;">| Semaine
-                    <br />|
-                    <span tal:content="heb/heb_tarif_sem_bs" />
-                    <br />|
-                    <span tal:content="heb/heb_tarif_sem_ms" />
-                    <br />|
-                    <span tal:content="heb/heb_tarif_sem_hs" />
-                    <br />| ---
-                    <br />| ---
-                    <br />|
-                    <span tal:content="heb/heb_tarif_semaine_fin_annee" />
-                    <br /></div>
-                  </div>
-                  <div style="display: table-cell;"
-                       tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR'">
+                <!--TABLE TARIFICATION GITES-->
+                <div tal:condition="python:heb.type.type_heb_code not in 'CH, MH, CHECR'">
+                    <table id="tarification-gite">
+                        <tr>
+                           <td align="center"><span>Période</span></td>
+                           <td align="center"><span>WE</span></td>
+                           <td align="center"><span>Semaine</span></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp; <span>Basse saison</span></td>
+                            <td align="center" bgcolor="#ACE087">
+                                <span tal:content="heb/heb_tarif_we_bs" />
+                            </td>
+                            <td align="center" bgcolor="#8BBE67">
+                                 <span tal:content="heb/heb_tarif_sem_bs" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp; <span>Moyenne saison</span></td>
+                            <td align="center" bgcolor="#ACE087">
+                                <span tal:content="heb/heb_tarif_we_ms" />
+                            </td>
+                            <td align="center" bgcolor="#8BBE67">
+                                 <span tal:content="heb/heb_tarif_sem_ms" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp; <span>Haute saison</span></td>
+                            <td align="center" bgcolor="#ACE087">
+                                 <span tal:content="heb/heb_tarif_we_hs" />
+                            </td>
+                            <td align="center" bgcolor="#8BBE67">
+                                 <span tal:content="heb/heb_tarif_sem_hs" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp; <span>WE de fête 3 nuits</span></td>
+                            <td align="center" bgcolor="#ACE087">
+                                 <span tal:content="heb/heb_tarif_we_3n" />
+                            </td>
+                            <td align="center" bgcolor="#8BBE67">-</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp; <span>WE de fête 4 nuits</span></td>
+                            <td align="center" bgcolor="#ACE087">
+                                 <span tal:content="heb/heb_tarif_we_4n" />
+                            </td>
+                            <td align="center" bgcolor="#8BBE67">-</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp; <span>Fin d'année</span></td>
+                            <td align="center" bgcolor="#ACE087">-</td>
+                            <td align="center" bgcolor="#8BBE67">
+                                 <span tal:content="heb/heb_tarif_semaine_fin_annee" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">&nbsp;</td>
+                        </tr>
+                        <tr bgcolor="#ceddce">
+                            <td>&nbsp;&nbsp; <span>Garantie</span></td>
+                            <td colspan="2" align="left">
+                                <span tal:content="heb/heb_tarif_garantie" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp; <span>Charges</span></td>
+                            <td colspan="2" align="left">
+                                <span tal:condition="exists: heb/heb_tarif_charge">|
+                                <span tal:content="heb/heb_tarif_charge" />
+                                <span tal:content="view/getHebergementCharge" />
+                                <br /></span>
+                                <span tal:condition="not: exists: heb/heb_tarif_charge">---</span>
+                            </td>
+                        </tr>
+                        <tr bgcolor="#ceddce">
+                            <td>&nbsp;&nbsp; <span>Taxe de séjour</span></td>
+                            <td colspan="2" align="left">
+                                <span tal:content="heb/heb_taxe_montant" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;&nbsp; <span>Divers</span></td>
+                            <td colspan="2" align="left">
+                                <span tal:content="heb/heb_tarif_divers" />
+                            </td>
+                        </tr>
+                     </table>
+                </div>
+
+                <!--TABLE TARIFICATION CHAMBRE-->
+                <div tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR'">
 
                     <div style="display: table-cell;">Nombre de personnes
                     <br />1 personne
@@ -214,10 +263,10 @@
                   </div>
                 </div>
                 <br />
-            </div>
-        </li>
-        <!-- DESCRIPTION -->
-        <li class="slide2">
+                </div>
+            </li>
+            <!-- DESCRIPTION -->
+            <li class="slide2">
             <div class="slide_handle"><div></div></div>
             <div class="slide_content">
                 <h2>Description</h2>
@@ -344,6 +393,6 @@
         </li>
         </ul>
       </div>
-    </div>
+</div><!--metal-->
 </body>
 </html>
