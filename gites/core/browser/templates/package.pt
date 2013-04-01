@@ -50,23 +50,32 @@
         </div>
     </div>
 
+    <!--
     <div id="menu-sup-package">
         <span  tal:content="context/@@plone_context_state/object_title"></span>
     </div>
+    -->
+
+    <!--
     <div id="viewlet-above-content"
          tal:content="structure provider:plone.abovecontenttitle">
     </div>
+    -->
 
-    <div id="largephoto">
+    <div id="package-large-photo">
         <img src=""
              tal:attributes="src view/getVignetteURL" />
     </div>
-    <p class="documentDescription"
-       tal:content="here/Description"
-       tal:condition="here/Description">
-          Description
-    </p>
-    <div class="stx"
+
+    <div id="package-description">
+        <p tal:content="here/Description"
+           tal:condition="here/Description">
+           Description
+        </p>
+    </div>
+
+    <div id="package-content"
+         class="stx"
          tal:condition="text"
          tal:attributes="class python:here.Format() in ('text/structured', 'text/x-rst', ) and 'stx' or 'plain'">
         <div tal:replace="structure text"></div>
