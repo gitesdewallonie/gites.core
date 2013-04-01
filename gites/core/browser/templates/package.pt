@@ -22,41 +22,49 @@
               tal:attributes="href string:$portal_url/++resource++gdwcore/heblisting.css" />
       </metal:css>
 
-      <link metal:fill-slot="head_slot" rel="image_src"
-            href="" tal:attributes="href view/getVignetteURL" />
+      <link metal:fill-slot="head_slot"
+            rel="image_src"
+            href=""
+            tal:attributes="href view/getVignetteURL" />
 
 <body>
 <div metal:fill-slot="main"
      tal:define="text context/getText;">
 
-      <script>
-          window.onscroll = function() {
-              var scroll = (document.documentElement.scrollTop || document.body.scrollTop);
-              if(scroll>200)
-                  document.getElementById('aside').style.top = scroll+'px';
-              }
-      </script>
-
-
+    <script>
+        window.onscroll = function() {
+            var scroll = (document.documentElement.scrollTop || document.body.scrollTop);
+            if(scroll>200)
+              document.getElementById('aside').style.top = scroll+'px';
+        }
+    </script>
     <div id="aside">
-        <h1 tal:content="context/@@plone_context_state/object_title"
-            class="documentFirstHeading">
-              Title or id
-        </h1>
-        voir les 52 hébergements.
+        <div id="aside-content">
+            <h1 tal:content="context/@@plone_context_state/object_title"
+                class="documentFirstHeading">
+                Title or id
+            </h1>
+            <div id="aside-info">
+              voir les 52 hébergements.
+            </div>
+        </div>
     </div>
 
-    <div id="menu-sup-package"><span  tal:content="context/@@plone_context_state/object_title"></span></div>
-    <div id="viewlet-above-content" tal:content="structure provider:plone.abovecontenttitle"></div>
+    <div id="menu-sup-package">
+        <span  tal:content="context/@@plone_context_state/object_title"></span>
+    </div>
+    <div id="viewlet-above-content"
+         tal:content="structure provider:plone.abovecontenttitle">
+    </div>
 
     <div id="largephoto">
-            <img src=""
-                 tal:attributes="src view/getVignetteURL" />
+        <img src=""
+             tal:attributes="src view/getVignetteURL" />
     </div>
     <p class="documentDescription"
-           tal:content="here/Description"
-           tal:condition="here/Description">
-            Description
+       tal:content="here/Description"
+       tal:condition="here/Description">
+          Description
     </p>
     <div class="stx"
          tal:condition="text"
