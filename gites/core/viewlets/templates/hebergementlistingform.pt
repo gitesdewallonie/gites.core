@@ -17,7 +17,7 @@
                 <label for="gite-theme">
                     <span tal:replace="filter/Title"/>
                     (<span tal:replace="heb_count"/>)
-                </label>
+               </label>
                 <br />
             </tal:inputs>
         </tal:block>

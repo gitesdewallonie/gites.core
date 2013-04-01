@@ -30,7 +30,6 @@
 <body>
 <div metal:fill-slot="main"
      tal:define="text context/getText;">
-
     <script>
         window.onscroll = function() {
             var scroll = (document.documentElement.scrollTop || document.body.scrollTop);
@@ -87,6 +86,6 @@
          tal:content="structure provider:gites.heblisting"></div>
     <div id="viewlet-below-content"
          tal:content="structure provider:plone.belowcontentbody"></div>
-</div>
+</div><!--metal-->
 </body>
 </html>
