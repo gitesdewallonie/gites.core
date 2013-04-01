@@ -3,7 +3,7 @@
       lang="en"
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="gites">
-  <body>
+  <body>dd
     <metal:block fill-slot="style_slot">
       <link rel="stylesheet"
             href="++resource++timeframe.css"
@@ -43,10 +43,10 @@
 
         <!-- Bannière titre + info -->
         <div style="display:table; table-layout:fixed;">
-        <span tal:content="heb/heb_nom" />| 
+        <span tal:content="heb/heb_nom" />|
         <div style="display: table-cell;"
              tal:condition="python:heb.type.type_heb_code == 'MV'">
-             Clés | 
+             Clés |
         <br />
         <tal:for repeat="epis heb/epis">
           <span tal:content="epis/heb_nombre_epis" />
@@ -56,7 +56,7 @@
         </tal:if></div>
         <div style="display: table-cell;"
              tal:condition="python:heb.type.type_heb_code != 'MV'">
-             Epis | 
+             Epis |
         <br />
         <tal:for repeat="epis heb/epis">
           <span tal:content="epis/heb_nombre_epis" />
@@ -64,43 +64,43 @@
         <tal:if condition="python:len(heb.epis)==0">
           <span>-</span>
         </tal:if></div>
-        <div style="display: table-cell;">Personnes | 
+        <div style="display: table-cell;">Personnes |
         <br />
         <span tal:content="string: ${heb/heb_cgt_cap_min}/${heb/heb_cgt_cap_max}" /></div>
-        <div style="display: table-cell;">Chambres | 
+        <div style="display: table-cell;">Chambres |
         <br />
         <span tal:content="heb/heb_cgt_nbre_chmbre" /></div>
-        <div style="display: table-cell;">Lit 1 personne | 
+        <div style="display: table-cell;">Lit 1 personne |
         <br />
         <span tal:content="heb/heb_lit_1p" /></div>
-        <div style="display: table-cell;">Lit 2 personnes | 
+        <div style="display: table-cell;">Lit 2 personnes |
         <br />
         <span tal:content="heb/heb_lit_2p" /></div>
-        <div style="display: table-cell;">Lits supérposés | 
+        <div style="display: table-cell;">Lits supérposés |
         <br />
         <span tal:content="heb/heb_lit_sup" /></div>
-        <div style="display: table-cell;">Lit enfant | 
+        <div style="display: table-cell;">Lit enfant |
         <br />
         <span tal:content="heb/heb_lit_enf" /></div>
-        <div style="display: table-cell;">N° | 
+        <div style="display: table-cell;">N° |
         <br />
         <span tal:content="heb/heb_pk" /></div>
         <br />
-        <div style="display: table-cell;">Thèmes  
+        <div style="display: table-cell;">Thèmes
         <br />
         <tal:repeat repeat="theme python:view.getHebMetadatasByType('themes')">
-            <span tal:content="theme/title" /> 
+            <span tal:content="theme/title" />
         </tal:repeat>
         </div></div>
         <br />
         <br />
 
-    	<ul id="descriptif-accordeon">
+        <ul id="descriptif-accordeon">
         <!-- ACCUEIL -->
-		<li class="slide1">
-			<div class="slide_handle"><div></div></div>
-			<div class="slide_content">
-                <h2>Accueil</h2>
+            <li class="slide1">
+                <div class="slide_handle"><div></div></div>
+                <div class="slide_content">
+                    <h2>Accueil</h2>
                 <div style="display:table; table-layout:fixed;">
                   <div style="display: table-cell;">
                     <img src=""
@@ -150,27 +150,27 @@
                     <br />| 
                     <span tal:content="heb/heb_tarif_garantie" />
                     <br />
-                    <span tal:condition="exists: heb/heb_tarif_charge">| 
+                    <span tal:condition="exists: heb/heb_tarif_charge">|
                     <span tal:content="heb/heb_iarif_charge" />
                     <span tal:content="view/getHebergementCharge" />
                     <br /></span>
                     <span tal:condition="not: exists: heb/heb_tarif_charge">
                     | ---
-                    <br /></span>| 
+                    <br /></span>|
                     <span tal:content="heb/heb_taxe_montant" />
-                    <br />| 
+                    <br />|
                     <span tal:content="heb/heb_tarif_divers" />
                     <br /></div>
                     <div style="display: table-cell;">| Semaine
-                    <br />| 
+                    <br />|
                     <span tal:content="heb/heb_tarif_sem_bs" />
-                    <br />| 
+                    <br />|
                     <span tal:content="heb/heb_tarif_sem_ms" />
-                    <br />| 
+                    <br />|
                     <span tal:content="heb/heb_tarif_sem_hs" />
                     <br />| ---
                     <br />| ---
-                    <br />| 
+                    <br />|
                     <span tal:content="heb/heb_tarif_semaine_fin_annee" />
                     <br /></div>
                   </div>
@@ -188,38 +188,38 @@
                     <br /></div>
                     <div style="display: table-cell;">| Nuitée avec petit
                     déjeuner
-                    <br />| 
+                    <br />|
                     <span tal:content="heb/heb_tarif_chmbr_avec_dej_1p" />
-                    <br />| 
+                    <br />|
                     <span tal:content="heb/heb_tarif_chmbr_avec_dej_2p" />
-                    <br />| 
+                    <br />|
                     <span tal:content="heb/heb_tarif_chmbr_avec_dej_3p" />
                     <br />
-                    <br />| 
+                    <br />|
                     <span tal:content="heb/heb_taxe_montant" />
-                    <br />| 
+                    <br />|
                     <span tal:content="heb/heb_tarif_chmbr_autre_1p" />
-                    <br />| 
+                    <br />|
                     <span tal:content="heb/heb_tarif_chmbr_table_hote_1p" />
                     <br /></div>
                     <div style="display: table-cell;">| Déduction si pas
                     petit déjeuner
-                    <br />| 
+                    <br />|
                     <span tal:content="heb/heb_tarif_chmbr_sans_dej_1p" />
-                    <br />| 
+                    <br />|
                     <span tal:content="heb/heb_tarif_chmbr_sans_dej_2p" />
-                    <br />| 
+                    <br />|
                     <span tal:content="heb/heb_tarif_chmbr_sans_dej_3p" />
                     <br /></div>
                   </div>
                 </div>
                 <br />
-        			</div>
-		</li>
+            </div>
+        </li>
         <!-- DESCRIPTION -->
-		<li class="slide2">
-			<div class="slide_handle"><div></div></div>
-			<div class="slide_content">
+        <li class="slide2">
+            <div class="slide_handle"><div></div></div>
+            <div class="slide_content">
                 <h2>Description</h2>
                 <div style="display:table; table-layout:fixed;">
                   <div style="display: table-cell;">
@@ -262,22 +262,22 @@
                   </div>
                 </div>
                 <br />
-			</div>
-		</li>
+            </div>
+        </li>
         <!-- DISPONIBILITE -->
-		<li class="slide3">
-			<div class="slide_handle"><div></div></div>
-			<div class="slide_content">
+        <li class="slide3">
+          <div class="slide_handle"><div></div></div>
+            <div class="slide_content">
                 <h2>Disponibilité</h2>
                 <div>
                 </div>
                 <br />
-			</div>
-		</li>
+            </div>
+        </li>
         <!-- PHOTOS -->
-		<li class="slide4">
-			<div class="slide_handle"><div></div></div>
-			<div class="slide_content">
+        <li class="slide4">
+            <div class="slide_handle"><div></div></div>
+            <div class="slide_content">
                 <h2>Photos</h2>
                 <div>
                   <tal:loop repeat="vignetteUrl view/getVignettesUrl">
@@ -289,21 +289,21 @@
                   </tal:loop>
                 </div>
                 <br />
-			</div>
-		</li>
+            </div>
+        </li>
         <!-- LOCALISATION -->
-		<li class="slide5">
-			<div class="slide_handle"><div></div></div>
-			<div class="slide_content">
+        <li class="slide5">
+            <div class="slide_handle"><div></div></div>
+            <div class="slide_content">
                 <h2>Localisation</h2>
                 <div></div>
                 <br />
-			</div>
-		</li>
+            </div>
+        </li>
         <!-- CONTACT -->
-		<li class="slide6">
-			<div class="slide_handle"><div></div></div>
-			<div class="slide_content">
+        <li class="slide6">
+            <div class="slide_handle"><div></div></div>
+            <div class="slide_content">
                 <h2>Contact</h2>
                 <div>
                   <span tal:content="heb/proprio/civilite/civ_titre" />
@@ -340,10 +340,10 @@
                     </a>
                   </div>
                 </div>
-			</div>
-		</li>
-    	</ul>
+            </div>
+        </li>
+        </ul>
       </div>
     </div>
-  </body>
+</body>
 </html>
