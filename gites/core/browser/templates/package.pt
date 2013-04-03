@@ -11,7 +11,7 @@
         <script type="text/javascript"
                 src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular-sanitize.min.js"></script>
         <script type="text/javascript"
-                src="http://fgnass.github.com/spin.js/spin.js"></script>
+                tal:attributes="src string:${here/portal_url}/++theme++gites.theme/scripts/spin.js"></script>
         <script type="text/javascript"
                 tal:attributes="src string:$portal_url/++resource++gdwcore/heblisting.js"></script>
         <script type="text/javascript"
