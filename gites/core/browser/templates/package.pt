@@ -11,9 +11,11 @@
         <script type="text/javascript"
                 src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular-sanitize.min.js"></script>
         <script type="text/javascript"
-                src="http://fgnass.github.com/spin.js/spin.js"></script>
+                tal:attributes="src string:${here/portal_url}/++theme++gites.theme/scripts/spin.js"></script>
         <script type="text/javascript"
                 tal:attributes="src string:$portal_url/++resource++gdwcore/heblisting.js"></script>
+        <script type="text/javascript"
+                tal:attributes="src string:${here/portal_url}/++theme++gites.theme/scripts/package.js"></script>
       </metal:javascript_head_slot>
 
       <metal:css fill-slot="css_slot">
@@ -31,36 +33,26 @@
 <div metal:fill-slot="main"
      tal:define="text context/getText;">
     <script>
-        window.onscroll = function() {
-            var scroll = (document.documentElement.scrollTop || document.body.scrollTop);
-            if(scroll>200)
-              document.getElementById('aside').style.top = scroll+'px';
-        }
     </script>
     <div id="aside">
-        <div id="aside-content">
-            <h1 tal:content="context/@@plone_context_state/object_title"
-                class="documentFirstHeading">
-                Title or id
-            </h1>
-            <div id="aside-info">
-              voir les 52 hébergements.
+        <div class="scroller_anchor"></div>
+        <div id="aside-container">
+            <div id="aside-content" class="scroller">
+                <h1 tal:content="context/@@plone_context_state/object_title"
+                    class="documentFirstHeading">
+                    Title or id
+                </h1>
+                <div id="aside-info">
+                  voir les 52 hébergements.
+                </div>
             </div>
         </div>
     </div>
 
-    <!--
-    <div id="menu-sup-package">
-        <span  tal:content="context/@@plone_context_state/object_title"></span>
-    </div>
-    -->
-
-    <!--
     <div id="viewlet-above-content"
          tal:content="structure provider:plone.abovecontenttitle">
     </div>
-    -->
-
+   
     <div id="package-large-photo">
         <img src=""
              tal:attributes="src view/getVignetteURL" />

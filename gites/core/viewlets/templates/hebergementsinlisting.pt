@@ -68,8 +68,9 @@
                 </div>
 
                 <div id="nbre-chambre"
-                     i18n:translate="chambre">
-                    <span tal:content="hebergement/heb_cgt_nbre_chmbre" />
+                     i18n:translate="x_chambres">
+                    <span tal:content="hebergement/heb_cgt_nbre_chmbre"
+                          class="nombre" />
                     chambres
                 </div>
 
