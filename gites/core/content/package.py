@@ -10,6 +10,7 @@ from AccessControl import ClassSecurityInfo
 from zope.interface import implements
 from plone.app.folder import folder
 from plone.app.blob.field import ImageField
+from Products.Maps.interfaces import IMarker
 from Products.CMFCore.interfaces import IContentish
 from Products.Archetypes.Field import DateTimeField, LinesField, BooleanField
 from Products.Archetypes.Widget import CalendarWidget, BooleanWidget
@@ -20,7 +21,8 @@ from Products.Archetypes.interfaces import (IBaseFolder,
 from Products.ATContentTypes.content.folder import ATFolder
 from Products.LinguaPlone.public import (Schema, TextField, RichWidget,
                                          ImageWidget,
-                                         TextAreaWidget, registerType)
+                                         TextAreaWidget, registerType,
+                                         IntegerField, IntegerWidget)
 
 from monet.mapsviewlet.interfaces import IMonetMapsEnabledContent
 
@@ -107,6 +109,16 @@ schema = Schema((
             i18n_domain='gites',
         )
     ),
+    IntegerField(
+        name='range',
+        schemata='Geolocation',
+        widget=IntegerWidget(
+            description="Rayon de selection d'hebergement autour du point (en km)",
+            label='Rayon',
+            label_msgid='gites_core_package_range_label',
+            description_msgid='gites_core_package_range_description',
+            i18n_domain='gites'
+        )),
     LinesField(
         name='userCriteria',
         multiValued=1,
@@ -168,6 +180,13 @@ class Package(ATFolder):
     _at_rename_after_creation = True
 
     schema = Package_schema
+
+    def is_geolocalized(self):
+        geomarker = IMarker(self)
+        user_range = self.getRange()
+        if geomarker.longitude is not None and geomarker.latitude is not None and user_range is not None:
+            return True
+        return False
 
 
 InitializeClass(Package)
