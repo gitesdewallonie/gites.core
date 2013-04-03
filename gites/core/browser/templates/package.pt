@@ -49,18 +49,10 @@
         </div>
     </div>
 
-    <!--
-    <div id="menu-sup-package">
-        <span  tal:content="context/@@plone_context_state/object_title"></span>
-    </div>
-    -->
-
-    <!--
     <div id="viewlet-above-content"
          tal:content="structure provider:plone.abovecontenttitle">
     </div>
-    -->
-
+   
     <div id="package-large-photo">
         <img src=""
              tal:attributes="src view/getVignetteURL" />
