@@ -36,13 +36,10 @@
                 tal:attributes="src string:${here/portal_url}/++theme++gites.theme/accordeon/script.js"></script>
     </metal:block>
 <div metal:fill-slot="main">
-
     <div tal:replace="structure provider:plone.abovecontenttitle" />
     <div tal:replace="structure provider:plone.belowcontenttitle" />
-      
     <div tal:replace="structure provider:plone.abovecontentbody" />
     <div id="content-core">
-
         <div id="description-heb"
              tal:define="heb context; hebergementIcons context/@@hebergement_icons; redirection view/redirectInactive;">
             <!-- Bannière titre + info -->
@@ -50,64 +47,65 @@
                 <div id="nom-heb">
                     <span tal:content="heb/heb_nom" />
                 </div>
-
                 <div id="nbre-cle"
                      class="etiquette-sup"
-                     tal:condition="python:heb.type.type_heb_code == 'MV'">
-                    Clés
+                     tal:condition="python:heb.type.type_heb_code == 'MV'"
+                     i18n:translate="nbre-cle">
                     <tal:for repeat="epis heb/epis">
                         <span tal:content="epis/heb_nombre_epis" />
                     </tal:for>
                     <tal:if condition="python:len(heb.epis)==0">
                         <span>-</span>
                     </tal:if>
+                    Clés
                 </div>
                 <div id="nbre-epis"
                      class="etiquette-sup"
-                     tal:condition="python:heb.type.type_heb_code != 'MV'">
-                    Epis
+                     tal:condition="python:heb.type.type_heb_code != 'MV'"
+                     i18n:translate="nbre-epis">
                     <tal:for repeat="epis heb/epis">
                         <span tal:content="epis/heb_nombre_epis" />
                     </tal:for>
                     <tal:if condition="python:len(heb.epis)==0">
                         <span>-</span>
                     </tal:if>
+                    Epis
                 </div>
                 <div id="nbre-personne"
-                     class="etiquette-sup">
-                    Personnes
-                    <br />
+                     class="etiquette-sup"
+                     i18n:translate="nbre-personne">
                     <span tal:content="string: ${heb/heb_cgt_cap_min}/${heb/heb_cgt_cap_max}" />
+                    personnes
                 </div>
                 <div id="nbre-chambre"
-                     class="etiquette-sup">
+                     class="etiquette-sup"
+                     i18n:translate="nbre-chambre">
+                    <span tal:content="heb/heb_cgt_ nbre_chmbre" />
                     Chambres
-                    <br />
-                    <span tal:content="heb/heb_cgt_nbre_chmbre" />
                 </div>
                 <div id="nbre-lit-1-personne"
-                     class="etiquette-sup">
-                    Lit 1 personne
-                    <br />
+                     class="etiquette-sup"
+                     i18n:translate="nbre-lit-1-personne">
                     <span tal:content="heb/heb_lit_1p" />
+                    Lit 1 personne
                 </div>
                 <div id="nbre-lit-2-personne"
-                     class="etiquette-sup">
-                    Lit 2 personnes
-                    <br />
+                     class="etiquette-sup"
+                     i18n:translate="nbre-lit-2-personne">
                     <span tal:content="heb/heb_lit_2p" />
+                    Lit 2 personnes
                 </div>
                 <div id="nbre-lit-enfant"
-                     class="etiquette-sup">
-                    Lit enfant
-                    <br />
+                     class="etiquette-sup"
+                     i18n:translate="nbre-lit-enfant">
                     <span tal:content="heb/heb_lit_enf" />
+                    Lit enfant
                 </div>
                 <div id="reference"
-                     class="etiquette-sup">
-                    N° |
-                    <br />
+                     class="etiquette-sup"
+                     i18n:translate="reference">
                     <span tal:content="heb/heb_pk" />
+                    Référence
                 </div>
                 <br />
                 <!--
