@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 import json
+import geoalchemy
 from sqlalchemy import func
 from plone.memoize.instance import memoize
 from five import grok
 from zope.interface import Interface
 from zope.publisher.interfaces.browser import IBrowserRequest
 from affinitic.db.cache import FromCache
+from Products.Maps.interfaces import IMarker
 from gites.db import session
 from gites.db.content import (LinkHebergementMetadata, Hebergement,
                               LinkHebergementEpis)
@@ -76,6 +78,12 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
         subquery = subquery.having(func.count() == len(criteria))
         subquery = subquery.subquery()
         query = query.filter(Hebergement.heb_pk == subquery.c.heb_fk)
+        if self.context.is_geolocalized():
+            geomarker = IMarker(self.context)
+            user_range = self.context.getRange()
+            point = 'POINT(%s %s)' % (geomarker.longitude, geomarker.latitude)
+            point = geoalchemy.base.WKTSpatialElement(point, srid=3447)
+            query = query.filter(Hebergement.heb_location.distance_sphere(point) < 1000 * user_range)
         return query
 
     def __len__(self):
