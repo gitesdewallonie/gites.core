@@ -4,14 +4,8 @@
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="gites">
 <body>
-    <metal:block fill-slot="style_slot">
-        <link rel="stylesheet"
-              href="++resource++timeframe.css"
-              type="text/css"
-              media="screen"
-              title="timeframe"
-              charset="utf-8" />
 
+    <metal:javascript_head_slot fill-slot="javascript_head_slot">
         <script type="text/javascript"
                 charset="utf-8"
                 src="++resource++prototype16.js"></script>
@@ -34,12 +28,25 @@
                 src=""
                 charset="utf-8"
                 tal:attributes="src string:${here/portal_url}/++theme++gites.theme/accordeon/script.js"></script>
-    </metal:block>
+    </metal:javascript_head_slot>
+
+    <metal:css fill-slot="css_slot">
+        <link rel="stylesheet"
+              href="++resource++timeframe.css"
+              type="text/css"
+              media="screen"
+              title="timeframe"
+              charset="utf-8" />
+    </metal:css>
+
 <div metal:fill-slot="main">
+
     <div tal:replace="structure provider:plone.abovecontenttitle" />
     <div tal:replace="structure provider:plone.belowcontenttitle" />
     <div tal:replace="structure provider:plone.abovecontentbody" />
+
     <div id="content-core">
+
         <div id="description-heb"
              tal:define="heb context; hebergementIcons context/@@hebergement_icons; redirection view/redirectInactive;">
             <!-- Bannière titre + info -->
@@ -80,7 +87,7 @@
                 <div id="nbre-chambre"
                      class="etiquette-sup"
                      i18n:translate="nbre-chambre">
-                    <span tal:content="heb/heb_cgt_ nbre_chmbre" />
+                    <span tal:content="heb/heb_cgt_nbre_chmbre" />
                     Chambres
                 </div>
                 <div id="nbre-lit-1-personne"
