@@ -1,10 +1,13 @@
 <div id="zone-produit-package">
-    <div id="zone-photo" tal:define="packages viewlet/getCarouselPackages">
+    <div id="zone-photo"
+         tal:define="packages viewlet/getCarouselPackages">
 
         <div id="package-carousel" class="carousel slide" tal:condition="packages">
             <ol class="carousel-indicators">
               <tal:bcl tal:repeat="package packages">
-                <li data-target="#package-carousel" data-slide-to="" class="active" tal:attributes="data-slide-to repeat/package/index"></li>
+                <li data-target="#package-carousel"
+                    data-slide-to=""
+                    class="active" tal:attributes="data-slide-to repeat/package/index"></li>
               </tal:bcl>
             </ol>
             <div class="carousel-inner">

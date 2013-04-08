@@ -52,12 +52,12 @@
     <div id="viewlet-above-content"
          tal:content="structure provider:plone.abovecontenttitle">
     </div>
-   
+<!--
     <div id="package-large-photo">
         <img src=""
              tal:attributes="src view/getVignetteURL" />
     </div>
-
+-->
     <div id="package-description">
         <p tal:content="here/Description"
            tal:condition="here/Description">
@@ -76,6 +76,7 @@
 
     <div id="heb-listing"
          tal:content="structure provider:gites.heblisting"></div>
+
     <div id="viewlet-below-content"
          tal:content="structure provider:plone.belowcontentbody"></div>
 </div><!--metal-->
