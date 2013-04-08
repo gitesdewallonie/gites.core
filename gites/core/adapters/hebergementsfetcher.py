@@ -9,8 +9,9 @@ from zope.publisher.interfaces.browser import IBrowserRequest
 from affinitic.db.cache import FromCache
 from Products.Maps.interfaces import IMarker
 from gites.db import session
+from gites.db.interfaces import ICommune
 from gites.db.content import (LinkHebergementMetadata, Hebergement,
-                              LinkHebergementEpis)
+                              LinkHebergementEpis, Commune, Proprio)
 from gites.core.interfaces import IHebergementsFetcher
 from gites.core.content.interfaces import IPackage
 
@@ -105,7 +106,28 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
         else:
             return ()
 
-    def __call__(self):
-        query = self._query.order_by(*self.order_by())
-        query = query.slice(self.batch_start, self.batch_end)
-        return query.all()
+
+class TypeHebCommuneHebFetcher(BaseHebergementsFetcher):
+    grok.adapts(ICommune, Interface, IBrowserRequest)
+
+    @property
+    def _query(self):
+        query = session().query(Hebergement).join('type').join('commune').join('epis').join('proprio')
+        query = query.options(
+            FromCache('gdw'))
+        typeHeb = self.context.aq_parent
+        query = query.filter(sa.and_(Commune.com_id == self.context.com_id,
+                                     Hebergement.heb_typeheb_fk == typeHeb.type_heb_pk))
+        query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
+                                     Proprio.pro_etat == True))
+        return query
+
+    def order_by(self):
+        if self.selected_order() == 'pers_numbers':
+            return (Hebergement.heb_cgt_cap_max.desc(), Hebergement.heb_nom)
+        elif self.selected_order() == 'room_count':
+            return (Hebergement.heb_cgt_nbre_chmbre.desc(), Hebergement.heb_nom)
+        elif self.selected_order() == 'epis':
+            return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
+        else:
+            return (Hebergement.heb_nom,)
