@@ -149,7 +149,7 @@
                 </script>
 
                 <!-- ACCUEIL -->
-                <li class="slide1">
+                <li class="slide slide1">
                     <div class="slide_handle"><div></div></div>
                     <div class="slide_content">
                         <h2>Accueil</h2>
@@ -372,7 +372,7 @@
                 </li>
 
                 <!-- DESCRIPTION -->
-                <li class="slide2">
+                <li class="slide slide2">
                     <div class="slide_handle"><div></div></div>
                     <div class="slide_content">
                         <h2>Description</h2>
@@ -418,7 +418,7 @@
                     </div>
                 </li>
                 <!-- DISPONIBILITE -->
-                <li class="slide3">
+                <li class="slide slide3">
                   <div class="slide_handle"><div></div></div>
                     <div class="slide_content">
                         <h2>Disponibilité</h2>
@@ -428,24 +428,33 @@
                     </div>
                 </li>
                 <!-- PHOTOS -->
-                <li class="slide4">
+                <li class="slide slide4">
                     <div class="slide_handle"><div></div></div>
                     <div class="slide_content">
                         <h2>Photos</h2>
-                        <div>
-                          <tal:loop repeat="vignetteUrl view/getVignettesUrl">
-                            <img src=""
-                                 alt=""
-                                 title=""
-                                 tal:attributes="src string:photos_heb/${vignetteUrl}; alt context/heb_nom; title context/heb_nom"
-                                 class="photo_gallery" />
-                          </tal:loop>
+                        <div tal:define="vignettesUrls view/getVignettesUrl">
+                            <div id="hebergement-carousel" class="carousel slide" tal:condition="vignettesUrls">
+                                <div class="carousel-inner">
+                                  <tal:bcl tal:repeat="vignetteUrl vignettesUrls">
+                                    <div class=""
+                                         tal:define="index repeat/vignetteUrl/index"
+                                         tal:attributes="class python: int(index) == 0 and 'item active' or 'item'">
+                                        <img src="" title="" alt=""
+                                             tal:attributes="src string:photos_heb/${vignetteUrl};
+                                                             alt context/heb_nom;
+                                                             title context/heb_nom">
+                                    </div>
+                                  </tal:bcl>
+                                </div>
+                                <a class="left carousel-control" href="#hebergement-carousel" data-slide="prev">&lsaquo;</a>
+                                <a class="right carousel-control" href="#hebergement-carousel" data-slide="next">&rsaquo;</a>
+                            </div>
                         </div>
                         <br />
                     </div>
                 </li>
                 <!-- LOCALISATION -->
-                <li class="slide5">
+                <li class="slide slide5">
                     <div class="slide_handle"><div></div></div>
                     <div class="slide_content">
                         <h2>Localisation</h2>
@@ -454,7 +463,7 @@
                     </div>
                 </li>
                 <!-- CONTACT -->
-                <li class="slide6">
+                <li class="slide slide6">
                     <div class="slide_handle"><div></div></div>
                     <div class="slide_content">
                         <h2>Contact</h2>
