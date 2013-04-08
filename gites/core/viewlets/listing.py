@@ -16,7 +16,7 @@ grok.context(interface.Interface)
 
 
 class HebergementUpdateListing(grok.View):
-    grok.context(IPackage)
+    grok.context(interface.Interface)
     grok.name('update_listing')
 
     def render(self):
