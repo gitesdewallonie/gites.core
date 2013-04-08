@@ -6,7 +6,7 @@ from affinitic.db.cache import FromCache
 from zope.contentprovider.interfaces import IContentProvider
 from plone.memoize.instance import memoize
 from gites.db import session
-from gites.db.content import Metadata
+from gites.db.content import Metadata, Commune
 from gites.core.content.interfaces import IPackage
 from gites.core.interfaces import IHebergementsFetcher
 from gites.locales import GitesMessageFactory as _
@@ -59,6 +59,8 @@ class HebergementListingForm(grok.Viewlet):
 
 class HebergementsInListing(grok.Viewlet):
     grok.order(20)
+    grok.baseclass()
+    grok.template('hebergementsinlisting')
 
     @property
     def _fetcher(self):
@@ -88,12 +90,25 @@ class HebergementsInListing(grok.Viewlet):
     def is_first_page(self):
         return self._fetcher.selected_page() == 0
 
+
+class HebergementsInPackageListing(HebergementsInListing):
+    grok.context(IPackage)
+
     def sort_items(self):
         return {'distance': _('Distance'),
                 'pers_numbers': _("Nombre de personnes"),
                 'room_count': _("Nombre de chambre"),
                 'epis': _(u"Épis"),
                 'heb_type': _(u"Type d'hébergement")}
+
+
+class HebergementsInCommuneListing(HebergementsInListing):
+    grok.context(Commune)
+
+    def sort_items(self):
+        return {'pers_numbers': _("Nombre de personnes"),
+                'room_count': _("Nombre de chambre"),
+                'epis': _(u"Épis")}
 
 
 class HebergementListingViewletManager(grok.ViewletManager):
