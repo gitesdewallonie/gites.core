@@ -26,6 +26,7 @@
 
   <include package="affinitic.pwmanager" />
   <include package="Products.LinguaPlone" />
+  <include file="permissions.zcml" />
   <include file="profiles.zcml" />
 
   <include package=".adapters"/>
