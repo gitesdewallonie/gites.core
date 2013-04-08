@@ -22,9 +22,9 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 
     var init = function() {
         $scope.page = $cookieStore.get('listing_page', 0);
-	var baseurl = document.URL;
-	$scope.listing_url = baseurl + '/update_listing'; // The url of our search
-	$scope.map_listing_url = baseurl + '/update_map_listing'; // The url of our search
+	var baseurl = kukit.engine.baseUrl;
+	$scope.listing_url = baseurl + 'update_listing'; // The url of our search
+	$scope.map_listing_url = baseurl + 'update_map_listing'; // The url of our search
         $scope.keywords = {};
         var page_cookie = $cookieStore.get('listing_keywords');
 	if ( page_cookie ) {
