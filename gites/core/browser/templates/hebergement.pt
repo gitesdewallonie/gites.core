@@ -154,13 +154,13 @@
                     <div class="slide_content">
                         <h2>Accueil</h2>
                     <div>
-                    <div id="description-photo-heb"
-                         class="div-accordeon">
+
+                    <div id="description-bloc-sup">
+                    <div id="description-photo-heb">
                         <img src=""
                              tal:attributes="src string:${here/photos_heb/absolute_url}/${heb/heb_code_gdw}00.jpg" />
                     </div>
                     <div id="description-calendrier"
-                         class="div-accordeon"
                          tal:condition="view/showCalendar">
                         <div id="calendars"></div>
                         <input type="hidden"
@@ -174,13 +174,15 @@
                                    value=""
                                    id="end" />
                     </div>
-
                     <div class="break-float"></div>
+                    </div>
 
+
+                    <div id="description-bloc-inf">
                     <!--TABLE TARIFICATION GITES-->
-                    <div class="div-accordeon"
+                    <div id="tarification-gite"
                          tal:condition="python:heb.type.type_heb_code not in 'CH, MH, CHECR'">
-                        <table id="tarification-gite">
+                        <table>
                             <tr>
                                <td align="center"><span>Période</span></td>
                                <td align="center"><span>WE</span></td>
@@ -275,9 +277,9 @@
                     </div>
 
                     <!--TABLE TARIFICATION CHAMBRE-->
-                    <div class="div-accordeon"
+                    <div id="tarification-chambre"
                          tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR'">
-                        <table id="tarification-chambre">
+                        <table>
                             <tr class="bg-chambre">
                                 <td>&nbsp;</td>
                                 <td align="center"><span>1 p.</span></td>
@@ -335,11 +337,13 @@
                                 <td align="center" class="empty-cell">&nbsp;</td>
                             </tr>
                         </table>
-                    </div>
+                    </div><!--tarif hebergement-->
 
                     <!-- TABLE TABLE D'HOTE-->
-                    <div class="div-accordeon">
-                        <table id="tarification-chambre">
+                    <div id="tarification-table-hote">
+                         <!--tal:condition="python:heb.type.type_heb_code in 'CH, MH,
+                             CHECR'">-->
+                        <table>
                            <tr align="center">
                               <td class="bg-chambre"><span>Table d'hôtes</span></td>
                               <td>
@@ -362,7 +366,9 @@
                               </td>
                            </tr>
                         </table>
-                    </div>
+                    </div><!--tarif table hote-->
+                    <div class="break-float"></div>
+                    </div><!--description-bloc-inf-->
                 </li>
 
                 <!-- DESCRIPTION -->
