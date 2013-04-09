@@ -1,0 +1,24 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:grok="http://namespaces.zope.org/grok"
+           xmlns:passmgr="http://affinitic.be/passmgr"
+           i18n_domain="gites">
+
+  <include package="zope.component" file="meta.zcml" />
+  <include package="zope.component" file="configure.zcml" />
+  <include package="grokcore.component" file="meta.zcml"/>
+  <include package="affinitic.pwmanager"/>
+
+  <passmgr:pwdfile
+      name="pg"
+      filename="pgpass"/>
+
+  <grok:grok package="gites.db.pg"/>
+
+  <utility
+      name="GitesMappings"
+      factory="gites.db.initializer.GitesModel"
+      provides="z3c.sqlalchemy.interfaces.IModelProvider"
+      />
+
+</configure>
