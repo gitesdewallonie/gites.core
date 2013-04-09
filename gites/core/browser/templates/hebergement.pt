@@ -493,29 +493,32 @@
                             <span tal:replace="heb/proprio/pro_langue" />
                             </div>
                             <div id="phone-proprio">
-                                <img src="telephone.gif" />
+                                <img src="icon_telephone.gif" />
                                 <span tal:replace="heb/proprio/pro_tel_priv" />
                             </div>
-                            <div id="fax-proprio">
-                                <img src="fax.gif" />
+                            <div id="fax-proprio"
+                                 tal:condition="python: heb.proprio.pro_fax_priv">
+                                <img src="icon_fax.gif" />
                                 <span tal:replace="heb/proprio/pro_fax_priv" />
                             </div>
-                            <div id="gsm-proprio">
-                                <img src="gsm.gif" />
+                            <div id="gsm-proprio"
+                                 tal:condition="python: heb.proprio.pro_gsm1">
+                                <img src="icon_gsm.gif" />
                                 <span tal:replace="heb/proprio/pro_gsm1" />
                             </div>
-                            <div id="email-proprio">
-                                <img src="email.gif" />
+                            <div id="email-proprio"
+                                 tal:condition="python: heb.proprio.pro_email">
+                                <img src="icon_email.gif" />
                                 <span tal:replace="heb/proprio/pro_email" />
                             </div>
                             <div id="url-proprio"
-                                 tal:condition="python: heb.proprio.pro_url!=''">
-                                <img src="lien.gif" />
+                                 tal:condition="python: heb.proprio.pro_url">
+                                <img src="icon_lien.gif" />
                                 <a href=""
                                    tal:attributes="href string: http://${heb/proprio/pro_url}"
                                    tal:content="string: http://${heb/proprio/pro_url}"
                                    target="_blank" />
-                            <div>
+                            </div>
                             <div id="contacter-proprio">
                                 <a href=""
                                    tal:attributes="href string:${context/@@plone_portal_state/portal_url}/form_contact_proprio?heb_pk=${heb/heb_pk}">
@@ -524,7 +527,8 @@
                             </div>
                         </div><!--descriptif coordonnee-->
                         <div id="descriptif-photo-proprio">
-                        </div><!-- descriptif photo proprio-->
+                        </div><!-- descriptif p hoto proprio-->
+                        <div class="break-float"></div>
                     </div>
                 </li>
             </ul>
