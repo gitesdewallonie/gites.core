@@ -10,8 +10,8 @@
                 tal:repeat="gite viewlet/getGitesForProprio">
         <a href=""
            tal:attributes="href string:${context/@@plone_portal_state/portal_url}/zone-membre/calendrier/month.html?pk=${gite/token};
-                           title gite/title"/>
-        <b tal:replace="gite/title"/>
+                           title gite/title">
+        <b tal:replace="gite/title"/></a>
     </tal:boucle>
     <div tal:condition="python: hasActive and not isBlocked">
         <a href=""

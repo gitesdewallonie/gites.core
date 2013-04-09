@@ -15,9 +15,7 @@ grok.context(interface.Interface)
 class ZoneMembreViewletManager(grok.ViewletManager):
     grok.name('gites.zonemembre')
     def available(self):
-        portal = getToolByName(self.context, 'portal_url').getPortalObject()
-        folder = getattr(portal,"zone-membre")
-        return self.context.getId() == folder.getId()
+        return "zone-membre" in self.context.getPhysicalPath()
 
 class CalendrierViewlet(grok.Viewlet):
     grok.order(10)
