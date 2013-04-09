@@ -8,11 +8,13 @@
     <metal:javascript_head_slot fill-slot="javascript_head_slot">
         <script type="text/javascript"
                 charset="utf-8"
-                src="++resource++prototype16.js"></script>
+                src=""
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++prototype16.js"></script>
 
         <script type="text/javascript"
                 charset="utf-8"
-                src="++resource++gitetimeframe.js"></script>
+                src=""
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gitetimeframe.js"></script>
 
         <script type="text/javascript"
                 charset="utf-8"
@@ -22,26 +24,32 @@
         <script type="text/javascript"
                 src=""
                 charset="utf-8"
-                tal:attributes="src string:${here/portal_url}/++theme++gites.theme/accordeon/jquery.accordionza.min.js"></script>
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/accordeon/jquery.accordionza.min.js"></script>
 
         <script type="text/javascript"
                 src=""
                 charset="utf-8"
-                tal:attributes="src string:${here/portal_url}/++theme++gites.theme/accordeon/script.js"></script>
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/accordeon/script.js"></script>
 
         <script type="text/javascript"
                 src=""
                 charset="utf-8"
-                tal:attributes="src string:${here/portal_url}/++theme++gites.theme/scripts/spin.js"></script>
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/scripts/spin.js"></script>
+
+        <script type="text/javascript"
+                charset="utf-8"
+                src=""
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/hebergement.js"></script>
     </metal:javascript_head_slot>
 
     <metal:css fill-slot="css_slot">
         <link rel="stylesheet"
-              href="++resource++timeframe.css"
+              href=""
               type="text/css"
               media="screen"
               title="timeframe"
-              charset="utf-8" />
+              charset="utf-8"
+              tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++timeframe.css" />
     </metal:css>
 
 <div metal:fill-slot="main">

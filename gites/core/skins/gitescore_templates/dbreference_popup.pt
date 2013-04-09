@@ -17,7 +17,7 @@
            tal:condition="not: exists:here/portal_css"
            tal:define="current_skin python: request.get(here.portal_skins.getRequestVarname(),'');
            skin_query python:(current_skin and ('?' + ztu.make_query(skin=current_skin))) or ''"
-           tal:content="string: @import url(${here/portal_url}/plone.css${skin_query});">
+           tal:content="string: @import url(${context/@@plone_portal_state/portal_url}/plone.css${skin_query});">
     </style>
     <script language="javascript" type="text/javascript">
          function showMessage(message) {
@@ -181,7 +181,7 @@
                                            border-bottom:1px solid ${border_color};;
                                            margin-bottom:1em;;padding:0.2em 0 0.1em 0;;margin-top:1.5em;"
                      tal:condition= "python:search_text=='' and allow_browse"
-                     tal:define=    "portal here/portal_url/getPortalObject;
+                     tal:define=    "portal context/@@plone_portal_state/portal_url/getPortalObject;
                                      putils nocall:portal/plone_utils;
                                      crumbs python:putils.createBreadCrumbs(here);
                                      crumbs python: test(True, context.referencebrowser_filterBreadCrumbs(crumbs, ''), crumbs); 
@@ -189,7 +189,7 @@
                                      parents request/PARENTS;
                                      nil python: parents.reverse();">
                                      
-                <img tal:attributes="src string:${here/portal_url}/logoIcon.gif"/>
+                <img tal:attributes="src string:${context/@@plone_portal_state/portal_url}/logoIcon.gif"/>
                 <tal:if condition="not: restrict_browsing_to_startup_directory">
                     <a i18n:translate="tabs_home"
                        tal:attributes="href string:${portal/absolute_url}/${template/getId}?fieldName=${fieldName}&amp;fieldRealName=${fieldRealName}&amp;at_url=${at_url}">

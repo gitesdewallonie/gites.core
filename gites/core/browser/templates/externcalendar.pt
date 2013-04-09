@@ -3,8 +3,10 @@
 <head>
   <style type="text/css" tal:content="string: @import url(${context/@@plone_portal_state/portal_url}/++resource++timeframe.css);"></style>
   <style type="text/css" tal:content="string: @import url(${view/getCustomStylesheet});"></style>
-  <script type="text/javascript" charset="utf-8" src="++resource++prototype16.js"></script>
-  <script type="text/javascript" charset="utf-8" src="++resource++gitetimeframe.js"></script>  
+  <script type="text/javascript" charset="utf-8" src=""
+          tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++prototype16.js"></script>
+  <script type="text/javascript" charset="utf-8" src=""
+          tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gitetimeframe.js"></script>
 </head>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">

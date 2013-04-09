@@ -43,7 +43,7 @@
             <li>
                 <a href=""
                    id="mail"
-                   tal:attributes="href string:${here/portal_url}/contact-info">
+                   tal:attributes="href string:${context/@@plone_portal_state/portal_url}/contact-info">
                 </a>
             </li>
         </ul>
