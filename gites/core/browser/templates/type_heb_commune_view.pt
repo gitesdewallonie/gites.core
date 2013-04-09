@@ -11,17 +11,17 @@
         <script type="text/javascript"
                 src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular-sanitize.min.js"></script>
         <script type="text/javascript"
-                tal:attributes="src string:${here/portal_url}/++theme++gites.theme/scripts/spin.js"></script>
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/scripts/spin.js"></script>
         <script type="text/javascript"
-                tal:attributes="src string:$portal_url/++resource++gdwcore/heblisting.js"></script>
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/heblisting.js"></script>
         <script type="text/javascript"
-                tal:attributes="src string:${here/portal_url}/++theme++gites.theme/scripts/package.js"></script>
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/scripts/package.js"></script>
       </metal:javascript_head_slot>
 
       <metal:css fill-slot="css_slot">
         <link rel="stylesheet"
               type="text/css"
-              tal:attributes="href string:$portal_url/++resource++gdwcore/heblisting.css" />
+              tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/heblisting.css" />
       </metal:css>
 
 <body>
@@ -31,7 +31,9 @@
         <div id="aside-container">
             <div id="aside-content" class="scroller">
               <h1>
-                <span tal:content="view/typeHebergementName"/> <span i18n:translate="in_location">in</span> <span tal:content="view/communeName"/>
+                <span tal:content="view/typeHebergementName"/>
+                <span i18n:translate="in_location">in</span>
+                <span tal:content="view/communeName"/>
               </h1>
             </div>
         </div>
@@ -39,7 +41,7 @@
     <div id="viewlet-above-content"
          tal:content="structure provider:plone.abovecontenttitle">
     </div>
-   
+
     <div class="break-float"></div>
 
     <div id="spin"

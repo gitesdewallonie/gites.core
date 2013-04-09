@@ -1,7 +1,7 @@
 <div id="main-header">
     <div id="logo">
         <a href=""
-           tal:attributes="href string:${here/portal_url}"></a>
+           tal:attributes="href string:${context/@@plone_portal_state/portal_url}"></a>
     </div>
 
     <div id="je-recherche">
@@ -11,7 +11,7 @@
 
         <form action="#"
               method="post"
-              tal:attributes="action string:${here/portal_url}/basic_search.html">
+              tal:attributes="action string:${context/@@plone_portal_state/portal_url}/basic_search.html">
             <div id="zone-gite-meuble">
                 <input type="checkbox"
                        name="gite-meuble"

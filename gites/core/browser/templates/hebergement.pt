@@ -8,11 +8,13 @@
     <metal:javascript_head_slot fill-slot="javascript_head_slot">
         <script type="text/javascript"
                 charset="utf-8"
-                src="++resource++prototype16.js"></script>
+                src=""
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++prototype16.js"></script>
 
         <script type="text/javascript"
                 charset="utf-8"
-                src="++resource++gitetimeframe.js"></script>
+                src=""
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gitetimeframe.js"></script>
 
         <script type="text/javascript"
                 charset="utf-8"
@@ -22,26 +24,32 @@
         <script type="text/javascript"
                 src=""
                 charset="utf-8"
-                tal:attributes="src string:${here/portal_url}/++theme++gites.theme/accordeon/jquery.accordionza.min.js"></script>
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/accordeon/jquery.accordionza.min.js"></script>
 
         <script type="text/javascript"
                 src=""
                 charset="utf-8"
-                tal:attributes="src string:${here/portal_url}/++theme++gites.theme/accordeon/script.js"></script>
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/accordeon/script.js"></script>
 
         <script type="text/javascript"
                 src=""
                 charset="utf-8"
-                tal:attributes="src string:${here/portal_url}/++theme++gites.theme/scripts/spin.js"></script>
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/scripts/spin.js"></script>
+
+        <script type="text/javascript"
+                charset="utf-8"
+                src=""
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/hebergement.js"></script>
     </metal:javascript_head_slot>
 
     <metal:css fill-slot="css_slot">
         <link rel="stylesheet"
-              href="++resource++timeframe.css"
+              href=""
               type="text/css"
               media="screen"
               title="timeframe"
-              charset="utf-8" />
+              charset="utf-8"
+              tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++timeframe.css" />
     </metal:css>
 
 <div metal:fill-slot="main">
@@ -160,6 +168,14 @@
                         <img src=""
                              tal:attributes="src string:${here/photos_heb/absolute_url}/${heb/heb_code_gdw}00.jpg" />
                     </div>
+
+                    <div id="adresse-hebergement">
+                        <span tal:content="heb/heb_adresse" /><br/>
+                        <span tal:content="heb/commune/com_cp" />
+                        <span tal:content="heb/heb_localite" />
+                        (<span tal:content="heb/commune/com_nom" />)
+                    </div>
+
                     <div id="description-calendrier"
                          tal:condition="view/showCalendar">
                         <div id="calendars"></div>
@@ -183,13 +199,13 @@
                     <div id="tarification-gite"
                          tal:condition="python:heb.type.type_heb_code not in 'CH, MH, CHECR'">
                         <table>
-                            <tr>
-                               <td align="center"><span>Période</span></td>
-                               <td align="center"><span>WE</span></td>
-                               <td align="center"><span>Semaine</span></td>
+                            <tr class="tarif-periode">
+                               <td>Période</td>
+                               <td>WE</td>
+                               <td>Semaine</td>
                             </tr>
                             <tr>
-                                <td>&nbsp;&nbsp; <span>Basse saison</span></td>
+                                <td class="tarif-saison">Basse saison</td>
                                 <td align="center" bgcolor="#ACE087">
                                     <span tal:content="heb/heb_tarif_we_bs" />
                                 </td>
@@ -198,7 +214,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>&nbsp;&nbsp; <span>Moyenne saison</span></td>
+                                <td class="tarif-saison">Moyenne saison</td>
                                 <td align="center" bgcolor="#ACE087">
                                     <span tal:content="heb/heb_tarif_we_ms" />
                                 </td>
@@ -207,7 +223,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>&nbsp;&nbsp; <span>Haute saison</span></td>
+                                <td class="tarif-saison">Haute saison</td>
                                 <td align="center" bgcolor="#ACE087">
                                      <span tal:content="heb/heb_tarif_we_hs" />
                                 </td>
@@ -219,14 +235,14 @@
                                 <td colspan="3">&nbsp;</td>
                             </tr>
                             <tr>
-                                <td>&nbsp;&nbsp; <span>WE de fête 3 nuits</span></td>
+                                <td class="tarif-saison">WE de fête 3 nuits</td>
                                 <td align="center" bgcolor="#ACE087">
                                      <span tal:content="heb/heb_tarif_we_3n" />
                                 </td>
                                 <td align="center" bgcolor="#8BBE67">-</td>
                             </tr>
                             <tr>
-                                <td>&nbsp;&nbsp; <span>WE de fête 4 nuits</span></td>
+                                <td class="tarif-saison">WE de fête 4 nuits</td>
                                 <td align="center" bgcolor="#ACE087">
                                      <span tal:content="heb/heb_tarif_we_4n" />
                                 </td>
@@ -236,7 +252,7 @@
                                 <td colspan="3">&nbsp;</td>
                             </tr>
                             <tr>
-                                <td>&nbsp;&nbsp; <span>Fin d'année</span></td>
+                                <td class="tarif-saison">Fin d'année</td>
                                 <td align="center" bgcolor="#ACE087">-</td>
                                 <td align="center" bgcolor="#8BBE67">
                                      <span tal:content="heb/heb_tarif_semaine_fin_annee" />
@@ -246,13 +262,13 @@
                                 <td colspan="3">&nbsp;</td>
                             </tr>
                             <tr bgcolor="#ceddce">
-                                <td>&nbsp;&nbsp; <span>Garantie</span></td>
+                                <td class="tarif-saison">Garantie</td>
                                 <td colspan="2" align="left">
                                     <span tal:content="heb/heb_tarif_garantie" />
                                 </td>
                             </tr>
                             <tr>
-                                <td>&nbsp;&nbsp; <span>Charges</span></td>
+                                <td class="tarif-saison">Charges</td>
                                 <td colspan="2" align="left">
                                     <span tal:condition="exists: heb/heb_tarif_charge">|
                                     <span tal:content="heb/heb_tarif_charge" />
@@ -262,13 +278,13 @@
                                 </td>
                             </tr>
                             <tr bgcolor="#ceddce">
-                                <td>&nbsp;&nbsp; <span>Taxe de séjour</span></td>
+                                <td class="tarif-saison">Taxe de séjour</td>
                                 <td colspan="2" align="left">
                                     <span tal:content="heb/heb_taxe_montant" />
                                 </td>
                             </tr>
                             <tr>
-                                <td>&nbsp;&nbsp; <span>Divers</span></td>
+                                <td class="tarif-saison">Divers</td>
                                 <td colspan="2" align="left">
                                     <span tal:content="heb/heb_tarif_divers" />
                                 </td>
@@ -340,9 +356,8 @@
                     </div><!--tarif hebergement-->
 
                     <!-- TABLE TABLE D'HOTE-->
-                    <div id="tarification-table-hote">
-                         <!--tal:condition="python:heb.type.type_heb_code in 'CH, MH,
-                             CHECR'">-->
+                    <div id="tarification-table-hote"
+                         tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR'">
                         <table>
                            <tr align="center">
                               <td class="bg-chambre"><span>Table d'hôtes</span></td>
@@ -357,7 +372,7 @@
                               <td>
                               <span>
                                  <span>
-                                       <img src="assiette_3.png"
+                                       <img src="icon_assiette_3.png"
                                             alt="Menu gastronomique"
                                             title="Menu gastronomique">
                                        <br />
@@ -468,12 +483,6 @@
                     <div class="slide_content">
                         <h2>Contact</h2>
                         <div id="descriptif-coordonnee">
-                            <div id="adresse-proprio">
-                                <span tal:content="heb/heb_adresse" /><br/>
-                                <span tal:content="heb/commune/com_cp" />
-                                <span tal:content="heb/heb_localite" />
-                                (<span tal:content="heb/commune/com_nom" />)
-                            </div>
                             <div id="nom-proprio">
                             <span tal:content="heb/proprio/civilite/civ_titre" />
                             <span tal:replace="heb/proprio/pro_prenom1" />
@@ -485,29 +494,32 @@
                             <span tal:replace="heb/proprio/pro_langue" />
                             </div>
                             <div id="phone-proprio">
-                                <img src="telephone.gif" />
+                                <img src="icon_telephone.gif" />
                                 <span tal:replace="heb/proprio/pro_tel_priv" />
                             </div>
-                            <div id="fax-proprio">
-                                <img src="fax.gif" />
+                            <div id="fax-proprio"
+                                 tal:condition="python: heb.proprio.pro_fax_priv">
+                                <img src="icon_fax.gif" />
                                 <span tal:replace="heb/proprio/pro_fax_priv" />
                             </div>
-                            <div id="gsm-proprio">
-                                <img src="gsm.gif" />
+                            <div id="gsm-proprio"
+                                 tal:condition="python: heb.proprio.pro_gsm1">
+                                <img src="icon_gsm.gif" />
                                 <span tal:replace="heb/proprio/pro_gsm1" />
                             </div>
-                            <div id="email-proprio">
-                                <img src="email.gif" />
+                            <div id="email-proprio"
+                                 tal:condition="python: heb.proprio.pro_email">
+                                <img src="icon_email.gif" />
                                 <span tal:replace="heb/proprio/pro_email" />
                             </div>
                             <div id="url-proprio"
-                                 tal:condition="python: heb.proprio.pro_url!=''">
-                                <img src="lien.gif" />
+                                 tal:condition="python: heb.proprio.pro_url">
+                                <img src="icon_lien.gif" />
                                 <a href=""
                                    tal:attributes="href string: http://${heb/proprio/pro_url}"
                                    tal:content="string: http://${heb/proprio/pro_url}"
                                    target="_blank" />
-                            <div>
+                            </div>
                             <div id="contacter-proprio">
                                 <a href=""
                                    tal:attributes="href string:${context/@@plone_portal_state/portal_url}/form_contact_proprio?heb_pk=${heb/heb_pk}">
@@ -516,7 +528,8 @@
                             </div>
                         </div><!--descriptif coordonnee-->
                         <div id="descriptif-photo-proprio">
-                        </div><!-- descriptif photo proprio-->
+                        </div><!-- descriptif p hoto proprio-->
+                        <div class="break-float"></div>
                     </div>
                 </li>
             </ul>
