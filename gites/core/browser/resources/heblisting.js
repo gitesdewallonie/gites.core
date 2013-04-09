@@ -17,12 +17,58 @@ $.fn.spin = function (opts) {
     return this;
 };
 
+
+// Calculate base href - code coming from kss
+
+var calculateBaseOnInstance = function(documentInstance, pageLocation) {
+    var base = '';
+    var nodes = documentInstance.getElementsByTagName("link");
+    if (nodes.length > 0) {
+        for (var i=0; i<nodes.length; i++) {
+            var link = nodes[i];
+            if ((link.rel == 'kss-base-url')||(link.rel == 'alternate' && link.getAttribute('data-kss-base-url') != null)) {
+                var base = link.href;
+                if (! /\/$/.test(base)) {
+                    base = base + '/';
+                }
+            }
+        }
+    }
+    if (!base) {
+        nodes = documentInstance.getElementsByTagName("base");
+        if (nodes.length != 0) {
+            var base = nodes[0].href;
+        } else {
+            var base = pageLocation;
+        }
+    }
+    var pieces = base.split('/');
+    pieces.pop();
+    base = pieces.join('/') + '/';
+    return base;
+};
+
+
+var calculateBase = function() {
+    var base = '';
+    // returns empty base when not in browser (cli tests)
+    try {
+        var _dummy = document;
+        _dummy = window;
+    } catch (e) {
+        // testing or what
+        return base;
+    }
+    base = calculateBaseOnInstance(document, window.location.href);
+    return base;
+};
+
 var app = angular.module('listing', ['ngSanitize', 'ngCookies']);
 app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 
     var init = function() {
         $scope.page = $cookieStore.get('listing_page', 0);
-	var baseurl = kukit.engine.baseUrl;
+	var baseurl = calculateBase();
 	$scope.listing_url = baseurl + 'update_listing'; // The url of our search
 	$scope.map_listing_url = baseurl + 'update_map_listing'; // The url of our search
         $scope.keywords = {};
