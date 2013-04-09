@@ -74,6 +74,8 @@
 
     <div class="break-float"></div>
 
+    <div id="spin"
+         style="display:none;"></div>
     <div id="heb-listing"
          tal:content="structure provider:gites.heblisting"></div>
 

@@ -94,8 +94,11 @@ class HebergementFolderTraversable(DefaultPublishTraverse):
             return self.getDefaultViewForObject(context, view_name)
         lenSub = len(sub)
         if sub:
-            if lenSub == 2 and sub[1] in self.context.known_communes_id \
-               and sub[0] in self.context.known_types_id:
+            if (lenSub == 2 and sub[1] in self.context.known_communes_id \
+                and sub[0] in self.context.known_types_id) or \
+               (lenSub == 3 and sub[1] in self.context.known_communes_id \
+                and sub[0] in self.context.known_types_id and \
+                sub[2] in ['update_listing', 'update_map_listing']):
                 # /hebergement/gites/villlers/
                 #              NAME * SUB[0]
                 #
@@ -109,9 +112,13 @@ class HebergementFolderTraversable(DefaultPublishTraverse):
                 TypeHebs = wrapper.getMapper('type_heb')
                 typeHeb = session.query(TypeHebs).get(int(typeHeb))
                 commune = session.query(Commune).get(int(commune))
-                return queryMultiAdapter((typeHeb.__of__(self.context),
-                                          commune.__of__(self.context),
-                                          self.request), name='index.html').__of__(self.context)
+                typeHeb = typeHeb.__of__(self.context)
+                name = 'index.html'
+                if lenSub == 3:
+                    name = sub[2]
+                return queryMultiAdapter((commune.__of__(typeHeb),
+                                        self.request),
+                                        name=name)
 
             elif lenSub >= 3 and \
                     sub[1] in self.context.known_communes_id \
@@ -130,7 +137,7 @@ class HebergementFolderTraversable(DefaultPublishTraverse):
                 else:
                     return queryMultiAdapter((hebergement.__of__(self.context),
                                               self.request), name=page).__of__(self.context)
-        return None
+        raise NotFound
 
     def nextName(self):
         """Pop the next name off of the traversal stack.

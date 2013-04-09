@@ -1,5 +1,3 @@
-<div id="spin"
-     style="display:none;"></div>
 <div id="listing-result-gite-theme">
     <form>
         <tal:block tal:repeat="filter viewlet/filters">

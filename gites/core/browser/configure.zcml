@@ -79,14 +79,11 @@
       template="templates/unknown_gites.pt"
       />
 
-  <adapter
-      for="gites.db.interfaces.ITypeHebergement
-           gites.db.interfaces.ICommune
-           zope.publisher.interfaces.browser.IDefaultBrowserLayer"
-     factory=".typehebcommune.TypeHebCommuneView"
-     provides=".interfaces.ITypeHebCommuneView"
-     name="index.html"
-     />
+   <browser:page
+      for="gites.db.interfaces.ICommune"
+      name="index.html"
+      permission="zope.Public"
+      class=".typehebcommune.TypeHebCommuneView"/>
 
   <utility
       name="gitescontent.communes"

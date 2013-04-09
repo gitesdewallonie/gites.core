@@ -23,10 +23,10 @@ class TypeHebCommuneView(BrowserView):
 
     render = ZopeTwoPageTemplateFile("templates/type_heb_commune_view.pt")
 
-    def __init__(self, typeHeb, commune, request):
+    def __init__(self, commune, request):
         self.request = request
-        self.context = typeHeb
-        self.typeHeb = typeHeb
+        self.typeHeb = commune.aq_parent
+        self.context = commune
         self.commune = commune
 
     def typeHebergementName(self):
