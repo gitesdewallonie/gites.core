@@ -49,7 +49,12 @@
                        tal:attributes="href hebergement/@@url"></a>
                 </div>
             </div>
-            <div id="vignette"><img src="vignette.png" /></div>
+            <div id="vignette">
+                <img src=""
+                     width="181"
+                     height="115"
+                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/getVignette}" />
+            </div>
 
             <div id="info-bloc-sup">
                 <div id="distance"> à 5Km </div>

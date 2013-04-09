@@ -31,7 +31,9 @@
         <div id="aside-container">
             <div id="aside-content" class="scroller">
               <h1>
-                <span tal:content="view/typeHebergementName"/> <span i18n:translate="in_location">in</span> <span tal:content="view/communeName"/>
+                <span tal:content="view/typeHebergementName"/>
+                <span i18n:translate="in_location">in</span>
+                <span tal:content="view/communeName"/>
               </h1>
             </div>
         </div>
@@ -39,7 +41,7 @@
     <div id="viewlet-above-content"
          tal:content="structure provider:plone.abovecontenttitle">
     </div>
-   
+
     <div class="break-float"></div>
 
     <div id="spin"
