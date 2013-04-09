@@ -10,8 +10,6 @@ GROUPING_DISTANCE_METERS = 500
 
 
 def main():
-    # XXXnext en gros faire comme dans gites.db la migration pour update les
-    # groupements
     initializeDB(gites.core.scripts)
     updateGroupementColumn()
 
