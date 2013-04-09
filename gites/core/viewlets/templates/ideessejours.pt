@@ -8,13 +8,15 @@
                 <img src="" tal:attributes="src string:${vignette/getURL}/image_thumb"/>
             </a>
         </tal:vign>
+        <div class="break-float"></div>
         <span class="bordeaux" tal:replace="offre/pretty_title_or_id"/><br>
         <p>
             <tal:desc tal:replace="offre/Description"/>
             <br>
         </p>
         <div class="plus-info">
-            <a tal:attributes="href viewlet/getAllIdeesSejoursView"><span i18n:translate="toutes_nos_idees_sejour">Toutes nos idées séjour</span></a>
+            <a tal:attributes="href viewlet/getAllIdeesSejoursView"><span
+            i18n:translate="toutes_nos_idees_sejour">Toutes nos idées séjour...</span></a>
         </div>
     </div>
 </tal:viewlet>

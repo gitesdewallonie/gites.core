@@ -5,9 +5,11 @@
         <a tal:attributes="href offre/absolute_url">
             <img src="" tal:replace="structure offre/getMiniPhoto"/>
         </a>
+        <div class="break-float"></div>
         <p><tal:desc tal:replace="offre/Description"/><br>
         <div class="plus-info">
-            <a tal:attributes="href viewlet/getAllBoutiqueItemsView"><span i18n:translate="tous_nos_articles">Tous nos articles</span></a>
+            <a tal:attributes="href viewlet/getAllBoutiqueItemsView"><span
+            i18n:translate="tous_nos_articles">Tous nos articles...</span></a>
         </div>
     </div>
 </tal:viewlet>
