@@ -168,6 +168,14 @@
                         <img src=""
                              tal:attributes="src string:${here/photos_heb/absolute_url}/${heb/heb_code_gdw}00.jpg" />
                     </div>
+
+                    <div id="adresse-hebergement">
+                        <span tal:content="heb/heb_adresse" /><br/>
+                        <span tal:content="heb/commune/com_cp" />
+                        <span tal:content="heb/heb_localite" />
+                        (<span tal:content="heb/commune/com_nom" />)
+                    </div>
+
                     <div id="description-calendrier"
                          tal:condition="view/showCalendar">
                         <div id="calendars"></div>
@@ -348,9 +356,8 @@
                     </div><!--tarif hebergement-->
 
                     <!-- TABLE TABLE D'HOTE-->
-                    <div id="tarification-table-hote">
-                         <!--tal:condition="python:heb.type.type_heb_code in 'CH, MH,
-                             CHECR'">-->
+                    <div id="tarification-table-hote"
+                         tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR'">
                         <table>
                            <tr align="center">
                               <td class="bg-chambre"><span>Table d'hôtes</span></td>
@@ -365,7 +372,7 @@
                               <td>
                               <span>
                                  <span>
-                                       <img src="assiette_3.png"
+                                       <img src="icon_assiette_3.png"
                                             alt="Menu gastronomique"
                                             title="Menu gastronomique">
                                        <br />
@@ -476,12 +483,6 @@
                     <div class="slide_content">
                         <h2>Contact</h2>
                         <div id="descriptif-coordonnee">
-                            <div id="adresse-proprio">
-                                <span tal:content="heb/heb_adresse" /><br/>
-                                <span tal:content="heb/commune/com_cp" />
-                                <span tal:content="heb/heb_localite" />
-                                (<span tal:content="heb/commune/com_nom" />)
-                            </div>
                             <div id="nom-proprio">
                             <span tal:content="heb/proprio/civilite/civ_titre" />
                             <span tal:replace="heb/proprio/pro_prenom1" />
