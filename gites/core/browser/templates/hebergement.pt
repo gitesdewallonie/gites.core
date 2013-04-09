@@ -468,6 +468,12 @@
                     <div class="slide_content">
                         <h2>Contact</h2>
                         <div id="descriptif-coordonnee">
+                            <div id="adresse-proprio">
+                                <span tal:content="heb/heb_adresse" /><br/>
+                                <span tal:content="heb/commune/com_cp" />
+                                <span tal:content="heb/heb_localite" />
+                                (<span tal:content="heb/commune/com_nom" />)
+                            </div>
                             <div id="nom-proprio">
                             <span tal:content="heb/proprio/civilite/civ_titre" />
                             <span tal:replace="heb/proprio/pro_prenom1" />
