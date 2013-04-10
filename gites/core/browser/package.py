@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from five import grok
 from zope.interface import implements
+from zope.component import getMultiAdapter
 from .interfaces import IPackageView
 from Products.CMFCore.utils import getToolByName
 
 from gites.core.content.interfaces import IPackage
+from gites.core.interfaces import IHebergementsFetcher
 
 grok.templatedir('templates')
 
@@ -28,3 +30,12 @@ class Package(grok.View):
                                     path={'query': path})
         if results:
             return results[0].getURL()
+
+    def getHebCount(self):
+        """
+        Return total number of herbegments in package
+        """
+        fetcher = getMultiAdapter((self.context, self,
+                                  self.request),
+                                  IHebergementsFetcher)
+        return len(fetcher)
