@@ -174,7 +174,7 @@
                                  tal:attributes="src string:${here/photos_heb/absolute_url}/${heb/heb_code_gdw}00.jpg" />
                         </div>
 
-                        <div id="adresse-hebergement">
+                        <div id="description-adresse-hebergement">
                             <span tal:content="heb/heb_adresse" /><br/>
                             <span tal:content="heb/commune/com_cp" />
                             <span tal:content="heb/heb_localite" />
@@ -287,13 +287,11 @@
                                     <span tal:content="heb/heb_taxe_montant" />
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="tarif-saison">Divers</td>
-                                <td colspan="2" align="left">
-                                    <span tal:content="heb/heb_tarif_divers" />
-                                </td>
-                            </tr>
                          </table>
+                        <div>
+                            <h3>Divers</h3>
+                            <p tal:content="heb/heb_tarif_divers"></p>
+                        </div>
                     </div>
 
                     <!--TABLE TARIFICATION CHAMBRE-->
@@ -415,7 +413,7 @@
 
                         <div class="break-float"></div>
 
-                        <div id="icone-confort">
+                        <div id="description-icone-confort">
                                 <tal:block define="metadata python:view.getAnimal()">
                                     <img src=""
                                          title=""
@@ -444,7 +442,7 @@
                 <li class="slide slide3">
                   <div class="slide_handle"><div></div></div>
                     <div class="slide_content">
-                        <h2>Disponibilité</h2>
+                        <h2>Disponibilités</h2>
                         <div>
                             <div id="description-dispo-calendrier"
                                  tal:condition="view/showCalendar">
@@ -502,16 +500,16 @@
                     <div class="slide_handle"><div></div></div>
                     <div class="slide_content">
                         <h2>Contact</h2>
-                        <div id="descriptif-coordonnee">
+                        <div id="description-coordonnee">
                             <div id="nom-proprio">
-                            <span tal:content="heb/proprio/civilite/civ_titre" />
-                            <span tal:replace="heb/proprio/pro_prenom1" />
-                            <span tal:replace="heb/proprio/pro_prenom2" />
-                            <span tal:replace="heb/proprio/pro_nom1" />
-                            <span tal:replace="heb/proprio/pro_nom2" />
+                                <span tal:content="heb/proprio/civilite/civ_titre" />
+                                <span tal:replace="heb/proprio/pro_prenom1" />
+                                <span tal:replace="heb/proprio/pro_prenom2" />
+                                <span tal:replace="heb/proprio/pro_nom1" />
+                                <span tal:replace="heb/proprio/pro_nom2" />
                             </div>
                             <div id="langue-proprio">
-                            <span tal:replace="heb/proprio/pro_langue" />
+                                <span tal:replace="heb/proprio/pro_langue" />
                             </div>
                             <div id="phone-proprio">
                                 <img src="icon_telephone.gif" />
@@ -547,7 +545,7 @@
                                 </a>
                             </div>
                         </div><!--descriptif coordonnee-->
-                        <div id="descriptif-photo-proprio">
+                        <div id="description-photo-proprio">
                         </div><!-- descriptif p hoto proprio-->
                         <div class="break-float"></div>
                     </div>
