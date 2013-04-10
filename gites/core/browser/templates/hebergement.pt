@@ -174,16 +174,6 @@
                         <span tal:content="heb/commune/com_cp" />
                         <span tal:content="heb/heb_localite" />
                         (<span tal:content="heb/commune/com_nom" />)
-                        <br />
-                        <a href=""
-                           tal:attributes="href view/getTypeHebInCommuneURL">
-                            <span i18n:translate="autres_a">
-                              Autres <span i18n:name="type_hebergement"
-                                            tal:content="view/getTypeHebergement"/>
-                              à <span i18n:name="commune"
-                                       tal:content="heb/commune/com_nom"/>
-                            </span>
-                        </a>
                     </div>
 
                     <div id="description-calendrier"
