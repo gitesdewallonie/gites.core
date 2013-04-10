@@ -3,6 +3,7 @@ from Products.CMFCore.utils import getToolByName
 
 
 def migrate(context):
+    return
     portal_url = getToolByName(context, 'portal_url')
     portal = portal_url.getPortalObject()
 
