@@ -147,7 +147,8 @@ class HebergementView(BrowserView):
         language = self.request.get('LANGUAGE')
         for md in heb.activeMetadatas:
             if md.metadata_type_id == metadataType:
-                dics.append({"id":md.met_id,"title":md.getTitre(language)})
+                dics.append({"id": md.met_id,
+                             "title": md.getTitre(language)})
         return dics
 
     def getAnimal(self):
@@ -155,14 +156,14 @@ class HebergementView(BrowserView):
         for item in list:
             if item['id'] == 'heb_animal':
                 return item
-        return {"id":"heb_no_animal","title":"NON CHIEN"}
+        return {"id": "heb_no_animal", "title": "NON CHIEN"}
 
     def getFumeur(self):
         list = self.getHebMetadatasByType('autorisations')
         for item in list:
             if item['id'] == 'heb_fumeur':
                 return item
-        return {"id":"heb_no_fumeur","title":"NON FUMEUR"}
+        return {"id": "heb_no_fumeur", "title": "NON FUMEUR"}
 
     def render(self):
         return self.template()
@@ -171,14 +172,14 @@ class HebergementView(BrowserView):
         """
         Get the vignette of an hebergement
         """
-        vignettes=[]
+        vignettes = []
         codeGDW = self.context.heb_code_gdw
         listeImage = self.context.photos_heb.fileIds()
         for i in range(15):
             if i < 10:
-                photo="%s0%s.jpg"%(codeGDW,i)
+                photo = "%s0%s.jpg" % (codeGDW, i)
             else:
-                photo="%s%s.jpg"%(codeGDW, i)
+                photo = "%s%s.jpg" % (codeGDW, i)
             if photo in listeImage:
                 vignettes.append(photo)
         return vignettes
