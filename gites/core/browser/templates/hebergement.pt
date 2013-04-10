@@ -22,6 +22,11 @@
                 tal:content="view/calendarJS"></script>
 
         <script type="text/javascript"
+                charset="utf-8"
+                tal:condition="view/showCalendar"
+                tal:content="view/dispoCalendarJS"></script>
+
+        <script type="text/javascript"
                 src=""
                 charset="utf-8"
                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/accordeon/jquery.accordionza.min.js"></script>
@@ -441,6 +446,20 @@
                     <div class="slide_content">
                         <h2>Disponibilité</h2>
                         <div>
+                            <div id="description-dispo-calendrier"
+                                 tal:condition="view/showCalendar">
+                                <div id="dispocalendars"></div>
+                                <input type="hidden"
+                                       id="disporeset" />
+                                <input type="hidden"
+                                       name="dispostart"
+                                       value=""
+                                       id="dispostart" />
+                                <input type="hidden"
+                                       name="dispoend"
+                                       value=""
+                                       id="dispoend" />
+                            </div>
                         </div>
                         <br />
                     </div>

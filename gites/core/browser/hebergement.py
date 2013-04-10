@@ -58,6 +58,29 @@ class HebergementView(BrowserView):
         """ % (self.context.heb_pk,
                self.request.get('LANGUAGE', 'en'))
 
+    def dispoCalendarJS(self):
+        """
+        Calendar javascript
+        """
+        return """
+        //<![CDATA[
+            calsetup = function() {
+                jQuery.noConflict();
+                new GiteTimeframe('dispocalendars', {
+                                startField: 'dispostart',
+                                endField: 'dispoend',
+                                resetButton: 'disporeset',
+                                weekOffset: 1,
+                                hebPk: %s,
+                                months:6,
+                                language: '%s',
+                                earliest: new Date()});}
+            registerPloneFunction(calsetup);
+        //]]>
+
+        """ % (self.context.heb_pk,
+               self.request.get('LANGUAGE', 'en'))
+
     def showCalendar(self):
         """
         Is the calendar activated for showing in description ?
