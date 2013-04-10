@@ -35,7 +35,8 @@ class IdeeSejourRootFolder(grok.View):
         path['depth'] = 1
         contentFilter['path'] = path
         contentFilter['portal_type'] = ['Package']
-        contentFilter['sort_on'] = 'getObjPositionInParent'
+        contentFilter['sort_on'] = 'effective'
+        contentFilter['sort_order'] = 'reverse'
         results = cat.queryCatalog(contentFilter)
         results = list(results)
         return results
