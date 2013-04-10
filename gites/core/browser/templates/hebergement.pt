@@ -163,7 +163,7 @@
                         <h2>Accueil</h2>
                     <div>
 
-                    <div id="description-bloc-sup">
+                    <div id="description-bloc-gauche">
                     <div id="description-photo-heb">
                         <img src=""
                              tal:attributes="src string:${here/photos_heb/absolute_url}/${heb/heb_code_gdw}00.jpg" />
@@ -204,7 +204,7 @@
                     </div>
 
 
-                    <div id="description-bloc-inf">
+                    <div id="description-bloc-droite">
                     <!--TABLE TARIFICATION GITES-->
                     <div id="tarification-gite"
                          tal:condition="python:heb.type.type_heb_code not in 'CH, MH, CHECR'">
