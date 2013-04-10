@@ -455,9 +455,7 @@
                                          tal:define="index repeat/vignetteUrl/index"
                                          tal:attributes="class python: int(index) == 0 and 'item active' or 'item'">
                                         <img src="" title="" alt=""
-                                             tal:attributes="src string:photos_heb/${vignetteUrl};
-                                                             alt context/heb_nom;
-                                                             title context/heb_nom">
+                                             tal:attributes="src string:photos_heb/${vignetteUrl}">
                                     </div>
                                   </tal:bcl>
                                 </div>
