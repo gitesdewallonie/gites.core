@@ -1,13 +1,27 @@
 <div id="zone-allo-chambre-hote">
-    <h3 i18n:translate="allo_chambre_hotes">Allo chambre d'hôtes</h3>
-    <img src="++theme++gites.theme/images/chambre.png" alt="chambre">
+    <h3>
+        <a href="http://www.allochambredhotes.be"
+           title="Allo chambre d'hôtes"
+           target="_blank">
+            Allo chambre d'hôtes
+        </a>
+    </h3>
+    <a href="http://www.allochambredhotes.be"
+       title="Allo chambre d'hôtes"
+       target="_blank">
+        <img src="++theme++gites.theme/images/chambre.png"
+             width="130"
+             alt="chambre">
+    </a>
+    <div class="break-float"></div>
     <p>A la recherche d'une chambre d'hôtes pour cette nuit?<br>
-    Avec Allo chambre d'hôtes, trouvez une chambre d'hôtes<br>
-    disponible ce soir à proximité de votre destination<br>
+    Avec Allo chambre d'hôtes, trouvez une chambre d'hôtes
+    disponible ce soir à proximité de votre destination
     en Wallonie.</p>
     <div class="plus-info">
         <a href="http://www.allochambredhotes.be"
-           title="Allo chambre d'hôtes">
+           title="Allo chambre d'hôtes"
+           target="_blank">
             <span i18n:translate="plus_infos">Plus d'infos...</span>
         </a>
     </div>

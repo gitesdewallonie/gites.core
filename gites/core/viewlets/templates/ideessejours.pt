@@ -2,19 +2,26 @@
              tal:condition="python:offre is not None">
     <div id="zone-idee-sejour"
          tal:define="vignettes python:viewlet.getRandomVignette(offre.getPath())">
-        <h3 i18n:translate="idees_sejours">Idées séjours</h3>
+        <h3>
+            <a tal:attributes="href viewlet/getAllIdeesSejoursView" i18n:translate="idees_sejours">Idées séjours</a>
+        </h3>
         <tal:vign tal:repeat="vignette vignettes">
             <a tal:attributes="href offre/getURL">
                 <img src="" tal:attributes="src string:${vignette/getURL}/image_thumb"/>
             </a>
         </tal:vign>
-        <span class="bordeaux" tal:replace="offre/pretty_title_or_id"/><br>
+        <div class="break-float"></div>
+        <a tal:attributes="href offre/getURL">
+            <span class="bordeaux" tal:replace="offre/pretty_title_or_id"/>
+        </a>
+        <br />
         <p>
             <tal:desc tal:replace="offre/Description"/>
             <br>
         </p>
         <div class="plus-info">
-            <a tal:attributes="href viewlet/getAllIdeesSejoursView"><span i18n:translate="toutes_nos_idees_sejour">Toutes nos idées séjour</span></a>
+            <a tal:attributes="href viewlet/getAllIdeesSejoursView"><span
+            i18n:translate="toutes_nos_idees_sejour">Toutes nos idées séjour...</span></a>
         </div>
     </div>
 </tal:viewlet>

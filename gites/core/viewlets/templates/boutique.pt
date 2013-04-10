@@ -1,13 +1,23 @@
 <tal:viewlet tal:define="offre viewlet/getRandomBoutiqueItem"
              tal:condition="python:offre is not None">
     <div id="zone-la-boutique">
-        <h3 i18n:translate="la_boutique">La boutique</h3>
+        <h3>
+            <a tal:attributes="href viewlet/getAllBoutiqueItemsView" i18n:translate="la_boutique">La boutique</a>
+        </h3>
         <a tal:attributes="href offre/absolute_url">
             <img src="" tal:replace="structure offre/getMiniPhoto"/>
         </a>
-        <p><tal:desc tal:replace="offre/Description"/><br>
+        <div class="break-float"></div>
+        <a tal:attributes="href offre/absolute_url">
+            <span class="bordeaux" tal:replace="offre/pretty_title_or_id"/>
+        </a>
+        <br />
+        <p>
+            <tal:desc tal:replace="offre/Description"/><br>
+        </p>
         <div class="plus-info">
-            <a tal:attributes="href viewlet/getAllBoutiqueItemsView"><span i18n:translate="tous_nos_articles">Tous nos articles</span></a>
+            <a tal:attributes="href viewlet/getAllBoutiqueItemsView"><span
+            i18n:translate="tous_nos_articles">Tous nos articles...</span></a>
         </div>
     </div>
 </tal:viewlet>

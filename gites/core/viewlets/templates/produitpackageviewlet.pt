@@ -17,10 +17,8 @@
                      tal:attributes="class python: int(index) == 0 and 'item active' or 'item'">
                     <a href=""
                        tal:attributes="href package/absolute_url">
-                        <img src="" title="" alt=""
-                             tal:attributes="src string: ${package/absolute_url}/largePhoto;
-                                             alt package/Title;
-                                             title package/Title">
+                        <img src=""
+                             tal:attributes="src string: ${package/absolute_url}/largePhoto">
                         <div class="carousel-caption">
                             <h4><span tal:replace="package/Title" /></h4>
                             <p><span tal:replace="package/Description" /></p>

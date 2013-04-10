@@ -1,4 +1,5 @@
 <div id="maj-info"
+     tal:condition='viewlet/isVisible'
      tal:define="portal_url context/@@plone_portal_state/portal_url">
     <div id="titre-maj-info"
          i18n:translate="maj_des_infos">
