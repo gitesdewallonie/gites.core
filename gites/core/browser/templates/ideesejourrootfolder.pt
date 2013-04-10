@@ -25,23 +25,23 @@
             Description
         </p>
 
-      <div class="idee_sejours_container"
+      <div id="idee_sejours_container"
            tal:define="package view/getPackages">
         <fieldset tal:repeat="brain package">
           <div tal:define="packageObject python:brain.getObject()"
-               id="div_idee_sejours">
+               class="div_idee_sejours">
             <p tal:define="packageObjectUrl python: '/'.join(packageObject.getPhysicalPath());
                            vignette python:view.getVignette(packageObjectUrl)"
-               id="logo-package">
+               class="logo-package">
                   <a href="" tal:attributes="href packageObject/absolute_url" tal:condition="vignette">
                      <img src="" tal:attributes="src string:${vignette/getURL}/image_thumb"/><br />
                   </a>
             </p>
 
-            <div id="info">
+            <div class="info">
                <a href="" tal:attributes="href packageObject/absolute_url">
-                  <span id="title" tal:content="packageObject/Title"/>
-                  <span id="description">
+                  <span class="title" tal:content="packageObject/Title"/>
+                  <span class="description">
                       <p tal:content="structure packageObject/Description"/>
                   </span>
                </a>
