@@ -163,38 +163,37 @@
                         <h2>Accueil</h2>
                     <div>
 
-                    <div id="description-bloc-gauche">
-                    <div id="description-photo-heb">
-                        <img src=""
-                             tal:attributes="src string:${here/photos_heb/absolute_url}/${heb/heb_code_gdw}00.jpg" />
-                    </div>
+                    <div id="accueil-bloc-gauche">
+                        <div id="description-photo-heb">
+                            <img src=""
+                                 tal:attributes="src string:${here/photos_heb/absolute_url}/${heb/heb_code_gdw}00.jpg" />
+                        </div>
 
-                    <div id="adresse-hebergement">
-                        <span tal:content="heb/heb_adresse" /><br/>
-                        <span tal:content="heb/commune/com_cp" />
-                        <span tal:content="heb/heb_localite" />
-                        (<span tal:content="heb/commune/com_nom" />)
-                    </div>
+                        <div id="adresse-hebergement">
+                            <span tal:content="heb/heb_adresse" /><br/>
+                            <span tal:content="heb/commune/com_cp" />
+                            <span tal:content="heb/heb_localite" />
+                            (<span tal:content="heb/commune/com_nom" />)
+                        </div>
 
-                    <div id="description-calendrier"
-                         tal:condition="view/showCalendar">
-                        <div id="calendars"></div>
-                        <input type="hidden"
+                        <div id="description-calendrier"
+                             tal:condition="view/showCalendar">
+                            <div id="calendars"></div>
+                            <input type="hidden"
                                    id="reset" />
-                        <input type="hidden"
+                            <input type="hidden"
                                    name="start"
                                    value=""
                                    id="start" />
-                        <input type="hidden"
+                            <input type="hidden"
                                    name="end"
                                    value=""
                                    id="end" />
-                    </div>
-                    <div class="break-float"></div>
-                    </div>
+                        </div>
+                    </div><!--accueil-bloc-gauche-->
 
 
-                    <div id="description-bloc-droite">
+                    <div id="accueil-bloc-droite">
                     <!--TABLE TARIFICATION GITES-->
                     <div id="tarification-gite"
                          tal:condition="python:heb.type.type_heb_code not in 'CH, MH, CHECR'">
@@ -383,7 +382,7 @@
                         </table>
                     </div><!--tarif table hote-->
                     <div class="break-float"></div>
-                    </div><!--description-bloc-inf-->
+                    </div><!--description-bloc-droite-->
                 </li>
 
                 <!-- DESCRIPTION -->
@@ -391,45 +390,49 @@
                     <div class="slide_handle"><div></div></div>
                     <div class="slide_content">
                         <h2>Description</h2>
-                        <div style="display:table; table-layout:fixed;">
-                            <div style="display: table-cell;">
-                            <h3>Description</h3>
-                            <br />
-                            <span tal:content="view/getHebergementDescription" />
-                            </div>
-                            <div style="display: table-cell;">
-                                <h3>Situation</h3>
-                                <br />
-                                <span tal:content="view/getHebergementSituation" />
-                            </div>
-                            <div style="display: table-cell;">
-                                <h3>Distribution</h3>
-                                <br />
-                                <span tal:content="view/getHebergementDistribution" />
-                                <br />
+                        <div id="description-bloc-gauche">
+                                <div id="heb-situation">
+                                    <h3>Situation</h3>
+                                    <p tal:content="view/getHebergementSituation"></p>
+                                </div>
+                                <div id="heb-distribution">
+                                    <h3>Distribution</h3>
+                                    <p tal:content="view/getHebergementDistribution"></p>
+                                </div>
+                        </div><!--description-bloc-gauche-->
+
+                        <div id="description-bloc-droite">
+                                <div id="heb-description">
+                                    <h3>Description</h3>
+                                    <p tal:content="view/getHebergementDescription"></p>
+                                </div>
+                        </div><!--description-bloc-gauche-->
+
+                        <div class="break-float"></div>
+
+                        <div id="icone-confort">
                                 <tal:block define="metadata python:view.getAnimal()">
                                     <img src=""
-                                       title=""
-                                       alt=""
-                                       tal:attributes="src string:${metadata/id}.png; alt metadata/title; title metadata/title"
-                                       class="picto" />
+                                         title=""
+                                         alt=""
+                                         tal:attributes="src string:${metadata/id}.png; alt metadata/title; title metadata/title"
+                                         class="picto" />
                                 </tal:block>
                                 <tal:block define="metadata python:view.getFumeur()">
                                     <img src=""
-                                       title=""
-                                       alt=""
-                                       tal:attributes="src string:${metadata/id}.png; alt metadata/title; title metadata/title"
-                                       class="picto" />
+                                         title=""
+                                         alt=""
+                                         tal:attributes="src string:${metadata/id}.png; alt metadata/title; title metadata/title"
+                                         class="picto" />
                                 </tal:block>
                                 <tal:for repeat="metadata python:view.getHebMetadatasByType('confort')">
                                     <img src=""
-                                       title=""
-                                       alt=""
-                                       tal:attributes="src string:${metadata/id}.png; alt metadata/title; title metadata/title"
-                                       class="picto" />
+                                         title=""
+                                         alt=""
+                                         tal:attributes="src string:${metadata/id}.png; alt metadata/title; title metadata/title"
+                                         class="picto" />
                                 </tal:for>
-                            </div>
-                        </div>
+                        </div><!--icone-confort-->
                     </div>
                 </li>
                 <!-- DISPONIBILITE -->
