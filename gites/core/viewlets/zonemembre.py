@@ -20,9 +20,7 @@ class ZoneMembreViewletManager(grok.ViewletManager):
 class CalendrierViewlet(grok.Viewlet):
     grok.order(10)
 
-    def available(self):
-        """By default, portlets are available
-        """
+    def isVisible(self):
         return len(self.getGitesForProprio()) > 0
 
     def hasActiveConfiguration(self):
@@ -61,9 +59,7 @@ class CalendrierViewlet(grok.Viewlet):
 class MajInfosViewlet(grok.Viewlet):
     grok.order(20)
 
-    def available(self):
-        """By default, portlets are available
-        """
+    def isVisible(self):
         return len(self.getGitesForProprio()) > 0
 
     @memoize
