@@ -36,7 +36,6 @@ class IdeeSejourRootFolder(grok.View):
         contentFilter['path'] = path
         contentFilter['portal_type'] = ['Package']
         contentFilter['sort_on'] = 'getObjPositionInParent'
-        contentFilter['review_state'] = 'published'
         results = cat.queryCatalog(contentFilter)
         results = list(results)
         return results

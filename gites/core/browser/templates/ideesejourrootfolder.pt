@@ -45,7 +45,8 @@
                       <p tal:content="structure packageObject/Description"/>
                   </span>
                </a>
-             </div>
+            </div>
+
           </div>
         </fieldset>
       </div>
