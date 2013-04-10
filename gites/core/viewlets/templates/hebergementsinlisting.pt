@@ -39,10 +39,10 @@
 
     <div tal:repeat="hebergement viewlet/hebergements">
         <div i18n:domain="gites"
-             tal:define="typeHeb hebergement/type/getType"
-             tal:attributes="class python: typeHeb=='gites' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
+             tal:define="typeHeb hebergement/type/type_heb_type"
+             tal:attributes="class python: typeHeb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
             <div id="typetype">
-                <span tal:content="typeHeb"
+                <span tal:content="hebergement/type/getType"
                       class="texte-vertical" />
                 <div class="btn-loupe-listing">
                     <a href=""
@@ -57,6 +57,12 @@
             </div>
 
             <div id="info-bloc-sup">
+
+                <div id="digit">
+                    <img src=""
+                         tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/${hebergement/type/type_heb_type}_${repeat/hebergement/number}.png" />
+                </div>
+
                 <div id="distance"> à 5Km </div>
 
                 <div id="nom-hebergement"
