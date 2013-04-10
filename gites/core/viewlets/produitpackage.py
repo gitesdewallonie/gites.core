@@ -16,8 +16,7 @@ class ProduitPackageViewlet(grok.Viewlet):
 
     def getCarouselPackages(self):
         cat = getToolByName(self.context, 'portal_catalog')
-        packages = cat.searchResults(portal_type='Package',
-                                     review_state='published')
+        packages = cat.searchResults(portal_type='Package')
         results = []
         for brain in packages:
             package = brain.getObject()
