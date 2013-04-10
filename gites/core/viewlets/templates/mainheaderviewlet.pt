@@ -93,6 +93,7 @@
                        id="nom-reference"
                        name="reference"
                        value=""
+                       tal:attributes="value python:request.form.get('reference')"
                        size="30" />
             </div>
             <div>
