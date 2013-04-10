@@ -35,7 +35,9 @@ def removePortlets(portal):
 
 def removeAllContentInsideFolder(container, folderId):
     # no translations here
-    folder = getattr(container, folderId)
+    folder = getattr(container, folderId, None)
+    if not folder:
+        return
     for objectId in folder.objectIds():
         if objectId:
             content = getattr(folder, objectId)
@@ -43,7 +45,9 @@ def removeAllContentInsideFolder(container, folderId):
 
 
 def removeContent(folder, objectId):
-    content = getattr(folder, objectId)
+    content = getattr(folder, objectId, None)
+    if not content:
+        return
     translations = content.getTranslations()
     for language in translations:
         translatedContent = translations[language][0]

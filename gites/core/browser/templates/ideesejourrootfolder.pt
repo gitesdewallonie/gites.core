@@ -33,7 +33,7 @@
             <p tal:define="packageObjectUrl python: '/'.join(packageObject.getPhysicalPath());
                            vignette python:view.getVignette(packageObjectUrl)"
                id="logo-package">
-                  <a href="" tal:attributes="href packageObject/absolute_url">
+                  <a href="" tal:attributes="href packageObject/absolute_url" tal:condition="vignette">
                      <img src="" tal:attributes="src string:${vignette/getURL}/image_thumb"/><br />
                   </a>
             </p>

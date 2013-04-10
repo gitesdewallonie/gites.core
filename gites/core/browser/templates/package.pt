@@ -31,7 +31,8 @@
 
 <body>
 <div metal:fill-slot="main"
-     tal:define="text context/getText;">
+     tal:define="text context/getText;
+                 textTop context/getTextTop;">
     <script>
     </script>
     <div id="aside">
@@ -43,7 +44,7 @@
                     Title or id
                 </h1>
                 <div id="aside-info">
-                  voir les 52 hébergements.
+                    <span i18n:translate="nombre_hebergements">Il y a <span i18n:name="nombre" tal:content="view/getHebCount"></span> hébergements</span>
                 </div>
             </div>
         </div>
@@ -52,24 +53,10 @@
     <div id="viewlet-above-content"
          tal:content="structure provider:plone.abovecontenttitle">
     </div>
-<!--
-    <div id="package-large-photo">
-        <img src=""
-             tal:attributes="src view/getVignetteURL" />
-    </div>
--->
-    <div id="package-description">
-        <p tal:content="here/Description"
-           tal:condition="here/Description">
-           Description
-        </p>
-    </div>
 
-    <div id="package-content"
-         class="stx"
-         tal:condition="text"
-         tal:attributes="class python:here.Format() in ('text/structured', 'text/x-rst', ) and 'stx' or 'plain'">
-        <div tal:replace="structure text"></div>
+    <div id="package-description"
+         tal:condition="textTop">
+        <div tal:replace="structure textTop"></div>
     </div>
 
     <div class="break-float"></div>
@@ -83,6 +70,14 @@
 
     <div id="viewlet-below-content"
          tal:content="structure provider:plone.belowcontentbody"></div>
+
+    <div id="package-content"
+         class="stx"
+         tal:condition="text"
+         tal:attributes="class python:here.Format() in ('text/structured', 'text/x-rst', ) and 'stx' or 'plain'">
+        <div tal:replace="structure text"></div>
+    </div>
+
 </div><!--metal-->
 </body>
 </html>

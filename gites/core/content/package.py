@@ -19,9 +19,9 @@ from Products.Archetypes.interfaces import (IBaseFolder,
                                             IBaseObject,
                                             IReferenceable)
 from Products.ATContentTypes.content.folder import ATFolder
-from Products.LinguaPlone.public import (Schema, TextField, RichWidget,
-                                         ImageWidget,
-                                         TextAreaWidget, registerType,
+from Products.LinguaPlone.public import (Schema, TextField,
+                                         TextAreaWidget, RichWidget,
+                                         ImageWidget, registerType,
                                          IntegerField, IntegerWidget)
 
 from monet.mapsviewlet.interfaces import IMonetMapsEnabledContent
@@ -45,10 +45,23 @@ schema = Schema((
     ),
 
     TextField(
+        name='textTop',
+        allowable_content_types=('text/plain', 'text/structured', 'text/html', 'application/msword'),
+        widget=RichWidget(
+            description="Texte d'introduction du produit",
+            label='Description',
+            label_msgid='GitesContent_label_description',
+            description_msgid='GitesContent_help_description',
+            i18n_domain='gites',
+        ),
+        default_output_type='text/html'
+    ),
+
+    TextField(
         name='text',
         allowable_content_types=('text/plain', 'text/structured', 'text/html', 'application/msword'),
         widget=RichWidget(
-            description="Description détaillée du produit",
+            description="Texte du produit",
             label='Text',
             label_msgid='GitesContent_label_text',
             description_msgid='GitesContent_help_text',
@@ -69,9 +82,8 @@ schema = Schema((
 
     ImageField(
         name='largePhoto',
-        required=1,
         widget=ImageWidget(
-            label='Photo large',
+            label='Photo large (1100 x 333 px)',
             description="Photo utilisée dans le descriptif du produit et pour le Carousel de la page d'accueil",
         ),
     ),
