@@ -14,7 +14,6 @@ from Products.Five import BrowserView
 from Acquisition import aq_inner
 from zope.interface import implements
 from zope.component import queryMultiAdapter
-from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from z3c.sqlalchemy import getSAWrapper
@@ -137,24 +136,6 @@ class HebergementView(BrowserView):
         urlList = str(hebURL).split('/')
         urlList.pop()
         return '/'.join(urlList)
-
-    @memoize
-    def getRelatedSejourFute(self):
-        """
-        Get Sejour Fute related to this hebergement
-        """
-        self.cat = getToolByName(self.context, 'portal_catalog')
-        pk = self.context.heb_pk
-        results = self.cat.searchResults(portal_type='SejourFute',
-                                         end={'query': DateTime(),
-                                              'range': 'min'},
-                                         review_state='published')
-        relatedSejour = []
-        for result in results:
-            sejour = result.getObject()
-            if pk in sejour.getHebPks():
-                relatedSejour.append(sejour)
-        return relatedSejour
 
     def getHebMetadatasByType(self, metadataType):
         """

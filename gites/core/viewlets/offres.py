@@ -18,7 +18,7 @@ class IdeesSejours(grok.Viewlet):
 
     def getRandomVignette(self, sejour_url, amount=1):
         """
-        Return a random vignette for a sejour fute
+        Return a random vignette for a package
         """
         cat = getToolByName(self.context, 'portal_catalog')
         results = cat.searchResults(portal_type='Vignette',

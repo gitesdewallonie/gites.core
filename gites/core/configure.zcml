@@ -31,7 +31,6 @@
 
   <include package=".adapters"/>
   <include package=".browser"/>
-  <include package=".flash"/>
   <include package=".viewlets"/>
 
   <cmf:registerDirectory name="gitescore_templates"/>

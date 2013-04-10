@@ -78,11 +78,6 @@ class IHebergementView(Interface):
         Get the commune and type hebergement URL
         """
 
-    def getRelatedSejourFute():
-        """
-        Get Sejour Fute related to this hebergement
-        """
-
 
 class IHebergementIconsView(Interface):
     """
