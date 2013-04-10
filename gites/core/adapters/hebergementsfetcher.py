@@ -126,7 +126,7 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             return ()
 
 
-class TypeHebCommuneHebFetcher(BaseHebergementsFetcher):
+class CommuneHebFetcher(BaseHebergementsFetcher):
     grok.adapts(ICommune, Interface, IBrowserRequest)
 
     @property
