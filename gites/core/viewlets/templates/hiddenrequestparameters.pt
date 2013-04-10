@@ -1,0 +1,10 @@
+<form id="hiddenForm">
+<tal:params tal:repeat="param viewlet/parameters">
+  <tal:block tal:define="key python:param[0];
+                         value python:param[1];">
+    <input type="hidden" ng-model="hidden" tal:attributes="name key;
+                                                         value value;
+                                                         ng-init string:hidden.${key}='${value}'"/>
+  </tal:block>
+</tal:params>
+</form>

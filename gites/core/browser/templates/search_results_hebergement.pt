@@ -2,24 +2,45 @@
       lang="en"
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="gites">
+      <metal:javascript_head_slot fill-slot="javascript_head_slot">
+        <script type="text/javascript"
+                src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
+        <script type="text/javascript"
+                src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular-cookies.min.js"></script>
+        <script type="text/javascript"
+                src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular-sanitize.min.js"></script>
+        <script type="text/javascript"
+                tal:attributes="src string:${here/portal_url}/++theme++gites.theme/scripts/spin.js"></script>
+        <script type="text/javascript"
+                tal:attributes="src string:$portal_url/++resource++gdwcore/heblisting.js"></script>
+      </metal:javascript_head_slot>
+
+      <metal:css fill-slot="css_slot">
+        <link rel="stylesheet"
+              type="text/css"
+              tal:attributes="href string:$portal_url/++resource++gdwcore/heblisting.css" />
+      </metal:css>
 
 <body>
 
-<div metal:fill-slot="main" tal:define="hebergements view/selectedHebergements">
+<div metal:fill-slot="main">
 
- <span tal:define="nbr python:len(hebergements)">
+ <span tal:define="nbr view/hebergementsCount">
   <h1>
     <span tal:replace="nbr" />
     <span i18n:translate="hebergements_correspondent" tal:condition="python: int(nbr)>1"> h&eacute;bergements correspondent &agrave; votre recherche.</span>
     <span i18n:translate="hebergement_correspond" tal:condition="python: int(nbr)<=1"> h&eacute;bergement correspond &agrave; votre recherche.</span>
   </h1>
   <div>
-   <span tal:condition="python: int(nbr)>0" i18n:translate="selectionnez_titre_pour_trier">
-     S&eacute;lectionnez le titre d&acute;une colonne pour trier les r&eacute;sultats.
-    </span>
-    <center>
-      <metal:macro use-macro="here/hebergement_table/macros/hebergement_table" />
-    </center>
+    <div id="spin"
+         style="display:none;"></div>
+    <div id="heb-listing"
+         tal:content="structure provider:gites.heblisting"></div>
+    <div class="break-float"></div>
+
+    <div id="viewlet-below-content"
+         tal:content="structure provider:plone.belowcontentbody"></div>
+
   </div>
  </span>
 

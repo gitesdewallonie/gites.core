@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 from five import grok
 from Acquisition import Explicit
 from zope import interface, component
@@ -9,6 +10,8 @@ from gites.db import session
 from gites.db.content import Metadata, Commune
 from gites.core.content.interfaces import IPackage
 from gites.core.interfaces import IHebergementsFetcher
+from gites.core.browser.moteur_recherche import MoteurRecherche
+from Products.CMFPlone.interfaces import IPloneSiteRoot
 from gites.locales import GitesMessageFactory as _
 
 grok.templatedir('templates')
@@ -90,6 +93,11 @@ class HebergementsInListing(grok.Viewlet):
     def is_first_page(self):
         return self._fetcher.selected_page() == 0
 
+    def sort_items(self):
+        return {'pers_numbers': _("Nombre de personnes"),
+                'room_count': _("Nombre de chambre"),
+                'epis': _(u"Épis")}
+
 
 class HebergementsInPackageListing(HebergementsInListing):
     grok.context(IPackage)
@@ -105,10 +113,33 @@ class HebergementsInPackageListing(HebergementsInListing):
 class HebergementsInCommuneListing(HebergementsInListing):
     grok.context(Commune)
 
-    def sort_items(self):
-        return {'pers_numbers': _("Nombre de personnes"),
-                'room_count': _("Nombre de chambre"),
-                'epis': _(u"Épis")}
+
+class RechercheListing(HebergementsInListing):
+    grok.view(MoteurRecherche)
+
+
+class RechercheListing(HebergementsInListing):
+    grok.context(IPloneSiteRoot)
+
+
+class HiddenRequestParameters(grok.Viewlet):
+    grok.order(5)
+
+    @memoize
+    def request_json_parameters(self):
+        if self.request._file is None:
+            return {}
+        request_body = self.request._file.read()
+        self.request._file.seek(0)
+        try:
+            return json.loads(request_body)
+        except ValueError:
+            return {}
+
+    def parameters(self):
+        params = self.request_json_parameters()
+        params.update(self.request.form.items())
+        return params.items()
 
 
 class HebergementListingViewletManager(grok.ViewletManager):

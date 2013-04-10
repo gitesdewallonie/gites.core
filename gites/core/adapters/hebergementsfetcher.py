@@ -13,6 +13,8 @@ from gites.db.interfaces import ICommune
 from gites.db.content import (LinkHebergementMetadata, Hebergement,
                               LinkHebergementEpis, Commune, Proprio)
 from gites.core.interfaces import IHebergementsFetcher
+from Products.CMFPlone.interfaces import IPloneSiteRoot
+from gites.core.browser.moteur_recherche import MoteurRecherche
 from gites.core.content.interfaces import IPackage
 
 
@@ -55,6 +57,13 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
         except ValueError:
             return {}
 
+    @property
+    @memoize
+    def data(self):
+        params = self.request_parameters()
+        params.update(self.request.form.items())
+        return params
+
     def selected_keywords(self):
         data = self.request_parameters()
         return [key for key, value in data.get('keywords', {}).items() if value is True]
@@ -67,6 +76,16 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
     def __len__(self):
         count = self._query.count()
         return count
+
+    def order_by(self):
+        if self.selected_order() == 'pers_numbers':
+            return (Hebergement.heb_cgt_cap_max.desc(), Hebergement.heb_nom)
+        elif self.selected_order() == 'room_count':
+            return (Hebergement.heb_cgt_nbre_chmbre.desc(), Hebergement.heb_nom)
+        elif self.selected_order() == 'epis':
+            return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
+        else:
+            return (Hebergement.heb_nom, )
 
 
 class PackageHebergementFetcher(BaseHebergementsFetcher):
@@ -122,12 +141,21 @@ class TypeHebCommuneHebFetcher(BaseHebergementsFetcher):
                                      Proprio.pro_etat == True))
         return query
 
-    def order_by(self):
-        if self.selected_order() == 'pers_numbers':
-            return (Hebergement.heb_cgt_cap_max.desc(), Hebergement.heb_nom)
-        elif self.selected_order() == 'room_count':
-            return (Hebergement.heb_cgt_nbre_chmbre.desc(), Hebergement.heb_nom)
-        elif self.selected_order() == 'epis':
-            return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
-        else:
-            return (Hebergement.heb_nom,)
+
+class SearchHebFetcher(BaseHebergementsFetcher):
+    grok.adapts(Interface, MoteurRecherche, IBrowserRequest)
+
+    @property
+    def _query(self):
+        reference = self.data.get('reference')
+        query = session().query(Hebergement).join('proprio').join('epis')
+        query = query.options(
+            FromCache('gdw'))
+        query = query.filter(Hebergement.heb_nom.ilike("%%%s%%" % reference))
+        query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
+                                     Proprio.pro_etat == True))
+        return query
+
+
+class SearchHebFetcherOnRoot(SearchHebFetcher):
+    grok.adapts(IPloneSiteRoot, Interface, IBrowserRequest)

@@ -17,6 +17,22 @@ $.fn.spin = function (opts) {
     return this;
 };
 
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
 
 // Calculate base href - code coming from kss
 
@@ -66,12 +82,17 @@ var calculateBase = function() {
 var app = angular.module('listing', ['ngSanitize', 'ngCookies']);
 app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 
-    var init = function() {
+    $scope.init = function() {
         $scope.page = $cookieStore.get('listing_page', 0);
 	var baseurl = calculateBase();
 	$scope.listing_url = baseurl + 'update_listing'; // The url of our search
 	$scope.map_listing_url = baseurl + 'update_map_listing'; // The url of our search
         $scope.keywords = {};
+        var formData = $('#hiddenForm').serializeObject();
+	if ( $scope.reference != formData.reference) {
+	    $scope.page = 0;
+	}
+	$scope.reference = formData.reference;
         var page_cookie = $cookieStore.get('listing_keywords');
 	if ( page_cookie ) {
 	    $scope.keywords = page_cookie;
@@ -79,13 +100,12 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 	$scope.sort = $cookieStore.get('listing_sort', '');
     };
 
-    // initialize values
-    init();
-
     $scope.updateMap = function() {
         $http.post($scope.map_listing_url, {'keywords': $scope.keywords,
 	                        'page': $scope.page,
-	                        'sort': $scope.sort}).
+	                        'sort': $scope.sort,
+		                'reference': $scope.reference
+	}).
         success(function(data, status) {
 	    if (typeof googleMapAPI != 'undefined') {
 	       googleMapAPI.updateHebergementsMarkers(data);
@@ -100,7 +120,8 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
         $cookieStore.put('listing_sort', $scope.sort);
         $http.post($scope.listing_url, {'keywords': $scope.keywords,
 	                        'page': $scope.page,
-	                        'sort': $scope.sort}).
+	                        'sort': $scope.sort,
+	                        'reference': $scope.reference}).
         success(function(data, status) {
             $scope.status = status;
             $scope.listcontainer = data;
@@ -108,7 +129,6 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 	$scope.updateMap();
     };
 
-    $scope.update();
 
     $scope.goToNextPage = function(){
 	 $scope.page++
@@ -135,6 +155,10 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 	 $scope.goToPage(0);
     }
 
+    // initialize values
+    $scope.init();
+
+    $scope.update();
 });
 
 app.directive('angularHtmlBind', function($compile) {
