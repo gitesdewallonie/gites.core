@@ -288,7 +288,7 @@
                                 </td>
                             </tr>
                          </table>
-                        <div>
+                        <div id="description-tarification-divers">
                             <h3>Divers</h3>
                             <p tal:content="heb/heb_tarif_divers"></p>
                         </div>
@@ -415,18 +415,11 @@
 
                         <div id="description-icone-confort">
                                 <tal:block define="metadata python:view.getAnimal()">
-                                    <img src=""
-                                         title=""
-                                         alt=""
-                                         tal:attributes="src string:${metadata/id}.png; alt metadata/title; title metadata/title"
-                                         class="picto" />
+                                    <div tal:attributes="class metadata/id" />
                                 </tal:block>
                                 <tal:block define="metadata python:view.getFumeur()">
-                                    <img src=""
-                                         title=""
-                                         alt=""
-                                         tal:attributes="src string:${metadata/id}.png; alt metadata/title; title metadata/title"
-                                         class="picto" />
+                                    <div tal:condition="python:metadata['id'] == 'no-smoke'"
+                                         tal:attributes="class metadata/id" />
                                 </tal:block>
                                 <tal:for repeat="metadata python:view.getHebMetadatasByType('confort')">
                                     <img src=""

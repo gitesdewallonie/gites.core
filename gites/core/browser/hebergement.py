@@ -178,15 +178,15 @@ class HebergementView(BrowserView):
         list = self.getHebMetadatasByType('autorisations')
         for item in list:
             if item['id'] == 'heb_animal':
-                return item
-        return {"id": "heb_no_animal", "title": "NON CHIEN"}
+                return {'id': 'dog'}
+        return {'id': 'no-dog'}
 
     def getFumeur(self):
         list = self.getHebMetadatasByType('autorisations')
         for item in list:
             if item['id'] == 'heb_fumeur':
-                return item
-        return {"id": "heb_no_fumeur", "title": "NON FUMEUR"}
+                return {'id': 'smoke'}
+        return {'id': 'no-smoke'}
 
     def render(self):
         return self.template()

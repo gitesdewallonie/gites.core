@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 import json
 import geoalchemy
+from dateutil.relativedelta import relativedelta
 import sqlalchemy as sa
 from plone.memoize.instance import memoize
 from five import grok
@@ -11,7 +13,8 @@ from Products.Maps.interfaces import IMarker
 from gites.db import session
 from gites.db.interfaces import ICommune
 from gites.db.content import (LinkHebergementMetadata, Hebergement,
-                              LinkHebergementEpis, Commune, Proprio)
+                              LinkHebergementEpis, Commune, Proprio,
+                              TypeHebergement, ReservationProprio)
 from gites.core.interfaces import IHebergementsFetcher
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from gites.core.browser.moteur_recherche import MoteurRecherche
@@ -178,19 +181,46 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                                              Hebergement.heb_cgt_cap_max >= capacityMax))
         return query
 
+    def filter_heb_type(self, show_gites, show_chambres, query):
+        if show_gites:
+            return query.filter(TypeHebergement.type_heb_type == 'gites')
+        elif show_chambres:
+            return query.filter(TypeHebergement.type_heb_type == 'chambre')
+
+    def filter_available_date(self, from_date, to_date, query):
+        if from_date:
+            from_date = datetime.strptime(from_date, '%m/%d/%Y').date()
+        if to_date:
+            to_date = datetime.strptime(to_date, '%m/%d/%Y').date()
+        query = query.filter(Hebergement.heb_calendrier_proprio != 'non actif')
+        beginDate = from_date or (to_date + relativedelta(days=-1))
+        endDate = to_date or (from_date + relativedelta(days=+1))
+        busyHebPks = sa.select([ReservationProprio.heb_fk],
+                               sa.and_(ReservationProprio.res_date >= beginDate,
+                                       ReservationProprio.res_date < endDate))
+        query = query.filter(~Hebergement.heb_pk.in_(busyHebPks))
+        return query
+
     @property
     def _query(self):
         reference = self.data.get('reference')
         capacity = self.data.get('form.capacityMin')
-        query = session().query(Hebergement).join('proprio').join('epis')
+        show_gites = 'gite_meuble' in self.data
+        show_chambres = 'chambre_hote' in self.data
+        from_date = self.data.get('form.fromDate')
+        to_date = self.data.get('form.toDate')
+        query = session().query(Hebergement).join('proprio').join('epis').join('type')
         query = query.options(
             FromCache('gdw'))
         if reference:
             query = query.filter(sa.or_(sa.func.unaccent(Hebergement.heb_nom).ilike("%%%s%%" % reference),
-                                    Hebergement.heb_nom.ilike("%%%s%%" % reference)))
-
+                                        Hebergement.heb_nom.ilike("%%%s%%" % reference)))
+        if show_gites != show_chambres:  # XOR
+            query = self.filter_heb_type(show_gites, show_chambres, query)
         if capacity:
             query = self.filter_capacity(capacity, query)
+        if from_date or to_date:
+            query = self.filter_available_date(from_date, to_date, query)
         query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
                                      Proprio.pro_etat == True))
         return query
