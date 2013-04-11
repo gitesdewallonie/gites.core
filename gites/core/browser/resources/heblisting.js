@@ -88,11 +88,11 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 	$scope.listing_url = baseurl + 'update_listing'; // The url of our search
 	$scope.map_listing_url = baseurl + 'update_map_listing'; // The url of our search
         $scope.keywords = {};
-        var formData = $('#hiddenForm').serializeObject();
-	if ( $scope.reference != formData.reference) {
+        $scope.formData = $('#hiddenForm').serializeObject();
+	if ( $scope.reference != $scope.formData.reference) {
 	    $scope.page = 0;
 	}
-	$scope.reference = formData.reference;
+	$scope.reference = $scope.formData.reference;
         var page_cookie = $cookieStore.get('listing_keywords');
 	if ( page_cookie ) {
 	    $scope.keywords = page_cookie;
@@ -100,12 +100,16 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 	$scope.sort = $cookieStore.get('listing_sort', '');
     };
 
-    $scope.updateMap = function() {
-        $http.post($scope.map_listing_url, {'keywords': $scope.keywords,
+    $scope.updatePostData = function() {
+	$scope.postData = $.extend($scope.formData, {'keywords': $scope.keywords,
 	                        'page': $scope.page,
 	                        'sort': $scope.sort,
-		                'reference': $scope.reference
-	}).
+	                        'reference': $scope.reference});
+    }
+
+    $scope.updateMap = function() {
+	$scope.updatePostData();
+        $http.post($scope.map_listing_url, $scope.postData).
         success(function(data, status) {
 	    if (typeof googleMapAPI != 'undefined') {
 	       googleMapAPI.updateHebergementsMarkers(data);
@@ -114,14 +118,13 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
     };
 
     $scope.update = function() {
-	if ( $scope.keywords ) {
+	$scope.updatePostData();
+	if ( ! $.isEmptyObject($scope.keywords) ) {
             $cookieStore.put('listing_keywords', $scope.keywords);
 	};
         $cookieStore.put('listing_sort', $scope.sort);
-        $http.post($scope.listing_url, {'keywords': $scope.keywords,
-	                        'page': $scope.page,
-	                        'sort': $scope.sort,
-	                        'reference': $scope.reference}).
+
+        $http.post($scope.listing_url, $scope.postData).
         success(function(data, status) {
             $scope.status = status;
             $scope.listcontainer = data;
