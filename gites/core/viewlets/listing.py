@@ -2,6 +2,7 @@
 import json
 from five import grok
 from Acquisition import Explicit
+from Products.Maps.interfaces import IMarker
 from zope import interface, component
 from affinitic.db.cache import FromCache
 from zope.contentprovider.interfaces import IContentProvider
@@ -74,6 +75,9 @@ class HebergementsInListing(grok.Viewlet):
     def hebergements(self):
         return self._fetcher()
 
+    def isGeoLocalized(self):
+        return component.queryAdapter(self.context, IMarker) is not None
+
     @memoize
     def count(self):
         return len(self._fetcher)
@@ -108,6 +112,9 @@ class HebergementsInPackageListing(HebergementsInListing):
                 'room_count': _("Nombre de chambre"),
                 'epis': _(u"Épis"),
                 'heb_type': _(u"Type d'hébergement")}
+
+    def heb_distance(self, hebergement):
+        return round(hebergement.distance / 1000, 2)
 
 
 class HebergementsInCommuneListing(HebergementsInListing):
