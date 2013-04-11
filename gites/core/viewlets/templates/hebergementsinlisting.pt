@@ -105,7 +105,7 @@
                          tal:attributes="class python: dog and 'dog' or 'no-dog'">
                     </div>
                     <div id="icon-confort-smoker"
-                         tal:condition="hebergement/is_smoker"
+                         tal:condition="not:hebergement/is_smoker"
                          tal:define="smoker hebergement/is_smoker"
                          tal:attributes="class python: smoker and 'smoke' or 'no-smoke'">
                     </div>
