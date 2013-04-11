@@ -1,4 +1,5 @@
-<div id="listing-result-gite-theme">
+<div id="listing-result-gite-theme"
+     tal:condition="viewlet/filters">
     <form>
         <tal:block tal:repeat="filter viewlet/filters">
             <tal:inputs tal:define="heb_count python:viewlet.count_hebs(filter.met_pk)">
