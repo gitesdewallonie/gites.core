@@ -385,46 +385,38 @@ class ISearchHosting(Interface):
 
     hebergementType = schema.Choice(
         title=_("Hebergement Type"),
-        description=_("Select a type of Hebergement"),
         required=True,
         vocabulary="gitescontent.groupedtypehebergement")
 
     provinces = schema.Choice(
         title=_('Province'),
-        description=_("Select a province"),
         required=True,
         vocabulary="gitescontent.provinces")
 
     communes = schema.Choice(
         title=_('Commune'),
-        description=_("Select a commune"),
         required=True,
         vocabulary="gitescontent.communes")
 
     classification = schema.Choice(
         title=_('Classification'),
-        description=_("Select a classification"),
         required=True,
         vocabulary="gitescontent.classification")
 
     capacityMin = schema.Int(
         title=_('Minimum Capacity'),
-        description=_('The minimum capacity of your hebergement'),
         required=False)
 
     roomAmount = schema.Int(
         title=_('Number of rooms'),
-        description=_('The number of rooms in hebergement'),
         required=False)
 
     animals = schema.Bool(
         title=_('Animals authorized'),
-        description=_('Are animals authorized in the Hebergement'),
         required=False)
 
     smokers = schema.Bool(
         title=_('Smoking allowed'),
-        description=_('Are people allowed to smoke in the Hebergement'),
         required=False)
 
     fromDate = schema.Date(
