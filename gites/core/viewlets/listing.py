@@ -84,7 +84,11 @@ class HebergementsInListing(grok.Viewlet):
         return len(self._fetcher)
 
     def pages(self):
-        return range(self.count() / self._fetcher.batch_size + 1)
+        counts = self.count() / self._fetcher.batch_size + 1
+        return range(counts)
+
+    def show_batch(self):
+        return len(self.pages()) > 1
 
     def batch_start(self):
         return self._fetcher.batch_start
