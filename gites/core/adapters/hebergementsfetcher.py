@@ -113,7 +113,7 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             query = session().query(Hebergement,
                           Hebergement.heb_location.distance_sphere(point).label('distance'))
         else:
-            query = session().query.query(Hebergement)
+            query = session().query(Hebergement)
         query = query.join('type').join('commune').join('epis')
         query = query.options(
             FromCache('gdw'))
@@ -129,7 +129,8 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             subquery = subquery.having(sa.func.count() == len(criteria))
             subquery = subquery.subquery()
             query = query.filter(Hebergement.heb_pk == subquery.c.heb_fk)
-        query = query.filter(Hebergement.heb_location.distance_sphere(point) < 1000 * user_range)
+        if self.context.is_geolocalized():
+            query = query.filter(Hebergement.heb_location.distance_sphere(point) < 1000 * user_range)
         return query
 
     def order_by(self):
