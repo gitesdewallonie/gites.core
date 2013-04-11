@@ -58,6 +58,8 @@
          tal:condition="textTop">
         <div tal:replace="structure textTop"></div>
     </div>
+    <div id="viewlet-map"
+         tal:content="structure provider:gites.mapviewlet"></div>
 
     <div class="break-float"></div>
 

@@ -491,7 +491,7 @@
                     <div class="slide_handle"><div></div></div>
                     <div class="slide_content">
                         <h2>Localisation</h2>
-                        <div id="description-map" tal:content="structure provider:plone.belowcontentbody" />
+                        <div id="description-map" tal:content="structure provider:gites.mapviewlet" />
                         <div class="break-float"></div>
                     </div>
                 </li>

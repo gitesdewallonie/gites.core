@@ -71,7 +71,17 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
     def __call__(self):
         query = self._query.order_by(*self.order_by())
         query = query.slice(self.batch_start, self.batch_end)
-        return query.all()
+        hebergements = []
+        for heb in query.all():
+            if isinstance(heb, tuple):
+                hebergement = heb[0]
+                for key in heb.keys()[1:]:
+                    value = getattr(heb, key)
+                    setattr(hebergement, key, value)
+                    hebergements.append(hebergement)
+            else:
+                hebergements.append(heb)
+        return hebergements
 
     def __len__(self):
         count = self._query.count()
@@ -93,7 +103,18 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
 
     @property
     def _query(self):
-        query = session().query(Hebergement).join('type').join('commune').join('epis')
+        point = None
+        if self.context.is_geolocalized():
+            geomarker = IMarker(self.context)
+            user_range = self.context.getRange()
+            point = 'POINT(%s %s)' % (geomarker.longitude, geomarker.latitude)
+            point = geoalchemy.base.WKTSpatialElement(point, srid=3447)
+        if point is not None:
+            query = session().query(Hebergement,
+                          Hebergement.heb_location.distance_sphere(point).label('distance'))
+        else:
+            query = session().query(Hebergement)
+        query = query.join('type').join('commune').join('epis')
         query = query.options(
             FromCache('gdw'))
         subquery = session().query(LinkHebergementMetadata.heb_fk)
@@ -101,17 +122,14 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
         criteria = criteria.union(
             self.context.getCriteria(),
             self.selected_keywords())
-        subquery = subquery.filter(LinkHebergementMetadata.metadata_fk.in_(criteria))
-        subquery = subquery.filter(LinkHebergementMetadata.link_met_value == True)
-        subquery = subquery.group_by(LinkHebergementMetadata.heb_fk)
-        subquery = subquery.having(sa.func.count() == len(criteria))
-        subquery = subquery.subquery()
-        query = query.filter(Hebergement.heb_pk == subquery.c.heb_fk)
+        if criteria:
+            subquery = subquery.filter(LinkHebergementMetadata.metadata_fk.in_(criteria))
+            subquery = subquery.filter(LinkHebergementMetadata.link_met_value == True)
+            subquery = subquery.group_by(LinkHebergementMetadata.heb_fk)
+            subquery = subquery.having(sa.func.count() == len(criteria))
+            subquery = subquery.subquery()
+            query = query.filter(Hebergement.heb_pk == subquery.c.heb_fk)
         if self.context.is_geolocalized():
-            geomarker = IMarker(self.context)
-            user_range = self.context.getRange()
-            point = 'POINT(%s %s)' % (geomarker.longitude, geomarker.latitude)
-            point = geoalchemy.base.WKTSpatialElement(point, srid=3447)
             query = query.filter(Hebergement.heb_location.distance_sphere(point) < 1000 * user_range)
         return query
 
@@ -122,6 +140,8 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             return (Hebergement.heb_cgt_nbre_chmbre.desc(), Hebergement.heb_nom)
         elif self.selected_order() == 'epis':
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
+        elif self.selected_order() == 'distance':
+            return ('distance', )
         else:
             return ()
 

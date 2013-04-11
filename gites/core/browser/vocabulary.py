@@ -8,6 +8,7 @@ from zope.interface import implements
 from zope.schema.interfaces import IVocabularyFactory
 from Products.Archetypes.interfaces import IVocabulary
 from Products.Archetypes.atapi import DisplayList
+from Products.CMFCore.utils import getToolByName
 from zope.component import queryMultiAdapter
 
 CARDS = ['carte01.jpg']
@@ -149,10 +150,22 @@ class GroupedTypeHebVocabulary(TypeHebVocabulary):
     implements(IVocabularyFactory)
 
     def getTypes(self, context):
+        translation_service = getToolByName(context,
+                                            'translation_service')
+
+        utranslate = translation_service.utranslate
         request = context.REQUEST
-        view = queryMultiAdapter((context, request),
-                                 name="moteur_recherche_view")
-        return view.getGroupedHebergementTypes()
+        lang = request.get('LANGUAGE', 'en')
+        return [{'pk': -2,
+                 'name': utranslate('gites', "Gites et Meubles",
+                                    context=context,
+                                    target_language=lang,
+                                    default="Gites")},
+                {'pk': -3,
+                 'name': utranslate('gites', "Chambre d'hote",
+                                    context=context,
+                                    target_language=lang,
+                                    default="Chambre d'hote")}]
 
 GroupedTypeHebVocabularyFactory = GroupedTypeHebVocabulary()
 
@@ -191,7 +204,7 @@ class CriteriaVocabulary(object):
         metadataTable = wrapper.getMapper('metadata')
         query = select([metadataTable.met_pk,
                         metadataTable.met_titre_fr],
-                        metadataTable.met_filterable == True)
+                       metadataTable.met_filterable == True)
         query = query.order_by(metadataTable.met_titre_fr)
         results = query.execute().fetchall()
         criteria = [(str(r.met_pk), r.met_titre_fr) for r in results]
