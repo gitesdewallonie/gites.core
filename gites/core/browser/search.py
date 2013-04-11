@@ -235,3 +235,25 @@ class BasicSearchHebergement(SearchHebergement):
     def update(self):
         self.request.locale = plone.z3cform.z2.setup_locale(self.request)
         super(BasicSearchHebergement, self).update()
+
+
+import zope.interface
+from z3c.form import form, field
+from five import grok
+from plone.z3cform import layout
+
+from gites.core.browser import interfaces
+
+
+class SearchHostingForm(form.Form):
+    fields = field.Fields(interfaces.ISearchHosting)
+    label = _("Search Hebergement")
+    ignoreContext = True
+
+
+class SearchHosting(layout.FormWrapper, grok.View):
+    grok.context(zope.interface.Interface)
+    grok.name('search_hosting.html')
+    grok.require('zope2.Public')
+
+    form = SearchHostingForm
