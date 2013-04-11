@@ -63,7 +63,11 @@
                          tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/${hebergement/type/type_heb_type}_${repeat/hebergement/number}.png" />
                 </div>
 
-                <div id="distance"> à 5Km </div>
+                <div tal:condition="viewlet/isGeoLocalized"
+                     id="distance">
+                     <span
+                     tal:define="dist python:viewlet.heb_distance(hebergement)"
+                     tal:content="string: ${dist} km"> à 5Km </span></div>
 
                 <div id="nom-hebergement"
                      tal:content="hebergement/heb_nom"></div>
