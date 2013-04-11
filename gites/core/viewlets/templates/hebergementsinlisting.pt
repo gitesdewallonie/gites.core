@@ -1,7 +1,8 @@
 <div id="listing-result-block">
 
     <div id="listing-result-info">
-        <div id="listing-result-batch">
+        <div id="listing-result-batch"
+             tal:condition="viewlet/show_batch">
             <a href=""
                tal:condition="not:viewlet/is_first_page"
                ng-click="goToPreviousPage()">Précédent</a>

@@ -11,22 +11,21 @@
 
         <form action="#"
               method="post"
-              tal:attributes="action string:${context/@@plone_portal_state/portal_url}/basic_search.html">
+              tal:attributes="action string:${context/@@plone_portal_state/portal_url}/moteur_recherche_view/getBasicSearch">
             <div id="zone-gite-meuble">
                 <input type="checkbox"
-                       name="gite-meuble"
+                       name="gite_meuble"
                        id="gite-meuble"
-                       value=""
-                       checked="checked"/>
-                <label for="gite-meuble"
+                       value=""/>
+                <label for="gite_meuble"
                        i18n:translate="gites_et_meubles">Gîtes et meublés</label>
             </div>
             <div id="zone-chambre-hote">
                 <input type="checkbox"
-                       name="chambre-hote"
+                       name="chambre_hote"
                        id="chambre-hote"
                        value="" />
-                <label for="chambre-hote"
+                <label for="chambre_hote"
                        i18n:translate="chambre_hotes">Chambre d'hôtes</label>
             </div>
             <div class="break-float"></div>

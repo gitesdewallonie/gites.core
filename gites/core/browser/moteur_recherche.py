@@ -12,6 +12,12 @@ class MoteurRecherche(BrowserView):
 
     search_results = ViewPageTemplateFile('templates/search_results_hebergement.pt')
 
+    def getBasicSearch(self):
+        """
+        Basic search
+        """
+        return self.search_results()
+
     def getHebergementByNameOrPk(self, reference):
         """
         Get the url of the hebergement by Pk or part of the name
