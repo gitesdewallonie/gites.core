@@ -230,8 +230,30 @@ class BasicSearchHebergement(SearchHebergement):
     form_fields = form.FormFields(IBasicSearchHebergement)
     too_much_form_fields = form.FormFields(IBasicSearchHebergementTooMuch)
 
-    search_results = ViewPageTemplateFile('templates/search_results_hebergement.pt')
+    template = ViewPageTemplateFile('templates/search_results_hebergement.pt')
 
     def update(self):
         self.request.locale = plone.z3cform.z2.setup_locale(self.request)
         super(BasicSearchHebergement, self).update()
+
+
+import zope.interface
+from z3c.form import form, field
+from five import grok
+from plone.z3cform import layout
+
+from gites.core.browser import interfaces
+
+
+class SearchHostingForm(form.Form):
+    fields = field.Fields(interfaces.ISearchHosting)
+    label = _("Search Hebergement")
+    ignoreContext = True
+
+
+class SearchHosting(layout.FormWrapper, grok.View):
+    grok.context(zope.interface.Interface)
+    grok.name('search_hosting.html')
+    grok.require('zope2.Public')
+
+    form = SearchHostingForm

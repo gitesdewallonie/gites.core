@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <metadata>
-  <version>0.1</version>
+  <version>0.4</version>
   <dependencies>
     <dependency>profile-Products.LinguaPlone:LinguaPlone</dependency>
     <dependency>profile-Products.CMFPlacefulWorkflow:CMFPlacefulWorkflow</dependency>

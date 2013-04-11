@@ -111,7 +111,7 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             point = geoalchemy.base.WKTSpatialElement(point, srid=3447)
         if point is not None:
             query = session().query(Hebergement,
-                          Hebergement.heb_location.distance_sphere(point).label('distance'))
+                                    Hebergement.heb_location.distance_sphere(point).label('distance'))
         else:
             query = session().query(Hebergement)
         query = query.join('type').join('commune').join('epis')
@@ -165,14 +165,32 @@ class CommuneHebFetcher(BaseHebergementsFetcher):
 class SearchHebFetcher(BaseHebergementsFetcher):
     grok.adapts(Interface, MoteurRecherche, IBrowserRequest)
 
+    def filter_capacity(self, capacityMin, query):
+        if capacityMin:
+            if capacityMin < 16:
+                capacityMax = capacityMin + 4
+                query = query.filter(sa.or_(Hebergement.heb_cgt_cap_min.between(capacityMin, capacityMax),
+                                            Hebergement.heb_cgt_cap_max.between(capacityMin, capacityMax)))
+            else:
+                capacityMax = capacityMin
+                capacityMin = 16
+                query = query.filter(sa.and_(Hebergement.heb_cgt_cap_min >= capacityMin,
+                                             Hebergement.heb_cgt_cap_max >= capacityMax))
+        return query
+
     @property
     def _query(self):
         reference = self.data.get('reference')
+        capacity = self.data.get('form.capacityMin')
         query = session().query(Hebergement).join('proprio').join('epis')
         query = query.options(
             FromCache('gdw'))
-        query = query.filter(sa.or_(sa.func.unaccent(Hebergement.heb_nom).ilike("%%%s%%" % reference),
+        if reference:
+            query = query.filter(sa.or_(sa.func.unaccent(Hebergement.heb_nom).ilike("%%%s%%" % reference),
                                     Hebergement.heb_nom.ilike("%%%s%%" % reference)))
+
+        if capacity:
+            query = self.filter_capacity(capacity, query)
         query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
                                      Proprio.pro_etat == True))
         return query
