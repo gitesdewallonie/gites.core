@@ -151,7 +151,8 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         query = session().query(Hebergement).join('proprio').join('epis')
         query = query.options(
             FromCache('gdw'))
-        query = query.filter(Hebergement.heb_nom.ilike("%%%s%%" % reference))
+        query = query.filter(sa.or_(sa.func.unaccent(Hebergement.heb_nom).ilike("%%%s%%" % reference),
+                                    Hebergement.heb_nom.ilike("%%%s%%" % reference)))
         query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
                                      Proprio.pro_etat == True))
         return query
