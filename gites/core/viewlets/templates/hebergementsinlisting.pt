@@ -5,7 +5,8 @@
              tal:condition="viewlet/show_batch">
             <a href=""
                tal:condition="not:viewlet/is_first_page"
-               ng-click="goToPreviousPage()">Précédent</a>
+               ng-click="goToPreviousPage()"
+               i18n:translate="precedent">Précédent</a>
             <tal:pages tal:repeat="page_number viewlet/pages">
                 <a href=""
                    tal:content="page_number"
@@ -13,7 +14,8 @@
             </tal:pages>
             <a href=""
                tal:condition="not:viewlet/is_last_page"
-               ng-click="goToNextPage()">Suivant</a>
+               ng-click="goToNextPage()"
+               i18n:translate="suivant">Suivant</a>
         </div>
 
 
@@ -68,7 +70,7 @@
                      id="distance">
                      <span
                      tal:define="dist python:viewlet.heb_distance(hebergement)"
-                     tal:content="string: ${dist} km"> à 5Km </span></div>
+                     tal:content="string: ${dist} km"> 5Km </span></div>
 
                 <div id="nom-hebergement"
                      tal:content="hebergement/heb_nom"></div>
