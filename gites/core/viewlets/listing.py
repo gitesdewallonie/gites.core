@@ -76,7 +76,8 @@ class HebergementsInListing(grok.Viewlet):
         return self._fetcher()
 
     def isGeoLocalized(self):
-        return component.queryAdapter(self.context, IMarker) is not None
+        return (component.queryAdapter(self.context, IMarker) is not None and
+                self.context.getRange() is not None)
 
     @memoize
     def count(self):
