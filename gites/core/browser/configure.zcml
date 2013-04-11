@@ -6,6 +6,13 @@
   <include file="hebergement.zcml"/>
   <grok:grok package="."/>
 
+   <browser:page
+      name="basic_search.html"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".search.BasicSearchHebergement"
+      permission="zope.Public"
+      />
+
   <browser:resourceDirectory
       name="gdwcore"
       directory="resources/"
