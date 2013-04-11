@@ -111,10 +111,10 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             point = geoalchemy.base.WKTSpatialElement(point, srid=3447)
         if point is not None:
             query = session().query(Hebergement,
-                                    Hebergement.heb_location.distance_sphere(point).label('distance'))
-            query = query.join('type').join('commune').join('epis')
+                          Hebergement.heb_location.distance_sphere(point).label('distance'))
         else:
-            query = session().query(Hebergement).join('type').join('commune').join('epis')
+            query = session().query.query(Hebergement)
+        query = query.join('type').join('commune').join('epis')
         query = query.options(
             FromCache('gdw'))
         subquery = session().query(LinkHebergementMetadata.heb_fk)
