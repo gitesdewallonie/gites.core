@@ -310,7 +310,7 @@
                                 <td align="center"><span>2 p.</span></td>
                                 <td align="center"><span>p. +</span></td>
                             </tr>
-                            <tr>
+                            <tr bgcolor="#CED8E2">
                                 <td class="tarif-saison">
                                     <span>Nuitée avec petit déjeuner</span>
                                 </td>
@@ -338,7 +338,7 @@
                                     <span tal:content="heb/heb_tarif_chmbr_sans_dej_3p" />
                                 </td>
                             </tr>
-                            <tr>
+                            <tr bgcolor="#CED8E2">
                                 <td class="tarif-saison">
                                     <span>Taxe de séjour</span>
                                 </td>
