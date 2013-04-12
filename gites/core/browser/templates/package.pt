@@ -44,8 +44,16 @@
                     Title or id
                 </h1>
                 <div id="aside-info">
-                    <span i18n:translate="nombre_hebergements">Il y a <span i18n:name="nombre" tal:content="view/getHebCount"></span> hébergements</span>
+                    <span i18n:translate="nombre_hebergements">
+                    Il y a <span i18n:name="nombre" tal:content="view/getHebCount"></span> 
+                    hébergements</span>
                 </div>
+                <div id="aside-menu">
+                    <a href="#carte">Carte</a> -
+                    <a href="#listing">Listing</a> -
+                    <a href="#plusinfos">Plus d'infos</a>
+                </div>
+                <div class="break-float"></div>
             </div>
         </div>
     </div>
@@ -58,6 +66,8 @@
          tal:condition="textTop">
         <div tal:replace="structure textTop"></div>
     </div>
+
+    <a name="carte"></a>
     <div id="viewlet-map"
          tal:content="structure provider:gites.mapviewlet"></div>
 
@@ -65,7 +75,9 @@
 
     <div id="spin"
          style="display:none;"></div>
-    <div id="heb-listing"
+
+    <a name="listing"></a>
+   <div id="heb-listing"
          tal:content="structure provider:gites.heblisting"></div>
 
     <div class="break-float"></div>
@@ -73,6 +85,8 @@
     <div id="viewlet-below-content"
          tal:content="structure provider:plone.belowcontentbody"></div>
 
+    <a name="plusinfos"></a>
+    <p><br /><br /><br /><br /></p>
     <div id="package-content"
          class="stx"
          tal:condition="text"

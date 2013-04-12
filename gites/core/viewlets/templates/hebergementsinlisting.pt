@@ -1,5 +1,4 @@
 <div id="listing-result-block">
-
     <div id="listing-result-info">
         <div id="listing-result-batch"
              tal:condition="viewlet/show_batch">
