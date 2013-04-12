@@ -80,8 +80,13 @@
             <div id="info-bloc-inf">
                 <div id="capacite-max"
                      i18n:translate="capacite-unite">
-                     <span tal:content="hebergement/heb_cgt_cap_max"
-                           class="nombre" />
+                     
+                    <span tal:condition="python: hebergement.heb_cgt_cap_min != hebergement.heb_cgt_cap_max"
+                          tal:content="string: ${hebergement/heb_cgt_cap_min}/${hebergement/heb_cgt_cap_max}"
+                          class="nombre" />
+                    <span tal:condition="python: hebergement.heb_cgt_cap_min == hebergement.heb_cgt_cap_max"
+                          tal:content="string: ${hebergement/heb_cgt_cap_min}"
+                          class="nombre" />
                     personnes
                 </div>
 

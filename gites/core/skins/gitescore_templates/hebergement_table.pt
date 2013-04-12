@@ -41,7 +41,10 @@
                             </div>
                         </td>
                         <td>
-                            <span tal:content="hebergement/heb_cgt_cap_min" />/<span tal:content="hebergement/heb_cgt_cap_max" />
+                            <span tal:condition="python: hebergement.heb_cgt_cap_min != hebergement.heb_cgt_cap_max"
+                                  tal:content="string: ${hebergement/heb_cgt_cap_min}/${hebergement/heb_cgt_cap_max}" />
+                            <span tal:condition="python: hebergement.heb_cgt_cap_min == hebergement.heb_cgt_cap_max"
+                                  tal:content="string: ${hebergement/heb_cgt_cap_min}" />
                         </td>
                         <td class="centered-column" tal:content="hebergement/heb_cgt_nbre_chmbre"/>
                         </tr>

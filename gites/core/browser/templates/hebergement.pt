@@ -97,7 +97,10 @@
                 </div>
                 <div id="nbre-personne"
                      class="etiquette-sup">
-                    <span tal:content="string: ${heb/heb_cgt_cap_min}/${heb/heb_cgt_cap_max}" />
+                    <span tal:condition="python: heb.heb_cgt_cap_min != heb.heb_cgt_cap_max"
+                          tal:content="string: ${heb/heb_cgt_cap_min}/${heb/heb_cgt_cap_max}" />
+                    <span tal:condition="python: heb.heb_cgt_cap_min == heb.heb_cgt_cap_max"
+                          tal:content="string: ${heb/heb_cgt_cap_min}" />
                     <tal:bloc i18n:translate="nbre-personne">personnes</tal:bloc>
                 </div>
                <div id="nbre-epis"
