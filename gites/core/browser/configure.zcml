@@ -93,14 +93,6 @@
       class=".typehebcommune.TypeHebCommuneView"/>
 
   <utility
-      name="gitescontent.communes"
-      component=".vocabulary.CommuneVocabularyFactory"/>
-
-  <utility
-      name="gitescontent.provinces"
-      component=".vocabulary.ProvinceVocabularyFactory"/>
-
-  <utility
       name="gitescontent.typehebergement"
       component=".vocabulary.TypeHebVocabularyFactory"/>
 
