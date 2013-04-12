@@ -5,7 +5,8 @@
       i18n:domain="gites">
 <body>
 
-    <metal:javascript_head_slot fill-slot="javascript_head_slot">
+    <metal:javascript_head_slot fill-slot="javascript_head_slot"
+                                tal:define="hasCalendar view/showCalendar">
         <script type="text/javascript"
                 charset="utf-8"
                 src=""
@@ -18,12 +19,12 @@
 
         <script type="text/javascript"
                 charset="utf-8"
-                tal:condition="view/showCalendar"
+                tal:condition="hasCalendar"
                 tal:content="view/calendarJS"></script>
 
         <script type="text/javascript"
                 charset="utf-8"
-                tal:condition="view/showCalendar"
+                tal:condition="hasCalendar"
                 tal:content="view/dispoCalendarJS"></script>
 
         <script type="text/javascript"
@@ -57,7 +58,8 @@
               tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++timeframe.css" />
     </metal:css>
 
-<div metal:fill-slot="main">
+<div metal:fill-slot="main"
+     tal:define="hasCalendar view/showCalendar">
 
     <div tal:replace="structure provider:plone.abovecontenttitle" />
     <div tal:replace="structure provider:plone.belowcontenttitle" />
@@ -182,7 +184,7 @@
                         </div>
 
                         <div id="description-calendrier"
-                             tal:condition="view/showCalendar">
+                             tal:condition="hasCalendar">
                             <div id="calendars"></div>
                             <input type="hidden"
                                    id="reset" />
@@ -438,7 +440,7 @@
                         <h2>Disponibilités</h2>
                         <div>
                             <div id="description-dispo-calendrier"
-                                 tal:condition="view/showCalendar">
+                                 tal:condition="hasCalendar">
                                 <div id="dispocalendars"></div>
                                 <input type="hidden"
                                        id="disporeset" />
@@ -450,6 +452,11 @@
                                        name="dispoend"
                                        value=""
                                        id="dispoend" />
+                            </div>
+                            <div tal:condition="not: hasCalendar">
+                                <span i18n:translate="pas_de_calendrier_pour_ce_gite">
+                                    Nous ne disposons pas des disponibilités pour cet hébergement.
+                                </span>
                             </div>
                         </div>
                         <br />
@@ -544,6 +551,9 @@
                     </div>
                 </li>
             </ul>
+
+            <div tal:replace="structure provider:plone.belowcontentbody" />
+
         </div><!--define-->
 
     </div>
