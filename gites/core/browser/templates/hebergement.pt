@@ -215,55 +215,55 @@
                             </tr>
                             <tr>
                                 <td class="tarif-saison">Basse saison</td>
-                                <td align="center" bgcolor="#ACE087">
+                                <td class="tarif-prix">
                                     <span tal:content="heb/heb_tarif_we_bs" />
                                 </td>
-                                <td align="center" bgcolor="#8BBE67">
+                                <td class="tarif-prix">
                                      <span tal:content="heb/heb_tarif_sem_bs" />
                                 </td>
                             </tr>
-                            <tr>
+                            <tr bgcolor="#ceddce">
                                 <td class="tarif-saison">Moyenne saison</td>
-                                <td align="center" bgcolor="#ACE087">
+                                <td class="tarif-prix">
                                     <span tal:content="heb/heb_tarif_we_ms" />
                                 </td>
-                                <td align="center" bgcolor="#8BBE67">
+                                <td class="tarif-prix">
                                      <span tal:content="heb/heb_tarif_sem_ms" />
                                 </td>
                             </tr>
                             <tr>
                                 <td class="tarif-saison">Haute saison</td>
-                                <td align="center" bgcolor="#ACE087">
+                                <td class="tarif-prix">
                                      <span tal:content="heb/heb_tarif_we_hs" />
                                 </td>
-                                <td align="center" bgcolor="#8BBE67">
+                                <td class="tarif-prix">
                                      <span tal:content="heb/heb_tarif_sem_hs" />
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="3">&nbsp;</td>
                             </tr>
-                            <tr>
+                            <tr bgcolor="#ceddce">
                                 <td class="tarif-saison">WE de fête 3 nuits</td>
-                                <td align="center" bgcolor="#ACE087">
+                                <td class="tarif-prix">
                                      <span tal:content="heb/heb_tarif_we_3n" />
                                 </td>
-                                <td align="center" bgcolor="#8BBE67">-</td>
+                                <td class="tarif-prix">-</td>
                             </tr>
                             <tr>
                                 <td class="tarif-saison">WE de fête 4 nuits</td>
-                                <td align="center" bgcolor="#ACE087">
+                                <td class="tarif-prix">
                                      <span tal:content="heb/heb_tarif_we_4n" />
                                 </td>
-                                <td align="center" bgcolor="#8BBE67">-</td>
+                                <td class="tarif-prix">-</td>
                             </tr>
                             <tr>
                                 <td colspan="3">&nbsp;</td>
                             </tr>
-                            <tr>
+                            <tr bgcolor="#ceddce">
                                 <td class="tarif-saison">Fin d'année</td>
-                                <td align="center" bgcolor="#ACE087">-</td>
-                                <td align="center" bgcolor="#8BBE67">
+                                <td class="tarif-prix">-</td>
+                                <td class="tarif-prix">
                                      <span tal:content="heb/heb_tarif_semaine_fin_annee" />
                                 </td>
                             </tr>
@@ -272,23 +272,24 @@
                             </tr>
                             <tr bgcolor="#ceddce">
                                 <td class="tarif-saison">Garantie</td>
-                                <td colspan="2" align="left">
+                                <td colspan="2" class="tarif-rpix">
                                     <span tal:content="heb/heb_tarif_garantie" />
                                 </td>
                             </tr>
                             <tr>
                                 <td class="tarif-saison">Charges</td>
-                                <td colspan="2" align="left">
+                                <td colspan="2" class="tarif-prix">
                                     <span tal:condition="exists: heb/heb_tarif_charge">|
-                                    <span tal:content="heb/heb_tarif_charge" />
-                                    <span tal:content="view/getHebergementCharge" />
-                                    <br /></span>
-                                    <span tal:condition="not: exists: heb/heb_tarif_charge">---</span>
+                                        <span tal:content="heb/heb_tarif_charge" />
+                                        <span tal:content="view/getHebergementCharge" />
+                                    </span>
+                                    <span tal:condition="not: exists: heb/heb_tarif_charge">-</span>
                                 </td>
                             </tr>
                             <tr bgcolor="#ceddce">
                                 <td class="tarif-saison">Taxe de séjour</td>
-                                <td colspan="2" align="left">
+                                <td colspan="2"
+                                    class="tarif-prix">
                                     <span tal:content="heb/heb_taxe_montant" />
                                 </td>
                             </tr>
@@ -303,94 +304,92 @@
                     <div id="tarification-chambre"
                          tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR'">
                         <table>
-                            <tr class="bg-chambre">
+                            <tr class="tarif-periode">
                                 <td>&nbsp;</td>
                                 <td align="center"><span>1 p.</span></td>
                                 <td align="center"><span>2 p.</span></td>
-                                <td align="center"><span>Personne supplémentaire</span></td>
+                                <td align="center"><span>p. +</span></td>
                             </tr>
                             <tr>
-                                <td class="bg-chambre">
+                                <td class="tarif-saison">
                                     <span>Nuitée avec petit déjeuner</span>
                                 </td>
-                                <td align="center">
+                                <td class="tarif-prix empty-cell">
                                     <span tal:content="heb/heb_tarif_chmbr_avec_dej_1p" />
                                 </td>
-                                <td align="center">
+                                <td class="tarif-prix empty-cell">
                                     <span tal:content="heb/heb_tarif_chmbr_avec_dej_2p" />
                                 </td>
-                                <td align="center">
+                                <td class="tarif-prix empty-cell">
                                     <span tal:content="heb/heb_tarif_chmbr_avec_dej_3p" />
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg-chambre">
+                                <td class="tarif-saison empty-cell">
                                     <span>Déduction si pas de petit déjeuner</span>
                                 </td>
-                                <td align="center">
+                                <td class="tarif-prix empty-cell">
                                     <span tal:content="heb/heb_tarif_chmbr_sans_dej_1p" />
                                 </td>
-                                <td align="center" class="empty-cell">
+                                <td class="tarif-prix empty-cell">
                                     <span tal:content="heb/heb_tarif_chmbr_sans_dej_2p" />
                                 </td>
-                                <td align="center" class="empty-cell">
+                                <td class="tarif-prix empty-cell">
                                     <span tal:content="heb/heb_tarif_chmbr_sans_dej_3p" />
                                 </td>
                             </tr>
                             <tr>
-                                <td class="bg-chambre">
-                                <span>Taxe de séjour</span>
+                                <td class="tarif-saison">
+                                    <span>Taxe de séjour</span>
                                 </td>
-                                <td align="center">
+                                <td class="tarif-prix empty-cell">
                                      <span tal:content="heb/heb_taxe_montant" />
                                 </td>
-                                <td align="center" class="empty-cell">&nbsp;</td>
-                                <td align="center" class="empty-cell">&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td class="bg-chambre">
-                                <span>Divers</span>
-                                </td>
-                                <td align="center">
-                                    <span tal:content="heb/heb_tarif_chmbr_autre_1p" />
-                                </td>
-                                <td align="center" class="empty-cell">
-                                    <span tal:content="heb/heb_tarif_chmbr_table_hote_1p" />
-                                </td>
-                                <td align="center" class="empty-cell">&nbsp;</td>
+                                <td class="tarif-prix empty-cell">&nbsp;</td>
+                                <td class="tarif-prix empty-cell">&nbsp;</td>
                             </tr>
                         </table>
-                    </div><!--tarif hebergement-->
+                        <div id="description-tarification-divers">
+                            <h3>Divers</h3>
+                            <span tal:content="heb/heb_tarif_chmbr_autre_1p" />
+                            <span tal:content="heb/heb_tarif_chmbr_table_hote_1p" />
+                        </div>
+                 </div><!--tarif hebergement-->
 
-                    <!-- TABLE TABLE D'HOTE-->
-                    <div id="tarification-table-hote"
-                         tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR'">
-                        <table>
-                           <tr align="center">
-                              <td class="bg-chambre"><span>Table d'hôtes</span></td>
-                              <td>
-                              <span>
-                                 <span>20.00</span>
-                              </span>
-                              </td>
-                           </tr>
-                           <tr align="center">
-                              <td class="bg-chambre"><span>Type</span></td>
-                              <td>
-                              <span>
-                                 <span>
-                                       <img src="icon_assiette_3.png"
-                                            alt="Menu gastronomique"
-                                            title="Menu gastronomique">
-                                       <br />
-                                 </span>
-                              </span>
-                              </td>
-                           </tr>
-                        </table>
-                    </div><!--tarif table hote-->
-                    <div class="break-float"></div>
-                    </div><!--description-bloc-droite-->
+                        <!-- TABLE TABLE D'HOTE-->
+                        <div id="tarification-table-hote"
+                             tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR'">
+                            <table>
+                                <tr>
+                                    <td colspan="2"
+                                        class="tarif-periode">
+                                        <span>Table d'hôtes</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tarif-saison">
+                                        <span>Tarif</span>
+                                    </td>
+                                    <td>
+                                        <span>20.00</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tarif-saison">
+                                        Type
+                                    </td>
+                                    <td>
+                                        <span>
+                                            <img src="icon_assiette_3.png"
+                                                 alt="Menu gastronomique"
+                                                 title="Menu gastronomique">
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div><!--tarif table hote-->
+                        <div class="break-float"></div>
+                    </div><!--accueil-bloc-droite-->
                 </li>
 
                 <!-- DESCRIPTION -->
