@@ -243,12 +243,15 @@ from five import grok
 from plone.z3cform import layout
 
 from gites.core.browser import interfaces
+from collective.z3cform.datepicker.widget import DatePickerFieldWidget
 
 
 class SearchHostingForm(form.Form):
     fields = field.Fields(interfaces.ISearchHosting)
     label = _("Search Hebergement")
     ignoreContext = True
+    fields['fromDate'].widgetFactory = DatePickerFieldWidget
+    fields['toDate'].widgetFactory = DatePickerFieldWidget
 
 
 class SearchHosting(layout.FormWrapper, grok.View):

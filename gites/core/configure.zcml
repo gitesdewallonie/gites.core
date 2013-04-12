@@ -18,6 +18,7 @@
   <include package="z3c.form" file="meta.zcml"/>
   <include package="z3c.form"/>
   <include package="z3c.unconfigure" file="meta.zcml" />
+  <include package="collective.z3cform.datepicker" />
 
   <five:registerPackage package="." initialize=".initialize" />
 
