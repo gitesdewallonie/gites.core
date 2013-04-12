@@ -64,11 +64,13 @@
                        value="" />
             </div>
             <div class="break-float"></div>
-            <div id="proximite">
+            <div id="proximite"
+                 tal:define="lang request/LANGUAGE | fr">
                 <input name="form.communes"
                        type="text"
-                       size="40"
-                       maxlength="12"
+                       autocomplete="off"
+                       class=""
+                       tal:attributes="class string:geocode_autocomplete_${lang}"
                        i18n:attributes="placeholder a_proximite_de"
                        placeholder="A proximité de">
             </div>
@@ -95,8 +97,7 @@
                        id="nom-reference"
                        name="reference"
                        value=""
-                       tal:attributes="value python:request.form.get('reference')"
-                       size="30" />
+                       tal:attributes="value python:request.form.get('reference')" />
             </div>
             <div>
                 <input type="submit"

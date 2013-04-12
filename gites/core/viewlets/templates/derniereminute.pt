@@ -12,7 +12,10 @@
         <p class="red"><span tal:replace="python:viewlet.getNiceEventStartDate(offre)" /> &rarr; <span tal:replace="python:viewlet.getNiceEventEndDate(offre)" /></p>
         <p><img src="img/bonhomme.png" class="bonhomme" alt="bonhomme"></p>
         <p>
-            <span tal:replace="string:${hebergement/heb_cgt_cap_min}/${hebergement/heb_cgt_cap_max}"/>
+            <span tal:condition="python: hebergement.heb_cgt_cap_min != hebergement.heb_cgt_cap_max"
+                  tal:content="string: ${hebergement/heb_cgt_cap_min}/${hebergement/heb_cgt_cap_max}" />
+            <span tal:condition="python: hebergement.heb_cgt_cap_min == hebergement.heb_cgt_cap_max"
+                  tal:content="string: ${hebergement/heb_cgt_cap_min}" />
         </p>
         <div class="plus-info">
             <a tal:attributes="href viewlet/getAllDerniereMinuteLink"><span i18n:translate="toutes_nos_dernieres_minutes">Toutes nos dernières minutes</span></a>

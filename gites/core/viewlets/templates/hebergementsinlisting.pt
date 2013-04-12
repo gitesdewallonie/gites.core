@@ -20,16 +20,22 @@
 
 
         <div id="sort">
-            <select ng-model="sort" ng-change="updateSort()">
+            <label for="input-sort">Trier les résultats par </label>
+            <select id="input-sort"
+                    name="input-sort"
+                    ng-model="sort"
+                    ng-change="updateSort()">
                 <tal:sort tal:repeat="sort_item python:viewlet.sort_items().items()">
-                    <option value="" tal:attributes="value python:sort_item[0]" tal:content="python:sort_item[1]"/>
+                    <option value=""
+                            tal:attributes="value python:sort_item[0]"
+                            tal:content="python:sort_item[1]"/>
                 </tal:sort>
             </select>
         </div>
 
         <div class="break-float"></div>
 
-        <div id="listing--result-count"
+        <div id="listing-result-count"
              i18n:translate="heb_count">
             Hébergement
             <span i18n:name="" tal:replace="viewlet/batch_start"/>
@@ -61,16 +67,17 @@
 
             <div id="info-bloc-sup">
 
-                <div id="digit">
+                <div class="digit"
+                     tal:attributes="id string:map_picto_${hebergement/heb_pk}">
                     <img src=""
                          tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/${hebergement/type/type_heb_type}_${repeat/hebergement/number}.png" />
                 </div>
 
                 <div tal:condition="viewlet/isGeoLocalized"
                      id="distance">
-                     <span
-                     tal:define="dist python:viewlet.heb_distance(hebergement)"
-                     tal:content="string: ${dist} km"> 5Km </span></div>
+                     <span tal:define="dist python:viewlet.heb_distance(hebergement)"
+                           tal:content="string: ${dist} km"> 5Km </span>
+                </div>
 
                 <div id="nom-hebergement"
                      tal:content="hebergement/heb_nom"></div>
@@ -80,8 +87,12 @@
             <div id="info-bloc-inf">
                 <div id="capacite-max"
                      i18n:translate="capacite-unite">
-                     <span tal:content="hebergement/heb_cgt_cap_max"
-                           class="nombre" />
+                    <span tal:condition="python: hebergement.heb_cgt_cap_min != hebergement.heb_cgt_cap_max"
+                          tal:content="string: ${hebergement/heb_cgt_cap_min}/${hebergement/heb_cgt_cap_max}"
+                          class="nombre" />
+                    <span tal:condition="python: hebergement.heb_cgt_cap_min == hebergement.heb_cgt_cap_max"
+                          tal:content="string: ${hebergement/heb_cgt_cap_min}"
+                          class="nombre" />
                     personnes
                 </div>
 
@@ -114,10 +125,8 @@
                     </div>
                 </div>
 
-                <span tal:content="hebergement/heb_pk" class="reference" />
-
                 <div id="commune"
-                     tal:content="hebergement/commune/com_nom"></div>
+                     tal:content="hebergement/heb_localite"></div>
             </div><!--info-bloc-inf-->
         </div><!--attributes-->
     </div><!--repeat-->

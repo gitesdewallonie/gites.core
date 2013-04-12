@@ -16,7 +16,7 @@ def main():
 
 def updateGroupementColumn():
     session = DBSession()
-    hebs = session.query(Hebergement).order_by(Hebergement.heb_pro_fk, Hebergement.heb_cgt_cap_max.desc())
+    hebs = session.query(Hebergement).order_by(Hebergement.heb_pro_fk, Hebergement.heb_cgt_cap_min.desc())
 
     groupementPk = 1
     proprioGroupedHebsPk = []
