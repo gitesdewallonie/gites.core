@@ -122,7 +122,7 @@
                 <span tal:content="hebergement/heb_pk" class="reference" />
 
                 <div id="commune"
-                     tal:content="hebergement/commune/com_nom"></div>
+                     tal:content="hebergement/heb_localite"></div>
             </div><!--info-bloc-inf-->
         </div><!--attributes-->
     </div><!--repeat-->
