@@ -466,8 +466,8 @@
                                        id="dispoend" />
                             </div>
                             <div tal:condition="not: hasCalendar">
-                                <span i18n:translate="pas_de_calendrier_pour_ce_gite">
-                                    Nous ne disposons pas des disponibilités pour cet hébergement.
+                                <span i18n:translate="desoles_pas_de_calendrier_pour_ce_gite">
+                                    Nous sommes désolés. Nous ne disposons pas des disponibilités pour cet hébergement.
                                 </span>
                             </div>
                         </div>
