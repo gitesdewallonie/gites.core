@@ -230,7 +230,7 @@ class BasicSearchHebergement(SearchHebergement):
     form_fields = form.FormFields(IBasicSearchHebergement)
     too_much_form_fields = form.FormFields(IBasicSearchHebergementTooMuch)
 
-    search_results = ViewPageTemplateFile('templates/search_results_hebergement.pt')
+    template = ViewPageTemplateFile('templates/search_results_hebergement.pt')
 
     def update(self):
         self.request.locale = plone.z3cform.z2.setup_locale(self.request)

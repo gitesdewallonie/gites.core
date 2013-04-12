@@ -121,6 +121,11 @@ class ITypeHebCommuneView(Interface):
 
 class IMoteurRecherche(Interface):
 
+    def getBasicSearch():
+        """
+        Basic search
+        """
+
     def getHebergementByNameOrPk(reference):
         """
         Get the url of the hebergement by Pk or part of the name

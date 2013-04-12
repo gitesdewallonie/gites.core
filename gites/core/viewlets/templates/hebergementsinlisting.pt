@@ -1,10 +1,12 @@
 <div id="listing-result-block">
 
     <div id="listing-result-info">
-        <div id="listing-result-batch">
+        <div id="listing-result-batch"
+             tal:condition="viewlet/show_batch">
             <a href=""
                tal:condition="not:viewlet/is_first_page"
-               ng-click="goToPreviousPage()">Précédent</a>
+               ng-click="goToPreviousPage()"
+               i18n:translate="precedent">Précédent</a>
             <tal:pages tal:repeat="page_number viewlet/pages">
                 <a href=""
                    tal:content="page_number"
@@ -12,7 +14,8 @@
             </tal:pages>
             <a href=""
                tal:condition="not:viewlet/is_last_page"
-               ng-click="goToNextPage()">Suivant</a>
+               ng-click="goToNextPage()"
+               i18n:translate="suivant">Suivant</a>
         </div>
 
 
@@ -67,7 +70,7 @@
                      id="distance">
                      <span
                      tal:define="dist python:viewlet.heb_distance(hebergement)"
-                     tal:content="string: ${dist} km"> à 5Km </span></div>
+                     tal:content="string: ${dist} km"> 5Km </span></div>
 
                 <div id="nom-hebergement"
                      tal:content="hebergement/heb_nom"></div>
@@ -105,7 +108,7 @@
                          tal:attributes="class python: dog and 'dog' or 'no-dog'">
                     </div>
                     <div id="icon-confort-smoker"
-                         tal:condition="hebergement/is_smoker"
+                         tal:condition="not:hebergement/is_smoker"
                          tal:define="smoker hebergement/is_smoker"
                          tal:attributes="class python: smoker and 'smoke' or 'no-smoke'">
                     </div>
