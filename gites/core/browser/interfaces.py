@@ -393,16 +393,6 @@ class ISearchHosting(Interface):
         required=True,
         vocabulary="gitescontent.groupedtypehebergement")
 
-    provinces = schema.Choice(
-        title=_('Province'),
-        required=True,
-        vocabulary="gitescontent.provinces")
-
-    communes = schema.Choice(
-        title=_('Commune'),
-        required=True,
-        vocabulary="gitescontent.communes")
-
     classification = schema.Choice(
         title=_('Classification'),
         required=True,
