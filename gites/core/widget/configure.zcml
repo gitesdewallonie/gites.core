@@ -1,0 +1,62 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:z3c="http://namespaces.zope.org/z3c">
+
+  <unconfigure>
+
+    <z3c:widgetTemplate
+        mode="input"
+        widget="z3c.form.interfaces.ITextWidget"
+        layer="z3c.form.interfaces.IFormLayer"
+        template="text_input.pt"
+        />
+
+    <z3c:widgetTemplate
+        mode="input"
+        widget="z3c.form.interfaces.ISelectWidget"
+        layer="z3c.form.interfaces.IFormLayer"
+        template="select_input.pt"
+        />
+
+    <z3c:widgetTemplate
+        mode="input"
+        widget="z3c.form.interfaces.ICheckBoxWidget"
+        layer="z3c.form.interfaces.IFormLayer"
+        template="checkbox_input.pt"
+        />
+
+    <z3c:widgetTemplate
+        mode="input"
+        widget="collective.z3cform.datepicker.interfaces.IDatePickerWidget"
+        layer="z3c.form.interfaces.IFormLayer"
+        template="datepicker_input.pt" />
+
+  </unconfigure>
+
+  <z3c:widgetTemplate
+      mode="input"
+      widget="z3c.form.interfaces.ITextWidget"
+      layer="z3c.form.interfaces.IFormLayer"
+      template="text_input.pt"
+      />
+
+  <z3c:widgetTemplate
+      mode="input"
+      widget="z3c.form.interfaces.ISelectWidget"
+      layer="z3c.form.interfaces.IFormLayer"
+      template="select_input.pt"
+      />
+
+  <z3c:widgetTemplate
+      mode="input"
+      widget="z3c.form.interfaces.ICheckBoxWidget"
+      layer="z3c.form.interfaces.IFormLayer"
+      template="checkbox_input.pt"
+      />
+
+  <z3c:widgetTemplate
+      mode="input"
+      widget="collective.z3cform.datepicker.interfaces.IDatePickerWidget"
+      layer="z3c.form.interfaces.IFormLayer"
+      template="datepicker_input.pt" />
+
+</configure>
