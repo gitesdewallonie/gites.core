@@ -3,86 +3,8 @@
         <a href=""
            tal:attributes="href string:${context/@@plone_portal_state/portal_url}"></a>
     </div>
-
-    <div id="je-recherche">
-        <h2 i18n:translate="je_cherche">Je cherche</h2>
-        <h3><a href="#" i18n:translate="recherche_avancee">Recherche avancée</a></h3>
-        <div class="break-float"></div>
-
-        <form action="#"
-              method="post"
-              tal:attributes="action string:${context/@@plone_portal_state/portal_url}/moteur_recherche_view/getBasicSearch">
-            <div id="zone-gite-meuble">
-                <input type="checkbox"
-                       name="gite_meuble"
-                       id="gite-meuble"
-                       value=""/>
-                <label for="gite_meuble"
-                       i18n:translate="gites_et_meubles">Gîtes et meublés</label>
-            </div>
-            <div id="zone-chambre-hote">
-                <input type="checkbox"
-                       name="chambre_hote"
-                       id="chambre-hote"
-                       value="" />
-                <label for="chambre_hote"
-                       i18n:translate="chambre_hotes">Chambre d'hôtes</label>
-            </div>
-            <div class="break-float"></div>
-            <div id="date-start">
-                <input name="form.toDate"
-                       type="text"
-                       size="9"
-                       maxlength="8"
-                       class="datepicker"
-                       i18n:attributes="placeholder arrivee"
-                       placeholder="Arrivée" />
-            </div>
-            <div id="date-end">
-                <input name="form.fromDate"
-                       type="text"
-                       size="9"
-                       maxlength="8"
-                       class="datepicker"
-                       i18n:attributes="placeholder depart"
-                       placeholder="Départ" />
-            </div>
-            <script type="text/javascript">
-                (function($){
-                        $(".datepicker").datepicker({
-                            showOn: "both",
-                            buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
-                            buttonImageOnly: true
-                            });
-                 })(jQuery);
-            </script>
-            <div id="nbre-personne">
-                <input type="text"
-                       size="3"
-                       maxlength="2"
-                       name="form.capacityMin"
-                       value="" />
-            </div>
-            <div class="break-float"></div>
-            <div id="proximite"
-                 tal:define="lang request/LANGUAGE | fr">
-                <input name="form.communes"
-                       type="text"
-                       autocomplete="off"
-                       class=""
-                       tal:attributes="class string:geocode_autocomplete_${lang}"
-                       i18n:attributes="placeholder a_proximite_de"
-                       placeholder="A proximité de">
-            </div>
-
-            <div>
-                <input type="submit"
-                       value="Trouver"
-                       class="trouver"
-                       i18n:translate="trouver" />
-            </div>
-        </form>
-    </div><!--je cherche-->
+    <!-- je-cherche -->
+    <div tal:content="structure viewlet/form/render" />
 
     <div id="je-connais">
         <h2 i18n:translate="je_connais">Je connais</h2>

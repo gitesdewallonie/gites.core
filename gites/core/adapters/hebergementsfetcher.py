@@ -189,9 +189,9 @@ class SearchHebFetcher(BaseHebergementsFetcher):
 
     def filter_available_date(self, from_date, to_date, query):
         if from_date:
-            from_date = datetime.strptime(from_date, '%m/%d/%Y').date()
+            from_date = datetime.strptime(from_date, '%d/%m/%Y').date()
         if to_date:
-            to_date = datetime.strptime(to_date, '%m/%d/%Y').date()
+            to_date = datetime.strptime(to_date, '%d/%m/%Y').date()
         query = query.filter(Hebergement.heb_calendrier_proprio != 'non actif')
         beginDate = from_date or (to_date + relativedelta(days=-1))
         endDate = to_date or (from_date + relativedelta(days=+1))
@@ -204,11 +204,11 @@ class SearchHebFetcher(BaseHebergementsFetcher):
     @property
     def _query(self):
         reference = self.data.get('reference')
-        capacity = self.data.get('form.capacityMin')
+        capacity = self.data.get('form.widgets.capacityMin')
         show_gites = 'gite_meuble' in self.data
         show_chambres = 'chambre_hote' in self.data
-        from_date = self.data.get('form.fromDate')
-        to_date = self.data.get('form.toDate')
+        from_date = self.data.get('form.widgets.fromDate')
+        to_date = self.data.get('form.widgets.toDate')
         query = session().query(Hebergement).join('proprio').join('epis').join('type')
         query = query.options(
             FromCache('gdw'))
