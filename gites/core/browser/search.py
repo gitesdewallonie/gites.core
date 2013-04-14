@@ -237,13 +237,31 @@ class BasicSearchHebergement(SearchHebergement):
         super(BasicSearchHebergement, self).update()
 
 
+##############
+## z3c.form ##
+##############
+
 import zope.interface
-from z3c.form import form, field
+from z3c.form import button, form, field
 from five import grok
 from plone.z3cform import layout
 
 from gites.core.browser import interfaces
 from collective.z3cform.datepicker.widget import DatePickerFieldWidget
+
+
+class BasicForm(form.Form):
+    fields = field.Fields(interfaces.ISearchHosting).select(
+        'hebergementType',
+        'capacityMin',
+        'fromDate',
+        'toDate')
+
+    ignoreContext = True
+    fields['fromDate'].widgetFactory = DatePickerFieldWidget
+    fields['toDate'].widgetFactory = DatePickerFieldWidget
+
+    template = ViewPageTemplateFile('templates/search_base_form.pt')
 
 
 class SearchHostingForm(form.Form):

@@ -257,13 +257,13 @@ class ISearchHosting(Interface):
         required=False)
 
     fromDate = schema.Date(
-        title=_('Sejour du'),
+        title=_(u'Arrivée'),
         required=False)
 
     toDate = schema.Date(
-        title=_('Sejour au'),
+        title=_(u'Départ'),
         required=False)
 
-    #nearTo = schema.Text(
-    #    title=_('Near to'),
-    #    required=False)
+    nearTo = schema.Text(
+        title=_('Near to'),
+        required=False)
