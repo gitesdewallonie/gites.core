@@ -242,7 +242,7 @@ class BasicSearchHebergement(SearchHebergement):
 ##############
 
 import zope.interface
-from z3c.form import button, form, field
+from z3c.form import form, field
 from five import grok
 from plone.z3cform import layout
 
