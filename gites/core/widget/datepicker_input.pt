@@ -1,7 +1,7 @@
 <input type="text" id="" name="" class="" title="" lang="" disabled=""
        readonly="" alt="" tabindex="" accesskey="" size="" maxlength=""
-       tal:attributes="id string:${view/id}-for-display;
-                       name string:${view/name}-for-display;
+       tal:attributes="id string:${view/id};
+                       name string:${view/name};
                        class view/klass;
                        style view/style;
                        title view/title;
@@ -26,17 +26,15 @@
                        accesskey view/accesskey;
                        onselect view/onselect;
                        size view/size;
-                       maxlength view/maxlength" />
-<input type="hidden" id="" name=""
-       tal:attributes="id view/id;
-                       value view/value;
-                       name view/name;" />
+                       maxlength view/maxlength;
+                       placeholder view/placeholder" />
 <script type="text/javascript">
 (function($){
     $(".datepicker-widget").datepicker({
+        dateFormat: "dd/mm/yy",
         showOn: "both",
         buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
-        buttonImageOnly: true
-        });
+        buttonImageOnly: true,
+    });
 })(jQuery);
 </script>
