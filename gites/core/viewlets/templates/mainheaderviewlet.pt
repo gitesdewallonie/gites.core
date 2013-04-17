@@ -23,7 +23,7 @@
             </div>
             <div>
                 <input type="submit"
-                       value="Trouver"
+                       value="Je trouve"
                        class="trouver"
                        i18n:translate="trouver" />
             </div>

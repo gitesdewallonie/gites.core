@@ -3,7 +3,7 @@
     <h3><a href="#" i18n:translate="recherche_avancee">Recherche avancée</a></h3>
     <div class="break-float"></div>
 
-    <form action="#"
+    <form action=""
           method="post"
           tal:attributes="action string:${context/@@plone_portal_state/portal_url}/moteur_recherche_view/getBasicSearch">
         <div id="zone-gite-meuble">
@@ -46,7 +46,7 @@
 
         <div>
             <input type="submit"
-                   value="Trouver"
+                   value="Je trouver"
                    class="trouver"
                    i18n:translate="trouver" />
         </div>
