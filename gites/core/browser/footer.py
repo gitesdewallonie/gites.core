@@ -27,7 +27,7 @@ class FooterView(grok.View):
         content = footerFolder.restrictedTraverse(contentId, default=None)
         if content:
             translation = content.getTranslation()
-            return translation and translation.CookedBody() or None
+            return translation
 
     def render(self):
         pass
