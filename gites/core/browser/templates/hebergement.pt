@@ -423,7 +423,7 @@
                                          title=""
                                          alt=""
                                          class="picto"
-                                         tal:attributes="src string:${here/portal_url}/${metadata/id}.png" />
+                                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png" />
                                 </tal:block>
                                 <tal:block define="metadata python:view.getFumeur()">
                                     <img src=""
@@ -431,14 +431,14 @@
                                          alt=""
                                          class="picto"
                                          tal:condition="python:metadata['id'] == 'heb_confort_no_fumeur'"
-                                         tal:attributes="src string:${here/portal_url}/${metadata/id}.png" />
+                                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png" />
                                 </tal:block>
                                 <tal:for repeat="metadata python:view.getHebMetadatasByType('confort')">
                                     <img src=""
                                          title=""
                                          alt=""
                                          class="picto"
-                                         tal:attributes="src string:${here/portal_url}/${metadata/id}.png;
+                                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
                                                          alt metadata/title;
                                                          title metadata/title" />
                                 </tal:for>

@@ -69,7 +69,7 @@
                 <div class="digit"
                      tal:attributes="id string:map_picto_${hebergement/heb_pk}">
                     <img src=""
-                         tal:attributes="src string:${here/portal_url}/++resource++gites.map.images/${hebergement/type/type_heb_type}_${repeat/hebergement/number}.png" />
+                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/${hebergement/type/type_heb_type}_${repeat/hebergement/number}.png" />
                 </div>
 
                 <div tal:condition="viewlet/isGeoLocalized"
