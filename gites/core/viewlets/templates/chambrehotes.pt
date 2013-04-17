@@ -7,19 +7,11 @@
             Allo chambre d'hôtes
         </a>
     </h3>
-    <div id="allo-images">
+    <div id="allo-qrcode">
         <a href="http://www.allochambredhotes.be"
            title="Allo chambre d'hôtes"
            target="_blank">
-            <img src="qrcode-mini.png"
-                 width="130"
-                 alt="chambre">
-        </a>
-        <a href="http://www.allochambredhotes.be"
-           title="Allo chambre d'hôtes"
-           target="_blank">
-            <img src="++theme++gites.theme/images/chambre.png"
-                 width="130"
+            <img src="++theme++gites.theme/images/allo_chbre_hote_qrcode.png"
                  alt="chambre">
         </a>
     </div>
