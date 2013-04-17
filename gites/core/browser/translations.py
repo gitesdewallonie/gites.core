@@ -16,7 +16,9 @@ class Translate(BrowserView):
     def getTranslatedObjectUrl(self, path):
         """
         """
-        obj = self.context.restrictedTraverse(path)
+        obj = self.context.restrictedTraverse(path, default=None)
+        if obj is None:
+            return ''
         translatedObject = obj.getTranslation()
         if translatedObject:
             url = translatedObject.absolute_url()

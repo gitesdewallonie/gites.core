@@ -25,7 +25,7 @@ class FooterView(grok.View):
         if footerFolder is None:
             return
         content = footerFolder.restrictedTraverse(contentId, default=None)
-        if content:
+        if content is not None:
             translation = content.getTranslation()
             return translation
 
