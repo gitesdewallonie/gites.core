@@ -82,11 +82,9 @@
 
     <div class="break-float"></div>
 
-    <div id="viewlet-below-content"
-         tal:content="structure provider:plone.belowcontentbody"></div>
-
     <a name="plusinfos"></a>
     <p><br /><br /><br /><br /></p>
+
     <div id="package-content"
          class="stx"
          tal:condition="text"

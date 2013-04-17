@@ -46,11 +46,12 @@
 
     <div id="spin"
          style="display:none;"></div>
+
     <div id="heb-listing"
          tal:content="structure provider:gites.heblisting"></div>
-    <div id="viewlet-below-content"
-         tal:content="structure provider:plone.belowcontentbody"></div>
+
     <div class="break-float"></div>
+
     <div id="viewlet-map"
          tal:content="structure provider:gites.mapviewlet"></div>
 </div>
