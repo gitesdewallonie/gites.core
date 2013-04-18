@@ -39,10 +39,10 @@
                           <a href="" i18n:translate="mice" tal:attributes="href python:translate('idee-sejour/mice')">MICE</a>
                       </li>
                       <li id="city-trip">
-                          <a href="#" i18n:translate="city_trip" tal:attributes="href python:translate('idee-sejour/city-trip')">CITY-TRIP</a>
+                          <a href="" i18n:translate="city_trip" tal:attributes="href python:translate('idee-sejour/city-trip')">CITY-TRIP</a>
                       </li>
                       <li id="insolite">
-                          <a href="#" i18n:translate="insolite" tal:attributes="href python:translate('idee-sejour/insolite')">INSOLITE</a>
+                          <a href="" i18n:translate="insolite" tal:attributes="href python:translate('idee-sejour/insolite')">INSOLITE</a>
                       </li>
                   </ul>
               </div>

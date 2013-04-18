@@ -1,6 +1,6 @@
 <div id="je-recherche">
     <h2 i18n:translate="je_cherche">Je cherche</h2>
-    <h3><a href="#" i18n:translate="recherche_avancee">Recherche avancée</a></h3>
+    <h3><a href="" i18n:translate="recherche_avancee">Recherche avancée</a></h3>
     <div class="break-float"></div>
 
     <form action=""

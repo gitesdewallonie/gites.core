@@ -49,9 +49,9 @@
                     hébergements</span>
                 </div>
                 <div id="aside-menu">
-                    <a href="#carte">Carte</a> -
-                    <a href="#listing">Listing</a> -
-                    <a href="#plusinfos">Plus d'infos</a>
+                    <a href="" tal:attributes="href string:${request/ACTUAL_URL}#carte">Carte</a> -
+                    <a href="" tal:attributes="href string:${request/ACTUAL_URL}#listing">Listing</a> -
+                    <a href="" tal:attributes="href string:${request/ACTUAL_URL}#plusinfos">Plus d'infos</a>
                 </div>
                 <div class="break-float"></div>
             </div>
@@ -67,7 +67,7 @@
         <div tal:replace="structure textTop"></div>
     </div>
 
-    <a name="carte"></a>
+    <a name="carte" class="package-anchor"></a>
     <div id="viewlet-map"
          tal:content="structure provider:gites.mapviewlet"></div>
 
@@ -76,15 +76,13 @@
     <div id="spin"
          style="display:none;"></div>
 
-    <a name="listing"></a>
-   <div id="heb-listing"
+    <a name="listing" class="package-anchor"></a>
+    <div id="heb-listing"
          tal:content="structure provider:gites.heblisting"></div>
 
     <div class="break-float"></div>
 
-    <a name="plusinfos"></a>
-    <p><br /><br /><br /><br /></p>
-
+    <a name="plusinfos" class="package-anchor"></a>
     <div id="package-content"
          class="stx"
          tal:condition="text"

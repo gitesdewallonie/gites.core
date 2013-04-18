@@ -10,7 +10,7 @@
         Mes données
     </div>
     <div id="maj-info-menu">
-        <a href="#"
+        <a href=""
            tal:attributes="href string:${portal_url}/zone-membre/proprio-info">
            <b i18n:translate="mes_donnees_perso">Mes données personnelles</b>
         </a>
