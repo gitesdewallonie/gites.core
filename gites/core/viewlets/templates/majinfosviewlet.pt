@@ -1,6 +1,7 @@
 <div id="maj-info"
      tal:condition='viewlet/isVisible'
-     tal:define="portal_url context/@@plone_portal_state/portal_url">
+     tal:define="portal_url context/@@plone_portal_state/portal_url"
+     i18n:domain="gites">
     <div id="titre-maj-info"
          i18n:translate="maj_des_infos">
         Mise à jour des infos

@@ -1,4 +1,5 @@
-<div id="zone-produit-package">
+<div id="zone-produit-package"
+     i18n:domain="gites">
     <div id="zone-photo"
          tal:define="packages viewlet/getCarouselPackages">
 

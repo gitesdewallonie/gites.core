@@ -1,6 +1,7 @@
 <tal:viewlet tal:define="offre viewlet/getRandomIdeesSejours"
              tal:condition="python:offre is not None">
     <div id="zone-idee-sejour"
+         i18n:domain="gites"
          tal:define="vignettes python:viewlet.getRandomVignette(offre.getPath())">
         <h3>
             <a tal:attributes="href viewlet/getAllIdeesSejoursView" i18n:translate="idees_sejours">Idées séjours</a>

@@ -1,6 +1,7 @@
 <tal:main metal:define-macro="hebergement_table">
     <span tal:define="nosorting nosorting | nothing;
-                      thclass python: (nosorting and 'nosort' or 'sort')">
+                      thclass python: (nosorting and 'nosort' or 'sort')"
+          i18n:domain="gites">
               <table class="listing" width="95%"
                      tal:condition="hebergements">
                 <thead>
@@ -37,7 +38,7 @@
                         <td>
                             <div id="nbrEpis" 
                                  tal:content="structure hebergementIcons/getEpis">
-                                <span i18n:translate="epis">Les épis</span>
+                                <span i18n:translate="epis">Les &eacute;pis</span>
                             </div>
                         </td>
                         <td>
