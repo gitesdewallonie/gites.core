@@ -49,9 +49,9 @@
                     hébergements</span>
                 </div>
                 <div id="aside-menu">
-                    <a href="" tal:attributes="href string:${request/ACTUAL_URL}#carte">Carte</a> -
-                    <a href="" tal:attributes="href string:${request/ACTUAL_URL}#listing">Listing</a> -
-                    <a href="" tal:attributes="href string:${request/ACTUAL_URL}#plusinfos">Plus d'infos</a>
+                    <a href="" tal:attributes="href string:${request/ACTUAL_URL}#carte"><span tal:omit-tag="" i18n:translate="carte">Carte</span></a> -
+                    <a href="" tal:attributes="href string:${request/ACTUAL_URL}#listing"><span tal:omit-tag="" i18n:translate="listing">Listing</span></a> -
+                    <a href="" tal:attributes="href string:${request/ACTUAL_URL}#plusinfos"><span tal:omit-tag="" i18n:translate="plus_dinfos">Plus d'infos</span></a>
                 </div>
                 <div class="break-float"></div>
             </div>
