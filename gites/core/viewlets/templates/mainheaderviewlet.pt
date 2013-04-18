@@ -34,8 +34,8 @@
     <div id="je-decouvre" tal:define="translate nocall:here/@@getTranslatedObjectUrl">
         <h2 i18n:translate="je_decouvre">Je découvre</h2>
         <div class="break-float"></div>
-        <div id="gitemeuble"><a tal:attributes="href python:translate('hebergement')"><span i18n:translate="gites_et_meubles">Gites et meublés</span></a></div>
-        <div id="maisonhote"><a tal:attributes="href python:translate('hebergement')"><span i18n:translate="chambre_hote">Chambre d'hôte</span></a></div>
+        <div id="gitemeuble"><a tal:attributes="href python:translate('type-hebergement')"><span i18n:translate="gites_et_meubles">Gites et meublés</span></a></div>
+        <div id="maisonhote"><a tal:attributes="href python:translate('type-hebergement')"><span i18n:translate="chambre_hote">Chambre d'hôte</span></a></div>
     </div><!--je decouvre-->
     <div class="break-float"></div>
 </div><!--main-header-->
