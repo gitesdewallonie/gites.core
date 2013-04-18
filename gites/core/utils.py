@@ -20,8 +20,6 @@ def createPage(parentFolder, documentId, documentTitle, excludeNav=False):
         parentFolder.invokeFactory('Document', documentId, title=documentTitle)
     document = getattr(parentFolder, documentId)
     document.exclude_from_nav=excludeNav
-    #By default, created page are written in English
-    #XXX bug here : document.setLanguage('en')
     publishObject(document)
     return document
 

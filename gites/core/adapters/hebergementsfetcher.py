@@ -205,8 +205,8 @@ class SearchHebFetcher(BaseHebergementsFetcher):
     def _query(self):
         reference = self.data.get('reference')
         capacity = self.data.get('form.widgets.capacityMin')
-        show_gites = 'gite_meuble' in self.data
-        show_chambres = 'chambre_hote' in self.data
+        show_gites = 'gite-meuble' in self.data
+        show_chambres = 'chambre-hote' in self.data
         from_date = self.data.get('form.widgets.fromDate')
         to_date = self.data.get('form.widgets.toDate')
         query = session().query(Hebergement).join('proprio').join('epis').join('type')
