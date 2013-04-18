@@ -1,5 +1,6 @@
 <div id="listing-result-block">
-    <div id="listing-result-info">
+    <div id="listing-result-info"
+         i18n:domain="gites">
         <div id="listing-result-batch"
              tal:condition="viewlet/show_batch">
             <a href=""
@@ -19,7 +20,7 @@
 
 
         <div id="sort">
-            <label for="input-sort">Trier les résultats par </label>
+            <label for="input-sort" i18n:translate="trier_par">Trier les résultats par </label>
             <select id="input-sort"
                     name="input-sort"
                     ng-model="sort"
@@ -37,7 +38,7 @@
         <div id="listing-result-count"
              i18n:translate="heb_count">
             Hébergement
-            <span i18n:name="" tal:replace="viewlet/batch_start"/>
+            <span i18n:name="heb_start" tal:replace="viewlet/batch_start"/>
             à
             <span i18n:name="heb_number" tal:replace="viewlet/batch_end"/>
             sur un total de
@@ -45,9 +46,9 @@
         </div>
     </div><!--listing-result-info-->
 
-    <div tal:repeat="hebergement viewlet/hebergements">
-        <div i18n:domain="gites"
-             tal:define="typeHeb hebergement/type/type_heb_type"
+    <div tal:repeat="hebergement viewlet/hebergements"
+         i18n:domain="gites">
+        <div tal:define="typeHeb hebergement/type/type_heb_type"
              tal:attributes="class python: typeHeb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
             <div id="typetype">
                 <span tal:content="hebergement/type/getType"
@@ -84,31 +85,28 @@
                      tal:content="hebergement/type/getTitle"></div>
             </div><!--info-bloc-sup-->
             <div id="info-bloc-inf">
-                <div id="capacite-max"
-                     i18n:translate="capacite-unite">
+                <div id="capacite-max">
                     <span tal:condition="python: hebergement.heb_cgt_cap_min != hebergement.heb_cgt_cap_max"
                           tal:content="string: ${hebergement/heb_cgt_cap_min}/${hebergement/heb_cgt_cap_max}"
                           class="nombre" />
                     <span tal:condition="python: hebergement.heb_cgt_cap_min == hebergement.heb_cgt_cap_max"
                           tal:content="string: ${hebergement/heb_cgt_cap_min}"
                           class="nombre" />
-                    personnes
+                    <span tal:omit-tag="" i18n:translate="x_personnes">personnes</span>
                 </div>
 
-                <div id="nbre-chambre"
-                     i18n:translate="x_chambres">
+                <div id="nbre-chambre">
                     <span tal:content="hebergement/heb_cgt_nbre_chmbre"
                           class="nombre" />
-                    chambres
+                    <span tal:omit-tag="" i18n:translate="x_chambres">chambres</span>
                 </div>
 
                 <div id="nbre-epis"
                      tal:repeat="epis hebergement/epis">
-                    <div id="epis-nbre"
-                         i18n:translate="epis">
+                    <div id="epis-nbre">
                       <span tal:content="epis/heb_nombre_epis"
                             class="nombre" />
-                      epis
+                      <span tal:omit-tag="" i18n:translate="x_epis">epis</span>
                     </div>
                 </div>
 
@@ -131,6 +129,3 @@
     </div><!--repeat-->
     <div id="break-float"></div>
 <div><!--listing-result-block-->
-
-
-
