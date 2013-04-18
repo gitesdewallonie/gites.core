@@ -160,7 +160,9 @@
                 var spinner = new Spinner(opts).spin(target);
             </script>
 
-            <ul id="descriptif-accordeon">
+            <ul id="descriptif-accordeon"
+                tal:define="lang request/LANGUAGE | fr;
+                            languageAwareClass string:slide_handle_${lang}">
 
                 <script language="javascript">
                     jQuery("#descriptif-accordeon").hide();
@@ -168,7 +170,8 @@
 
                 <!-- ACCUEIL -->
                 <li class="slide slide1">
-                    <div class="slide_handle"><div></div></div>
+                    <div class="slide_handle"
+                         tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
                     <div class="slide_content">
                         <h2>Accueil</h2>
                     <div>
@@ -394,7 +397,8 @@
 
                 <!-- DESCRIPTION -->
                 <li class="slide slide2">
-                    <div class="slide_handle"><div></div></div>
+                    <div class="slide_handle"
+                         tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
                     <div class="slide_content">
                         <h2>Description</h2>
                         <div id="description-bloc-gauche">
@@ -447,7 +451,8 @@
                 </li>
                 <!-- DISPONIBILITE -->
                 <li class="slide slide3">
-                  <div class="slide_handle"><div></div></div>
+                    <div class="slide_handle"
+                         tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
                     <div class="slide_content">
                         <h2>Disponibilités</h2>
                         <div>
@@ -476,7 +481,8 @@
                 </li>
                 <!-- PHOTOS -->
                 <li class="slide slide4">
-                    <div class="slide_handle"><div></div></div>
+                    <div class="slide_handle"
+                         tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
                     <div class="slide_content">
                         <h2>Photos</h2>
                         <div tal:define="vignettesUrls view/getVignettesUrl">
@@ -500,7 +506,8 @@
                 </li>
                 <!-- LOCALISATION -->
                 <li class="slide slide5">
-                    <div class="slide_handle"><div></div></div>
+                    <div class="slide_handle"
+                         tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
                     <div class="slide_content">
                         <h2>Localisation</h2>
                         <div id="description-map" tal:content="structure provider:gites.mapviewlet" />
@@ -509,7 +516,8 @@
                 </li>
                 <!-- CONTACT -->
                 <li class="slide slide6">
-                    <div class="slide_handle"><div></div></div>
+                    <div class="slide_handle"
+                         tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
                     <div class="slide_content">
                         <h2>Contact</h2>
                         <div id="description-coordonnee">
