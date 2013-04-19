@@ -83,17 +83,17 @@
                     <tal:if condition="python:len(heb.epis)==0">
                         <span>-</span>
                     </tal:if>
-                    <tal:bloc i18n:translate="nbre_cle">Clés</tal:bloc>
+                    <tal:bloc i18n:translate="x_cles">clés</tal:bloc>
                 </div>
                 <div id="reference"
                      class="etiquette-sup">
                     <span tal:content="heb/heb_pk" />
-                    <tal:bloc i18n:translate="reference">Référence</tal:bloc>
+                    <tal:bloc i18n:translate="reference">référence</tal:bloc>
                 </div>
                 <div id="nbre-chambre"
                      class="etiquette-sup">
                     <span tal:content="heb/heb_cgt_nbre_chmbre" />
-                    <tal:bloc i18n:translate="nbre-chambre">Chambres</tal:bloc>
+                    <tal:bloc i18n:translate="x_chambres">chambres</tal:bloc>
                 </div>
                 <div id="nbre-personne"
                      class="etiquette-sup">
@@ -101,7 +101,7 @@
                           tal:content="string: ${heb/heb_cgt_cap_min}/${heb/heb_cgt_cap_max}" />
                     <span tal:condition="python: heb.heb_cgt_cap_min == heb.heb_cgt_cap_max"
                           tal:content="string: ${heb/heb_cgt_cap_min}" />
-                    <tal:bloc i18n:translate="nbre-personne">personnes</tal:bloc>
+                    <tal:bloc i18n:translate="x_personnes">personnes</tal:bloc>
                 </div>
                <div id="nbre-epis"
                      class="etiquette-sup"
@@ -112,35 +112,9 @@
                     <tal:if condition="python:len(heb.epis)==0">
                         <span>-</span>
                     </tal:if>
-                    <tal:bloc i18n:translate="nbre-epis">Epis</tal:bloc>
+                    <tal:bloc i18n:translate="x_epis">epis</tal:bloc>
                 </div>
 
-                <!--
-                <div id="nbre-lit-1-personne"
-                     class="etiquette-sup">
-                    <span tal:content="heb/heb_lit_1p" />
-                    <tal:bloc i18n:translate="nbre-lit-1-personne">Lit 1 personne</tal:bloc>
-                </div>
-                <div id="nbre-lit-2-personne"
-                     class="etiquette-sup">
-                    <span tal:content="heb/heb_lit_2p" />
-                    <tal:bloc i18n:translate="nbre-lit-2-personne">Lit 2 personnes</tal:bloc>
-                </div>
-                <div id="nbre-lit-enfant"
-                     class="etiquette-sup">
-                    <span tal:content="heb/heb_lit_enf" />
-                    <tal:bloc i18n:translate="nbre-lit-enfant">Lit enfant</tal:bloc>
-                </div>
-                -->
-                <!--
-                <div style="display: table-cell;">
-                    Thèmes
-                    <br />
-                    <tal:repeat repeat="theme python:view.getHebMetadatasByType('themes')">
-                        <span tal:content="theme/title" />
-                    </tal:repeat>
-                </div>
-                -->
                 <div class="break-float"></div>
             </div><!--info-sup-->
 
@@ -160,7 +134,9 @@
                 var spinner = new Spinner(opts).spin(target);
             </script>
 
-            <ul id="descriptif-accordeon">
+            <ul id="descriptif-accordeon"
+                tal:define="lang request/LANGUAGE | fr;
+                            languageAwareClass string:slide_handle_${lang}">
 
                 <script language="javascript">
                     jQuery("#descriptif-accordeon").hide();
@@ -168,9 +144,10 @@
 
                 <!-- ACCUEIL -->
                 <li class="slide slide1">
-                    <div class="slide_handle"><div></div></div>
+                    <div class="slide_handle"
+                         tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
                     <div class="slide_content">
-                        <h2>Accueil</h2>
+                        <h2 i18n:translate="accueil">Accueil</h2>
                     <div>
 
                     <div id="accueil-bloc-gauche">
@@ -209,12 +186,12 @@
                          tal:condition="python:heb.type.type_heb_code not in 'CH, MH, CHECR'">
                         <table>
                             <tr class="tarif-periode">
-                               <td>Période</td>
-                               <td>WE</td>
-                               <td>Semaine</td>
+                               <td i18n:translate="periode">Période</td>
+                               <td i18n:translate="we">WE</td>
+                               <td i18n:translate="semaine">Semaine</td>
                             </tr>
                             <tr>
-                                <td class="tarif-saison">Basse saison</td>
+                                <td class="tarif-saison" i18n:translate="basse_saison">Basse saison</td>
                                 <td class="tarif-prix">
                                     <span tal:content="heb/heb_tarif_we_bs" />
                                 </td>
@@ -223,7 +200,7 @@
                                 </td>
                             </tr>
                             <tr bgcolor="#ceddce">
-                                <td class="tarif-saison">Moyenne saison</td>
+                                <td class="tarif-saison" i18n:translate="moyenne_saison">Moyenne saison</td>
                                 <td class="tarif-prix">
                                     <span tal:content="heb/heb_tarif_we_ms" />
                                 </td>
@@ -232,7 +209,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="tarif-saison">Haute saison</td>
+                                <td class="tarif-saison" i18n:translate="haute_saison">Haute saison</td>
                                 <td class="tarif-prix">
                                      <span tal:content="heb/heb_tarif_we_hs" />
                                 </td>
@@ -244,14 +221,14 @@
                                 <td colspan="3">&nbsp;</td>
                             </tr>
                             <tr bgcolor="#ceddce">
-                                <td class="tarif-saison">WE de fête 3 nuits</td>
+                                <td class="tarif-saison" i18n:translate="we_fete_3">WE de fête 3 nuits</td>
                                 <td class="tarif-prix">
                                      <span tal:content="heb/heb_tarif_we_3n" />
                                 </td>
                                 <td class="tarif-prix">-</td>
                             </tr>
                             <tr>
-                                <td class="tarif-saison">WE de fête 4 nuits</td>
+                                <td class="tarif-saison" i18n:translate="we_fete_4">WE de fête 4 nuits</td>
                                 <td class="tarif-prix">
                                      <span tal:content="heb/heb_tarif_we_4n" />
                                 </td>
@@ -261,7 +238,7 @@
                                 <td colspan="3">&nbsp;</td>
                             </tr>
                             <tr bgcolor="#ceddce">
-                                <td class="tarif-saison">Fin d'année</td>
+                                <td class="tarif-saison" i18n:translate="fin_annee">Fin d'année</td>
                                 <td class="tarif-prix">-</td>
                                 <td class="tarif-prix">
                                      <span tal:content="heb/heb_tarif_semaine_fin_annee" />
@@ -271,13 +248,13 @@
                                 <td colspan="3">&nbsp;</td>
                             </tr>
                             <tr bgcolor="#ceddce">
-                                <td class="tarif-saison">Garantie</td>
+                                <td class="tarif-saison" i18n:translate="garantie">Garantie</td>
                                 <td colspan="2" class="tarif-rpix">
                                     <span tal:content="heb/heb_tarif_garantie" />
                                 </td>
                             </tr>
                             <tr>
-                                <td class="tarif-saison">Charges</td>
+                                <td class="tarif-saison" i18n:translate="charges">Charges</td>
                                 <td colspan="2" class="tarif-prix">
                                     <span tal:condition="exists: heb/heb_tarif_charge">|
                                         <span tal:content="heb/heb_tarif_charge" />
@@ -287,7 +264,7 @@
                                 </td>
                             </tr>
                             <tr bgcolor="#ceddce">
-                                <td class="tarif-saison">Taxe de séjour</td>
+                                <td class="tarif-saison" i18n:translate="taxe_sejour">Taxe de séjour</td>
                                 <td colspan="2"
                                     class="tarif-prix">
                                     <span tal:content="heb/heb_taxe_montant" />
@@ -306,13 +283,13 @@
                         <table>
                             <tr class="tarif-periode">
                                 <td>&nbsp;</td>
-                                <td align="center"><span>1 p.</span></td>
-                                <td align="center"><span>2 p.</span></td>
-                                <td align="center"><span>p. +</span></td>
+                                <td align="center"><span i18n:translate="1_p">1 p.</span></td>
+                                <td align="center"><span i18n:translate="2_p">2 p.</span></td>
+                                <td align="center"><span i18n:translate="p_plus">p. +</span></td>
                             </tr>
                             <tr bgcolor="#CED8E2">
                                 <td class="tarif-saison">
-                                    <span>Nuitée avec petit déjeuner</span>
+                                    <span i18n:translate="nuitee_dejeuner">Nuitée avec petit déjeuner</span>
                                 </td>
                                 <td class="tarif-prix empty-cell">
                                     <span tal:content="heb/heb_tarif_chmbr_avec_dej_1p" />
@@ -326,7 +303,7 @@
                             </tr>
                             <tr>
                                 <td class="tarif-saison empty-cell">
-                                    <span>Déduction si pas de petit déjeuner</span>
+                                    <span i18n:translate="deduction_pas_dejeuner">Déduction si pas de petit déjeuner</span>
                                 </td>
                                 <td class="tarif-prix empty-cell">
                                     <span tal:content="heb/heb_tarif_chmbr_sans_dej_1p" />
@@ -340,7 +317,7 @@
                             </tr>
                             <tr bgcolor="#CED8E2">
                                 <td class="tarif-saison">
-                                    <span>Taxe de séjour</span>
+                                    <span i18n:translate="taxe_sejour">Taxe de séjour</span>
                                 </td>
                                 <td class="tarif-prix empty-cell">
                                      <span tal:content="heb/heb_taxe_montant" />
@@ -350,7 +327,7 @@
                             </tr>
                         </table>
                         <div id="description-tarification-divers">
-                            <h3>Divers</h3>
+                            <h3 i18n:translate="divers">Divers</h3>
                             <span tal:content="heb/heb_tarif_chmbr_autre_1p" />
                             <span tal:content="heb/heb_tarif_chmbr_table_hote_1p" />
                         </div>
@@ -362,20 +339,21 @@
                             <table>
                                 <tr>
                                     <td colspan="2"
-                                        class="tarif-periode">
-                                        <span>Table d'hôtes</span>
+                                        class="tarif-periode"
+                                        i18n:translate="table_hote">
+                                        Table d'hôtes
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="tarif-saison">
-                                        <span>Tarif</span>
+                                    <td class="tarif-saison" i18n:translate="tarif">
+                                        Tarif
                                     </td>
                                     <td>
-                                        <span>20.00</span>
+                                        20.00
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="tarif-saison">
+                                    <td class="tarif-saison" i18n:translate="type">
                                         Type
                                     </td>
                                     <td>
@@ -394,23 +372,24 @@
 
                 <!-- DESCRIPTION -->
                 <li class="slide slide2">
-                    <div class="slide_handle"><div></div></div>
+                    <div class="slide_handle"
+                         tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
                     <div class="slide_content">
-                        <h2>Description</h2>
+                        <h2 i18n:translate="description">Description</h2>
                         <div id="description-bloc-gauche">
                                 <div id="heb-situation">
-                                    <h3>Situation</h3>
+                                    <h3 i18n:translate="situation">Situation</h3>
                                     <p tal:content="view/getHebergementSituation"></p>
                                 </div>
                                 <div id="heb-distribution">
-                                    <h3>Distribution</h3>
+                                    <h3 i18n:translate="distribution">Distribution</h3>
                                     <p tal:content="view/getHebergementDistribution"></p>
                                 </div>
                         </div><!--description-bloc-gauche-->
 
                         <div id="description-bloc-droite">
                                 <div id="heb-description">
-                                    <h3>Description</h3>
+                                    <h3 i18n:translate="description">Description</h3>
                                     <p tal:content="view/getHebergementDescription"></p>
                                 </div>
                         </div><!--description-bloc-gauche-->
@@ -447,9 +426,10 @@
                 </li>
                 <!-- DISPONIBILITE -->
                 <li class="slide slide3">
-                  <div class="slide_handle"><div></div></div>
+                    <div class="slide_handle"
+                         tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
                     <div class="slide_content">
-                        <h2>Disponibilités</h2>
+                        <h2 i18n:translate="disponibilites">Disponibilités</h2>
                         <div>
                             <div id="description-dispo-calendrier"
                                  tal:condition="hasCalendar">
@@ -476,9 +456,10 @@
                 </li>
                 <!-- PHOTOS -->
                 <li class="slide slide4">
-                    <div class="slide_handle"><div></div></div>
+                    <div class="slide_handle"
+                         tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
                     <div class="slide_content">
-                        <h2>Photos</h2>
+                        <h2 i18n:translate="photos">Photos</h2>
                         <div tal:define="vignettesUrls view/getVignettesUrl">
                             <div id="hebergement-carousel" class="carousel slide" tal:condition="vignettesUrls">
                                 <div class="carousel-inner">
@@ -500,18 +481,20 @@
                 </li>
                 <!-- LOCALISATION -->
                 <li class="slide slide5">
-                    <div class="slide_handle"><div></div></div>
+                    <div class="slide_handle"
+                         tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
                     <div class="slide_content">
-                        <h2>Localisation</h2>
+                        <h2 i18n:translate="localisation">Localisation</h2>
                         <div id="description-map" tal:content="structure provider:gites.mapviewlet" />
                         <div class="break-float"></div>
                     </div>
                 </li>
                 <!-- CONTACT -->
                 <li class="slide slide6">
-                    <div class="slide_handle"><div></div></div>
+                    <div class="slide_handle"
+                         tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
                     <div class="slide_content">
-                        <h2>Contact</h2>
+                        <h2 i18n:translate="contact">Contact</h2>
                         <div id="description-coordonnee">
                             <div id="nom-proprio">
                                 <span tal:content="heb/proprio/civilite/civ_titre" />
@@ -553,7 +536,7 @@
                             <div id="contacter-proprio">
                                 <a href=""
                                    tal:attributes="href string:${context/@@plone_portal_state/portal_url}/form_contact_proprio?heb_pk=${heb/heb_pk}">
-                                    <span>Contactez le propriétaire</span>
+                                    <span i18n:translate="contactez_proprio">Contactez le propriétaire</span>
                                 </a>
                             </div>
                         </div><!--descriptif coordonnee-->

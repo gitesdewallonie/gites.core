@@ -52,7 +52,7 @@ class SuperLanguageSelector(TranslatableLanguageSelector, grok.Viewlet):
                 append_path.insert(0, check)
             else:
                 stop = True
-        #XXX we remove virtualhostroot
+        # we remove virtualhostroot
         if 'VirtualHostRoot' in append_path:
             append_path.remove('VirtualHostRoot')
         if append_path:

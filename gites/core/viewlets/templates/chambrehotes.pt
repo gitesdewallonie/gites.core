@@ -1,4 +1,5 @@
-<div id="zone-allo-chambre-hote">
+<div id="zone-allo-chambre-hote"
+     i18n:domain="gites">
     <h3>
         <a href="http://www.allochambredhotes.be"
            title="Allo chambre d'hôtes"

@@ -1,4 +1,5 @@
 <div id="calendrier"
+     i18n:domain="gites"
      tal:condition='viewlet/isVisible'
      tal:define="portal_url context/@@plone_portal_state/portal_url;
                  hasActive viewlet/hasActiveConfiguration;
