@@ -112,11 +112,14 @@ class HebergementsInPackageListing(HebergementsInListing):
     grok.context(IPackage)
 
     def sort_items(self):
-        return {'distance': _('Distance'),
-                'pers_numbers': _("Nombre de personnes"),
-                'room_count': _("Nombre de chambre"),
-                'epis': _(u"Épis"),
-                'heb_type': _(u"Type d'hébergement")}
+        sortables = {
+            'pers_numbers': _("Nombre de personnes"),
+            'room_count': _("Nombre de chambre"),
+            'epis': _(u"Épis"),
+            'heb_type': _(u"Type d'hébergement")}
+        if self.isGeoLocalized():
+            sortables['distance'] = _('Distance')
+        return sortables
 
     def heb_distance(self, hebergement):
         return round(hebergement.distance / 1000, 2)
