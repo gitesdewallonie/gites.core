@@ -59,10 +59,13 @@
                 </div>
             </div>
             <div id="vignette">
-                <img src=""
-                     width="181"
-                     height="115"
-                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/getVignette}" />
+                <a href=""
+                   tal:attributes="href hebergement/@@url">
+                    <img src=""
+                         width="181"
+                         height="115"
+                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/getVignette}" />
+                </a>
             </div>
 
             <div id="info-bloc-sup">
@@ -79,8 +82,11 @@
                            tal:content="string: ${dist} km"> 5Km </span>
                 </div>
 
-                <div id="nom-hebergement"
-                     tal:content="hebergement/heb_nom"></div>
+                <div id="nom-hebergement">
+                    <a href=""
+                       tal:attributes="href hebergement/@@url"
+                       tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
+                </div>
                 <div id="type"
                      tal:define="lang request/LANGUAGE | fr"
                      tal:content="python: hebergement.type.getTitle(languageCode=lang)"></div>
