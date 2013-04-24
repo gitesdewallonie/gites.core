@@ -1,11 +1,9 @@
 <div id="calendrier"
-     i18n:domain="gites"
      tal:condition='viewlet/isVisible'
      tal:define="portal_url context/@@plone_portal_state/portal_url;
                  hasActive viewlet/hasActiveConfiguration;
                  isBlocked viewlet/isBlocked">
-    <div id="titre-calendrier"
-         i18n:translate="calendrier">
+    <div id="titre-calendrier">
         Calendrier
     </div>
     <tal:boucle tal:condition="python: hasActive and not isBlocked"
@@ -19,27 +17,23 @@
         <a href=""
            class="tile"
            title="Affichage mensuel"
-           tal:attributes="href string:${context/@@plone_portal_state/portal_url}/zone-membre/calendrier/multical.html"
-           i18n:translate="affichage_mensuel">
+           tal:attributes="href string:${context/@@plone_portal_state/portal_url}/zone-membre/calendrier/multical.html">
            Affichage mensuel
         </a>
     </div>
     <div>
         <a href=""
            tal:condition="not: viewlet/isBlocked"
-           tal:attributes="href string:${context/@@plone_portal_state/portal_url}/zone-membre/calendrier/configuration"
-           i18n:translate="configuration">
+           tal:attributes="href string:${context/@@plone_portal_state/portal_url}/zone-membre/calendrier/configuration">
            Configuration
         </a>
-        <span tal:condition="viewlet/isBlocked"
-              i18n:translate="calendrier_bloque">
+        <span tal:condition="viewlet/isBlocked">
             Votre calendrier est bloqué. Veuillez contacter les Gîtes de Wallonie.
         </span>
     </div>
     <div>
         <a href=""
-           tal:attributes="href string:${context/@@plone_portal_state/portal_url}/zone-membre/calendrier/aide"
-           i18n:translate="aide">
+           tal:attributes="href string:${context/@@plone_portal_state/portal_url}/zone-membre/calendrier/aide">
            Aide
         </a>
     </div>

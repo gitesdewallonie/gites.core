@@ -1,6 +1,5 @@
-<div id="zone-membre" tal:condition='viewletmanager/available'
-     i18n:domain="gites">
-    <h2 i18n:translate="zone_membre">Zone Membre</h2>
+<div id="zone-membre" tal:condition='viewletmanager/available'>
+    <h2>Zone Membre</h2>
     <tal:viewlets repeat="viewlet viewletmanager/viewlets">
         <tal:viewlet tal:replace="structure python:viewlet.render()" />
     </tal:viewlets>
