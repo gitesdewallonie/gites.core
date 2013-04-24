@@ -201,11 +201,11 @@ class ISearchHebergement(Interface):
         description=_('Are people allowed to smoke in the Hebergement'),
         required=False)
 
-    fromDate = schema.Date(title=_('Sejour du'),
+    fromDate = schema.Date(title=_('Stay from'),
                            description=_('Stay from'),
                            required=False)
 
-    toDate = schema.Date(title=_('Sejour au'),
+    toDate = schema.Date(title=_('Stay to'),
                          description=_('Stay to'),
                          required=False)
 
@@ -257,11 +257,11 @@ class ISearchHosting(Interface):
         required=False)
 
     fromDate = schema.Date(
-        title=_(u'Arrivée'),
+        title=_(u'Stay from'),
         required=False)
 
     toDate = schema.Date(
-        title=_(u'Départ'),
+        title=_(u'Stay to'),
         required=False)
 
     nearTo = schema.Text(

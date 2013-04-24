@@ -79,7 +79,7 @@ class SearchHebergement(formbase.PageForm):
         sortedResults = firstResults + nextResults
         return sortedResults
 
-    @form.action(_(u"Search"))
+    @form.action(_("action_search", u"Rechercher"))
     def action_search(self, action, data):
         wrapper = getSAWrapper('gites_wallons')
         session = wrapper.session

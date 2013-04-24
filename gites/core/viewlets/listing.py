@@ -103,9 +103,9 @@ class HebergementsInListing(grok.Viewlet):
         return self._fetcher.selected_page() == 0
 
     def sort_items(self):
-        return {'pers_numbers': _("Nombre de personnes"),
-                'room_count': _("Nombre de chambre"),
-                'epis': _(u"Épis")}
+        return {'pers_numbers': _("nombre_personnes", "Nombre de personne"),
+                'room_count': _("nombre-chambres", "Nombre de chambres"),
+                'epis': _(u"Epis")}
 
 
 class HebergementsInPackageListing(HebergementsInListing):
@@ -113,10 +113,10 @@ class HebergementsInPackageListing(HebergementsInListing):
 
     def sort_items(self):
         sortables = {
-            'pers_numbers': _("Nombre de personnes"),
-            'room_count': _("Nombre de chambre"),
-            'epis': _(u"Épis"),
-            'heb_type': _(u"Type d'hébergement")}
+            'pers_numbers': _("nombre_personnes", "Nombre de personne"),
+            'room_count': _("nombre-chambres", "Nombre de chambres"),
+            'epis': _(u"Epis"),
+            'heb_type': _(u"Hebergement Type")}
         if self.isGeoLocalized():
             sortables['distance'] = _('Distance')
         return sortables

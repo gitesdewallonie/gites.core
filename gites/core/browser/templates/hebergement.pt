@@ -187,7 +187,7 @@
                         <table>
                             <tr class="tarif-periode">
                                <td i18n:translate="periode">Période</td>
-                               <td i18n:translate="we">WE</td>
+                               <td i18n:translate="week-end">WE</td>
                                <td i18n:translate="semaine">Semaine</td>
                             </tr>
                             <tr>
@@ -221,14 +221,14 @@
                                 <td colspan="3">&nbsp;</td>
                             </tr>
                             <tr bgcolor="#ceddce">
-                                <td class="tarif-saison" i18n:translate="we_fete_3">WE de fête 3 nuits</td>
+                                <td class="tarif-saison" i18n:translate="3_nuits">WE de fête 3 nuits</td>
                                 <td class="tarif-prix">
                                      <span tal:content="heb/heb_tarif_we_3n" />
                                 </td>
                                 <td class="tarif-prix">-</td>
                             </tr>
                             <tr>
-                                <td class="tarif-saison" i18n:translate="we_fete_4">WE de fête 4 nuits</td>
+                                <td class="tarif-saison" i18n:translate="4_nuits">WE de fête 4 nuits</td>
                                 <td class="tarif-prix">
                                      <span tal:content="heb/heb_tarif_we_4n" />
                                 </td>
@@ -238,7 +238,7 @@
                                 <td colspan="3">&nbsp;</td>
                             </tr>
                             <tr bgcolor="#ceddce">
-                                <td class="tarif-saison" i18n:translate="fin_annee">Fin d'année</td>
+                                <td class="tarif-saison" i18n:translate="fin_d_annee">Fin d'ann&eacute;e</td>
                                 <td class="tarif-prix">-</td>
                                 <td class="tarif-prix">
                                      <span tal:content="heb/heb_tarif_semaine_fin_annee" />
@@ -289,7 +289,7 @@
                             </tr>
                             <tr bgcolor="#CED8E2">
                                 <td class="tarif-saison">
-                                    <span i18n:translate="nuitee_dejeuner">Nuitée avec petit déjeuner</span>
+                                    <span i18n:translate="nuit_avec_petit_dejeuner">Nuit&eacute;e avec petit d&eacute;jeuner</span>
                                 </td>
                                 <td class="tarif-prix empty-cell">
                                     <span tal:content="heb/heb_tarif_chmbr_avec_dej_1p" />
@@ -303,7 +303,7 @@
                             </tr>
                             <tr>
                                 <td class="tarif-saison empty-cell">
-                                    <span i18n:translate="deduction_pas_dejeuner">Déduction si pas de petit déjeuner</span>
+                                    <span i18n:translate="deduction_si_pas_petit_dejeuner">D&eacute;duction si pas petit d&eacute;jeuner</span>
                                 </td>
                                 <td class="tarif-prix empty-cell">
                                     <span tal:content="heb/heb_tarif_chmbr_sans_dej_1p" />
@@ -340,7 +340,7 @@
                                 <tr>
                                     <td colspan="2"
                                         class="tarif-periode"
-                                        i18n:translate="table_hote">
+                                        i18n:translate="table_hotes">
                                         Table d'hôtes
                                     </td>
                                 </tr>
@@ -536,7 +536,7 @@
                             <div id="contacter-proprio">
                                 <a href=""
                                    tal:attributes="href string:${context/@@plone_portal_state/portal_url}/form_contact_proprio?heb_pk=${heb/heb_pk}">
-                                    <span i18n:translate="contactez_proprio">Contactez le propriétaire</span>
+                                    <span i18n:translate="contactez_le_proprietaire">Contactez le propri&eacute;taire</span>
                                 </a>
                             </div>
                         </div><!--descriptif coordonnee-->

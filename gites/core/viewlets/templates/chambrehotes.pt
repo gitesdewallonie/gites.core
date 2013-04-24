@@ -3,8 +3,7 @@
     <h3>
         <a href="http://www.allochambredhotes.be"
            title="Allo chambre d'hôtes"
-           target="_blank"
-           i18n:translate="allo_chambre_hotes">
+           target="_blank">
             Allo chambre d'hôtes
         </a>
     </h3>
@@ -17,7 +16,7 @@
         </a>
     </div>
     <div class="break-float"></div>
-    <p i18n:translate="allo_chambre_description">A la recherche d'une chambre d'hôtes pour cette nuit?<br>
+    <p i18n:translate="allo_chambre_description">A la recherche d'une chambre d'hôtes pour cette nuit?<br />
     Avec Allo chambre d'hôtes, trouvez une chambre d'hôtes
     disponible ce soir à proximité de votre destination
     en Wallonie.</p>
@@ -25,7 +24,7 @@
         <a href="http://www.allochambredhotes.be"
            title="Allo chambre d'hôtes"
            target="_blank">
-            <span i18n:translate="plus_infos">Plus d'infos...</span>
+            <span i18n:translate="plus_dinfos">Plus d'infos</span>...
         </a>
     </div>
 </div>

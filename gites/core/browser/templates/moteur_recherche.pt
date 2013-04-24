@@ -48,7 +48,7 @@
                           </tr>
                           <tr>
                               <td class="widget" align="right">
-                                 <label i18n:translate="" class="label-recherche">Sejour du</label>
+                                 <label i18n:translate="" class="label-recherche">Stay from</label>
                               </td>
                               <td>
                                  <input id="form.fromDate" 
@@ -69,7 +69,7 @@
                           </tr>
                           <tr>
                               <td class="widget"  align="right">
-                                  <label i18n:translate="" class="label-recherche">Sejour au</label>
+                                  <label i18n:translate="" class="label-recherche">Stay to</label>
                               </td>
                               <td>
                                   <input id="form.toDate" 

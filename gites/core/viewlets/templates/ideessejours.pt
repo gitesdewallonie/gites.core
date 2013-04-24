@@ -22,7 +22,7 @@
         </p>
         <div class="plus-info">
             <a tal:attributes="href viewlet/getAllIdeesSejoursView"><span
-            i18n:translate="toutes_nos_idees_sejour">Toutes nos idées séjour...</span></a>
+            i18n:translate="toutes_nos_idees_sejour">Toutes nos idées séjour</span>...</a>
         </div>
     </div>
 </tal:viewlet>

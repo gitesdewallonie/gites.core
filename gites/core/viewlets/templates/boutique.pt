@@ -18,7 +18,7 @@
         </p>
         <div class="plus-info">
             <a tal:attributes="href viewlet/getAllBoutiqueItemsView"><span
-            i18n:translate="tous_nos_articles">Tous nos articles...</span></a>
+            i18n:translate="tous_nos_articles">Tous nos articles</span>...</a>
         </div>
     </div>
 </tal:viewlet>

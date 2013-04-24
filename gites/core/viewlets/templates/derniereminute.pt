@@ -19,7 +19,7 @@
                   tal:content="string: ${hebergement/heb_cgt_cap_min}" />
         </p>
         <div class="plus-info">
-            <a tal:attributes="href viewlet/getAllDerniereMinuteLink"><span i18n:translate="toutes_nos_dernieres_minutes">Toutes nos dernières minutes</span></a>
+            <a tal:attributes="href viewlet/getAllDerniereMinuteLink"><span i18n:translate="toutes_nos_dernieres_minutes">Toutes nos dernières minutes</span>...</a>
         </div>
     </div>
 </tal:viewlet>
