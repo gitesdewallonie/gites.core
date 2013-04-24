@@ -82,7 +82,8 @@
                 <div id="nom-hebergement"
                      tal:content="hebergement/heb_nom"></div>
                 <div id="type"
-                     tal:content="hebergement/type/getTitle"></div>
+                     tal:define="lang request/LANGUAGE | fr"
+                     tal:content="python: hebergement.type.getTitle(languageCode=lang)"></div>
             </div><!--info-bloc-sup-->
             <div id="info-bloc-inf">
                 <div id="capacite-max">

@@ -49,7 +49,7 @@
             <input type="submit"
                    value="Je trouve"
                    class="trouver"
-                   i18n:translate="je_trouve" />
+                   i18n:attributes="value je_trouve" />
         </div>
     </form>
 </div><!--je cherche-->
