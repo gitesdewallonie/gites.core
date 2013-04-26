@@ -27,12 +27,14 @@
 __author__ = """Jean Francois Roche <jfroche@pyxel.be>"""
 __docformat__ = 'plaintext'
 
+from zope.interface import implements
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.atapi import (Schema, registerType,
                                        TextField, RichWidget, ImageField,
                                        ImageWidget, AttributeStorage,
                                        BaseFolderSchema)
 from gites.core.config import PROJECTNAME
+from gites.core.content.interfaces import IBoutiqueItem
 from Products.ATContentTypes.content.folder import ATFolder
 
 
@@ -82,9 +84,11 @@ BoutiqueItem_schema = ATFolder.schema.copy() + \
 
 ##/code-section after-schema
 
+
 class BoutiqueItem(ATFolder):
     """
     """
+    implements(IBoutiqueItem)
     security = ClassSecurityInfo()
     __implements__ = (getattr(ATFolder, '__implements__', ()))
 

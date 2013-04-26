@@ -38,3 +38,9 @@ class ISejourFute(Interface):
     """
     Sejour Fute marker interface
     """
+
+
+class IBoutiqueItem(Interface):
+    """
+    Boutique Item marker interface
+    """
