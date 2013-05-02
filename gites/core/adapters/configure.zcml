@@ -16,4 +16,10 @@
 
   <grok:grok package=".hebergementsfetcher"/>
 
+  <adapter
+      for="..content.interfaces.IBoutiqueItem"
+      factory=".atmetatags.BoutiqueItemATMetatags"
+      provides="collective.opengraph.interfaces.IOpengraphMetatags"
+      />
+
 </configure>
