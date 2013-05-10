@@ -163,6 +163,11 @@ class ISendMail(Interface):
         Envoi un mail au proprio via le site
         """
 
+    def sendMailForProblem():
+        """
+        Envoi un mail pour signaler un problème
+        """
+
 
 class ISearchHebergement(Interface):
     """
