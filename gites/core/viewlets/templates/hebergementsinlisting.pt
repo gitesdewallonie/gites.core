@@ -48,10 +48,11 @@
 
     <div tal:repeat="hebergement viewlet/hebergements"
          i18n:domain="gites">
-        <div tal:define="typeHeb hebergement/heb_type_type"
-             tal:attributes="class python: typeHeb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
+        <div tal:define="heb_view nocall:hebergement/@@view;
+                         type_heb heb_view/heb_type_type"
+             tal:attributes="class python: type_heb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
             <div id="typetype">
-                <span tal:content="hebergement/heb_type_type"
+                <span tal:content="type_heb"
                       class="texte-vertical" />
                 <div class="btn-loupe-listing">
                     <a href=""
@@ -73,7 +74,7 @@
                 <div class="digit"
                      tal:attributes="id string:map_picto_${hebergement/heb_pk}">
                     <img src=""
-                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/${hebergement/heb_type_type}_${repeat/hebergement/number}.png" />
+                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/${type_heb}_${repeat/hebergement/number}.png" />
                 </div>
 
                 <div tal:condition="viewlet/isGeoLocalized"
@@ -88,7 +89,7 @@
                        tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
                 </div>
                 <div id="type"
-                     tal:content="hebergement/heb_type"></div>
+                     tal:content="heb_view/heb_type"></div>
             </div><!--info-bloc-sup-->
             <div id="info-bloc-inf">
                 <div id="capacite-max">
@@ -110,7 +111,7 @@
                 <div id="nbre-epis">
                     <div id="epis-nbre"
                          i18n:translate="epis">
-                      <span tal:content="hebergement/heb_nombre_epis"
+                      <span tal:content="heb_view/nombre_epis"
                             class="nombre" />
                       <span tal:omit-tag="" i18n:translate="x_epis">epis</span>
                     </div>
