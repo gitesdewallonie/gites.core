@@ -5,7 +5,7 @@ from dateutil.relativedelta import relativedelta
 import sqlalchemy as sa
 from plone.memoize.instance import memoize
 from five import grok
-from zope.interface import Interface
+from zope.interface import Interface, directlyProvides
 from zope.publisher.interfaces.browser import IBrowserRequest
 from affinitic.db.cache import FromCache
 from Products.Maps.interfaces import IMarker
@@ -14,7 +14,7 @@ from gites.db.interfaces import ICommune
 from gites.db.content import (LinkHebergementMetadata, Hebergement,
                               LinkHebergementEpis, Commune, Proprio,
                               TypeHebergement, ReservationProprio)
-from gites.core.interfaces import IHebergementsFetcher
+from gites.core.interfaces import IHebergementsFetcher, IHebergementInSearch
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from gites.core.browser.moteur_recherche import MoteurRecherche
 from gites.core.content.interfaces import IPackage
@@ -81,6 +81,9 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
                     value = getattr(heb, key)
                     setattr(hebergement, key, value)
                     hebergements.append(hebergement)
+            elif isinstance(heb, tuple):
+                directlyProvides(heb, IHebergementInSearch)
+                hebergements.append(heb)
             else:
                 hebergements.append(heb)
         return hebergements
