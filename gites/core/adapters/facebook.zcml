@@ -1,0 +1,26 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:grok="http://namespaces.zope.org/grok"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           i18n_domain="gites">
+
+  <!-- Deactivate facebook metatags in sc.social.like -->
+  <include package="z3c.unconfigure"
+           file="meta.zcml" />
+  <include package="sc.social.like.browser" />
+
+  <unconfigure>
+    <browser:viewlet
+        name="sc.social.likes_metadata"
+        manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
+        layer="sc.social.like.interfaces.ISocialLikeLayer"
+        class="sc.social.like.browser.viewlets.SocialMetadataViewlet"
+        permission="zope.Public"
+        />
+  </unconfigure>
+
+  <!-- Adapts facebook metadatas -->
+  <adapter for="..content.interfaces.IBoutiqueItem"
+           factory=".atmetatags.BoutiqueItemATMetatags"
+           provides="collective.opengraph.interfaces.IOpengraphMetatags" />
+
+</configure>
