@@ -1,16 +1,20 @@
 # -*- coding: utf-8 -*-
-import time
 from datetime import date
+from mailer import Mailer
+from smtplib import SMTPSenderRefused
+import time
+
+from collective.captcha.browser.captcha import Captcha
+from Products.CMFDefault.exceptions import EmailAddressInvalid
+from Products.CMFDefault.utils import checkEmailAddress
+from Products.Five import BrowserView
+from Products.statusmessages.interfaces import IStatusMessage
+from z3c.sqlalchemy import getSAWrapper
 from zope.component import queryMultiAdapter
 from zope.interface import implements
-from z3c.sqlalchemy import getSAWrapper
-from Products.CMFDefault.utils import checkEmailAddress
-from Products.CMFDefault.exceptions import EmailAddressInvalid
-from Products.Five import BrowserView
-from collective.captcha.browser.captcha import Captcha
 
+from gites.locales import GitesMessageFactory as _
 from interfaces import ISendMail
-from mailer import Mailer
 
 LANG_MAP = {'en': 'Anglais',
             'fr': 'Français',
@@ -178,11 +182,12 @@ Il s'agit de :
         """
         envoi d'un mail pour signaler un problème
         """
+        if self.request.get('vecteur') is None:
+            return
         captcha = self.request.get('captcha', '')
         captchaView = Captcha(self.context, self.request)
         isCorrectCaptcha = captchaView.verify(captcha)
         if not isCorrectCaptcha:
-            self.request.RESPONSE.redirect("signaler_probleme")
             return ""
 
         gdwMail = u'info@gitesdewallonie.be'
@@ -209,7 +214,7 @@ Il s'agit de :
 #        mailer = Mailer("relay.skynet.be", fromMail)
         mailer.setSubject("[SIGNALER UN PROBLEME PAR LE SITE DES GITES DE WALLONIE]")
         mailer.setRecipients(gdwMail)
-        mail = u""":: SIGNALER UN PROBLEME ::
+        mail = """:: SIGNALER UN PROBLEME ::
 
 L'utilisateur %s %s signale un problème sur le site des Gîtes de Wallonie.
 
@@ -222,15 +227,20 @@ Il s'agit de :
     * Type de problème : %s
     * Remarque : %s
 """ \
-              % (unicode(contactNom, 'utf-8'), \
-                unicode(contactPrenom, 'utf-8'), \
-                unicode(contactNom, 'utf-8'), \
-                unicode(contactPrenom, 'utf-8'), \
-                unicode(contactLangue, 'utf-8'), \
-                unicode(contactEmail, 'utf-8'), \
-                typeProbleme, \
-                unicode(remarque, 'utf-8'))
-        mailer.sendAllMail(mail.encode('utf-8'), plaintext=True)
+            % (unicode(contactNom).encode('utf-8'), \
+              unicode(contactPrenom).encode('utf-8'), \
+              unicode(contactNom).encode('utf-8'), \
+              unicode(contactPrenom).encode('utf-8'), \
+              unicode(contactLangue).encode('utf-8'), \
+              unicode(contactEmail).encode('utf-8'), \
+              unicode(typeProbleme).encode('utf-8'), \
+              unicode(remarque).encode('utf-8'))
+        try:
+            mailer.sendAllMail(mail, plaintext=True)
+        except SMTPSenderRefused:
+            messages = IStatusMessage(self.request)
+            messages.add(_(u"Il y a eu un problème lors de l'envoi de votre demande (SMTPSenderRefused)."), type=u"error")
+            return
 
         translate = queryMultiAdapter((self.context, self.request),
                                        name='getTranslatedObjectUrl')

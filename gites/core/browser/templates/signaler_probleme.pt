@@ -17,9 +17,10 @@
 Signaler un problème
 </h1>
 
-<div id="content-core" class="signaler-probleme" align="center">
+<div id="content-core" class="signaler-probleme" align="center"
+     tal:define="send view/sendMailForProblem">
 
-<form action="send_mail_for_problem"
+<form action="signaler_probleme"
       name="signaler-probleme"
       onsubmit="return validate(this);"
       method="post">
