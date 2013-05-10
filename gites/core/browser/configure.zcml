@@ -47,6 +47,24 @@
 
   <browser:page
       for="*"
+      name="signaler_probleme"
+      template="templates/signaler_probleme.pt"
+      permission="zope.Public"
+      allowed_interface=".interfaces.ISendMail"
+      class=".SendMail.SendMail"
+      />
+
+  <browser:page
+      for="*"
+      name="send_mail_for_problem"
+      permission="zope.Public"
+      allowed_interface=".interfaces.ISendMail"
+      class=".SendMail.SendMail"
+      attribute="sendMailForProblem"
+      />
+
+  <browser:page
+      for="*"
       name="boutique_item_view"
       template="templates/boutique_item_view.pt"
       permission="zope.Public"

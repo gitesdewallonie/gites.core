@@ -1,0 +1,168 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="gites">
+
+<head>
+   <script src="validate_forms.js"
+           type="text/javascript"></script>
+</head>
+
+<body>
+
+<div metal:fill-slot="main">
+
+<h1 i18n:translate="signaler_un_probleme" class="documentFirstHeading">
+Signaler un problème
+</h1>
+
+<div id="content-core" class="signaler-probleme" align="center">
+
+<form action="send_mail_for_problem"
+      name="signaler-probleme"
+      onsubmit="return validate(this);"
+      method="post">
+    <table width="95%"
+           border="0"
+           tal:define="captchaView nocall:context/@@captcha"
+           id="table-signaler-probleme">
+        <tr>
+            <td align="right">
+                <span class="fieldRequired"
+                      title="Required"
+                      i18n:attributes="title title_required;"></span>
+                <label for="contactNom" i18n:translate="nom">Nom</label>
+            </td>
+            <td>
+                <input type="text"
+                       name="contactNom"
+                       size="30"
+                       class="required"
+                       value=""
+                       tal:attributes="value request/contactNom | nothing"
+                       />
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                <span class="fieldRequired"
+                      title="Required"
+                      i18n:attributes="title title_required;"></span>
+                <label for="contactPrenom" i18n:translate="prenom">Prénom</label>
+            </td>
+            <td>
+                <input type="text"
+                       name="contactPrenom"
+                       size="30"
+                       class="required"
+                       value=""
+                       tal:attributes="value request/contactPrenom | nothing"
+                       />
+            </td>
+        </tr>
+        <tr class="field">
+            <td align="right">
+                <span class="fieldRequired"
+                      title="Required"
+                      i18n:attributes="title title_required;"></span>
+                <label for="contactEmail"  i18n:translate="email">E-mail</label>
+            </td>
+            <td>
+                <input type="text"
+                       id="contactEmail"
+                       name="contactEmail"
+                       size="30"
+                       class="email required"
+                       value=""
+                       tal:attributes="value request/contactEmail | nothing"
+                       />
+            </td>
+        </tr>
+        <tr>
+           <td align="right">
+               <label for="contactLangue" i18n:translate="langue">Langue</label>
+           </td>
+           <td>
+              <select name="contactLangue">
+                 <option>...</option>
+                 <option i18n:translate="francais"> Français</option>
+                 <option i18n:translate="neerlandais"> Néerlandais</option>
+                 <option i18n:translate="anglais"> Anglais</option>
+              </select>
+          </td>
+        </tr>
+        <tr>
+           <td align="right">
+               <label for="typeProbleme" i18n:translate="type_de_probleme">Type de problème</label>
+           </td>
+           <td>
+              <select name="typeProbleme">
+                 <option>...</option>
+                 <option i18n:translate="calendrier_pas_a_jour"> Calendrier pas à jour</option>
+                 <option i18n:translate="coordonnees_incorrectes"> Coordonnées incorrectes</option>
+              </select>
+           </td>
+        </tr>
+
+        <tr>
+            <td align="right">
+                <span class="fieldRequired"
+                      title="Required"
+                      i18n:attributes="title title_required;"></span>
+                <label for="remarque" i18n:translate="remarques">Remarques</label>
+            </td>
+            <td>
+                <textarea name="remarque"
+                          value=""
+                          class="required"
+                          tal:attributes="value request/remarque | nothing"
+                          ><span tal:replace="request/remarque | nothing"/></textarea>
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right">
+                <div  id="help-captcha">
+                    <span class="fieldRequired"
+                          title="Required"
+                          i18n:attributes="title title_required;"></span>
+                    <label for="captcha" i18n:translate="help_captcha">
+                        Enter the exact word in the image. This is used to fight robots.
+                    </label>
+                </div>
+            </td>
+            <td>
+                <div class="error"
+                     tal:condition="request/captcha | nothing"
+                     i18n:translate="invalid_captcha">
+                    Invalid captcha
+                </div>
+                <span tal:replace="structure captchaView/image_tag" />
+                <input type="text"
+                       class="required"
+                       name="captcha"
+                       value=""
+                       />
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" align="center">
+                <br />
+                <input type="hidden"
+                       name="vecteur"
+                       value="" />
+                <input type="submit"
+                       i18n:attributes="value envoyer_demande;"
+                       value="Envoyer votre demande" />
+            </td>
+        </tr>
+    </table>
+</form>
+
+</div>
+
+</div><!--div metal-->
+</body>
+</html>

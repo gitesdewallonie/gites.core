@@ -173,3 +173,68 @@ Il s'agit de :
             url = translate('mailsent')
             self.request.RESPONSE.redirect(url)
         return ''
+
+    def sendMailForProblem(self):
+        """
+        envoi d'un mail pour signaler un problème
+        """
+        captcha = self.request.get('captcha', '')
+        captchaView = Captcha(self.context, self.request)
+        isCorrectCaptcha = captchaView.verify(captcha)
+        if not isCorrectCaptcha:
+            self.request.RESPONSE.redirect("signaler_probleme")
+            return ""
+
+        gdwMail = u'info@gitesdewallonie.be'
+#        gdwMail = u'francois@affinitic.be'
+        typeProbleme = self.request.get('typeProbleme')
+        contactNom = self.request.get('contactNom', '')
+        contactPrenom = self.request.get('contactPrenom', '')
+        contactLangue = self.request.get('contactLangue', None)
+        if not contactLangue or contactLangue.strip() == '...':
+            language = self.request.get('LANGUAGE', 'en')
+            contactLangue = LANG_MAP.get(language, '')
+        contactEmail = self.request.get('contactEmail', None)
+        remarque = self.request.get('remarque', '')
+
+        fromMail = "info@gitesdewallonie.be"
+        if contactEmail is not None:
+            try:
+                checkEmailAddress(contactEmail)
+                fromMail = contactEmail
+            except EmailAddressInvalid:
+                pass
+
+        mailer = Mailer("localhost", fromMail)
+#        mailer = Mailer("relay.skynet.be", fromMail)
+        mailer.setSubject("[SIGNALER UN PROBLEME PAR LE SITE DES GITES DE WALLONIE]")
+        mailer.setRecipients(gdwMail)
+        mail = u""":: SIGNALER UN PROBLEME ::
+
+L'utilisateur %s %s signale un problème sur le site des Gîtes de Wallonie.
+
+Il s'agit de :
+
+    * Nom : %s
+    * Prénom : %s
+    * Langue : %s
+    * E-mail : %s
+    * Type de problème : %s
+    * Remarque : %s
+""" \
+              % (unicode(contactNom, 'utf-8'), \
+                unicode(contactPrenom, 'utf-8'), \
+                unicode(contactNom, 'utf-8'), \
+                unicode(contactPrenom, 'utf-8'), \
+                unicode(contactLangue, 'utf-8'), \
+                unicode(contactEmail, 'utf-8'), \
+                typeProbleme, \
+                unicode(remarque, 'utf-8'))
+        mailer.sendAllMail(mail.encode('utf-8'), plaintext=True)
+
+        translate = queryMultiAdapter((self.context, self.request),
+                                       name='getTranslatedObjectUrl')
+
+        url = translate('mailsent')
+        self.request.RESPONSE.redirect(url)
+        return ''
