@@ -104,8 +104,8 @@ class HebergementView(BrowserView):
         """
         Redirect if gites / proprio is not active
         """
-        if self.context.heb_site_public == '0' or \
-           self.context.proprio.pro_etat == False:
+        if (self.context.heb_site_public == '0' or
+                self.context.proprio.pro_etat == False):
             url = getToolByName(self.context, 'portal_url')()
             return self.request.response.redirect(url)
 
@@ -236,9 +236,9 @@ class HebergementExternCalendarView(HebergementView):
         except ValueError:
             return None
         hebergement = session.query(HebTable).get(heb_pk)
-        if hebergement and \
-           int(hebergement.heb_site_public) == 1 and \
-           hebergement.proprio.pro_etat:
+        if (hebergement and
+                int(hebergement.heb_site_public) == 1 and
+                hebergement.proprio.pro_etat):
            # L'hébergement doit être actif, ainsi que son propriétaire
             # hebURL = queryMultiAdapter((hebergement.__of__(self.context.hebergement), self.request), name="url")
             return hebergement
@@ -277,7 +277,7 @@ class HebergementIconsView(BrowserView):
         """
         url = getToolByName(self.context, 'portal_url')()
         translate = queryMultiAdapter((self.context, self.request),
-                                       name='getTranslatedObjectUrl')
+                                      name='getTranslatedObjectUrl')
         if self.context.type.type_heb_code in ['CH', 'MH', 'CHECR']:
             url = translate('signaletiques/signaletique-chambre-hote')
         else:
@@ -321,10 +321,10 @@ class HebergementAbsoluteURL(BrowserView):
         typeHeb = context.type.getId(language)
         hebId = context.heb_id
         return "%s/%s/%s/%s" % (container.absolute_url(),
-                             typeHeb,
-                             commune,
-                             hebId,
-                             )
+                                typeHeb,
+                                commune,
+                                hebId,
+                                )
 
     __call__ = __str__
 

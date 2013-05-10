@@ -27,12 +27,14 @@
 __author__ = """Jean Francois Roche <jfroche@pyxel.be>"""
 __docformat__ = 'plaintext'
 
+from zope.interface import implements
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.atapi import (Schema, registerType,
                                        TextField, RichWidget, ImageField,
                                        ImageWidget, AttributeStorage,
                                        BaseFolderSchema)
 from gites.core.config import PROJECTNAME
+from gites.core.content.interfaces import IBoutiqueItem
 from Products.ATContentTypes.content.folder import ATFolder
 
 
@@ -65,12 +67,11 @@ schema = Schema((
 )
 
 ##code-section after-local-schema #fill in your manual code here
-schema['photo'].sizes= {'large': (768, 768),
-                       'preview': (400, 400),
-                       'mini': (200, 200),
-                       'thumb': (128, 128),
-                       'tile': (64, 64),
-                      }
+schema['photo'].sizes = {'large': (768, 768),
+                         'preview': (400, 400),
+                         'mini': (200, 200),
+                         'thumb': (128, 128),
+                         'tile': (64, 64)}
 ##/code-section after-local-schema
 
 BoutiqueItem_schema = BaseFolderSchema.copy() + \
@@ -82,9 +83,11 @@ BoutiqueItem_schema = ATFolder.schema.copy() + \
 
 ##/code-section after-schema
 
+
 class BoutiqueItem(ATFolder):
     """
     """
+    implements(IBoutiqueItem)
     security = ClassSecurityInfo()
     __implements__ = (getattr(ATFolder, '__implements__', ()))
 
@@ -103,17 +106,14 @@ class BoutiqueItem(ATFolder):
     typeDescription = "BoutiqueItem"
     typeDescMsgId = 'description_edit_boutiqueitem'
 
-
     actions = (
 
-
-       {'action': "string:${object_url}/boutique_item_view",
-        'category': "object",
-        'id': 'view',
-        'name': 'View',
-        'permissions': ("View", ),
-        'condition': 'python:1'},
-
+        {'action': "string:${object_url}/boutique_item_view",
+         'category': "object",
+         'id': 'view',
+         'name': 'View',
+         'permissions': ("View", ),
+         'condition': 'python:1'},
 
     )
 
