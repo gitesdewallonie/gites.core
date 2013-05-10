@@ -8,6 +8,7 @@ Copyright by Affinitic sprl
 $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
 from urlparse import urljoin
+from affinitic.db.cache import FromCache
 from plone.memoize.instance import memoize
 from zope.traversing.browser.interfaces import IAbsoluteURL
 from Products.Five import BrowserView
@@ -18,7 +19,8 @@ from Products.CMFCore.utils import getToolByName
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from z3c.sqlalchemy import getSAWrapper
 from plone import api
-
+from gites.db.content import Hebergement
+from gites.db.content.hebergement.metadata import Metadata
 from gites.map.browser.interfaces import IMappableView
 from gites.core.browser.interfaces import (IHebergementView,
                                            IHebergementIconsView)
@@ -305,7 +307,13 @@ class HebergementAbsoluteURL(BrowserView):
     implements(IAbsoluteURL)
 
     def __str__(self):
-        context = aq_inner(self.context)
+        if isinstance(self.context, tuple):
+            if hasattr(self.context, 'heb_pk'):
+                context = Hebergement.first(heb_pk=self.context.heb_pk)
+            else:
+                return ''
+        else:
+            context = aq_inner(self.context)
         portal = api.portal.get()
         container = portal.hebergement
         commune = context.commune.com_id
@@ -319,3 +327,26 @@ class HebergementAbsoluteURL(BrowserView):
                              )
 
     __call__ = __str__
+
+
+class HebergementHelper(BrowserView):
+
+    def _get_metadata(self, metadata_id):
+        from gites.db import session
+        from gites.db.content.hebergement.linkhebergementmetadata import LinkHebergementMetadata
+        session = session()
+        query = session.query(LinkHebergementMetadata.link_met_value)
+        query = query.options(FromCache('gdw'))
+        query = query.join('hebergement').join('metadata_info')
+        query = query.filter(Hebergement.heb_pk == self.context.heb_pk)
+        return query.filter(Metadata.met_id == metadata_id).scalar()
+
+    def is_smoker(self):
+        """
+        """
+        return self._get_metadata('heb_fumeur')
+
+    def accept_dogs(self):
+        """
+        """
+        return self._get_metadata('heb_animal')
