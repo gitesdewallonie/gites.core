@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+from Products.CMFCore.utils import getToolByName
 from zope.interface import implements
 from zope.component import getUtility
 
-from collective.opengraph.viewlets import ATMetatags, decode_str, LastUpdatedOrderedDict
+from collective.opengraph.viewlets import ATMetatags, LastUpdatedOrderedDict
 from collective.opengraph.interfaces import IOpengraphMetatags
 
 from affinitic.pwmanager.interfaces import IPasswordManager
@@ -19,20 +20,20 @@ class GdwATMetatags(ATMetatags):
     def admins(self):
         pwManager = getUtility(IPasswordManager, 'facebookadmins')
         admins = self.settings.admins or pwManager.username
-        return decode_str(admins, self.default_charset)
+        return admins
 
     @property
     def app_id(self):
         pwManager = getUtility(IPasswordManager, 'facebookapp')
         appid = self.settings.app_id or pwManager.username
-        return decode_str(appid, self.default_charset)
+        return appid
 
     @property
     def content_type(self):
-        return decode_str('hotel', self.default_charset)
+        return 'hotel'
 
 
-class BoutiqueItemATMetatags(ATMetatags):
+class BoutiqueItemATMetatags(GdwATMetatags):
     """
     Boutique item Facebook informations
     """
@@ -43,8 +44,36 @@ class BoutiqueItemATMetatags(ATMetatags):
     def image_url(self):
         return self.context.photo.absolute_url()
 
+    @property
+    def content_type(self):
+        return 'product'
 
-class HebergementATMetatags(ATMetatags):
+
+class PackageATMetatags(GdwATMetatags):
+    """
+    Boutique item Facebook informations
+    """
+
+    implements(IOpengraphMetatags)
+
+    @property
+    def image_url(self):
+        """
+        Return vignette URL for a package
+        """
+        cat = getToolByName(self.portal_state.context, 'portal_catalog')
+        path = '/'.join(self.portal_state.context.getPhysicalPath())
+        results = cat.searchResults(portal_type='Vignette',
+                                    path={'query': path})
+        if results:
+            return results[0].getURL()
+
+    @property
+    def content_type(self):
+        return 'activity'
+
+
+class HebergementATMetatags(GdwATMetatags):
     """
     Boutique item Facebook informations
     """

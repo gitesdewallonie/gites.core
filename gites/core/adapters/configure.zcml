@@ -5,9 +5,11 @@
   <adapter for="gites.db.interfaces.IMaisonTourisme"
            factory=".search.MaisonTourismeSearch"
            provides=".interfaces.ITableSearch" />
+
   <adapter for="gites.db.interfaces.IHebergement"
            factory=".search.HebergementSearch"
            provides=".interfaces.ITableSearch" />
+
   <grok:grok package=".hebergementsfetcher" />
 
   <include file="facebook.zcml" />

@@ -200,6 +200,5 @@ class Package(ATFolder):
             return True
         return False
 
-
 InitializeClass(Package)
 registerType(Package, PROJECTNAME)

@@ -17,6 +17,10 @@
            factory=".atmetatags.BoutiqueItemATMetatags"
            provides="collective.opengraph.interfaces.IOpengraphMetatags" />
 
+  <adapter for="..content.interfaces.IPackage"
+           factory=".atmetatags.PackageATMetatags"
+           provides="collective.opengraph.interfaces.IOpengraphMetatags" />
+
   <adapter for="gites.db.interfaces.IHebergement"
            factory=".atmetatags.HebergementATMetatags"
            provides="collective.opengraph.interfaces.IOpengraphMetatags" />
