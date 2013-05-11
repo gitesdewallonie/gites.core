@@ -1,16 +1,20 @@
 # -*- coding: utf-8 -*-
-import time
 from datetime import date
+from mailer import Mailer
+from smtplib import SMTPSenderRefused
+import time
+
+from collective.captcha.browser.captcha import Captcha
+from Products.CMFDefault.exceptions import EmailAddressInvalid
+from Products.CMFDefault.utils import checkEmailAddress
+from Products.Five import BrowserView
+from Products.statusmessages.interfaces import IStatusMessage
+from z3c.sqlalchemy import getSAWrapper
 from zope.component import queryMultiAdapter
 from zope.interface import implements
-from z3c.sqlalchemy import getSAWrapper
-from Products.CMFDefault.utils import checkEmailAddress
-from Products.CMFDefault.exceptions import EmailAddressInvalid
-from Products.Five import BrowserView
-from collective.captcha.browser.captcha import Captcha
 
+from gites.locales import GitesMessageFactory as _
 from interfaces import ISendMail
-from mailer import Mailer
 
 LANG_MAP = {'en': 'Anglais',
             'fr': 'Français',
@@ -172,4 +176,75 @@ Il s'agit de :
         else:
             url = translate('mailsent')
             self.request.RESPONSE.redirect(url)
+        return ''
+
+    def sendMailForProblem(self):
+        """
+        envoi d'un mail pour signaler un problème
+        """
+        if self.request.get('vecteur') is None:
+            return
+        captcha = self.request.get('captcha', '')
+        captchaView = Captcha(self.context, self.request)
+        isCorrectCaptcha = captchaView.verify(captcha)
+        if not isCorrectCaptcha:
+            return ""
+
+        gdwMail = u'info@gitesdewallonie.be'
+#        gdwMail = u'francois@affinitic.be'
+        typeProbleme = self.request.get('typeProbleme')
+        contactNom = self.request.get('contactNom', '')
+        contactPrenom = self.request.get('contactPrenom', '')
+        contactLangue = self.request.get('contactLangue', None)
+        if not contactLangue or contactLangue.strip() == '...':
+            language = self.request.get('LANGUAGE', 'en')
+            contactLangue = LANG_MAP.get(language, '')
+        contactEmail = self.request.get('contactEmail', None)
+        remarque = self.request.get('remarque', '')
+
+        fromMail = "info@gitesdewallonie.be"
+        if contactEmail is not None:
+            try:
+                checkEmailAddress(contactEmail)
+                fromMail = contactEmail
+            except EmailAddressInvalid:
+                pass
+
+        mailer = Mailer("localhost", fromMail)
+#        mailer = Mailer("relay.skynet.be", fromMail)
+        mailer.setSubject("[SIGNALER UN PROBLEME PAR LE SITE DES GITES DE WALLONIE]")
+        mailer.setRecipients(gdwMail)
+        mail = """:: SIGNALER UN PROBLEME ::
+
+L'utilisateur %s %s signale un problème sur le site des Gîtes de Wallonie.
+
+Il s'agit de :
+
+    * Nom : %s
+    * Prénom : %s
+    * Langue : %s
+    * E-mail : %s
+    * Type de problème : %s
+    * Remarque : %s
+""" \
+            % (unicode(contactNom).encode('utf-8'), \
+              unicode(contactPrenom).encode('utf-8'), \
+              unicode(contactNom).encode('utf-8'), \
+              unicode(contactPrenom).encode('utf-8'), \
+              unicode(contactLangue).encode('utf-8'), \
+              unicode(contactEmail).encode('utf-8'), \
+              unicode(typeProbleme).encode('utf-8'), \
+              unicode(remarque).encode('utf-8'))
+        try:
+            mailer.sendAllMail(mail, plaintext=True)
+        except SMTPSenderRefused:
+            messages = IStatusMessage(self.request)
+            messages.add(_(u"Il y a eu un problème lors de l'envoi de votre demande (SMTPSenderRefused)."), type=u"error")
+            return
+
+        translate = queryMultiAdapter((self.context, self.request),
+                                       name='getTranslatedObjectUrl')
+
+        url = translate('mailsent')
+        self.request.RESPONSE.redirect(url)
         return ''

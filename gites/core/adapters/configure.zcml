@@ -2,24 +2,18 @@
            xmlns:grok="http://namespaces.zope.org/grok"
            i18n_domain="gites">
 
-  <adapter
-      for="gites.db.interfaces.IMaisonTourisme"
-      factory=".search.MaisonTourismeSearch"
-      provides=".interfaces.ITableSearch"
-      />
+  <adapter for="gites.db.interfaces.IMaisonTourisme"
+           factory=".search.MaisonTourismeSearch"
+           provides=".interfaces.ITableSearch" />
 
-  <adapter
-      for="gites.db.interfaces.IHebergement"
-      factory=".search.HebergementSearch"
-      provides=".interfaces.ITableSearch"
-      />
+  <adapter for="gites.db.interfaces.IHebergement"
+           factory=".search.HebergementSearch"
+           provides=".interfaces.ITableSearch" />
 
-  <grok:grok package=".hebergementsfetcher"/>
+  <grok:grok package=".hebergementsfetcher" />
 
-  <adapter
-      for="..content.interfaces.IBoutiqueItem"
-      factory=".atmetatags.BoutiqueItemATMetatags"
-      provides="collective.opengraph.interfaces.IOpengraphMetatags"
-      />
+  <include file="facebook.zcml" />
+
+  <includeOverrides file="overrides.zcml" />
 
 </configure>

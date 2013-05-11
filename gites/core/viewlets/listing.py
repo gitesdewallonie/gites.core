@@ -8,9 +8,9 @@ from affinitic.db.cache import FromCache
 from zope.contentprovider.interfaces import IContentProvider
 from plone.memoize.instance import memoize
 from gites.db import session
-from gites.db.content import Metadata, Commune
+from gites.db.content import Metadata, Commune, Hebergement
 from gites.core.content.interfaces import IPackage
-from gites.core.interfaces import IHebergementsFetcher
+from gites.core.interfaces import IHebergementsFetcher, IHebergementInSearch
 from gites.core.browser.moteur_recherche import MoteurRecherche
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from gites.locales import GitesMessageFactory as _
@@ -59,6 +59,40 @@ class HebergementListingForm(grok.Viewlet):
         query = query.filter(LinkHebergementMetadata.metadata_fk == metadata_id)
         query = query.filter(LinkHebergementMetadata.heb_fk == subquery.c.heb_pk)
         return query.count()
+
+class HebergementInSearchListingView(grok.View):
+    grok.context(IHebergementInSearch)
+    grok.name('view')
+
+    def heb_type_type(self):
+        return self.context.heb_type_type
+
+    def heb_type(self):
+        return self.context.heb_type
+
+    def nombre_epis(self):
+        return self.context.heb_nombre_epis
+
+    def render(self):
+        return None
+
+
+class HebergementInListingView(grok.View):
+    grok.context(Hebergement)
+    grok.name('view')
+
+    def heb_type_type(self):
+        return self.context.type.type_heb_type
+
+    def heb_type(self):
+        lang = self.request.get('LANGUAGE')
+        return self.context.type.getTitle(languageCode=lang)
+
+    def nombre_epis(self):
+        return self.context.epis[0].heb_nombre_epis
+
+    def render(self):
+        return None
 
 
 class HebergementsInListing(grok.Viewlet):

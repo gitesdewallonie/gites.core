@@ -27,6 +27,13 @@ class IHebergementsFetcher(Interface):
         return a list of hebergement
         """
 
+
 class IMapViewletManager(IViewletManager):
     """
+    """
+
+
+class IHebergementInSearch(Interface):
+    """
+    Marker interface for hebergement
     """

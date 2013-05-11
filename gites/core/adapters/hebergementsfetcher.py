@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
 import json
 import geoalchemy
 from dateutil.relativedelta import relativedelta
 import sqlalchemy as sa
 from plone.memoize.instance import memoize
 from five import grok
-from zope.interface import Interface
+from zope.interface import Interface, directlyProvides
 from zope.publisher.interfaces.browser import IBrowserRequest
 from affinitic.db.cache import FromCache
 from Products.Maps.interfaces import IMarker
@@ -15,7 +14,7 @@ from gites.db.interfaces import ICommune
 from gites.db.content import (LinkHebergementMetadata, Hebergement,
                               LinkHebergementEpis, Commune, Proprio,
                               TypeHebergement, ReservationProprio)
-from gites.core.interfaces import IHebergementsFetcher
+from gites.core.interfaces import IHebergementsFetcher, IHebergementInSearch
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from gites.core.browser.moteur_recherche import MoteurRecherche
 from gites.core.content.interfaces import IPackage
@@ -49,6 +48,13 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
         request_params = self.request_parameters()
         return request_params.get('sort', 'hebergement')
 
+    @property
+    @memoize
+    def data(self):
+        params = self.request_parameters()
+        params.update(self.request.form.items())
+        return params
+
     @memoize
     def request_parameters(self):
         if self.request._file is None:
@@ -60,13 +66,6 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
         except ValueError:
             return {}
 
-    @property
-    @memoize
-    def data(self):
-        params = self.request_parameters()
-        params.update(self.request.form.items())
-        return params
-
     def selected_keywords(self):
         data = self.request_parameters()
         return [key for key, value in data.get('keywords', {}).items() if value is True]
@@ -76,12 +75,15 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
         query = query.slice(self.batch_start, self.batch_end)
         hebergements = []
         for heb in query.all():
-            if isinstance(heb, tuple):
+            if isinstance(heb, tuple) and isinstance(heb[0], Hebergement):
                 hebergement = heb[0]
                 for key in heb.keys()[1:]:
                     value = getattr(heb, key)
                     setattr(hebergement, key, value)
                     hebergements.append(hebergement)
+            elif isinstance(heb, tuple):
+                directlyProvides(heb, IHebergementInSearch)
+                hebergements.append(heb)
             else:
                 hebergements.append(heb)
         return hebergements
@@ -168,6 +170,21 @@ class CommuneHebFetcher(BaseHebergementsFetcher):
 class SearchHebFetcher(BaseHebergementsFetcher):
     grok.adapts(Interface, MoteurRecherche, IBrowserRequest)
 
+    def _get_data_from_form(self):
+        from gites.core.browser.search import SearchHostingForm
+        form = SearchHostingForm(self.context, self.request)
+        form.update()
+        data, errors = form.extractData()
+        return data
+
+    @property
+    @memoize
+    def data(self):
+        params = super(SearchHebFetcher, self).data
+        data = self._get_data_from_form()
+        params.update(data)
+        return params
+
     def filter_capacity(self, capacityMin, query):
         if capacityMin:
             if capacityMin < 16:
@@ -181,6 +198,21 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                                              Hebergement.heb_cgt_cap_max >= capacityMax))
         return query
 
+    def filter_capacity_in_group(self, capacityMin, query):
+        if capacityMin:
+            if capacityMin < 16:
+                capacityMax = capacityMin + 4
+                return '(sum(heb_cgt_cap_min) between %s and %s) \
+                        or \
+                        (sum(heb_cgt_cap_max) between %s and %s)' % (capacityMin, capacityMax,
+                                                              capacityMin, capacityMax)
+            else:
+                capacityMax = capacityMin
+                capacityMin = 16
+                return '(sum(heb_cgt_cap_min) >= %s) \
+                        and \
+                        (sum(heb_cgt_cap_max) >= %s)' % (capacityMin, capacityMax)
+
     def filter_heb_type(self, show_gites, show_chambres, query):
         if show_gites:
             return query.filter(TypeHebergement.type_heb_type == 'gites')
@@ -188,10 +220,6 @@ class SearchHebFetcher(BaseHebergementsFetcher):
             return query.filter(TypeHebergement.type_heb_type == 'chambre')
 
     def filter_available_date(self, from_date, to_date, query):
-        if from_date:
-            from_date = datetime.strptime(from_date, '%d/%m/%Y').date()
-        if to_date:
-            to_date = datetime.strptime(to_date, '%d/%m/%Y').date()
         query = query.filter(Hebergement.heb_calendrier_proprio != 'non actif')
         beginDate = from_date or (to_date + relativedelta(days=-1))
         endDate = to_date or (from_date + relativedelta(days=+1))
@@ -201,29 +229,94 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         query = query.filter(~Hebergement.heb_pk.in_(busyHebPks))
         return query
 
-    @property
-    def _query(self):
+    def apply_filters(self, query, group=False):
         reference = self.data.get('reference')
-        capacity = self.data.get('form.widgets.capacityMin')
-        show_gites = 'gite-meuble' in self.data
-        show_chambres = 'chambre-hote' in self.data
-        from_date = self.data.get('form.widgets.fromDate')
-        to_date = self.data.get('form.widgets.toDate')
-        query = session().query(Hebergement).join('proprio').join('epis').join('type')
-        query = query.options(
-            FromCache('gdw'))
+        capacity = self.data.get('capacityMin')
+        heb_type = self.data.get('form.widgets.hebergementType')
+        show_gites = heb_type and 'gite-meuble' in heb_type
+        show_chambres = heb_type and 'chambre-hote' in heb_type
+        from_date = self.data.get('fromDate')
+        to_date = self.data.get('toDate')
         if reference:
             query = query.filter(sa.or_(sa.func.unaccent(Hebergement.heb_nom).ilike("%%%s%%" % reference),
                                         Hebergement.heb_nom.ilike("%%%s%%" % reference)))
         if show_gites != show_chambres:  # XOR
             query = self.filter_heb_type(show_gites, show_chambres, query)
-        if capacity:
+        if capacity and not group:
             query = self.filter_capacity(capacity, query)
         if from_date or to_date:
             query = self.filter_available_date(from_date, to_date, query)
         query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
                                      Proprio.pro_etat == True))
         return query
+
+    def _query_grouped_heb(self, session):
+        query = session.query(sa.func.min(Hebergement.heb_nom).label('heb_nom'),
+                              sa.func.sum(Hebergement.heb_cgt_nbre_chmbre).label('heb_cgt_nbre_chmbre'),
+                              sa.func.sum(Hebergement.heb_cgt_cap_min).label('heb_cgt_cap_min'),
+                              sa.func.sum(Hebergement.heb_cgt_cap_max).label('heb_cgt_cap_max'),
+                              sa.literal_column("'gite-groupes'").label('heb_type'),
+                              sa.func.min(TypeHebergement.type_heb_type).label('heb_type_type'),
+                              sa.func.min(Hebergement.heb_code_gdw).label('heb_code_gdw'),
+                              sa.func.min(Hebergement.heb_pk).label('heb_pk'),
+                              sa.func.max(LinkHebergementEpis.heb_nombre_epis).label('heb_nombre_epis'),
+                              sa.func.min(Hebergement.heb_localite).label('heb_localite'),
+                              sa.func.min(Hebergement.heb_gps_long).label('heb_gps_long'),
+                              sa.func.min(Hebergement.heb_gps_lat).label('heb_gps_lat')
+                              )
+        query = query.join('proprio').join('epis').join('type')
+        query = query.filter(Hebergement.heb_groupement_pk != None)
+        query = self.apply_filters(query, group=True)
+        #XXX
+        query = query.group_by(Hebergement.heb_groupement_pk)
+
+        capacity = self.data.get('capacityMin')
+        capacity_filters = self.filter_capacity_in_group(capacity,
+                                                 query)
+        if capacity_filters:
+            query = query.having(sa.and_(capacity_filters,
+                                         sa.func.count() > 1))
+        else:
+            query = query.having(sa.func.count() > 1)
+        return query
+
+    def _query_non_grouped_heb(self, session):
+        query = session.query(Hebergement.heb_nom.label('heb_nom'),
+                              Hebergement.heb_cgt_nbre_chmbre.label('heb_cgt_nbre_chmbre'),
+                              Hebergement.heb_cgt_cap_min.label('heb_cgt_cap_min'),
+                              Hebergement.heb_cgt_cap_max.label('heb_cgt_cap_max'),
+                              TypeHebergement.type_heb_id.label('heb_type'),
+                              TypeHebergement.type_heb_type.label('heb_type_type'),
+                              Hebergement.heb_code_gdw.label('heb_code_gdw'),
+                              Hebergement.heb_pk.label('heb_pk'),
+                              LinkHebergementEpis.heb_nombre_epis.label('heb_nombre_epis'),
+                              Hebergement.heb_localite.label('heb_localite'),
+                              Hebergement.heb_gps_long.label('heb_gps_long'),
+                              Hebergement.heb_gps_lat.label('heb_gps_lat'))
+        query = query.join('proprio').join('epis').join('type')
+        query = self.apply_filters(query)
+        return query
+
+    @property
+    def _query(self):
+        sess = session()
+        query = self._query_non_grouped_heb(sess)
+        query = query.options(
+            FromCache('gdw'))
+        return query.union(self._query_grouped_heb(sess))
+
+    def order_by(self):
+        if self.selected_order() == 'pers_numbers':
+            return ('heb_cgt_cap_min desc', 'heb_nom')
+        elif self.selected_order() == 'room_count':
+            return (Hebergement.heb_cgt_nbre_chmbre.desc(), Hebergement.heb_nom)
+        elif self.selected_order() == 'epis':
+            return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
+        else:
+            return ('heb_nom', )
+
+    def __len__(self):
+        return len(self._query.all())
 
 
 class SearchHebFetcherOnRoot(SearchHebFetcher):

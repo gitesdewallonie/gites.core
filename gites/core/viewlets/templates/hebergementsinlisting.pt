@@ -48,23 +48,24 @@
 
     <div tal:repeat="hebergement viewlet/hebergements"
          i18n:domain="gites">
-        <div tal:define="typeHeb hebergement/type/type_heb_type"
-             tal:attributes="class python: typeHeb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
+        <div tal:define="heb_view nocall:hebergement/@@view;
+                         type_heb heb_view/heb_type_type"
+             tal:attributes="class python: type_heb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
             <div id="typetype">
-                <span tal:content="hebergement/type/getType"
+                <span tal:content="type_heb"
                       class="texte-vertical" />
                 <div class="btn-loupe-listing">
                     <a href=""
-                       tal:attributes="href hebergement/@@url"></a>
+                       tal:attributes="href hebergement/@@url_heb"></a>
                 </div>
             </div>
             <div id="vignette">
                 <a href=""
-                   tal:attributes="href hebergement/@@url">
+                   tal:attributes="href hebergement/@@url_heb">
                     <img src=""
                          width="181"
                          height="115"
-                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/getVignette}" />
+                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/heb_code_gdw}.jpg" />
                 </a>
             </div>
 
@@ -73,7 +74,7 @@
                 <div class="digit"
                      tal:attributes="id string:map_picto_${hebergement/heb_pk}">
                     <img src=""
-                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/${hebergement/type/type_heb_type}_${repeat/hebergement/number}.png" />
+                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/${type_heb}_${repeat/hebergement/number}.png" />
                 </div>
 
                 <div tal:condition="viewlet/isGeoLocalized"
@@ -84,12 +85,11 @@
 
                 <div id="nom-hebergement">
                     <a href=""
-                       tal:attributes="href hebergement/@@url"
+                       tal:attributes="href hebergement/@@url_heb"
                        tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
                 </div>
                 <div id="type"
-                     tal:define="lang request/LANGUAGE | fr"
-                     tal:content="python: hebergement.type.getTitle(languageCode=lang)"></div>
+                     tal:content="heb_view/heb_type"></div>
             </div><!--info-bloc-sup-->
             <div id="info-bloc-inf">
                 <div id="capacite-max">
@@ -108,10 +108,10 @@
                     <span tal:omit-tag="" i18n:translate="x_chambres">chambres</span>
                 </div>
 
-                <div id="nbre-epis"
-                     tal:repeat="epis hebergement/epis">
-                    <div id="epis-nbre">
-                      <span tal:content="epis/heb_nombre_epis"
+                <div id="nbre-epis">
+                    <div id="epis-nbre"
+                         i18n:translate="epis">
+                      <span tal:content="heb_view/nombre_epis"
                             class="nombre" />
                       <span tal:omit-tag="" i18n:translate="x_epis">epis</span>
                     </div>
@@ -119,12 +119,12 @@
 
                 <div id="icon-confort">
                     <div id="icon-confort-dog"
-                         tal:define="dog hebergement/accept_dogs"
+                         tal:define="dog hebergement/@@accept_dogs"
                          tal:attributes="class python: dog and 'dog' or 'no-dog'">
                     </div>
                     <div id="icon-confort-smoker"
-                         tal:condition="not:hebergement/is_smoker"
-                         tal:define="smoker hebergement/is_smoker"
+                         tal:condition="not:smoker"
+                         tal:define="smoker hebergement/@@is_smoker"
                          tal:attributes="class python: smoker and 'smoke' or 'no-smoke'">
                     </div>
                 </div>

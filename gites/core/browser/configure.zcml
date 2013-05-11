@@ -7,6 +7,29 @@
   <grok:grok package="."/>
 
    <browser:page
+      name="url_heb"
+      for="*"
+      class=".hebergement.HebergementAbsoluteURL"
+      permission="zope.Public"
+      />
+
+   <browser:page
+      name="is_smoker"
+      for="*"
+      attribute="is_smoker"
+      class=".hebergement.HebergementHelper"
+      permission="zope.Public"
+      />
+
+   <browser:page
+      name="accept_dogs"
+      for="*"
+      attribute="accept_dogs"
+      class=".hebergement.HebergementHelper"
+      permission="zope.Public"
+      />
+
+   <browser:page
       name="basic_search.html"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".search.BasicSearchHebergement"
@@ -43,6 +66,24 @@
       permission="zope.Public"
       allowed_interface=".interfaces.ISendMail"
       class=".SendMail.SendMail"
+      />
+
+  <browser:page
+      for="*"
+      name="signaler_probleme"
+      template="templates/signaler_probleme.pt"
+      permission="zope.Public"
+      allowed_interface=".interfaces.ISendMail"
+      class=".SendMail.SendMail"
+      />
+
+  <browser:page
+      for="*"
+      name="send_mail_for_problem"
+      permission="zope.Public"
+      allowed_interface=".interfaces.ISendMail"
+      class=".SendMail.SendMail"
+      attribute="sendMailForProblem"
       />
 
   <browser:page

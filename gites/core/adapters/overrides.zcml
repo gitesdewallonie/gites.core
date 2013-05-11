@@ -1,0 +1,13 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           i18n_domain="gites">
+
+  <!-- Override default facebook metatag class -->
+  <include package="collective.opengraph" file="configure.zcml" />
+
+  <adapter
+      for="Products.ATContentTypes.interface.interfaces.IATContentType"
+      factory=".atmetatags.GdwATMetatags"
+      provides="collective.opengraph.interfaces.IOpengraphMetatags"
+      />
+
+</configure>
