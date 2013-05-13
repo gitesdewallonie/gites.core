@@ -7,23 +7,41 @@ Copyright by Affinitic sprl
 
 $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
+from embedly import Embedly
+from plone.memoize import instance, forever
 from urlparse import urljoin
-from affinitic.db.cache import FromCache
-from plone.memoize.instance import memoize
 from zope.traversing.browser.interfaces import IAbsoluteURL
 from Products.Five import BrowserView
 from Acquisition import aq_inner
 from zope.interface import implements
 from zope.component import queryMultiAdapter
+from zope.component import getUtility
 from Products.CMFCore.utils import getToolByName
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from z3c.sqlalchemy import getSAWrapper
 from plone import api
+
+from affinitic.db.cache import FromCache
+from affinitic.pwmanager.interfaces import IPasswordManager
+
 from gites.db.content import Hebergement
 from gites.db.content.hebergement.metadata import Metadata
+
 from gites.map.browser.interfaces import IMappableView
+
 from gites.core.browser.interfaces import (IHebergementView,
                                            IHebergementIconsView)
+
+
+@forever.memoize
+def getIframeForVideo(videoUrl):
+    pwManager = getUtility(IPasswordManager, 'embedly')
+    key = pwManager.username
+    client = Embedly(key)
+    embed = client.oembed(videoUrl, maxheight=377)
+    if embed.error:
+        return None
+    return embed.html
 
 
 class HebergementView(BrowserView):
@@ -123,7 +141,7 @@ class HebergementView(BrowserView):
         language = self.request.get('LANGUAGE', 'en')
         return self.context.getSituation(language)
 
-    @memoize
+    @instance.memoize
     def getHebergementDescription(self):
         """
         Get the hebergement type title translated
@@ -131,7 +149,7 @@ class HebergementView(BrowserView):
         language = self.request.get('LANGUAGE', 'en')
         return self.context.getDescription(language)
 
-    @memoize
+    @instance.memoize
     def getHebergementCharge(self):
         """
         Get the hebergement type title translated
@@ -208,6 +226,12 @@ class HebergementView(BrowserView):
             if photo in listeImage:
                 vignettes.append(photo)
         return vignettes
+
+    def getIframeForVideo(self, videoUrl):
+        """
+        Get embedly generated iframe for video
+        """
+        return getIframeForVideo(videoUrl)
 
 
 class HebergementExternCalendarView(HebergementView):
