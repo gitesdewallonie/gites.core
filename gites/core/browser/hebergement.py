@@ -218,7 +218,7 @@ class HebergementView(BrowserView):
         vignettes = []
         codeGDW = self.context.heb_code_gdw
         listeImage = self.context.photos_heb.fileIds()
-        for i in range(15):
+        for i in range(40):
             if i < 10:
                 photo = "%s0%s.jpg" % (codeGDW, i)
             else:
