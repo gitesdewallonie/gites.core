@@ -554,7 +554,11 @@
                     </div>
                 </li>
             </ul>
-
+            <div id="signaler-un-probleme">
+                <a href="#"
+                   i18n:translate="signaler-un-probleme"> Signaler un problème </a>
+            </div>
+            <div class="break-float"></div>
             <div tal:replace="structure provider:plone.belowcontentbody" />
 
         </div><!--define-->
