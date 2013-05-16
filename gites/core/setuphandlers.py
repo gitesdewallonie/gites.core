@@ -7,9 +7,11 @@ Copyright by Affinitic sprl
 
 $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
+import logging
+import tempfile
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlacefulWorkflow.PlacefulWorkflowTool import WorkflowPolicyConfig_id
-import logging
+from Products.LocalFS.LocalFS import manage_addLocalFS
 from gites.core.utils import createFolder
 logger = logging.getLogger('gites.core')
 
@@ -22,6 +24,19 @@ def setupgites(context):
     createFolder(portal, "zone-membre", "Zone Membre", True)
 #    setupProprioPlacefulWorkflow(portal)
     disableGlobalAddingForContentType(portal, 'GeoLocation')
+    createLocalFS(portal)
+
+
+def createLocalFS(portal):
+    if 'photos_heb_tmp' not in portal.objectIds():
+        manage_addLocalFS(portal, 'photos_heb_tmp', 'Photos heb temporaires',
+                          tempfile.gettempdir())
+    if 'photos_proprio' not in portal.objectIds():
+        manage_addLocalFS(portal, 'photos_proprio', 'Photos proprio',
+                          tempfile.gettempdir())
+    if 'photos_proprio_tmp' not in portal.objectIds():
+        manage_addLocalFS(portal, 'photos_proprio_tmp', 'Photos proprio temporaires',
+                          tempfile.gettempdir())
 
 
 def disableGlobalAddingForContentType(portal, contentTypeName):
