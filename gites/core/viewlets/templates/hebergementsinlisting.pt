@@ -65,7 +65,7 @@
                     <img src=""
                          width="181"
                          height="115"
-                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/heb_code_gdw}.jpg" />
+                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/heb_code_gdw}00.jpg" />
                 </a>
             </div>
 
