@@ -464,14 +464,6 @@
                                          video heb/video">
                             <div id="hebergement-carousel" class="carousel slide" tal:condition="python: vignettesUrls or video">
                                 <div class="carousel-inner">
-                                  <tal:bcl tal:repeat="vignetteUrl vignettesUrls">
-                                    <div class=""
-                                         tal:define="index repeat/vignetteUrl/index"
-                                         tal:attributes="class python: int(index) == 0 and 'item active' or 'item'">
-                                        <img src="" title="" alt=""
-                                             tal:attributes="src string:photos_heb/${vignetteUrl}">
-                                    </div>
-                                  </tal:bcl>
                                   <tal:ifvideo tal:condition="video">
                                     <div class=""
                                          tal:define="index python: len(vignettesUrls)"
@@ -479,6 +471,14 @@
                                         <span tal:replace="structure python: view.getIframeForVideo(video.heb_vid_url)" />
                                     </div>
                                   </tal:ifvideo>
+                                  <tal:bcl tal:repeat="vignetteUrl vignettesUrls">
+                                    <div class=""
+                                         tal:define="index repeat/vignetteUrl/index"
+                                         tal:attributes="class python: int(index) == 0 and 'item active' or 'item'">
+                                        <img src="" title="" alt=""
+                                             tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${vignetteUrl}">
+                                    </div>
+                                  </tal:bcl>
                                 </div>
                                 <a class="left carousel-control" href="#hebergement-carousel" data-slide="prev">&lsaquo;</a>
                                 <a class="right carousel-control" href="#hebergement-carousel" data-slide="next">&rsaquo;</a>
