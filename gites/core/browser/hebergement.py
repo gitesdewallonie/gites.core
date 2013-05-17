@@ -227,6 +227,17 @@ class HebergementView(BrowserView):
                 vignettes.append(photo)
         return vignettes
 
+    def getPhotoContact(self):
+        utool = getToolByName(self.context, 'portal_url')
+        portal = utool.getPortalObject()
+        photoStorage = getattr(portal, 'photos_proprio')
+        proPk = self.context.heb_pro_fk
+        photoName = "%s.jpg" % proPk
+        if photoName in photoStorage.fileIds():
+            return photoName
+        else:
+            return None
+
     def getIframeForVideo(self, videoUrl):
         """
         Get embedly generated iframe for video

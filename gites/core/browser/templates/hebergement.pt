@@ -548,7 +548,11 @@
                                 </a>
                             </div>
                         </div><!--descriptif coordonnee-->
-                        <div id="description-photo-proprio">
+                        <div id="description-photo-proprio"
+                             tal:define="photocontact view/getPhotoContact">
+                            <img src="" width="196" height="170"
+                                 tal:condition="photocontact"
+                                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_proprio/${heb/proprio/pro_pk}.jpg" />
                         </div><!-- descriptif p hoto proprio-->
                         <div class="break-float"></div>
                     </div>
