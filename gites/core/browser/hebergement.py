@@ -215,9 +215,12 @@ class HebergementView(BrowserView):
         """
         Get the vignette of an hebergement
         """
+        utool = getToolByName(self.context, 'portal_url')
+        portal = utool.getPortalObject()
+        photoStorage = getattr(portal, 'photos_heb')
         vignettes = []
         codeGDW = self.context.heb_code_gdw
-        listeImage = self.context.photos_heb.fileIds()
+        listeImage = photoStorage.fileIds()
         for i in range(40):
             if i < 10:
                 photo = "%s0%s.jpg" % (codeGDW, i)

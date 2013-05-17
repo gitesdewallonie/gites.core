@@ -109,7 +109,10 @@ class HebergementATMetatags(GdwATMetatags):
 
     @property
     def image_url(self):
-        url = self.context.photos_heb.absolute_url()
+        utool = getToolByName(self.context, 'portal_url')
+        portal = utool.getPortalObject()
+        photoStorage = getattr(portal, 'photos_heb')
+        url = photoStorage.absolute_url()
         image_url = '%s/%s' % (url, self.context.getVignette())
         return image_url
 
