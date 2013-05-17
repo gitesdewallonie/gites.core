@@ -10,7 +10,12 @@
 </head>
 
 <body>
-
+    <metal:javascript_head_slot fill-slot="javascript_head_slot">
+            <script type="text/javascript"
+                    charset="utf-8"
+                    src=""
+                    tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/signalerprobleme.js"></script>
+    </metal:javascript_head_slot>
 <div metal:fill-slot="main">
 
 <h1 i18n:translate="signaler_un_probleme" class="documentFirstHeading">
@@ -98,11 +103,14 @@ Signaler un problème
                <label for="typeProbleme" i18n:translate="type_de_probleme">Type de problème</label>
            </td>
            <td>
-              <select name="typeProbleme">
+              <select name="typeProbleme" id="typeProbleme" onchange="check();">
                  <option>...</option>
                  <option i18n:translate="calendrier_pas_a_jour"> Calendrier pas à jour</option>
                  <option i18n:translate="coordonnees_incorrectes"> Coordonnées incorrectes</option>
+                 <option i18n:translate="prix_incorrect"> Prix incorrect</option>
+                 <option value="autre" i18n:translate="autre"> Autre</option>
               </select>
+              <input type="text" style="display: none" name="typeautre" id="typeautre" /><br />
            </td>
         </tr>
 

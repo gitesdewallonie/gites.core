@@ -193,6 +193,8 @@ Il s'agit de :
         gdwMail = u'info@gitesdewallonie.be'
 #        gdwMail = u'francois@affinitic.be'
         typeProbleme = self.request.get('typeProbleme')
+        if typeProbleme == "autre":
+            typeProbleme = self.request.get('typeautre')
         contactNom = self.request.get('contactNom', '')
         contactPrenom = self.request.get('contactPrenom', '')
         contactLangue = self.request.get('contactLangue', None)
