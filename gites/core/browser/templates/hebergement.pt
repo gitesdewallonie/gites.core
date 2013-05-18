@@ -152,7 +152,7 @@
 
                     <div id="accueil-bloc-gauche">
                         <div id="description-photo-heb">
-                            <img src=""
+                            <img src="" width="300" height="195"
                                  tal:attributes="src string:${here/photos_heb/absolute_url}/${heb/heb_code_gdw}00.jpg" />
                         </div>
 
