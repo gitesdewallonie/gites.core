@@ -7,6 +7,8 @@
 <div metal:fill-slot="main">
   <tal:main tal:define="text context/getText;">
 
+    <div tal:replace="structure provider:plone.abovecontenttitle" />
+
     <h1 tal:content="here/Title">
         Boutique item title
     </h1>
