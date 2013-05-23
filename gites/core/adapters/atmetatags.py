@@ -32,6 +32,10 @@ class GdwATMetatags(ATMetatags):
     def content_type(self):
         return 'hotel'
 
+    @property
+    def image_url(self):
+        return "%s/logo.png" % self.portal_state.portal_url()
+
 
 class BoutiqueItemATMetatags(GdwATMetatags):
     """
