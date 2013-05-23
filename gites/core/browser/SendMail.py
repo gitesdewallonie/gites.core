@@ -192,8 +192,10 @@ Il s'agit de :
 
         gdwMail = u'info@gitesdewallonie.be'
 #        gdwMail = u'francois@affinitic.be'
-        typeProbleme = self.request.get('typeProbleme')
-        if typeProbleme == "autre":
+        typeProbleme = self.request.get('typeProbleme', None)
+        if not typeProbleme or typeProbleme.strip() == '...':
+            typeProbleme = u'Non spécifié'
+        elif typeProbleme == "autre":
             typeProbleme = self.request.get('typeautre')
         contactNom = self.request.get('contactNom', '')
         contactPrenom = self.request.get('contactPrenom', '')
@@ -201,6 +203,7 @@ Il s'agit de :
         if not contactLangue or contactLangue.strip() == '...':
             language = self.request.get('LANGUAGE', 'en')
             contactLangue = LANG_MAP.get(language, '')
+            contactLangue = contactLangue.decode('utf-8')
         contactEmail = self.request.get('contactEmail', None)
         remarque = self.request.get('remarque', '')
 
