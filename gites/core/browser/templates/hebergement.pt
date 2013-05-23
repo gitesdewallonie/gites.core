@@ -560,6 +560,7 @@
             </ul>
             <div id="signaler-un-probleme">
                 <a href="#"
+                   tal:attributes="href string:${context/@@plone_portal_state/portal_url}/signaler_probleme"
                    i18n:translate="signaler-un-probleme"> Signaler un problème </a>
             </div>
             <div class="break-float"></div>
