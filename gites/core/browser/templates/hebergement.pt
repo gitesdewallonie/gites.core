@@ -121,14 +121,14 @@
             <div id="accordeon-spin"></div>
             <script language="javascript">
                 var opts = {
-                    lines: 12, // The number of lines to draw
-                    length: 7, // The length of each line
-                    width: 5, // The line thickness
-                    radius: 10, // The radius of the inner circle
-                    color: '#fff', // #rbg or #rrggbb
-                    speed: 1, // Rounds per second
-                    trail: 66, // Afterglow percentage
-                    shadow: true // Whether to render a shadow
+                    lines: 12,      // The number of lines to draw
+                    length: 7,      // The length of each line
+                    width: 5,       // The line thickness
+                    radius: 10,     // The radius of the inner circle
+                    color: '#fff',  // #rbg or #rrggbb
+                    speed: 1,       // Rounds per second
+                    trail: 66,      // Afterglow percentage
+                    shadow: true    // Whether to render a shadow
                 };
                 var target = document.getElementById('accordeon-spin');
                 var spinner = new Spinner(opts).spin(target);
@@ -152,7 +152,7 @@
 
                     <div id="accueil-bloc-gauche">
                         <div id="description-photo-heb">
-                            <img src=""
+                            <img src="" width="300" height="195"
                                  tal:attributes="src string:${here/photos_heb/absolute_url}/${heb/heb_code_gdw}00.jpg" />
                         </div>
 

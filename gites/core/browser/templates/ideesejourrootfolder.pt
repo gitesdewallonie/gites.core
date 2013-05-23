@@ -34,7 +34,7 @@
                            vignette python:view.getVignette(packageObjectUrl)"
                class="logo-package">
                   <a href="" tal:attributes="href packageObject/absolute_url" tal:condition="vignette">
-                     <img src="" tal:attributes="src string:${vignette/getURL}/image_thumb"/><br />
+                     <img src="" tal:attributes="src string:${vignette/getURL}"/><br />
                   </a>
             </p>
 

@@ -19,7 +19,10 @@ class Translate(BrowserView):
         obj = self.context.restrictedTraverse(path, default=None)
         if obj is None:
             return ''
-        translatedObject = obj.getTranslation()
+        try:
+            translatedObject = obj.getTranslation()
+        except AttributeError:
+            return ''
         if translatedObject:
             url = translatedObject.absolute_url()
         else:
