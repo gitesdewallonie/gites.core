@@ -94,9 +94,9 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
 
     def order_by(self):
         if self.selected_order() == 'pers_numbers':
-            return (Hebergement.heb_cgt_cap_min.desc(), Hebergement.heb_nom)
+            return (Hebergement.heb_cgt_cap_min.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'room_count':
-            return (Hebergement.heb_cgt_nbre_chmbre.desc(), Hebergement.heb_nom)
+            return (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'epis':
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
         else:
@@ -140,9 +140,9 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
 
     def order_by(self):
         if self.selected_order() == 'pers_numbers':
-            return (Hebergement.heb_cgt_cap_min.desc(), Hebergement.heb_nom)
+            return (Hebergement.heb_cgt_cap_min.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'room_count':
-            return (Hebergement.heb_cgt_nbre_chmbre.desc(), Hebergement.heb_nom)
+            return (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'epis':
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
         elif self.selected_order() == 'distance':
@@ -310,9 +310,9 @@ class SearchHebFetcher(BaseHebergementsFetcher):
 
     def order_by(self):
         if self.selected_order() == 'pers_numbers':
-            return ('heb_cgt_cap_min desc', 'heb_nom')
+            return ('heb_cgt_cap_min asc', 'heb_nom')
         elif self.selected_order() == 'room_count':
-            return (Hebergement.heb_cgt_nbre_chmbre.desc(), Hebergement.heb_nom)
+            return (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'epis':
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
         else:
