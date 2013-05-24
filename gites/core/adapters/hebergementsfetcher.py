@@ -205,7 +205,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                 return '(sum(heb_cgt_cap_min) between %s and %s) \
                         or \
                         (sum(heb_cgt_cap_max) between %s and %s)' % (capacityMin, capacityMax,
-                                                              capacityMin, capacityMax)
+                                                                     capacityMin, capacityMax)
             else:
                 capacityMax = capacityMin
                 capacityMin = 16
@@ -257,6 +257,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                               sa.func.sum(Hebergement.heb_cgt_cap_max).label('heb_cgt_cap_max'),
                               sa.literal_column("'gite-groupes'").label('heb_type'),
                               sa.func.min(TypeHebergement.type_heb_type).label('heb_type_type'),
+                              sa.func.min(TypeHebergement.type_heb_code).label('heb_type_code'),
                               sa.func.min(Hebergement.heb_code_gdw).label('heb_code_gdw'),
                               sa.func.min(Hebergement.heb_pk).label('heb_pk'),
                               sa.func.max(LinkHebergementEpis.heb_nombre_epis).label('heb_nombre_epis'),
@@ -272,7 +273,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
 
         capacity = self.data.get('capacityMin')
         capacity_filters = self.filter_capacity_in_group(capacity,
-                                                 query)
+                                                         query)
         if capacity_filters:
             query = query.having(sa.and_(capacity_filters,
                                          sa.func.count() > 1))
@@ -287,12 +288,14 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                               Hebergement.heb_cgt_cap_max.label('heb_cgt_cap_max'),
                               TypeHebergement.type_heb_id.label('heb_type'),
                               TypeHebergement.type_heb_type.label('heb_type_type'),
+                              TypeHebergement.type_heb_code.label('heb_type_code'),
                               Hebergement.heb_code_gdw.label('heb_code_gdw'),
                               Hebergement.heb_pk.label('heb_pk'),
                               LinkHebergementEpis.heb_nombre_epis.label('heb_nombre_epis'),
                               Hebergement.heb_localite.label('heb_localite'),
                               Hebergement.heb_gps_long.label('heb_gps_long'),
-                              Hebergement.heb_gps_lat.label('heb_gps_lat'))
+                              Hebergement.heb_gps_lat.label('heb_gps_lat')
+                              )
         query = query.join('proprio').join('epis').join('type')
         query = self.apply_filters(query)
         return query

@@ -74,17 +74,6 @@
                 <div id="nom-heb">
                     <span tal:content="heb/heb_nom" />
                 </div>
-                <div id="nbre-cle"
-                     class="etiquette-sup"
-                     tal:condition="python:heb.type.type_heb_code == 'MV'">
-                    <tal:for repeat="epis heb/epis">
-                        <span tal:content="epis/heb_nombre_epis"/>
-                    </tal:for>
-                    <tal:if condition="python:len(heb.epis)==0">
-                        <span>-</span>
-                    </tal:if>
-                    <tal:bloc i18n:translate="x_cles">clés</tal:bloc>
-                </div>
                 <div id="reference"
                      class="etiquette-sup">
                     <span tal:content="heb/heb_pk" />
@@ -102,6 +91,17 @@
                     <span tal:condition="python: heb.heb_cgt_cap_min == heb.heb_cgt_cap_max"
                           tal:content="string: ${heb/heb_cgt_cap_min}" />
                     <tal:bloc i18n:translate="x_personnes">personnes</tal:bloc>
+                </div>
+                <div id="nbre-cle"
+                     class="etiquette-sup"
+                     tal:condition="python:heb.type.type_heb_code == 'MV'">
+                    <tal:for repeat="epis heb/epis">
+                        <span tal:content="epis/heb_nombre_epis"/>
+                    </tal:for>
+                    <tal:if condition="python:len(heb.epis)==0">
+                        <span>-</span>
+                    </tal:if>
+                    <tal:bloc i18n:translate="x_cles">clés</tal:bloc>
                 </div>
                <div id="nbre-epis"
                      class="etiquette-sup"
