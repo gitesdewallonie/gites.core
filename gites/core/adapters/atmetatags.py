@@ -71,6 +71,8 @@ class PackageATMetatags(GdwATMetatags):
                                     path={'query': path})
         if results:
             return results[0].getURL()
+        else:
+            return super(PackageATMetatags, self).image_url
 
     @property
     def content_type(self):
