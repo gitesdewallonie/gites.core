@@ -84,44 +84,44 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 
     $scope.init = function() {
         $scope.page = $cookieStore.get('listing_page', 0);
-	var baseurl = calculateBase();
-	$scope.listing_url = baseurl + 'update_listing'; // The url of our search
-	$scope.map_listing_url = baseurl + 'update_map_listing'; // The url of our search
+        var baseurl = calculateBase();
+        $scope.listing_url = baseurl + 'update_listing'; // The url of our search
+        $scope.map_listing_url = baseurl + 'update_map_listing'; // The url of our search
         $scope.keywords = {};
         $scope.formData = $('#hiddenForm').serializeObject();
-	if ( $scope.reference != $scope.formData.reference) {
-	    $scope.page = 0;
-	}
-	$scope.reference = $scope.formData.reference;
+        if ( $scope.reference != $scope.formData.reference) {
+            $scope.page = 0;
+        }
+        $scope.reference = $scope.formData.reference;
         var page_cookie = $cookieStore.get('listing_keywords');
-	if ( page_cookie ) {
-	    $scope.keywords = page_cookie;
-	}
-	$scope.sort = $cookieStore.get('listing_sort', '');
+        if ( page_cookie ) {
+            $scope.keywords = page_cookie;
+        }
+        $scope.sort = $cookieStore.get('listing_sort', '');
     };
 
     $scope.updatePostData = function() {
-	$scope.postData = $.extend($scope.formData, {'keywords': $scope.keywords,
-	                        'page': $scope.page,
-	                        'sort': $scope.sort,
-	                        'reference': $scope.reference});
+        $scope.postData = $.extend($scope.formData, {'keywords': $scope.keywords,
+                                                     'page': $scope.page,
+                                                     'sort': $scope.sort,
+                                                     'reference': $scope.reference});
     }
 
     $scope.updateMap = function() {
-	$scope.updatePostData();
+        $scope.updatePostData();
         $http.post($scope.map_listing_url, $scope.postData).
         success(function(data, status) {
-	    if (typeof googleMapAPI != 'undefined') {
-	       googleMapAPI.updateHebergementsMarkers(data);
-	    }
+            if (typeof googleMapAPI != 'undefined') {
+                googleMapAPI.updateHebergementsMarkers(data);
+            }
         })
     };
 
     $scope.update = function() {
-	$scope.updatePostData();
-	if ( ! $.isEmptyObject($scope.keywords) ) {
+        $scope.updatePostData();
+        if ( ! $.isEmptyObject($scope.keywords) ) {
             $cookieStore.put('listing_keywords', $scope.keywords);
-	};
+        };
         $cookieStore.put('listing_sort', $scope.sort);
 
         $http.post($scope.listing_url, $scope.postData).
@@ -129,33 +129,33 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
             $scope.status = status;
             $scope.listcontainer = data;
         })
-	$scope.updateMap();
+        $scope.updateMap();
     };
 
 
     $scope.goToNextPage = function(){
-	 $scope.page++
-	 $scope.goToPage($scope.page);
+        $scope.page++
+        $scope.goToPage($scope.page);
     }
 
     $scope.goToPreviousPage = function(){
-         $scope.page--;
-	 $scope.goToPage($scope.page);
+        $scope.page--;
+        $scope.goToPage($scope.page);
     }
 
 
     $scope.goToPage = function(page){
-	 $scope.page = page;
-         $cookieStore.put('listing_page', page);
-	 $scope.update();
+        $scope.page = page;
+        $cookieStore.put('listing_page', page);
+        $scope.update();
     }
 
     $scope.updateSort = function() {
-	 $scope.goToPage(0);
+        $scope.goToPage(0);
     }
 
     $scope.updateKeywords = function() {
-	 $scope.goToPage(0);
+        $scope.goToPage(0);
     }
 
     // initialize values
@@ -205,3 +205,12 @@ app.config(function ($httpProvider) {
             });
         };
     })
+
+
+jQuery('div#listing-result-block').ready(function($) {
+
+  $('input#comparison-button').click(function() {
+    alert('bla');
+  });
+
+});
