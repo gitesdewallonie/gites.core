@@ -34,6 +34,16 @@ class IMapViewletManager(IViewletManager):
 
 
 class IHebergementInSearch(Interface):
-    """
-    Marker interface for hebergement
-    """
+    """ Marker interface for hebergement """
+
+
+class IHebergementComparisonTable(Interface):
+    """ Marker interface for the hosting comparison table """
+
+
+class IHebergementComparisonThree(IHebergementComparisonTable):
+    """ Marker interface for the comparison of three hostings """
+
+
+class IHebergementComparisonFour(IHebergementComparisonThree):
+    """ Marker interface for the comparison of four hostings """

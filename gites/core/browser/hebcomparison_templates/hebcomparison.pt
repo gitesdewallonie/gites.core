@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en" lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="gites">
+<head></head>
+<body metal:fill-slot="wrapper">
+<style>
+body { background-color: #FFF; }
+.center { text-align: center; }
+td.comparison-4 { width: 181px; }
+td.comparison-3 { width: 241px; }
+td.comparison-2 { width: 364px; }
+.icons-on table.comparison td {
+  line-height: 1em;
+  padding: 3px 3px;
+}
+table.comparison thead { display: none; }
+table.comparison tbody tr.header td.description {
+  background-color: #FFF;
+}
+table.comparison tbody tr.header td {
+  color: #222222;
+  font-family: 'Josefin Sans','Helvetica Neue',Arial,FreeSans,sans-serif;
+  font-size: 1.2em;
+  text-shadow: 1px 1px 1px rgba(250, 250, 250, 0.5);
+  padding: 10px 3px;
+}
+table.comparison tbody tr.header td.gite  {
+  background-color: rgba(210, 254, 255, 0.3);
+  background-image: url("/++theme++gites.theme/images/bg_listing_gite.png");
+  color: #265902;
+}
+table.comparison tbody tr.header td.chambre {
+  background-color: rgba(210, 254, 255, 0.3);
+  background-image: url("/++theme++gites.theme/images/bg_listing_chambre.png");
+  color: #00336A;
+}
+table.comparison span.icon {
+  font-family: 'Josefin Sans','Helvetica Neue',Arial,FreeSans,sans-serif;
+  font-weight: bold;
+  font-size: 1.8em;
+  text-shadow: 1px 1px 1px #666;
+}
+table.comparison span.false { color: #CF000E; }
+table.comparison span.true { color: #265902; }
+</style>
+<div>
+  <div tal:content="structure view/get_table" />
+</div>
+</body>
+
+</html>
