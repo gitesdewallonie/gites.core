@@ -11,6 +11,18 @@ from gites.core.interfaces import IHebergementsFetcher
 grok.templatedir('templates')
 
 
+def getVignetteURL(context):
+    """
+    Return vignette URL for a package
+    """
+    cat = getToolByName(context, 'portal_catalog')
+    path = '/'.join(context.getPhysicalPath())
+    results = cat.searchResults(portal_type='Vignette',
+                                path={'query': path})
+    if results:
+        return results[0].getURL()
+
+
 class Package(grok.View):
     """
     View on Idee Sejour
@@ -21,15 +33,7 @@ class Package(grok.View):
     grok.require('zope2.View')
 
     def getVignetteURL(self):
-        """
-        Return vignette URL for a package
-        """
-        cat = getToolByName(self.context, 'portal_catalog')
-        path = '/'.join(self.context.getPhysicalPath())
-        results = cat.searchResults(portal_type='Vignette',
-                                    path={'query': path})
-        if results:
-            return results[0].getURL()
+        return getVignetteURL(self.context)
 
     def getHebCount(self):
         """
