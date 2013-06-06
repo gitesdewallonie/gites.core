@@ -268,7 +268,8 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                               sa.func.max(LinkHebergementEpis.heb_nombre_epis).label('heb_nombre_epis'),
                               sa.func.min(Hebergement.heb_localite).label('heb_localite'),
                               sa.func.min(Hebergement.heb_gps_long).label('heb_gps_long'),
-                              sa.func.min(Hebergement.heb_gps_lat).label('heb_gps_lat')
+                              sa.func.min(Hebergement.heb_gps_lat).label('heb_gps_lat'),
+                              sa.func.min(Hebergement.heb_groupement_pk).label('heb_groupement_pk')
                               )
         query = query.join('proprio').join('epis').join('type')
         query = query.filter(Hebergement.heb_groupement_pk != None)
@@ -299,7 +300,8 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                               LinkHebergementEpis.heb_nombre_epis.label('heb_nombre_epis'),
                               Hebergement.heb_localite.label('heb_localite'),
                               Hebergement.heb_gps_long.label('heb_gps_long'),
-                              Hebergement.heb_gps_lat.label('heb_gps_lat')
+                              Hebergement.heb_gps_lat.label('heb_gps_lat'),
+                              Hebergement.heb_groupement_pk.label('heb_groupement_pk')
                               )
         query = query.join('proprio').join('epis').join('type')
         query = self.apply_filters(query)
