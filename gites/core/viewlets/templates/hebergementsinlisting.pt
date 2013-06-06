@@ -72,7 +72,7 @@
             <div id="info-bloc-sup">
 
                 <div class="digit"
-                     tal:attributes="id string:map_picto_${hebergement/heb_pk}">
+                    tal:attributes="id string:map_picto_${hebergement/heb_pk}_${hebergement/heb_type}">
                     <img src=""
                          tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/${type_heb}_${repeat/hebergement/number}.png" />
                 </div>
