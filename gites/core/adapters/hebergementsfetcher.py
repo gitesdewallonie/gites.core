@@ -242,6 +242,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         from_date = self.data.get('fromDate')
         to_date = self.data.get('toDate')
         if reference:
+            reference = reference.strip()
             query = query.filter(sa.or_(sa.func.unaccent(Hebergement.heb_nom).ilike("%%%s%%" % reference),
                                         Hebergement.heb_nom.ilike("%%%s%%" % reference)))
         if show_gites != show_chambres:  # XOR
