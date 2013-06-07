@@ -106,16 +106,35 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
         }
     };
 
+    var selectedKeywords = function() {
+	var selected_keywords = [];
+	for (var keyword in $scope.keywords) {
+		if ( $scope.keywords[keyword] === true ) {
+			selected_keywords.push(keyword);
+		};
+	};
+	return selected_keywords;
+    }
+
     $scope.updatePostData = function() {
-        $scope.postData = $.extend($scope.formData, {'keywords': $scope.keywords,
+        $scope.postData = $.extend($scope.formData, {'keywords': selectedKeywords(),
                                                      'page': $scope.page,
                                                      'sort': $scope.sort,
                                                      'reference': $scope.reference});
     }
 
+    var serializeToHTTPPost = function(data){
+        return $.param(data);
+    }
+
+    var httpPostconfig = {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+        transformRequest: serializeToHTTPPost
+	};
+
     $scope.updateMap = function() {
         $scope.updatePostData();
-        $http.post($scope.map_listing_url, $scope.postData).
+        $http.post($scope.map_listing_url, $scope.postData, httpPostconfig).
         success(function(data, status) {
             if (typeof googleMapAPI != 'undefined') {
                 googleMapAPI.updateHebergementsMarkers(data);
@@ -130,7 +149,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
         };
         $cookieStore.put('listing_sort', $scope.sort);
 
-        $http.post($scope.listing_url, $scope.postData).
+        $http.post($scope.listing_url, $scope.postData, httpPostconfig).
         success(function(data, status) {
             $scope.status = status;
             $scope.listcontainer = data;

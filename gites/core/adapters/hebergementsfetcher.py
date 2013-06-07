@@ -32,8 +32,7 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
         self.request = request
 
     def selected_page(self):
-        request_params = self.request_parameters()
-        return request_params.get('page', 0)
+        return int(self.data.get('page', 0))
 
     @property
     def batch_start(self):
@@ -45,18 +44,16 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
 
     @memoize
     def selected_order(self):
-        request_params = self.request_parameters()
-        return request_params.get('sort', 'hebergement')
+        return self.data.get('sort', 'hebergement')
 
     @property
     @memoize
     def data(self):
-        params = self.request_parameters()
-        params.update(self.request.form.items())
-        return params
+        return self.request.form
 
     @memoize
     def request_parameters(self):
+        return {}
         if self.request._file is None:
             return {}
         request_body = self.request._file.read()
@@ -67,8 +64,10 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
             return {}
 
     def selected_keywords(self):
-        data = self.request_parameters()
-        return [key for key, value in data.get('keywords', {}).items() if value is True]
+        keywords = self.data.get('keywords[]', [])
+        if isinstance(keywords, str):
+            keywords = [keywords]
+        return keywords
 
     def __call__(self):
         query = self._query.order_by(*self.order_by())
@@ -128,7 +127,7 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             FromCache('gdw'))
         subquery = session().query(LinkHebergementMetadata.heb_fk)
         criteria = set()
-        criteria = criteria.union(
+        criteria.update(
             self.context.getCriteria(),
             self.selected_keywords())
         if criteria:
