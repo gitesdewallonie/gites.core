@@ -12,8 +12,9 @@ import sqlalchemy as sa
 import zope.component
 import zope.interface
 import zope.publisher
-from z3c.table import column, interfaces as table_interfaces, table, value
 from five import grok
+from z3c.table import column, interfaces as table_interfaces, table, value
+from zope.i18n import translate
 
 from gites.db import content as mappers, session
 from gites.locales import GitesMessageFactory as _
@@ -106,65 +107,77 @@ class HebComparisonValues(value.ValuesMixin,
                 zope.publisher.interfaces.browser.IBrowserRequest,
                 interfaces.IHebergementComparisonTable)
 
+    heb_add_columns = ['heb_code_gdw', 'heb_cgt_cap_min', 'heb_cgt_cap_max',
+                       'heb_pk', 'heb_calendrier_proprio']
+
+    def translate(self, msgid):
+        return translate(_(msgid), target_language=self.language)
+
     @property
-    def base_comparison_columns(self):
+    def base_comparison_list(self):
         return ComparisonList(
             ComparisonColumn(u'heb_nom', u'', table='hebergement'),
             ComparisonColumn(u'picture', u''),
-            ComparisonColumn(u'heb_nbre_epis', _('x_epis'),
+            ComparisonColumn(u'heb_nbre_epis', self.translate('Epis'),
                              table='hebergement'),
-            ComparisonColumn(u'capacity', _('capacite')),
-            ComparisonColumn(u'heb_cgt_nbre_chmbre', _('x_chambres'),
+            ComparisonColumn(u'capacity', self.translate('capacite')),
+            ComparisonColumn(u'heb_cgt_nbre_chmbre',
+                             self.translate('Chambres'),
                              table='hebergement'),
             ComparisonColumn(u'heb_tarif_we_bs',
-                             u'%s (%s)' % (_('basse_saison'), _('week-end')),
+                             u'%s (%s)' % (self.translate('basse_saison'),
+                                           self.translate('week-end')),
                              table='hebergement'),
-            ComparisonColumn(u'heb_tarif_sem_bs', _('basse_saison'),
+            ComparisonColumn(u'heb_tarif_sem_bs',
+                             self.translate('basse_saison'),
                              table='hebergement'),
             ComparisonColumn(u'heb_tarif_we_ms',
-                             u'%s (%s)' % (_('moyenne_saison'), _('week-end')),
+                             u'%s (%s)' % (self.translate('moyenne_saison'),
+                                           self.translate('week-end')),
                              table='hebergement'),
-            ComparisonColumn(u'heb_tarif_sem_ms', _('moyenne_saison'),
+            ComparisonColumn(u'heb_tarif_sem_ms',
+                             self.translate('moyenne_saison'),
                              table='hebergement'),
             ComparisonColumn(u'heb_tarif_we_hs',
-                             u'%s (%s)' % (_('haute_saison'), _('week-end')),
+                             u'%s (%s)' % (self.translate('haute_saison'),
+                                           self.translate('week-end')),
                              table='hebergement'),
-            ComparisonColumn(u'heb_tarif_sem_hs', _('haute_saison'),
+            ComparisonColumn(u'heb_tarif_sem_hs',
+                             self.translate('haute_saison'),
                              table='hebergement'),
-            ComparisonColumn(u'heb_tarif_we_3n', _('3_nuits'),
+            ComparisonColumn(u'heb_tarif_we_3n', self.translate('3_nuits'),
                              table='hebergement'),
-            ComparisonColumn(u'heb_tarif_we_4n', _('4_nuits'),
+            ComparisonColumn(u'heb_tarif_we_4n', self.translate('4_nuits'),
                              table='hebergement'),
-            ComparisonColumn(u'heb_tarif_semaine_fin_annee', _('fin_d_annee'),
+            ComparisonColumn(u'heb_tarif_semaine_fin_annee',
+                             self.translate('fin_d_annee'),
                              table='hebergement'),
-            ComparisonColumn(u'heb_tarif_garantie', _('garantie'),
+            ComparisonColumn(u'heb_tarif_garantie', self.translate('garantie'),
                              table='hebergement'),
-            ComparisonColumn(u'heb_taxe_montant', _('taxe_sejour'),
+            ComparisonColumn(u'heb_taxe_montant',
+                             self.translate('taxe_sejour'),
                              table='hebergement'),
-            ComparisonColumn(u'pro_langue', _('langue'), table='proprio'),)
+            ComparisonColumn(u'pro_langue', self.translate('langue'),
+                             table='proprio'))
 
     @property
     def values(self):
-        self.comparison_columns = self.base_comparison_columns
         self.language = self.request.get('LANGUAGE', 'fr')
+        self.comparison_list = self.base_comparison_list
         self.add_metadata_columns()
-        heb_add_columns = ['heb_code_gdw', 'heb_cgt_cap_min',
-                           'heb_cgt_cap_max', 'heb_pk']
-        heb_columns = self.comparison_columns.get_columns_keys('hebergement')
-        query = session().query(mappers.Proprio.pro_langue,
-                                mappers.TypeHebergement.type_heb_code)
-        query = query.join('hebergements', 'type')
-        for c in heb_columns + heb_add_columns:
-            query = query.add_column(getattr(mappers.Hebergement, c))
-        query = query.filter(
-            mappers.Hebergement.heb_pk.in_(self.request.get('heb_pk')))
-        query = query.order_by(mappers.Hebergement.heb_pk)
+        self.comparison_list.add_element(ComparisonColumn(
+            u'calendar', _('calendrier')))
+        self.heb_columns = self.comparison_list.get_columns_keys('hebergement')
 
+        return self.rows_to_cols(self.rows)
+
+    @property
+    def rows(self):
         results = []
-        for result in query.all():
+        for result in self.query.all():
             criteria = {}
             # Hebergement columns
-            for c in heb_columns:
+            for c in self.heb_columns:
                 criteria[c] = getattr(result, c)
             # Metadatas columns
             criteria.update(self.get_metadatas(result.heb_pk))
@@ -178,16 +191,34 @@ class HebComparisonValues(value.ValuesMixin,
             criteria['picture'] = u'<img width="181" height="115" ' \
                 'src="%s/photos_heb/%s00.jpg" />' % (self.context.portal_url(),
                                                      result.heb_code_gdw)
+            criteria['calendar'] = self.translate(
+                'desoles_pas_de_calendrier_pour_ce_gite')
+            if result.heb_calendrier_proprio == 'actif':
+                criteria['calendar'] = u'<div id="description-calendrier">' \
+                    u'<div id="calendars%s"></div><input type="hidden" ' \
+                    u'id="reset" /><input type="hidden" name="start" ' \
+                    u'value="" id="start" /><input type="hidden" name="end" ' \
+                    u'value="" id="end" /></div>' % result.heb_pk
             results.append(criteria)
+        return results
 
-        return self.rows_to_cols(results)
+    @property
+    def query(self):
+        query = session().query(mappers.Proprio.pro_langue,
+                                mappers.TypeHebergement.type_heb_code)
+        query = query.join('hebergements', 'type')
+        for c in self.heb_columns + self.heb_add_columns:
+            query = query.add_column(getattr(mappers.Hebergement, c))
+        query = query.filter(
+            mappers.Hebergement.heb_pk.in_(self.request.get('heb_pk')))
+        return query.order_by(mappers.Hebergement.heb_pk)
 
     def add_metadata_columns(self):
         query = session().query(mappers.Metadata).filter(
             mappers.Metadata.met_filterable == True)
         query = query.order_by(mappers.Metadata.metadata_type_id)
         for metadata in query.all():
-            self.comparison_columns.add_element(ComparisonColumn(
+            self.comparison_list.add_element(ComparisonColumn(
                 u'met_%s' % metadata.met_pk, metadata.getTitre(self.language)))
 
     def get_metadatas(self, heb_pk):
@@ -204,7 +235,7 @@ class HebComparisonValues(value.ValuesMixin,
     def rows_to_cols(self, values):
         """ Converts the rows to columns """
         new_values = []
-        for column in self.comparison_columns.columns:
+        for column in self.comparison_list.columns:
             column_values = {'description': column.translation}
             for idx, row in enumerate(values):
                 column_values['col_%s' % str(idx + 1)] = row[column.key]
@@ -230,7 +261,7 @@ class HebComparisonColumn(column.GetAttrColumn):
         if isinstance(value, bool):
             return {True: '<span class="icon true">v</span>',
                     False: '<span class="icon false">x</span>'}[value]
-        return value
+        return value or ''
 
 
 class HebComparisonTitle(column.GetAttrColumn, grok.MultiAdapter):
