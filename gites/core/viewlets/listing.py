@@ -60,6 +60,7 @@ class HebergementListingForm(grok.Viewlet):
         query = query.filter(LinkHebergementMetadata.heb_fk == subquery.c.heb_pk)
         return query.count()
 
+
 class HebergementInSearchListingView(grok.View):
     grok.context(IHebergementInSearch)
     grok.name('view')

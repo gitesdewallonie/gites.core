@@ -4,7 +4,7 @@ from zope.component import getUtility
 from zope.configuration import xmlconfig
 
 from affinitic.db.interfaces import IDatabase
-from affinitic.db.utils import initialize_declarative_mappers
+from affinitic.db.utils import initialize_declarative_mappers, initialize_defered_mappers
 
 from gites.db import DeclarativeBase
 
@@ -17,6 +17,7 @@ def initializeDB(module):
     pg = getUtility(IDatabase, 'postgres')
     session = pg.session
     initialize_declarative_mappers(DeclarativeBase, pg.metadata)
+    initialize_defered_mappers(pg.metadata)
     return session
 
 

@@ -78,7 +78,7 @@
             <div id="info-bloc-sup">
 
                 <div class="digit"
-                     tal:attributes="id string:map_picto_${hebergement/heb_pk}">
+                    tal:attributes="id string:map_picto_${hebergement/heb_pk}_${heb_view/heb_type}">
                     <img src=""
                          tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/${type_heb}_${repeat/hebergement/number}.png" />
                 </div>
@@ -114,7 +114,18 @@
                     <span tal:omit-tag="" i18n:translate="x_chambres">chambres</span>
                 </div>
 
-                <div id="nbre-epis">
+                <div id="nbre-cle"
+                     tal:condition="python:hebergement.heb_type_code == 'MV'">
+                    <div id="cle-nbre"
+                         i18n:translate="cles">
+                      <span tal:content="heb_view/nombre_epis"
+                            class="nombre" />
+                      <span tal:omit-tag="" i18n:translate="x_cles">cles</span>
+                    </div>
+                </div>
+
+                <div id="nbre-epis"
+                     tal:condition="python:hebergement.heb_type_code != 'MV'">
                     <div id="epis-nbre"
                          i18n:translate="epis">
                       <span tal:content="heb_view/nombre_epis"

@@ -32,8 +32,7 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
         self.request = request
 
     def selected_page(self):
-        request_params = self.request_parameters()
-        return request_params.get('page', 0)
+        return int(self.data.get('page', 0))
 
     @property
     def batch_start(self):
@@ -45,18 +44,16 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
 
     @memoize
     def selected_order(self):
-        request_params = self.request_parameters()
-        return request_params.get('sort', 'hebergement')
+        return self.data.get('sort', 'hebergement')
 
     @property
     @memoize
     def data(self):
-        params = self.request_parameters()
-        params.update(self.request.form.items())
-        return params
+        return self.request.form
 
     @memoize
     def request_parameters(self):
+        return {}
         if self.request._file is None:
             return {}
         request_body = self.request._file.read()
@@ -67,8 +64,10 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
             return {}
 
     def selected_keywords(self):
-        data = self.request_parameters()
-        return [key for key, value in data.get('keywords', {}).items() if value is True]
+        keywords = self.data.get('keywords[]', [])
+        if isinstance(keywords, str):
+            keywords = [keywords]
+        return keywords
 
     def __call__(self):
         query = self._query.order_by(*self.order_by())
@@ -94,9 +93,9 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
 
     def order_by(self):
         if self.selected_order() == 'pers_numbers':
-            return (Hebergement.heb_cgt_cap_min.desc(), Hebergement.heb_nom)
+            return (Hebergement.heb_cgt_cap_min.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'room_count':
-            return (Hebergement.heb_cgt_nbre_chmbre.desc(), Hebergement.heb_nom)
+            return (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'epis':
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
         else:
@@ -116,15 +115,19 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             point = geoalchemy.base.WKTSpatialElement(point, srid=3447)
         if point is not None:
             query = session().query(Hebergement,
-                                    Hebergement.heb_location.distance_sphere(point).label('distance'))
+                                    Hebergement.heb_location.distance_sphere(point).label('distance'),
+                                    TypeHebergement.type_heb_code.label('heb_type_code')
+                                    )
         else:
-            query = session().query(Hebergement)
+            query = session().query(Hebergement,
+                                    TypeHebergement.type_heb_code.label('heb_type_code')
+                                    )
         query = query.join('type').join('commune').join('epis')
         query = query.options(
             FromCache('gdw'))
         subquery = session().query(LinkHebergementMetadata.heb_fk)
         criteria = set()
-        criteria = criteria.union(
+        criteria.update(
             self.context.getCriteria(),
             self.selected_keywords())
         if criteria:
@@ -140,9 +143,9 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
 
     def order_by(self):
         if self.selected_order() == 'pers_numbers':
-            return (Hebergement.heb_cgt_cap_min.desc(), Hebergement.heb_nom)
+            return (Hebergement.heb_cgt_cap_min.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'room_count':
-            return (Hebergement.heb_cgt_nbre_chmbre.desc(), Hebergement.heb_nom)
+            return (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'epis':
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
         elif self.selected_order() == 'distance':
@@ -205,7 +208,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                 return '(sum(heb_cgt_cap_min) between %s and %s) \
                         or \
                         (sum(heb_cgt_cap_max) between %s and %s)' % (capacityMin, capacityMax,
-                                                              capacityMin, capacityMax)
+                                                                     capacityMin, capacityMax)
             else:
                 capacityMax = capacityMin
                 capacityMin = 16
@@ -238,6 +241,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         from_date = self.data.get('fromDate')
         to_date = self.data.get('toDate')
         if reference:
+            reference = reference.strip()
             query = query.filter(sa.or_(sa.func.unaccent(Hebergement.heb_nom).ilike("%%%s%%" % reference),
                                         Hebergement.heb_nom.ilike("%%%s%%" % reference)))
         if show_gites != show_chambres:  # XOR
@@ -257,12 +261,14 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                               sa.func.sum(Hebergement.heb_cgt_cap_max).label('heb_cgt_cap_max'),
                               sa.literal_column("'gite-groupes'").label('heb_type'),
                               sa.func.min(TypeHebergement.type_heb_type).label('heb_type_type'),
+                              sa.func.min(TypeHebergement.type_heb_code).label('heb_type_code'),
                               sa.func.min(Hebergement.heb_code_gdw).label('heb_code_gdw'),
                               sa.func.min(Hebergement.heb_pk).label('heb_pk'),
                               sa.func.max(LinkHebergementEpis.heb_nombre_epis).label('heb_nombre_epis'),
                               sa.func.min(Hebergement.heb_localite).label('heb_localite'),
                               sa.func.min(Hebergement.heb_gps_long).label('heb_gps_long'),
-                              sa.func.min(Hebergement.heb_gps_lat).label('heb_gps_lat')
+                              sa.func.min(Hebergement.heb_gps_lat).label('heb_gps_lat'),
+                              sa.func.min(Hebergement.heb_groupement_pk).label('heb_groupement_pk')
                               )
         query = query.join('proprio').join('epis').join('type')
         query = query.filter(Hebergement.heb_groupement_pk != None)
@@ -272,7 +278,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
 
         capacity = self.data.get('capacityMin')
         capacity_filters = self.filter_capacity_in_group(capacity,
-                                                 query)
+                                                         query)
         if capacity_filters:
             query = query.having(sa.and_(capacity_filters,
                                          sa.func.count() > 1))
@@ -287,12 +293,15 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                               Hebergement.heb_cgt_cap_max.label('heb_cgt_cap_max'),
                               TypeHebergement.type_heb_id.label('heb_type'),
                               TypeHebergement.type_heb_type.label('heb_type_type'),
+                              TypeHebergement.type_heb_code.label('heb_type_code'),
                               Hebergement.heb_code_gdw.label('heb_code_gdw'),
                               Hebergement.heb_pk.label('heb_pk'),
                               LinkHebergementEpis.heb_nombre_epis.label('heb_nombre_epis'),
                               Hebergement.heb_localite.label('heb_localite'),
                               Hebergement.heb_gps_long.label('heb_gps_long'),
-                              Hebergement.heb_gps_lat.label('heb_gps_lat'))
+                              Hebergement.heb_gps_lat.label('heb_gps_lat'),
+                              Hebergement.heb_groupement_pk.label('heb_groupement_pk')
+                              )
         query = query.join('proprio').join('epis').join('type')
         query = self.apply_filters(query)
         return query
@@ -307,9 +316,9 @@ class SearchHebFetcher(BaseHebergementsFetcher):
 
     def order_by(self):
         if self.selected_order() == 'pers_numbers':
-            return ('heb_cgt_cap_min desc', 'heb_nom')
+            return ('heb_cgt_cap_min asc', 'heb_nom')
         elif self.selected_order() == 'room_count':
-            return (Hebergement.heb_cgt_nbre_chmbre.desc(), Hebergement.heb_nom)
+            return (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'epis':
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
         else:
