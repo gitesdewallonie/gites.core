@@ -128,10 +128,31 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
         success(function(data, status) {
             $scope.status = status;
             $scope.listcontainer = data;
-        })
+        });
         $scope.updateMap();
     };
 
+    $scope.compareHeb = function() {
+        var comparator_url = '@@hebergement-comparison?heb_pk='
+        var comparison_values = [];
+        jQuery('input:checked[name="heb-comparison:list"]').each(function() {
+            comparison_values.push(jQuery(this).val());
+        });
+
+        if(jQuery('#overlay-comparator').length != 0) {
+            jQuery('#overlay-comparator').remove();
+        }
+
+        jQuery('<div id="overlay-comparator"><div class="contentWrap"></div></div>').appendTo(jQuery('#overlay-container'));
+
+        jQuery('#overlay-comparator').overlay({
+            onBeforeLoad: function() {
+                var wrap = this.getOverlay().find(".contentWrap");
+                wrap.load(comparator_url + comparison_values.join('&heb_pk='));
+            },
+        });
+        jQuery('#overlay-comparator').overlay().load();
+    };
 
     $scope.goToNextPage = function(){
         $scope.page++
