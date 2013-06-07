@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
+import zope.interface
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
 from z3c.sqlalchemy import getSAWrapper
 from zope.component import getMultiAdapter
-from gites.core.interfaces import IHebergementsFetcher
+from gites.core.interfaces import IHebergementsFetcher, ISearchRequest
 
 
 class MoteurRecherche(BrowserView):
@@ -16,6 +17,7 @@ class MoteurRecherche(BrowserView):
         """
         Basic search
         """
+        zope.interface.alsoProvides(self.request, ISearchRequest)
         return self.search_results()
 
     def getHebergementByNameOrPk(self, reference):
@@ -41,6 +43,7 @@ class MoteurRecherche(BrowserView):
                 portal = getToolByName(self.context, 'portal_url').getPortalObject()
                 return getMultiAdapter((portal, self.request),
                                        name="unknown_gites")()
+        zope.interface.alsoProvides(self.request, ISearchRequest)
         return self.search_results()
 
     def hebergementsCount(self):

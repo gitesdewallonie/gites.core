@@ -1,19 +1,22 @@
 # -*- coding: utf-8 -*-
 from datetime import date
 from dateutil.relativedelta import relativedelta
-from five.formlib import formbase
-from Products.CMFCore.utils import getToolByName
-from gites.locales import GitesMessageFactory as _
-
-from .interfaces import (ISearchHebergement,
-                         IBasicSearchHebergement,
-                         IBasicSearchHebergementTooMuch,
-                         ISearchHebergementTooMuch)
-from zope.formlib import form
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from z3c.sqlalchemy import getSAWrapper
 from sqlalchemy import and_, or_, select
+
+from z3c.sqlalchemy import getSAWrapper
+from zope.formlib import form
+from five.formlib import formbase
+
 import plone.z3cform.z2
+from Products.CMFCore.utils import getToolByName
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+
+from gites.locales import GitesMessageFactory as _
+from gites.core.interfaces import ISearchRequest
+from gites.core.browser.interfaces import (ISearchHebergement,
+                                           IBasicSearchHebergement,
+                                           IBasicSearchHebergementTooMuch,
+                                           ISearchHebergementTooMuch)
 
 
 class SearchHebergement(formbase.PageForm):
@@ -278,3 +281,6 @@ class SearchHosting(layout.FormWrapper, grok.View):
     grok.require('zope2.Public')
 
     form = SearchHostingForm
+
+    def update(self):
+        zope.interface.alsoProvides(ISearchRequest, self.request)

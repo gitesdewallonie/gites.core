@@ -8,6 +8,7 @@ Copyright by Affinitic sprl
 $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
 from zope.interface import Interface
+from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.viewlet.interfaces import IViewletManager
 
 
@@ -26,6 +27,10 @@ class IHebergementsFetcher(Interface):
         """
         return a list of hebergement
         """
+
+
+class ISearchRequest(IBrowserRequest):
+    pass
 
 
 class IMapViewletManager(IViewletManager):

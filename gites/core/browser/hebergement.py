@@ -13,7 +13,7 @@ from urlparse import urljoin
 from zope.traversing.browser.interfaces import IAbsoluteURL
 from Products.Five import BrowserView
 from Acquisition import aq_inner
-from zope.interface import implements
+from zope.interface import alsoProvides, implements
 from zope.component import queryMultiAdapter
 from zope.component import getUtility
 from Products.CMFCore.utils import getToolByName
@@ -29,6 +29,7 @@ from gites.db.content.hebergement.metadata import Metadata
 
 from gites.map.browser.interfaces import IMappableView
 
+from gites.core.interfaces import ISearchRequest
 from gites.core.browser.interfaces import (IHebergementView,
                                            IHebergementIconsView)
 
@@ -54,6 +55,7 @@ class HebergementView(BrowserView):
     def __init__(self, context, request):
         super(HebergementView, self).__init__(context, request)
         super(BrowserView, self).__init__(context, request)
+        alsoProvides(self.request, ISearchRequest)
 
     def calendarJS(self):
         """
