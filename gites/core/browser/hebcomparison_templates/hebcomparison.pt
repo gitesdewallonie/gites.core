@@ -1,18 +1,37 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xml:lang="en" lang="en"
-      metal:use-macro="here/main_template/macros/master"
       i18n:domain="gites">
-<head></head>
-<body metal:fill-slot="wrapper">
+<head>
+    <script type="text/javascript"
+            charset="utf-8"
+            src=""
+            tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++prototype16.js"></script>
+
+    <script type="text/javascript"
+            charset="utf-8"
+            src=""
+            tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gitetimeframe.js"></script>
+
+    <script type="text/javascript"
+            charset="utf-8"
+            tal:content="view/calendarJS"></script>
+
+    <link rel="stylesheet" href="" type="text/css" media="screen" title="timeframe" charset="utf-8"
+          tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++timeframe.css"/>
+</head>
+<body>
 <style>
-body { background-color: #FFF; }
 .center { text-align: center; }
 td.comparison-4 { width: 181px; }
 td.comparison-3 { width: 241px; }
-td.comparison-2 { width: 364px; }
+td.comparison-2 { width: 362px; }
 .icons-on table.comparison td {
   line-height: 1em;
   padding: 3px 3px;
+}
+table.comparison {
+  border: none;
+  width: 100%;
 }
 table.comparison thead { display: none; }
 table.comparison tbody tr.header td.description {
@@ -43,8 +62,38 @@ table.comparison span.icon {
 }
 table.comparison span.false { color: #CF000E; }
 table.comparison span.true { color: #265902; }
+
+table.comparison td div.timeframe_calendar caption {
+  display: block;
+  width: 100%;
+}
+table.comparison td div.timeframe_calendar thead,
+table.comparison td div.timeframe_calendar tbody {
+  display: block;
+}
+table.comparison td div.timeframe_calendar div.timeframe_menu {
+  margin: 5px 0;
+}
+table.comparison td div.timeframe_calendar td,
+table.comparison td div.timeframe_calendar th {
+  background-color: #FFF;
+  text-align: center;
+  border: none;
+  padding: 2px 1px;
+}
+table.comparison td div.timeframe_calendar th {
+  background: none repeat scroll 0 0 #222222;
+  color: #EEEEEE;
+}
+table.comparison td div.timeframe_calendar td.indisp {
+  background-color: red;
+}
+table.comparison td div.timeframe_calendar td.unselectable,
+table.comparison td div.timeframe_calendar td.beyond {
+  background-color: #AAA;
+}
 </style>
-<div>
+<div class="comparator">
   <div tal:content="structure view/get_table" />
 </div>
 </body>
