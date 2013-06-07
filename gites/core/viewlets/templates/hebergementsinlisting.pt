@@ -58,6 +58,12 @@
                     <a href=""
                        tal:attributes="href hebergement/@@url_heb"></a>
                 </div>
+                <div class="comparer">
+                  <input type="checkbox"
+                         value=""
+                         name="heb-comparison:list"
+                         tal:attributes="value hebergement/heb_pk" />
+                </div>
             </div>
             <div id="vignette">
                 <a href=""
@@ -136,3 +142,10 @@
     </div><!--repeat-->
     <div id="break-float"></div>
 <div><!--listing-result-block-->
+<input type="button"
+       value="comparer"
+       id="comparison-button"
+       src="@@hebergement-comparison?heb_pk="
+       ng-click="compareHeb()" />
+
+<div id="overlay-container"></div>
