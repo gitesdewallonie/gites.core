@@ -12,7 +12,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from gites.locales import GitesMessageFactory as _
-from gites.core.interfaces import ISearchRequest
+from gites.core.interfaces import IMapRequest
 from gites.core.browser.interfaces import (ISearchHebergement,
                                            IBasicSearchHebergement,
                                            IBasicSearchHebergementTooMuch,
@@ -283,4 +283,4 @@ class SearchHosting(layout.FormWrapper, grok.View):
     form = SearchHostingForm
 
     def update(self):
-        zope.interface.alsoProvides(ISearchRequest, self.request)
+        zope.interface.alsoProvides(IMapRequest, self.request)

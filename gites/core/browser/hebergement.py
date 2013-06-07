@@ -29,7 +29,7 @@ from gites.db.content.hebergement.metadata import Metadata
 
 from gites.map.browser.interfaces import IMappableView
 
-from gites.core.interfaces import ISearchRequest
+from gites.core.interfaces import IMapRequest
 from gites.core.browser.interfaces import (IHebergementView,
                                            IHebergementIconsView)
 
@@ -55,7 +55,7 @@ class HebergementView(BrowserView):
     def __init__(self, context, request):
         super(HebergementView, self).__init__(context, request)
         super(BrowserView, self).__init__(context, request)
-        alsoProvides(self.request, ISearchRequest)
+        alsoProvides(self.request, IMapRequest)
 
     def calendarJS(self):
         """

@@ -29,7 +29,7 @@ class IHebergementsFetcher(Interface):
         """
 
 
-class ISearchRequest(IBrowserRequest):
+class IMapRequest(IBrowserRequest):
     pass
 
 
