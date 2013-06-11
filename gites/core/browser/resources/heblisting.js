@@ -1,13 +1,13 @@
 'use strict';
 
-$.fn.spin = function (opts) {
+jQuery.fn.spin = function (opts) {
     this.each(function () {
-        var $this = $(this),
+        var $this = jQuery(this),
             spinner = $this.data('spinner');
 
         if (spinner) spinner.stop();
         if (opts !== false) {
-            opts = $.extend({
+            opts = jQuery.extend({
                 color: $this.css('color')
             }, opts);
             spinner = new Spinner(opts).spin(this);
@@ -17,11 +17,11 @@ $.fn.spin = function (opts) {
     return this;
 };
 
-$.fn.serializeObject = function()
+jQuery.fn.serializeObject = function()
 {
     var o = {};
     var a = this.serializeArray();
-    $.each(a, function() {
+    jQuery.each(a, function() {
         if (o[this.name] !== undefined) {
             if (!o[this.name].push) {
                 o[this.name] = [o[this.name]];
@@ -88,7 +88,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
         $scope.listing_url = baseurl + 'update_listing'; // The url of our search
         $scope.map_listing_url = baseurl + 'update_map_listing'; // The url of our search
         $scope.keywords = {};
-        $scope.formData = $('#hiddenForm').serializeObject();
+        $scope.formData = jQuery('#hiddenForm').serializeObject();
         if ( $scope.reference != $scope.formData.reference) {
             $scope.page = 0;
         }
@@ -117,14 +117,14 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
     }
 
     $scope.updatePostData = function() {
-        $scope.postData = $.extend($scope.formData, {'keywords': selectedKeywords(),
+        $scope.postData = jQuery.extend($scope.formData, {'keywords': selectedKeywords(),
                                                      'page': $scope.page,
                                                      'sort': $scope.sort,
                                                      'reference': $scope.reference});
     }
 
     var serializeToHTTPPost = function(data){
-        return $.param(data);
+        return jQuery.param(data);
     }
 
     var httpPostconfig = {
@@ -144,7 +144,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 
     $scope.update = function() {
         $scope.updatePostData();
-        if ( ! $.isEmptyObject($scope.keywords) ) {
+        if ( ! jQuery.isEmptyObject($scope.keywords) ) {
             $cookieStore.put('listing_keywords', $scope.keywords);
         };
         $cookieStore.put('listing_sort', $scope.sort);
@@ -172,8 +172,14 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 
         jQuery('#overlay-comparator').overlay({
             onBeforeLoad: function() {
+                this.getOverlay().height('34px');
                 var wrap = this.getOverlay().find(".contentWrap");
                 wrap.load(comparator_url + comparison_values.join('&heb_pk='));
+            },
+            onLoad: function() {
+                if (this.getOverlay().find('.comparator').height() > 100) {
+                    this.getOverlay().height('80%');
+                }
             },
         });
         jQuery('#overlay-comparator').overlay().load();
@@ -234,7 +240,7 @@ app.config(function ($httpProvider) {
             trail: 66, // Afterglow percentage
             shadow: true // Whether to render a shadow
         };
-        $("#spin").show().spin(opts);
+        jQuery("#spin").show().spin(opts);
             return data;
         };
         $httpProvider.defaults.transformRequest.push(spinnerFunction);
@@ -242,21 +248,12 @@ app.config(function ($httpProvider) {
     .factory('myHttpInterceptor', function ($q, $window) {
         return function (promise) {
             return promise.then(function (response) {
-		$("#spin").hide()
+		jQuery("#spin").hide()
                 return response;
 
             }, function (response) {
-		$("#spin").hide()
+		jQuery("#spin").hide()
                 return $q.reject(response);
             });
         };
     })
-
-
-jQuery('div#listing-result-block').ready(function($) {
-
-  $('input#comparison-button').click(function() {
-    alert('bla');
-  });
-
-});
