@@ -13,6 +13,8 @@
                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/scripts/spin.js"></script>
         <script type="text/javascript"
                 tal:attributes="src string:$portal_url/++resource++gdwcore/heblisting.js"></script>
+        <script type="text/javascript"
+                tal:attributes="src string:$portal_url/++resource++gdwcore/ui-bootstrap-0.3.0.min.js"></script>
       </metal:javascript_head_slot>
 
       <metal:css fill-slot="css_slot">

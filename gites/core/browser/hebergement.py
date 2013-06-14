@@ -24,7 +24,7 @@ from plone import api
 from affinitic.db.cache import FromCache
 from affinitic.pwmanager.interfaces import IPasswordManager
 
-from gites.db.content import Hebergement
+from gites.db.content import Hebergement, TypeHebergement, LinkHebergementEpis
 from gites.db.content.hebergement.metadata import Metadata
 
 from gites.map.browser.interfaces import IMappableView
@@ -248,6 +248,72 @@ class HebergementView(BrowserView):
         Get embedly generated iframe for video
         """
         return getIframeForVideo(videoUrl)
+
+
+    def getGroupementByPk(self):
+        import json
+        pk = self.request.form['pk']
+        wrapper = getSAWrapper('gites_wallons')
+        session = wrapper.session
+        query = session.query(Hebergement.heb_nom.label('heb_nom'),
+                              Hebergement.heb_cgt_nbre_chmbre.label('heb_cgt_nbre_chmbre'),
+                              Hebergement.heb_cgt_cap_min.label('heb_cgt_cap_min'),
+                              Hebergement.heb_cgt_cap_max.label('heb_cgt_cap_max'),
+                              TypeHebergement.type_heb_id.label('heb_type'),
+                              TypeHebergement.type_heb_type.label('heb_type_type'),
+                              TypeHebergement.type_heb_code.label('heb_type_code'),
+                              Hebergement.heb_code_gdw.label('heb_code_gdw'),
+                              Hebergement.heb_pk.label('heb_pk'),
+                              LinkHebergementEpis.heb_nombre_epis.label('heb_nombre_epis'),
+                              Hebergement.heb_localite.label('heb_localite'),
+                              Hebergement.heb_gps_long.label('heb_gps_long'),
+                              Hebergement.heb_gps_lat.label('heb_gps_lat'),
+                              Hebergement.heb_groupement_pk.label('heb_groupement_pk')
+                              )
+        query = query.join('proprio').join('epis').join('type')
+        query = query.filter(Hebergement.heb_groupement_pk == pk)
+        hebList = []
+        for heb in query.all():
+            hebList.append({
+                            'heb_nom':heb.heb_nom,
+                            'type_heb':heb.heb_type_type,
+                            'heb_type':heb.heb_type,
+                            'heb_type_code':heb.heb_type_code,
+                            'heb_code_gdw':heb.heb_code_gdw,
+                            'heb_localite':heb.heb_localite,
+                            'heb_nombre_epis':heb.heb_nombre_epis,
+                            'heb_cgt_cap_min':heb.heb_cgt_cap_min,
+                            'heb_cgt_cap_max':heb.heb_cgt_cap_max,
+                            'heb_cgt_nbre_chmbre':heb.heb_cgt_nbre_chmbre,
+                            'heb_fumeur':self._get_metadata('heb_fumeur',heb.heb_pk),
+                            'heb_animal':self._get_metadata('heb_animal',heb.heb_pk),
+                            'url_heb':self._get_url(heb.heb_pk),
+                            })
+        return json.dumps(hebList)
+
+    def _get_metadata(self, metadata_id, heb_pk):
+        from gites.db import session
+        from gites.db.content.hebergement.linkhebergementmetadata import LinkHebergementMetadata
+        session = session()
+        query = session.query(LinkHebergementMetadata.link_met_value)
+        query = query.options(FromCache('gdw'))
+        query = query.join('hebergement').join('metadata_info')
+        query = query.filter(Hebergement.heb_pk == heb_pk)
+        return query.filter(Metadata.met_id == metadata_id).scalar()
+
+    def _get_url(self, pk):
+        context = Hebergement.first(heb_pk=pk)
+        portal = api.portal.get()
+        container = portal.hebergement
+        commune = context.commune.com_id
+        language = self.request.get('LANGUAGE', 'en')
+        typeHeb = context.type.getId(language)
+        hebId = context.heb_id
+        return "%s/%s/%s/%s" % (container.absolute_url(),
+                                typeHeb,
+                                commune,
+                                hebId,
+                                )
 
 
 class HebergementExternCalendarView(HebergementView):

@@ -6,6 +6,15 @@
   <include file="hebergement.zcml"/>
   <grok:grok package="."/>
 
+
+  <browser:page
+      for="*"
+      name="getGroupementByPk"
+      attribute="getGroupementByPk"
+      class=".hebergement.HebergementView"
+      permission="zope.Public"
+      />
+
    <browser:page
       name="url_heb"
       for="*"
