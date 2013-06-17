@@ -142,6 +142,14 @@
       permission="zope.Public"
       class=".typehebcommune.TypeHebCommuneView"/>
 
+   <browser:page
+      for="gites.db.interfaces.IHebergement"
+      name="plone_layout"
+      permission="zope.Public"
+      class=".layout.LayoutPolicy"
+      allowed_interface="plone.app.layout.globals.interfaces.ILayoutPolicy"
+      />
+
   <utility
       name="gitescontent.typehebergement"
       component=".vocabulary.TypeHebVocabularyFactory"/>
