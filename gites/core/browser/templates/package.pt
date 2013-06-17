@@ -93,6 +93,8 @@
         <div tal:replace="structure text"></div>
     </div>
 
+    <div class="scroller_endanchor"></div>
+
 </div><!--metal-->
 </body>
 </html>
