@@ -25,6 +25,8 @@ def setupgites(context):
 #    setupProprioPlacefulWorkflow(portal)
     disableGlobalAddingForContentType(portal, 'GeoLocation')
     createLocalFS(portal)
+    ideesSejourFolder = getattr(portal, 'idee-sejour')
+    changeFolderView(portal, ideesSejourFolder, 'idee_sejour_root')
 
 
 def createLocalFS(portal):
@@ -37,6 +39,21 @@ def createLocalFS(portal):
     if 'photos_proprio_tmp' not in portal.objectIds():
         manage_addLocalFS(portal, 'photos_proprio_tmp', 'Photos proprio temporaires',
                           tempfile.gettempdir())
+
+
+def addViewToType(portal, typename, templatename):
+    pt = getToolByName(portal, 'portal_types')
+    foldertype = getattr(pt, typename)
+    available_views = list(foldertype.getAvailableViewMethods(portal))
+    if not templatename in available_views:
+        available_views.append(templatename)
+        foldertype.manage_changeProperties(view_methods=available_views)
+
+
+def changeFolderView(portal, folder, viewname):
+    addViewToType(portal, 'Folder', viewname)
+    if folder.getLayout() != viewname:
+        folder.setLayout(viewname)
 
 
 def disableGlobalAddingForContentType(portal, contentTypeName):
