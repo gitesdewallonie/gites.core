@@ -8,6 +8,8 @@ from plone.i18n.normalizer.interfaces import IIDNormalizer
 from plone.app.layout.globals import layout as base
 from plone.app.layout.navigation.interfaces import INavigationRoot
 
+from gites.db.interfaces import IHebergement
+
 
 class LayoutPolicy(base.LayoutPolicy):
     """
@@ -51,5 +53,13 @@ class LayoutPolicy(base.LayoutPolicy):
             body_class += " anonymous"
         else:
             body_class += " logged-in"
+
+        # See if we are on a room or gites to add a specific CSS class
+        if IHebergement.providedBy(self.context):
+            hebType = self.context.type.type_heb_type
+            if hebType == u'gite':
+                body_class += " gite"
+            elif hebType == u'chambre':
+                body_class += " chambre"
 
         return body_class
