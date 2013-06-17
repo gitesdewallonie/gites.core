@@ -26,18 +26,13 @@
 
 <body>
 <div metal:fill-slot="main">
-    <div id="aside">
-        <div class="scroller_anchor"></div>
-        <div id="aside-container">
-            <div id="aside-content" class="scroller">
-              <h1>
-                <span tal:content="view/typeHebergementName"/>
-                <span i18n:translate="in_location">in</span>
-                <span tal:content="view/communeName"/>
-              </h1>
-            </div>
-        </div>
-    </div>
+
+    <h1>
+      <span tal:replace="view/typeHebergementName"/>
+      <span i18n:translate="in_location">in</span>
+      <span tal:replace="view/communeName"/>
+    </h1>
+
     <div id="viewlet-above-content"
          tal:content="structure provider:plone.abovecontenttitle">
     </div>
