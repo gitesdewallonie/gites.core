@@ -36,6 +36,9 @@ class HebergementUpdateListing(grok.View):
         return u'\n'.join(rendered_viewlets)
 
 
+LINKS_COUNT = 5
+
+
 class HebergementListingForm(grok.Viewlet):
     grok.order(10)
     grok.context(IPackage)
@@ -118,18 +121,35 @@ class HebergementsInListing(grok.Viewlet):
     def count(self):
         return len(self._fetcher)
 
+    def next_items(self):
+        next_size = LINKS_COUNT + (LINKS_COUNT- len(self.previous_items()))
+        return range(self.current_page() + 1, min(self.current_page() + next_size,
+                                                  self.page_counts()))
+    def current_page(self):
+        return self._fetcher.selected_page()
+
+    def current_item(self):
+        return self._fetcher.selected_page() * self._fetcher.batch_size
+
+    def previous_items(self):
+        def positives(items):
+            return [x for x in items if x >= 0]
+        return positives(range(self.current_page() - LINKS_COUNT, self.current_page() ))
+
+    def page_counts(self):
+        return self.count() / self._fetcher.batch_size + 1
+
     def pages(self):
-        counts = self.count() / self._fetcher.batch_size + 1
-        return range(counts)
+        return range(self.page_counts())
 
     def show_batch(self):
-        return len(self.pages()) > 1
+        return len(self.previous_items()) > 0 or len(self.next_items()) > 0
 
     def batch_start(self):
         return self._fetcher.batch_start
 
     def batch_end(self):
-        return self._fetcher.batch_end
+        return min(self._fetcher.batch_end, self.count())
 
     def is_last_page(self):
         return self._fetcher.selected_page() == len(self.pages()) - 1
