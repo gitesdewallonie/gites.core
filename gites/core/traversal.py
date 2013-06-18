@@ -38,11 +38,12 @@ class HebergementFolderTraversable(DefaultPublishTraverse):
         """
         # The first name might denote a content object to be acquired,
         # e.g. an image. In that case we're done.
-        try:
-            return super(HebergementFolderTraversable,
-                         self).publishTraverse(request, name)
-        except AttributeError:
-            pass
+        if name not in self.context.known_types_id:
+            try:
+                return super(HebergementFolderTraversable,
+                            self).publishTraverse(request, name)
+            except AttributeError:
+                pass
 
         self.request = request
 
