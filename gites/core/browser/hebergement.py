@@ -200,15 +200,19 @@ class HebergementView(BrowserView):
         list = self.getHebMetadatasByType('autorisations')
         for item in list:
             if item['id'] == 'heb_animal':
-                return {'id': 'heb_confort_animal'}
-        return {'id': 'heb_confort_no_animal'}
+                return {'id': 'heb_confort_animal',
+                        'title': item['title']}
+        return {'id': 'heb_confort_no_animal',
+                'title': u'Animaux de compagnie non autorisés'}
 
     def getFumeur(self):
         list = self.getHebMetadatasByType('autorisations')
         for item in list:
             if item['id'] == 'heb_fumeur':
-                return {'id': 'heb_confort_fumeur'}
-        return {'id': 'heb_confort_no_fumeur'}
+                return {'id': 'heb_confort_fumeur',
+                        'title': item['title']}
+        return {'id': 'heb_confort_no_fumeur',
+                'title': u'Hébergement non fumeur'}
 
     def render(self):
         return self.template()
@@ -249,7 +253,6 @@ class HebergementView(BrowserView):
         """
         return getIframeForVideo(videoUrl)
 
-
     def getGroupementByPk(self):
         import json
         pk = self.request.form['pk']
@@ -275,20 +278,19 @@ class HebergementView(BrowserView):
         hebList = []
         for heb in query.all():
             hebList.append({
-                            'heb_nom':heb.heb_nom,
-                            'type_heb':heb.heb_type_type,
-                            'heb_type':heb.heb_type,
-                            'heb_type_code':heb.heb_type_code,
-                            'heb_code_gdw':heb.heb_code_gdw,
-                            'heb_localite':heb.heb_localite,
-                            'heb_nombre_epis':heb.heb_nombre_epis,
-                            'heb_cgt_cap_min':heb.heb_cgt_cap_min,
-                            'heb_cgt_cap_max':heb.heb_cgt_cap_max,
-                            'heb_cgt_nbre_chmbre':heb.heb_cgt_nbre_chmbre,
-                            'heb_fumeur':self._get_metadata('heb_fumeur',heb.heb_pk),
-                            'heb_animal':self._get_metadata('heb_animal',heb.heb_pk),
-                            'url_heb':self._get_url(heb.heb_pk),
-                            })
+                'heb_nom': heb.heb_nom,
+                'type_heb': heb.heb_type_type,
+                'heb_type': heb.heb_type,
+                'heb_type_code': heb.heb_type_code,
+                'heb_code_gdw': heb.heb_code_gdw,
+                'heb_localite': heb.heb_localite,
+                'heb_nombre_epis': heb.heb_nombre_epis,
+                'heb_cgt_cap_min': heb.heb_cgt_cap_min,
+                'heb_cgt_cap_max': heb.heb_cgt_cap_max,
+                'heb_cgt_nbre_chmbre': heb.heb_cgt_nbre_chmbre,
+                'heb_fumeur': self._get_metadata('heb_fumeur', heb.heb_pk),
+                'heb_animal': self._get_metadata('heb_animal', heb.heb_pk),
+                'url_heb': self._get_url(heb.heb_pk)})
         return json.dumps(hebList)
 
     def _get_metadata(self, metadata_id, heb_pk):
@@ -395,10 +397,10 @@ class HebergementIconsView(BrowserView):
         url = getToolByName(self.context, 'portal_url')()
         if self.context.type.type_heb_code in ['MV']:
             for i in range(number):
-                result.append('<img src="1_clef.png" src="%s1_clef.png"/>' % url)
+                result.append('<img src="1_clef.png" alt="Clef" src="%s1_clef.png"/>' % url)
         else:
             for i in range(number):
-                result.append('<img src="1_epis.gif" src="%s1_epis.gif"/>' % url)
+                result.append('<img src="1_epis.gif" alt="Epis" src="%s1_epis.gif"/>' % url)
         return " ".join(result)
 
     def getEpis(self):

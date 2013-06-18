@@ -7,7 +7,8 @@
             <a tal:attributes="href viewlet/getAllDerniereMinuteLink" i18n:translate="derniere_minute">Dernière minute</a>
         </h3>
         <a tal:attributes="href hebergement/@@url">
-            <img tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/getVignette}"/>
+            <img alt=""
+                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/getVignette}"/>
         </a>
         <span class="bordeaux" tal:replace="offre/pretty_title_or_id" /><br>
         <p class="red"><span tal:replace="python:viewlet.getNiceEventStartDate(offre)" /> &rarr; <span tal:replace="python:viewlet.getNiceEventEndDate(offre)" /></p>

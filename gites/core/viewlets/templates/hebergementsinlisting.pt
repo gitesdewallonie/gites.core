@@ -75,6 +75,7 @@
           <a href=""
              tal:attributes="href hebergement/@@url_heb">
             <img src=""
+                 alt=""
                  width="181"
                  height="115"
                  tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/heb_code_gdw}00.jpg" />
@@ -84,6 +85,7 @@
           <div class="digit"
                tal:attributes="id string:map_picto_${hebergement/heb_pk}_${heb_view/heb_type}">
             <img src=""
+                 alt=""
                  tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/${type_heb}_${repeat/hebergement/number}.png" />
           </div>
           <div tal:condition="viewlet/isGeoLocalized"
@@ -175,6 +177,7 @@
                 <a href=""
                    tal:attributes="href string:{{groupe.url_heb}}">
                   <img src=""
+                       alt=""
                        width="181"
                        height="115"
                        tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/{{groupe.heb_code_gdw}}00.jpg" />
