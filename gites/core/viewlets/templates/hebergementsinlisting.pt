@@ -92,11 +92,12 @@
                   tal:content="string: ${dist} km">5Km</span>
           </div>
           <div id="nom-hebergement">
-            <tal:groupe condition="python:heb_view.heb_type == 'gite-groupes'">
-              <a tal:attributes="ng-click string:getGroupement(${hebergement/heb_groupement_pk})"
+            <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
+              <a style="cursor:pointer"
+                 tal:attributes="ng-click string:getGroupement(${hebergement/heb_groupement_pk})"
                  tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
             </tal:groupe>
-            <tal:groupe condition="python:heb_view.heb_type != 'gite-groupes'">
+            <tal:groupe condition="python:heb_view.heb_type() != 'gite-groupes'">
               <a href=""
                  tal:attributes="href hebergement/@@url_heb"
                  tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
@@ -158,7 +159,7 @@
         <!--info-bloc-inf-->
       </div>
       <!--attributes-->
-      <tal:groupe condition="python:heb_view.heb_type == 'gite-groupes'">
+      <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
         <div collapse="!isCollapsed">
           <div data-ng-repeat="groupe in data">
             <div class="{{(groupe.type_heb == 'gite') && 'hebergement-gite-listing-detail' || 'hebergement-chambre-listing-detail'}}">
@@ -180,11 +181,11 @@
                 </a>
               </div>
               <div id="info-bloc-sup">
-                <div class="digit"
-                     tal:attributes="id string:map_picto_{{groupe.heb_pk}}">
-                  <img src=""
-                       tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/{{groupe.type_heb}}_${repeat/hebergement/number}.png" />
-                </div>
+                <!--                <div class="digit"-->
+                <!--                     tal:attributes="id string:map_picto_{{groupe.heb_pk}}">-->
+                <!--                  <img src=""-->
+                <!--                       tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/{{groupe.type_heb}}_${repeat/hebergement/number}.png" />-->
+                <!--                </div>-->
                 <!--                <div tal:condition="viewlet/isGeoLocalized"-->
                 <!--                     id="distance">-->
                 <!--                     <span tal:define="dist python:viewlet.heb_distance(hebergement)"-->
