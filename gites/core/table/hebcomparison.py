@@ -31,14 +31,17 @@ class HebComparisonTable(table.Table):
     sortOn = None
     startBatchingAt = 9999
 
+    def __init__(self, context, request, heb_pks):
+        super(HebComparisonTable, self).__init__(context, request)
+        self.heb_pks = heb_pks
+
     def update(self):
         """ Adds css classes for the hosting type """
         super(HebComparisonTable, self).update()
         query = session().query(mappers.Hebergement.heb_pk,
                                 mappers.TypeHebergement.type_heb_code)
         query = query.join('type')
-        query = query.filter(
-            mappers.Hebergement.heb_pk.in_(self.request.get('heb_pk')))
+        query = query.filter(mappers.Hebergement.heb_pk.in_(self.heb_pks))
         query = query.order_by(mappers.Hebergement.heb_pk)
         for idx, hosting in enumerate(query.all()):
             column = self.columns[idx + 1]
@@ -210,7 +213,7 @@ class HebComparisonValues(value.ValuesMixin,
         for c in self.heb_columns + self.heb_add_columns:
             query = query.add_column(getattr(mappers.Hebergement, c))
         query = query.filter(
-            mappers.Hebergement.heb_pk.in_(self.request.get('heb_pk')))
+            mappers.Hebergement.heb_pk.in_(self.table.heb_pks))
         return query.order_by(mappers.Hebergement.heb_pk)
 
     def add_metadata_columns(self):
