@@ -89,10 +89,10 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
         $scope.map_listing_url = baseurl + 'update_map_listing'; // The url of our search
         $scope.keywords = {};
         $scope.formData = jQuery('#hiddenForm').serializeObject();
+        $scope.reference = $scope.formData.reference;
         if ( $scope.reference != $scope.formData.reference) {
             $scope.page = 0;
         }
-        $scope.reference = $scope.formData.reference;
         var page_cookie = $cookieStore.get('listing_keywords');
         if ( page_cookie ) {
             $scope.keywords = page_cookie;
