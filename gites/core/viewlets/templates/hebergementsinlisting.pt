@@ -77,17 +77,17 @@
                  tal:attributes="href hebergement/@@url_heb"></a>
             </tal:groupe>
           </div>
-          <div class="comparer">
+          <div class="comparer" tal:condition="python:heb_view.heb_type() != 'gite-groupes'">
             <input type="checkbox"
                    value=""
                    name="heb-comparison:list"
                    id=""
                    class="heb-comparaison-check"
-                   title="selectionner pour comparer"
-                   i-18n:translate="selectionner-pour-comparer"
                    tal:attributes="value hebergement/heb_pk;
                                    id repeat/hebergement/number" />
             <label for=""
+                   title="selectionner pour comparer"
+                   i18n:attributes="title selectionner-pour-comparer"
                    tal:attributes="for repeat/hebergement/number"></label>
           </div>
         </div>
