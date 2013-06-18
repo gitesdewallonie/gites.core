@@ -45,7 +45,7 @@ table.comparison tbody tr.header td {
   padding: 10px 3px;
 }
 table.comparison tbody tr.header td.gite  {
-  background-color: rgba(210, 254, 255, 0.3);
+  background-color: rgba(217, 255, 178, 0.3);
   background-image: url("/++theme++gites.theme/images/bg_listing_gite.png");
   color: #265902;
 }
@@ -92,9 +92,20 @@ table.comparison td div.timeframe_calendar td.unselectable,
 table.comparison td div.timeframe_calendar td.beyond {
   background-color: #AAA;
 }
+.comparator div.error {
+  padding: 0.5em;
+  background-color: #FFDDCC;
+  border: 1px solid #DD0000;
+}
 </style>
-<div class="comparator">
-  <div tal:content="structure view/get_table" />
+<div class="comparator"
+     tal:define="validation view/validate">
+  <tal:block condition="validation">
+    <div tal:content="structure view/get_table" />
+  </tal:block>
+  <tal:block condition="not: validation">
+    <div class="error" tal:content="view/error" />
+  </tal:block>
 </div>
 </body>
 

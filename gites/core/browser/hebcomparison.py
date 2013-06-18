@@ -7,12 +7,16 @@ Licensed under the GPL license, see LICENCE.txt for more details.
 Copyright by Affinitic sprl
 """
 
+import sqlalchemy as sa
+
 import zope.interface
 from five import grok
 
+from gites.db import content as mappers, session
+from gites.locales import GitesMessageFactory as _
+
 from gites.core import interfaces
 from gites.core.table import hebcomparison
-from gites.db import content as mappers, session
 
 
 class HebComparisonView(grok.View):
@@ -21,10 +25,20 @@ class HebComparisonView(grok.View):
     grok.require('zope2.View')
     grok.template('hebcomparison')
 
+    def update(self):
+        query = session().query(mappers.Hebergement.heb_pk)
+        query = query.join('proprio')
+        query = query.filter(sa.and_(
+            mappers.Hebergement.heb_pk.in_(self.request.get('heb_pk')),
+            mappers.Hebergement.heb_site_public == '1',
+            mappers.Proprio.pro_etat == True))
+        self.heb_pks = [heb.heb_pk for heb in query.all()]
+
     def get_table(self):
         """ Returns the render of the table """
         table = hebcomparison.HebComparisonTable(self.context,
-                                                 self.request)
+                                                 self.request,
+                                                 self.heb_pks)
         if len(self.request.get('heb_pk')) == 3:
             zope.interface.alsoProvides(
                 table, interfaces.IHebergementComparisonThree)
@@ -69,16 +83,42 @@ calsetup%(heb_pk)s = function() {
 }
 registerPloneFunction(calsetup%(heb_pk)s);"""
         content = ""
-        for heb_pk in self.request.get('heb_pk'):
-            if self.is_active_calendar(heb_pk) is False:
-                continue
+        for heb_pk in self.hebs_with_active_calendar:
             content = "%s%s" % (content, calendar_js % {
                 'heb_pk': heb_pk,
                 'language': self.request.get('LANGUAGE', 'en')})
         return content
 
-    def is_active_calendar(self, heb_pk):
-        query = session().query(mappers.Hebergement.heb_calendrier_proprio)
-        query = query.filter(mappers.Hebergement.heb_pk == heb_pk)
-        result = query.first()
-        return getattr(result, 'heb_calendrier_proprio', None) == 'actif'
+    @property
+    def hebs_with_active_calendar(self):
+        """ Returns the heb_pk for the heb who have an active calendar """
+        query = session().query(mappers.Hebergement.heb_pk)
+        query = query.filter(sa.and_(
+            mappers.Hebergement.heb_pk.in_(self.heb_pks),
+            mappers.Hebergement.heb_calendrier_proprio == 'actif'))
+        return [heb.heb_pk for heb in query.all()]
+
+    def validate(self):
+        if len(self.heb_pks) < 2:
+            self.error = _(u'compare_less_than_2')
+            return False
+        if len(self.heb_pks) > 4:
+            self.error = _(u'compare_more_than_4')
+            return False
+        if self._as_heb_mix_type is True:
+            self.error = _(u'compare_mix_type')
+            return False
+        return True
+
+    @property
+    def _as_heb_mix_type(self):
+        """ Verifies if there's multiple hosting type """
+        query = session().query(mappers.Hebergement.heb_pk,
+                                mappers.TypeHebergement.type_heb_code)
+        query = query.join('type')
+        query = query.filter(
+            mappers.Hebergement.heb_pk.in_(self.heb_pks))
+        types = []
+        for heb in query.all():
+            types.append(heb.type_heb_code in ('CH', 'MH', 'CHECR'))
+        return len(set(types)) > 1
