@@ -172,7 +172,7 @@
               <span tal:content="heb_view/nombre_epis"
                     class="nombre" />
               <span tal:omit-tag=""
-                    i18n:translate="x_epis">epis</span>
+                    i18n:translate="x_epis">&eacute;pis</span>
             </div>
           </div>
           <div id="icon-confort">
@@ -245,20 +245,18 @@
                 </div>
                 <div id="nbre-cle"
                      ng-show="groupe.heb_type_code == 'MV'">
-                  <div id="cle-nbre"
-                       i18n:translate="cles">
+                  <div id="cle-nbre">
                     <span class="nombre">{{groupe.heb_nombre_epis}}</span>
                     <span tal:omit-tag=""
-                          i18n:translate="x_cles">cles</span>
+                          i18n:translate="x_cles">cl&eacute;s</span>
                   </div>
                 </div>
                 <div id="nbre-epis"
                      ng-show="groupe.heb_type_code != 'MV'">
-                  <div id="epis-nbre"
-                       i18n:translate="epis">
+                  <div id="epis-nbre">
                     <span class="nombre">{{groupe.heb_nombre_epis}}</span>
                     <span tal:omit-tag=""
-                          i18n:translate="x_epis">epis</span>
+                          i18n:translate="x_epis">&eacute;pis</span>
                   </div>
                 </div>
                 <div id="icon-confort">
