@@ -31,7 +31,7 @@
            tal:condition="view/isPayable">
            <legend i18n:translate="commande">Commande</legend>
            <p i18n:translate="text_price">
-           Price: <span i18n:name="value_price" tal:content="view/getPrice"/> €</p>
+           Price: <span i18n:name="value_price" tal:content="view/getPrice"/> &euro;</p>
 
 
            <form action=""

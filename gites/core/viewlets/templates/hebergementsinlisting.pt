@@ -68,8 +68,14 @@
           <span tal:content="type_heb"
                 class="texte-vertical" />
           <div class="btn-loupe-listing">
-            <a href=""
-               tal:attributes="href hebergement/@@url_heb"></a>
+            <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
+              <a href=""
+                 tal:attributes="ng-click string:getGroupement(${hebergement/heb_groupement_pk})"></a>
+            </tal:groupe>
+            <tal:groupe condition="python:heb_view.heb_type() != 'gite-groupes'">
+              <a href=""
+                 tal:attributes="href hebergement/@@url_heb"></a>
+            </tal:groupe>
           </div>
           <div class="comparer">
             <input type="checkbox"
@@ -86,13 +92,24 @@
           </div>
         </div>
         <div id="vignette">
-          <a href=""
-             tal:attributes="href hebergement/@@url_heb">
-            <img src=""
-                 width="181"
-                 height="115"
-                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/heb_code_gdw}00.jpg" />
-          </a>
+            <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
+              <a href=""
+                 tal:attributes="ng-click string:getGroupement(${hebergement/heb_groupement_pk})">
+                <img src=""
+                     width="181"
+                     height="115"
+                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/heb_code_gdw}00.jpg" />
+              </a>
+            </tal:groupe>
+            <tal:groupe condition="python:heb_view.heb_type() != 'gite-groupes'">
+              <a href=""
+                 tal:attributes="href hebergement/@@url_heb">
+                <img src=""
+                     width="181"
+                     height="115"
+                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/heb_code_gdw}00.jpg" />
+              </a>
+            </tal:groupe>
         </div>
         <div id="info-bloc-sup">
           <div class="digit"
@@ -107,7 +124,7 @@
           </div>
           <div id="nom-hebergement">
             <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
-              <a style="cursor:pointer"
+              <a href=""
                  tal:attributes="ng-click string:getGroupement(${hebergement/heb_groupement_pk})"
                  tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
             </tal:groupe>
@@ -145,7 +162,7 @@
               <span tal:content="heb_view/nombre_epis"
                     class="nombre" />
               <span tal:omit-tag=""
-                    i18n:translate="x_cles">cles</span>
+                    i18n:translate="x_cles">cl&eacute;s</span>
             </div>
           </div>
           <div id="nbre-epis"
