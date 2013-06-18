@@ -36,13 +36,13 @@
         <div class="break-float"></div>
         <div id="proximite"
              tal:define="lang request/LANGUAGE | fr">
-            <input name="form.communes"
+            <input name="form.widgets.nearTo"
                    type="text"
                    autocomplete="off"
                    class=""
                    tal:attributes="class string:geocode_autocomplete_${lang}"
                    i18n:attributes="placeholder a_proximite_de"
-                   placeholder="A proximité de">
+                   placeholder="A proximité de"/>
         </div>
 
         <div>
