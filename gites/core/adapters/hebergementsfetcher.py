@@ -4,6 +4,7 @@ import geoalchemy
 from dateutil.relativedelta import relativedelta
 import sqlalchemy as sa
 from plone.memoize.instance import memoize
+from plone.memoize import forever
 from five import grok
 from zope.interface import Interface, directlyProvides
 from zope.publisher.interfaces.browser import IBrowserRequest
@@ -18,6 +19,13 @@ from gites.core.interfaces import IHebergementsFetcher, IHebergementInSearch
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from gites.core.browser.moteur_recherche import MoteurRecherche
 from gites.core.content.interfaces import IPackage
+from pygeocoder import Geocoder
+
+
+@forever.memoize
+def get_geocoded_location(location):
+    results = Geocoder.geocode(location)
+    return results
 
 
 class BaseHebergementsFetcher(grok.MultiAdapter):
@@ -232,6 +240,13 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         query = query.filter(~Hebergement.heb_pk.in_(busyHebPks))
         return query
 
+    def filter_location(self, location, query):
+        result = get_geocoded_location(location)[0]
+        point = 'POINT(%s %s)' % (result.coordinates[1],
+                                  result.coordinates[0])
+        point = geoalchemy.base.WKTSpatialElement(point, srid=3447)
+        return query.filter(Hebergement.heb_location.distance_sphere(point) < 10000)
+
     def apply_filters(self, query, group=False):
         reference = self.data.get('reference')
         capacity = self.data.get('capacityMin')
@@ -240,6 +255,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         show_chambres = heb_type and 'chambre-hote' in heb_type
         from_date = self.data.get('fromDate')
         to_date = self.data.get('toDate')
+        near_to = self.data.get('nearTo')
         if reference:
             reference = reference.strip()
             query = query.filter(sa.or_(sa.func.unaccent(Hebergement.heb_nom).ilike("%%%s%%" % reference),
@@ -250,6 +266,8 @@ class SearchHebFetcher(BaseHebergementsFetcher):
             query = self.filter_capacity(capacity, query)
         if from_date or to_date:
             query = self.filter_available_date(from_date, to_date, query)
+        if near_to:
+            query = self.filter_location(near_to, query)
         query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
                                      Proprio.pro_etat == True))
         return query
