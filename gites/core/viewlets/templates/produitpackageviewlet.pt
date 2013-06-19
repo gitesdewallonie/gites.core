@@ -33,9 +33,9 @@
             <a class="right carousel-control" href="#package-carousel" data-slide="next">&rsaquo;</a>
         </div>
 
-        <div id="zone-packperm-membre">
-              <div id="zone-package-permanent"
-                   tal:define="translate nocall:here/@@getTranslatedObjectUrl">
+        <div id="zone-packperm-membre"
+             tal:define="translate nocall:here/@@getTranslatedObjectUrl">
+              <div id="zone-package-permanent">
                   <ul>
                       <li id="mice">
                           <a href="" i18n:translate="mice" tal:attributes="href python:translate('idee-sejour/mice')">MICE</a>
@@ -48,10 +48,9 @@
                       </li>
                   </ul>
               </div>
-              <div id="bouton-devenir-membre"
-                   tal:define="translate nocall:here/@@getTranslatedObjectUrl">
+              <div id="bouton-devenir-membre">
                   <a href=""
-                     tal:attributes="href string:XXX"
+                     tal:attributes="href python:translate('devenir-gites-de-wallonie')"
                      i18n:translate="devenir_membre">Devenir membre</a>
               </div>
               <div class="break-float"></div>
