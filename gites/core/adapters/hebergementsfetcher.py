@@ -130,7 +130,7 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             query = session().query(Hebergement,
                                     TypeHebergement.type_heb_code.label('heb_type_code')
                                     )
-        query = query.join('type').join('commune').join('epis')
+        query = query.join('type').join('commune').join('epis').join('proprio')
         query = query.options(
             FromCache('gdw'))
         subquery = session().query(LinkHebergementMetadata.heb_fk)
@@ -147,6 +147,8 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             query = query.filter(Hebergement.heb_pk == subquery.c.heb_fk)
         if self.context.is_geolocalized():
             query = query.filter(Hebergement.heb_location.distance_sphere(point) < 1000 * user_range)
+        query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
+                                     Proprio.pro_etat == True))
         return query
 
     def order_by(self):
@@ -226,7 +228,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
 
     def filter_heb_type(self, show_gites, show_chambres, query):
         if show_gites:
-            return query.filter(TypeHebergement.type_heb_type == 'gites')
+            return query.filter(TypeHebergement.type_heb_type == 'gite')
         elif show_chambres:
             return query.filter(TypeHebergement.type_heb_type == 'chambre')
 

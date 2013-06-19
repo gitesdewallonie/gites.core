@@ -32,7 +32,7 @@ class HebComparisonView(grok.View):
             mappers.Hebergement.heb_pk.in_(self.request.get('heb_pk')),
             mappers.Hebergement.heb_site_public == '1',
             mappers.Proprio.pro_etat == True))
-        self.heb_pks = [heb.heb_pk for heb in query.all()]
+        self.heb_pks = set([heb.heb_pk for heb in query.all()])
 
     def get_table(self):
         """ Returns the render of the table """
