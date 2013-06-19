@@ -191,6 +191,15 @@ class RechercheListing(HebergementsInListing):
 class RechercheListing(HebergementsInListing):
     grok.context(IPloneSiteRoot)
 
+    def sort_items(self):
+        sortables = {
+            'pers_numbers': _("nombre_personnes", "Nombre de personne"),
+            'room_count': _("nombre-chambres", "Nombre de chambres"),
+            'epis': _(u"Epis")}
+        if self.isGeoLocalized():
+            sortables['distance'] = _('Distance')
+        return sortables
+
     def heb_distance(self, hebergement):
         return round(hebergement.distance / 1000, 2)
 
