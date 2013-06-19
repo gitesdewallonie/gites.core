@@ -111,15 +111,6 @@ class HebergementView(BrowserView):
         """
         return (self.context.heb_calendrier_proprio == 'actif')
 
-    def getCustomStylesheet(self):
-        """
-        Returns referer stylesheet URL where proprio can customize calendar
-        CSS
-        """
-        referer = self.request.get('HTTP_REFERER', None)
-        customCssUrl = urljoin(referer, 'calendar-custom.css')
-        return customCssUrl
-
     def redirectInactive(self):
         """
         Redirect if gites / proprio is not active
@@ -278,20 +269,20 @@ class HebergementView(BrowserView):
         hebList = []
         for heb in query.all():
             hebList.append({
-                            'heb_pk':heb.heb_pk,
-                            'heb_nom':heb.heb_nom,
-                            'type_heb':heb.heb_type_type,
-                            'heb_type':heb.heb_type,
-                            'heb_type_code':heb.heb_type_code,
-                            'heb_code_gdw':heb.heb_code_gdw,
-                            'heb_localite':heb.heb_localite,
-                            'heb_nombre_epis':heb.heb_nombre_epis,
-                            'heb_cgt_cap_min':heb.heb_cgt_cap_min,
-                            'heb_cgt_cap_max':heb.heb_cgt_cap_max,
-                            'heb_cgt_nbre_chmbre':heb.heb_cgt_nbre_chmbre,
-                            'heb_fumeur':self._get_metadata('heb_fumeur',heb.heb_pk),
-                            'heb_animal':self._get_metadata('heb_animal',heb.heb_pk),
-                            'url_heb':self._get_url(heb.heb_pk),
+                            'heb_pk': heb.heb_pk,
+                            'heb_nom': heb.heb_nom,
+                            'type_heb': heb.heb_type_type,
+                            'heb_type': heb.heb_type,
+                            'heb_type_code': heb.heb_type_code,
+                            'heb_code_gdw': heb.heb_code_gdw,
+                            'heb_localite': heb.heb_localite,
+                            'heb_nombre_epis': heb.heb_nombre_epis,
+                            'heb_cgt_cap_min': heb.heb_cgt_cap_min,
+                            'heb_cgt_cap_max': heb.heb_cgt_cap_max,
+                            'heb_cgt_nbre_chmbre': heb.heb_cgt_nbre_chmbre,
+                            'heb_fumeur': self._get_metadata('heb_fumeur', heb.heb_pk),
+                            'heb_animal': self._get_metadata('heb_animal', heb.heb_pk),
+                            'url_heb': self._get_url(heb.heb_pk),
                             })
         return json.dumps(hebList)
 
@@ -320,7 +311,7 @@ class HebergementView(BrowserView):
                                 )
 
 
-class HebergementExternCalendarView(HebergementView):
+class HebergementExternCalendarView(BrowserView):
     """
     View for extern calendars
     """
@@ -330,9 +321,8 @@ class HebergementExternCalendarView(HebergementView):
     def __init__(self, context, request):
         hebPk = request.get('pk')
         hebergement = self.getHebergementByPk(hebPk)
-        self.context = hebergement
-        super(HebergementExternCalendarView, self).__init__(self.context, request)
-        super(HebergementView, self).__init__(self.context, request)
+        self.hebergement = hebergement
+        super(BrowserView, self).__init__(context, request)
 
     def getHebergementByPk(self, heb_pk):
         """
@@ -349,11 +339,26 @@ class HebergementExternCalendarView(HebergementView):
         if (hebergement and
                 int(hebergement.heb_site_public) == 1 and
                 hebergement.proprio.pro_etat):
-           # L'hébergement doit être actif, ainsi que son propriétaire
-            # hebURL = queryMultiAdapter((hebergement.__of__(self.context.hebergement), self.request), name="url")
             return hebergement
         else:
             return None
+
+    def showCalendar(self):
+        """
+        Is the calendar activated for showing on external sites ?
+        (if the calendar has been blocked due to inactivity, it will not
+        appear because heb_calendrier_proprio will be 'bloque' by cron)
+        """
+        return (self.hebergement.heb_calendrier_proprio == 'actif')
+
+    def getCustomStylesheet(self):
+        """
+        Returns referer stylesheet URL where proprio can customize calendar
+        CSS
+        """
+        referer = self.request.get('HTTP_REFERER', None)
+        customCssUrl = urljoin(referer, 'calendar-custom.css')
+        return customCssUrl
 
     def calendarJS(self):
         """
@@ -362,17 +367,17 @@ class HebergementExternCalendarView(HebergementView):
         return """
         //<![CDATA[
             new GiteTimeframe('calendars', {
-                            startField: 'start',
-                            endField: 'end',
-                            resetButton: 'reset',
-                            weekOffset: 1,
-                            hebPk: %s,
-                            months:1,
-                            language: '%s',
-                            earliest: new Date()});
+                              startField: 'start',
+                              endField: 'end',
+                              resetButton: 'reset',
+                              weekOffset: 1,
+                              hebPk: %s,
+                              months:1,
+                              language: '%s',
+                              earliest: new Date()});
         //]]>
 
-        """ % (self.context.heb_pk, 'fr')
+        """ % (self.hebergement.heb_pk, 'fr')
 
 
 class HebergementIconsView(BrowserView):
