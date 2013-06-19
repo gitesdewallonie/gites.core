@@ -17,8 +17,8 @@
                   <th class="" tal:attributes="class thclass">
                     <span id="capacite">
                       <img src="capacite.png"
-                           title="Capacit&eacute;"
-                           alt="Capacit&eacute;"
+                           title="Capacite"
+                           alt="Capacite"
                            i18n:attributes="alt capacite; title capacite" />
                   </th>
                   <th class="" tal:attributes="class thclass">
@@ -84,8 +84,8 @@
                   <th class="" tal:attributes="class thclass">
                     <span id="capacite">
                       <img src="capacite.png"
-                           title="Capacit&eacute;"
-                           alt="Capacit&eacute;"
+                           title="Capacite"
+                           alt="Capacite"
                            i18n:attributes="alt capacite; title capacite" />
                   </th>
                   <th class="" tal:attributes="class thclass">

@@ -101,7 +101,7 @@
                     <tal:if condition="python:len(heb.epis)==0">
                         <span>-</span>
                     </tal:if>
-                    <tal:bloc i18n:translate="x_cles">clés</tal:bloc>
+                    <tal:bloc i18n:translate="x_cles">cl&eacute;s</tal:bloc>
                 </div>
                <div id="nbre-epis"
                      class="etiquette-sup"
@@ -112,7 +112,7 @@
                     <tal:if condition="python:len(heb.epis)==0">
                         <span>-</span>
                     </tal:if>
-                    <tal:bloc i18n:translate="x_epis">epis</tal:bloc>
+                    <tal:bloc i18n:translate="x_epis">&eacute;pis</tal:bloc>
                 </div>
 
                 <div class="break-float"></div>
