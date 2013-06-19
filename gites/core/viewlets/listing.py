@@ -191,6 +191,12 @@ class RechercheListing(HebergementsInListing):
 class RechercheListing(HebergementsInListing):
     grok.context(IPloneSiteRoot)
 
+    def heb_distance(self, hebergement):
+        return round(hebergement.distance / 1000, 2)
+
+    def isGeoLocalized(self):
+        return self.request.form['nearTo']
+
 
 class HiddenRequestParameters(grok.Viewlet):
     grok.order(5)
