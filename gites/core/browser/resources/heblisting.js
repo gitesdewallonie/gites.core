@@ -219,34 +219,37 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
         $scope.goToPage(0);
     }
 
-    $scope.collapseCtrl = function() {
-        $scope.isCollapsed = false;
-    }
-
-    $scope.getGroupement = function(pk) {
-        if ($scope.isCollapsed == false){
-        $http({
-                url: "getGroupementByPk",
-                method: "POST",
-                data: "pk="+parseInt(pk),
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).success(function(data, status, headers, config) {
-                $scope.data = data;
-                $scope.status = status;
-                $scope.isCollapsed = true;
-        }).error(function(data, status, headers, config) {
-                $scope.status = status;
-        });
-        }
-        else {
-            $scope.isCollapsed = false;
-        }
-    }
     // initialize values
     $scope.init();
 
     $scope.update();
 });
+
+app.controller(
+        "collapseCtrl",
+        function($scope, $http, $compile, $cookieStore){
+            $scope.isCollapsed = false;
+            $scope.getGroupement = function(pk) {
+                if ($scope.isCollapsed == false){
+                $http({
+                        url: "getGroupementByPk",
+                        method: "POST",
+                        data: "pk="+parseInt(pk),
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).success(function(data, status, headers, config) {
+                        $scope.data = data;
+                        $scope.status = status;
+                        $scope.isCollapsed = true;
+                }).error(function(data, status, headers, config) {
+                        $scope.status = status;
+                });
+                }
+                else {
+                    $scope.isCollapsed = false;
+                }
+            }
+        });
+
 
 app.directive('angularHtmlBind', function($compile) {
     return function(scope, elm, attrs) {
