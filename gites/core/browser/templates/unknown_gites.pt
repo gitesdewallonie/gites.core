@@ -7,7 +7,7 @@
 
 <div metal:fill-slot="main">
 
-    <img src="o_alerte.png"/>
+    <img src="o_alerte.png" alt="Attention"/>
     <span class="unknown_gites" 
           i18n:translate="unknown_gites">La référence de l'hébergement 
     <span i18n:name="heb_pk" 

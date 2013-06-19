@@ -266,6 +266,19 @@ class BasicForm(form.Form):
 
     template = ViewPageTemplateFile('templates/search_base_form.pt')
 
+    def selected_gite(self):
+        """
+        """
+        heb_type = self.request.form.get('form.widgets.hebergementType')
+        if not heb_type or 'gite-meuble' in heb_type:
+            return 'checked'
+
+    def selected_chambre(self):
+        """
+        """
+        heb_type = self.request.form.get('form.widgets.hebergementType')
+        if not heb_type or 'chambre-hote' in heb_type:
+            return 'checked'
 
 class SearchHostingForm(form.Form):
     fields = field.Fields(interfaces.ISearchHosting)

@@ -107,13 +107,13 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
     };
 
     var selectedKeywords = function() {
-	var selected_keywords = [];
-	for (var keyword in $scope.keywords) {
-		if ( $scope.keywords[keyword] === true ) {
-			selected_keywords.push(keyword);
-		};
-	};
-	return selected_keywords;
+    var selected_keywords = [];
+    for (var keyword in $scope.keywords) {
+        if ( $scope.keywords[keyword] === true ) {
+            selected_keywords.push(keyword);
+        };
+    };
+    return selected_keywords;
     }
 
     $scope.updatePostData = function() {
@@ -130,7 +130,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
     var httpPostconfig = {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
         transformRequest: serializeToHTTPPost
-	};
+    };
 
     $scope.updateMap = function() {
         $scope.updatePostData();
@@ -138,6 +138,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
         success(function(data, status) {
             if (typeof googleMapAPI != 'undefined') {
                 googleMapAPI.updateHebergementsMarkers(data);
+                giteMapHandlers.initExternalDigitMarkerHandlers();
             }
         })
     };
@@ -271,11 +272,11 @@ app.config(function ($httpProvider) {
     .factory('myHttpInterceptor', function ($q, $window) {
         return function (promise) {
             return promise.then(function (response) {
-		jQuery("#spin").hide()
+        jQuery("#spin").hide()
                 return response;
 
             }, function (response) {
-		jQuery("#spin").hide()
+        jQuery("#spin").hide()
                 return $q.reject(response);
             });
         };

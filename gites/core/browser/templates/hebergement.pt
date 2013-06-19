@@ -112,7 +112,7 @@
                     <tal:if condition="python:len(heb.epis)==0">
                         <span>-</span>
                     </tal:if>
-                    <tal:bloc i18n:translate="x_epis">epis</tal:bloc>
+                    <tal:bloc i18n:translate="x_epis">&eacute;pis</tal:bloc>
                 </div>
 
                 <div class="break-float"></div>
@@ -153,6 +153,7 @@
                     <div id="accueil-bloc-gauche">
                         <div id="description-photo-heb">
                             <img src="" width="300" height="195"
+                                 alt="Photo hébergement"
                                  tal:attributes="src string:${here/photos_heb/absolute_url}/${heb/heb_code_gdw}00.jpg" />
                         </div>
 
@@ -402,7 +403,9 @@
                                          title=""
                                          alt=""
                                          class="picto"
-                                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png" />
+                                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
+                                                         alt metadata/title;
+                                                         title metadata/title" />
                                 </tal:block>
                                 <tal:block define="metadata python:view.getFumeur()">
                                     <img src=""
@@ -410,7 +413,9 @@
                                          alt=""
                                          class="picto"
                                          tal:condition="python:metadata['id'] == 'heb_confort_no_fumeur'"
-                                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png" />
+                                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
+                                                         alt metadata/title;
+                                                         title metadata/title" />
                                 </tal:block>
                                 <tal:for repeat="metadata python:view.getHebMetadatasByType('confort')">
                                     <img src=""
@@ -515,27 +520,27 @@
                                 <span tal:replace="heb/proprio/pro_langue" />
                             </div>
                             <div id="phone-proprio">
-                                <img src="icon_telephone.gif" />
+                                <img src="icon_telephone.gif" alt="Téléphone" />
                                 <span tal:replace="heb/proprio/pro_tel_priv" />
                             </div>
                             <div id="fax-proprio"
                                  tal:condition="python: heb.proprio.pro_fax_priv">
-                                <img src="icon_fax.gif" />
+                                <img src="icon_fax.gif" alt="Fax" />
                                 <span tal:replace="heb/proprio/pro_fax_priv" />
                             </div>
                             <div id="gsm-proprio"
                                  tal:condition="python: heb.proprio.pro_gsm1">
-                                <img src="icon_gsm.gif" />
+                                <img src="icon_gsm.gif" alt="GSM" />
                                 <span tal:replace="heb/proprio/pro_gsm1" />
                             </div>
                             <div id="email-proprio"
                                  tal:condition="python: heb.proprio.pro_email">
-                                <img src="icon_email.gif" />
+                                <img src="icon_email.gif" alt="E-mail" />
                                 <span tal:replace="heb/proprio/pro_email" />
                             </div>
                             <div id="url-proprio"
                                  tal:condition="python: heb.proprio.pro_url">
-                                <img src="icon_lien.gif" />
+                                <img src="icon_lien.gif" alt="Site web" />
                                 <a href=""
                                    tal:attributes="href string: http://${heb/proprio/pro_url}"
                                    tal:content="string: http://${heb/proprio/pro_url}"
@@ -550,7 +555,7 @@
                         </div><!--descriptif coordonnee-->
                         <div id="description-photo-proprio"
                              tal:define="photocontact view/getPhotoContact">
-                            <img src="" width="196" height="170"
+                            <img src="" width="196" height="170" alt=""
                                  tal:condition="photocontact"
                                  tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_proprio/${heb/proprio/pro_pk}.jpg" />
                         </div><!-- descriptif p hoto proprio-->

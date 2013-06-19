@@ -87,7 +87,7 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
                 for key in heb.keys()[1:]:
                     value = getattr(heb, key)
                     setattr(hebergement, key, value)
-                    hebergements.append(hebergement)
+                hebergements.append(hebergement)
             elif isinstance(heb, tuple):
                 directlyProvides(heb, IHebergementInSearch)
                 hebergements.append(heb)
@@ -226,7 +226,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
 
     def filter_heb_type(self, show_gites, show_chambres, query):
         if show_gites:
-            return query.filter(TypeHebergement.type_heb_type == 'gites')
+            return query.filter(TypeHebergement.type_heb_type == 'gite')
         elif show_chambres:
             return query.filter(TypeHebergement.type_heb_type == 'chambre')
 

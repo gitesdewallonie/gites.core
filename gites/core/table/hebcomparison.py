@@ -193,9 +193,12 @@ class HebComparisonValues(value.ValuesMixin,
             else:
                 criteria['capacity'] = result.heb_cgt_cap_max
             criteria['pro_langue'] = result.pro_langue
-            criteria['picture'] = u'<img width="181" height="115" ' \
-                'src="%s/photos_heb/%s00.jpg" />' % (self.context.portal_url(),
-                                                     result.heb_code_gdw)
+            criteria['picture'] = u"""
+                <img width="181" height="115"
+                     alt="Photo hébergement"'
+                     src="%s/photos_heb/%s00.jpg" />""" % \
+                (self.context.portal_url(),
+                 result.heb_code_gdw)
             criteria['calendar'] = self.translate(
                 'desoles_pas_de_calendrier_pour_ce_gite')
             if result.heb_calendrier_proprio == 'actif':
@@ -234,7 +237,7 @@ class HebComparisonValues(value.ValuesMixin,
         query = query.filter(sa.and_(
             mappers.LinkHebergementMetadata.heb_fk == heb_pk,
             mappers.Metadata.met_filterable == True))
-        return dict([('met_%s' % m.metadata_fk, m.link_met_value) for m \
+        return dict([('met_%s' % m.metadata_fk, m.link_met_value) for m
                      in query.all()])
 
     def rows_to_cols(self, values):
