@@ -332,7 +332,8 @@
 
                         <!-- TABLE TABLE D'HOTE-->
                         <div id="tarification-table-hote"
-                             tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR'">
+                             tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR'"
+                             tal:define="table_hote view/getTableHote">
                             <table>
                                 <tr>
                                     <td colspan="2"
@@ -353,10 +354,7 @@
                                         Type
                                     </td>
                                     <td>
-                                        <span>
-                                            <img src="icon_assiette_3.png"
-                                                 alt="Menu gastronomique"
-                                                 title="Menu gastronomique">
+                                        <span tal:content="table_hote">
                                         </span>
                                     </td>
                                 </tr>
