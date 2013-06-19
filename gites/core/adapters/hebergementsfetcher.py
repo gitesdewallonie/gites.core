@@ -130,7 +130,7 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             query = session().query(Hebergement,
                                     TypeHebergement.type_heb_code.label('heb_type_code')
                                     )
-        query = query.join('type').join('commune').join('epis')
+        query = query.join('type').join('commune').join('epis').join('proprio')
         query = query.options(
             FromCache('gdw'))
         subquery = session().query(LinkHebergementMetadata.heb_fk)
