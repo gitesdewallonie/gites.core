@@ -11,6 +11,7 @@
             <input type="checkbox"
                    name="form.widgets.hebergementType:list"
                    id="gite-meuble"
+                   tal:attributes="checked view/selected_gite"
                    value="gite-meuble"/>
             <label for="gite-meuble"
                    i18n:translate="gites_et_meubles">G&icirc;tes et meubl&eacute;s</label>
@@ -18,6 +19,7 @@
         <div id="zone-chambre-hote">
             <input type="checkbox"
                    name="form.widgets.hebergementType:list"
+                   tal:attributes="checked view/selected_chambre"
                    id="chambre-hote"
                    value="chambre-hote" />
             <label for="chambre-hote"

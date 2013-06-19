@@ -226,7 +226,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
 
     def filter_heb_type(self, show_gites, show_chambres, query):
         if show_gites:
-            return query.filter(TypeHebergement.type_heb_type == 'gites')
+            return query.filter(TypeHebergement.type_heb_type == 'gite')
         elif show_chambres:
             return query.filter(TypeHebergement.type_heb_type == 'chambre')
 
