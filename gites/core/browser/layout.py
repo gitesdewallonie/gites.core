@@ -22,7 +22,6 @@ class LayoutPolicy(base.LayoutPolicy):
     def bodyClass(self, template, view):
         """Returns the CSS class to be used on the body tag.
         """
-
         # Get content parent
         body_class = base.LayoutPolicy.bodyClass(self, template, view)
 

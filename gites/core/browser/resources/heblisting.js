@@ -79,6 +79,7 @@ var calculateBase = function() {
     return base;
 };
 
+
 var app = angular.module('listing', ['ngSanitize', 'ngCookies', 'ui.bootstrap']);
 app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 
@@ -89,10 +90,12 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
         $scope.map_listing_url = baseurl + 'update_map_listing'; // The url of our search
         $scope.keywords = {};
         $scope.formData = jQuery('#hiddenForm').serializeObject();
-        $scope.reference = $scope.formData.reference;
-        if ( $scope.reference != $scope.formData.reference) {
+        var data = jQuery.extend({}, $scope.formData);
+        delete data['page'];
+        if ( data != $cookieStore.get('listing_form_data', {})) {
             $scope.page = 0;
         }
+        $scope.reference = $scope.formData.reference;
         var page_cookie = $cookieStore.get('listing_keywords');
         if ( page_cookie ) {
             $scope.keywords = page_cookie;
@@ -147,6 +150,11 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
         $scope.updatePostData();
         if ( ! jQuery.isEmptyObject($scope.keywords) ) {
             $cookieStore.put('listing_keywords', $scope.keywords);
+        };
+        if ( ! jQuery.isEmptyObject($scope.formData) ) {
+	    var data = jQuery.extend({}, $scope.formData);
+	    delete data['page'];
+            $cookieStore.put('listing_form_data', data);
         };
         $cookieStore.put('listing_sort', $scope.sort);
 
@@ -211,34 +219,37 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
         $scope.goToPage(0);
     }
 
-    $scope.collapseCtrl = function() {
-        $scope.isCollapsed = false;
-    }
-
-    $scope.getGroupement = function(pk) {
-        if ($scope.isCollapsed == false){
-        $http({
-                url: "getGroupementByPk",
-                method: "POST",
-                data: "pk="+parseInt(pk),
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).success(function(data, status, headers, config) {
-                $scope.data = data;
-                $scope.status = status;
-                $scope.isCollapsed = true;
-        }).error(function(data, status, headers, config) {
-                $scope.status = status;
-        });
-        }
-        else {
-            $scope.isCollapsed = false;
-        }
-    }
     // initialize values
     $scope.init();
 
     $scope.update();
 });
+
+app.controller(
+        "collapseCtrl",
+        function($scope, $http, $compile, $cookieStore){
+            $scope.isCollapsed = false;
+            $scope.getGroupement = function(pk) {
+                if ($scope.isCollapsed == false){
+                $http({
+                        url: "getGroupementByPk",
+                        method: "POST",
+                        data: "pk="+parseInt(pk),
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).success(function(data, status, headers, config) {
+                        $scope.data = data;
+                        $scope.status = status;
+                        $scope.isCollapsed = true;
+                }).error(function(data, status, headers, config) {
+                        $scope.status = status;
+                });
+                }
+                else {
+                    $scope.isCollapsed = false;
+                }
+            }
+        });
+
 
 app.directive('angularHtmlBind', function($compile) {
     return function(scope, elm, attrs) {

@@ -39,6 +39,15 @@
       />
 
    <browser:page
+      for="*"
+      name="extern-calendar"
+      class=".hebergement.HebergementExternCalendarView"
+      allowed_interface=".interfaces.IHebergementView"
+      permission="zope.Public"
+      template="templates/externcalendar.pt"
+      />
+
+   <browser:page
       name="basic_search.html"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".search.BasicSearchHebergement"
