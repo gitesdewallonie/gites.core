@@ -6,7 +6,7 @@
             <a tal:attributes="href viewlet/getAllBoutiqueItemsView" i18n:translate="la_boutique">La boutique</a>
         </h3>
         <a tal:attributes="href offre/absolute_url">
-            <img src="" tal:replace="structure offre/getMiniPhoto"/>
+            <img src="" alt="Photo" tal:replace="structure offre/getMiniPhoto"/>
         </a>
         <div class="break-float"></div>
         <a tal:attributes="href offre/absolute_url">

@@ -38,7 +38,7 @@
                                   hebergement promotion/getHebergement"
                       tal:condition="hebergement"
                       tal:attributes="class python:test(oddrow, 'draggable even', 'draggable odd');">
-                    <td><a href="" tal:attributes="href hebergement/@@url"> <img src="" border="0" tal:attributes="src string:${context/@@plone_portal_state/portal_url}/vignettes_heb/${hebergement/getVignette}" /></a></td>
+                    <td><a href="" tal:attributes="href hebergement/@@url"> <img src="" alt="" border="0" tal:attributes="src string:${context/@@plone_portal_state/portal_url}/vignettes_heb/${hebergement/getVignette}" /></a></td>
                     <td><a href="" tal:attributes="href hebergement/@@url" tal:content="hebergement/heb_nom"></a></td>
                     <td tal:define="hebergementView nocall:hebergement/@@hebergement_view;"
                         tal:content="hebergementView/getTypeHebergement"/>
@@ -104,7 +104,7 @@
                                   hebergement lastminute/getHebergement"
                       tal:condition="hebergement"
                       tal:attributes="class python:test(oddrow, 'draggable even', 'draggable odd');">
-                    <td><a href="" tal:attributes="href hebergement/@@url"> <img src="" border="0" tal:attributes="src string:${context/@@plone_portal_state/portal_url}/vignettes_heb/${hebergement/getVignette}" /></a></td>
+                    <td><a href="" tal:attributes="href hebergement/@@url"> <img src="" border="0" alt="" tal:attributes="src string:${context/@@plone_portal_state/portal_url}/vignettes_heb/${hebergement/getVignette}" /></a></td>
                     <td><a href="" tal:attributes="href hebergement/@@url" tal:content="hebergement/heb_nom"></a></td>
                     <td tal:define="hebergementView nocall:hebergement/@@hebergement_view"
                         tal:content="hebergementView/getTypeHebergement"/>
