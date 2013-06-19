@@ -147,6 +147,8 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             query = query.filter(Hebergement.heb_pk == subquery.c.heb_fk)
         if self.context.is_geolocalized():
             query = query.filter(Hebergement.heb_location.distance_sphere(point) < 1000 * user_range)
+        query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
+                                     Proprio.pro_etat == True))
         return query
 
     def order_by(self):
