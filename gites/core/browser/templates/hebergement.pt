@@ -327,7 +327,6 @@
                         <div id="description-tarification-divers">
                             <h3 i18n:translate="divers">Divers</h3>
                             <span tal:content="heb/heb_tarif_chmbr_autre_1p" />
-                            <span tal:content="heb/heb_tarif_chmbr_table_hote_1p" />
                         </div>
                  </div><!--tarif hebergement-->
 
@@ -346,8 +345,7 @@
                                     <td class="tarif-saison" i18n:translate="tarif">
                                         Tarif
                                     </td>
-                                    <td>
-                                        20.00
+                                    <td tal:content="heb/heb_tarif_chmbr_table_hote_1p">
                                     </td>
                                 </tr>
                                 <tr>
