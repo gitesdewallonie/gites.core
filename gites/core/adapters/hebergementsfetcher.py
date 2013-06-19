@@ -87,7 +87,7 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
                 for key in heb.keys()[1:]:
                     value = getattr(heb, key)
                     setattr(hebergement, key, value)
-                    hebergements.append(hebergement)
+                hebergements.append(hebergement)
             elif isinstance(heb, tuple):
                 directlyProvides(heb, IHebergementInSearch)
                 hebergements.append(heb)

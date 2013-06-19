@@ -187,7 +187,7 @@
                                      parents request/PARENTS;
                                      nil python: parents.reverse();">
                                      
-                <img tal:attributes="src string:${context/@@plone_portal_state/portal_url}/logoIcon.gif"/>
+                <img alt="" tal:attributes="src string:${context/@@plone_portal_state/portal_url}/logoIcon.gif"/>
                 <tal:if condition="not: restrict_browsing_to_startup_directory">
                     <a i18n:translate="tabs_home"
                        tal:attributes="href string:${portal/absolute_url}/${template/getId}?fieldName=${fieldName}&amp;fieldRealName=${fieldRealName}&amp;at_url=${at_url}">

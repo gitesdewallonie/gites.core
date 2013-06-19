@@ -174,7 +174,7 @@
             <div id="moteur-avance">
                <a href=""
                   i18n:translate="recherche_avancee"
-                  tal:attributes="href string:${context/@@plone_portal_state/portal_url}/search.html">recherche avanc&eacute;e</a>
+                  tal:attributes="href string:${context/@@plone_portal_state/portal_url}/search.html">Recherche avanc&eacute;e</a>
            </div>
           </div>
        </td>

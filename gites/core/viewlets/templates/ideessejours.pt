@@ -8,7 +8,7 @@
         </h3>
         <tal:vign tal:repeat="vignette vignettes">
             <a tal:attributes="href offre/getURL">
-                <img src="" tal:attributes="src string:${vignette/getURL}"/>
+                <img src="" alt="" tal:attributes="src string:${vignette/getURL}"/>
             </a>
         </tal:vign>
         <div class="break-float"></div>
