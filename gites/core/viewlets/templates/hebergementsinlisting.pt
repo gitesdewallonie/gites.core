@@ -201,6 +201,19 @@
                   <a href=""
                      tal:attributes="href string:{{groupe.url_heb}}"></a>
                 </div>
+                <div class="comparer">
+                    <input type="checkbox"
+                        value=""
+                        name="heb-comparison:list"
+                        id=""
+                        class="heb-comparaison-check"
+                        tal:attributes="value string:{{groupe.heb_pk}};
+                                        id string:{{groupe.heb_pk}}" />
+                    <label for=""
+                        title="selectionner pour comparer"
+                        i18n:attributes="title selectionner-pour-comparer"
+                        tal:attributes="for string:{{groupe.heb_pk}}"></label>
+                </div>
               </div>
               <div id="vignette">
                 <a href=""

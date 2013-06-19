@@ -275,6 +275,7 @@ class HebergementView(BrowserView):
         hebList = []
         for heb in query.all():
             hebList.append({
+                            'heb_pk':heb.heb_pk,
                             'heb_nom':heb.heb_nom,
                             'type_heb':heb.heb_type_type,
                             'heb_type':heb.heb_type,
