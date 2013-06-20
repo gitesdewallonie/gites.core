@@ -16,6 +16,14 @@
       />
 
    <browser:page
+      for="*"
+      class=".hebergement.HebergementView"
+      name="gallery"
+      template="templates/galerie.pt"
+      permission="zope.Public"
+      />
+
+   <browser:page
       name="url_heb"
       for="*"
       class=".hebergement.HebergementAbsoluteURL"
