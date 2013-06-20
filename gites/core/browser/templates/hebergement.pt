@@ -177,6 +177,27 @@
 
                     <div id="accueil-bloc-droite">
                     <!--TABLE TARIFICATION GITES-->
+
+                    <tal:for repeat="metadata python:view.getHebMetadatasByType('themes')">
+                        <img src=""
+                             title=""
+                             alt=""
+                             class="picto"
+                             tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
+                                             alt metadata/title;
+                                             title metadata/title" />
+                    </tal:for>
+
+                    <tal:for repeat="metadata python:view.getHebMetadatasByType('gitesplus')">
+                        <img src=""
+                             title=""
+                             alt=""
+                             class="picto"
+                             tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
+                                             alt metadata/title;
+                                             title metadata/title" />
+                    </tal:for>
+
                     <div id="tarification-gite"
                          tal:condition="python:heb.type.type_heb_code not in 'CH, MH, CHECR'">
                         <table>
