@@ -68,10 +68,13 @@
     <div id="content-core">
 
         <div id="description-heb"
-             tal:define="heb context; hebergementIcons context/@@hebergement_icons; redirection view/redirectInactive;">
+             tal:define="heb context;
+                         hebergementIcons context/@@hebergement_icons;
+                         redirection view/redirectInactive;">
             <!-- Bannière titre + info -->
             <div id="description-info-sup"
-                 tal:define="epis heb/epis">
+                 tal:define="epis python:heb.epis and heb.epis[0] or None;
+                             episValue python:epis and (epis.heb_nombre_epis > 0 and epis.heb_nombre_epis) or '-'">
                 <div id="nom-heb">
                     <span tal:content="heb/heb_nom" />
                 </div>
@@ -93,24 +96,18 @@
                           tal:content="string: ${heb/heb_cgt_cap_min}" />
                     <tal:bloc i18n:translate="x_personnes">personnes</tal:bloc>
                 </div>
-                <tal:if condition="python: len(epis) > 0 and epis[0].heb_nombre_epis > 0">
-                    <div id="nbre-cle"
-                         class="etiquette-sup"
-                         tal:condition="python:heb.type.type_heb_code == 'MV'">
-                        <tal:for repeat="epis heb/epis">
-                            <span tal:content="epis/heb_nombre_epis"/>
-                        </tal:for>
-                        <tal:bloc i18n:translate="x_cles">cl&eacute;s</tal:bloc>
-                    </div>
-                    <div id="nbre-epis"
-                         class="etiquette-sup"
-                         tal:condition="python:heb.type.type_heb_code != 'MV'">
-                        <tal:for repeat="epis heb/epis">
-                            <span tal:content="epis/heb_nombre_epis" />
-                        </tal:for>
-                        <tal:bloc i18n:translate="x_epis">&eacute;pis</tal:bloc>
-                    </div>
-                </tal:if>
+                <div id="nbre-cle"
+                     class="etiquette-sup"
+                     tal:condition="python:heb.type.type_heb_code == 'MV'">
+                    <span tal:content="episValue"/>
+                    <tal:bloc i18n:translate="x_cles">cl&eacute;s</tal:bloc>
+                </div>
+                <div id="nbre-epis"
+                     class="etiquette-sup"
+                     tal:condition="python:heb.type.type_heb_code != 'MV'">
+                    <span tal:content="episValue"/>
+                    <tal:bloc i18n:translate="x_epis">&eacute;pis</tal:bloc>
+                </div>
 
                 <div class="break-float"></div>
             </div><!--info-sup-->
