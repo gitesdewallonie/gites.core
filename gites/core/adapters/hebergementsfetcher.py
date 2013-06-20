@@ -261,7 +261,6 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         classification = self.data.get('classification')
         #11 = Animal
         #12 = Fumeur
-        import pdb;pdb.set_trace()
         if animals:
             subquery = session().query(LinkHebergementMetadata.heb_fk)
             subquery = subquery.filter(LinkHebergementMetadata.metadata_fk == 11)
