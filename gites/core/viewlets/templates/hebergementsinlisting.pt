@@ -158,8 +158,7 @@
           </div>
           <div id="nbre-cle"
                tal:condition="python:hebergement.heb_type_code == 'MV'">
-            <div id="cle-nbre"
-                 i18n:translate="cles">
+            <div id="cle-nbre">
               <span tal:content="heb_view/nombre_epis"
                     class="nombre" />
               <span tal:omit-tag=""
@@ -168,8 +167,7 @@
           </div>
           <div id="nbre-epis"
                tal:condition="python:hebergement.heb_type_code != 'MV'">
-            <div id="epis-nbre"
-                 i18n:translate="epis">
+            <div id="epis-nbre">
               <span tal:content="heb_view/nombre_epis"
                     class="nombre" />
               <span tal:omit-tag=""

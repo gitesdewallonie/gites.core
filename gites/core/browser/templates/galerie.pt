@@ -1,0 +1,31 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="plone">
+
+<body>
+
+    <div metal:fill-slot="main">
+
+        <h1 tal:content="context/heb_nom"/>
+
+        <div align="center"
+             tal:define="redirection view/redirectInactive;">
+
+            <tal:loop tal:repeat="vignetteUrl view/getVignettesUrl">
+                <img src=""
+                     alt=""
+                     title=""
+                     tal:attributes="src string:photos_heb/${vignetteUrl};
+                                     alt context/heb_nom;
+                                     title context/heb_nom"
+                     class="photo_gallery"/>
+                <br />
+            </tal:loop>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -52,8 +52,8 @@ class HebComparisonTable(table.Table):
 
     def _hosting_type(self, host_type):
         if host_type not in ('CH', 'MH', 'CHECR'):
-            return 'gite'
-        return 'chambre'
+            return 'gites'
+        return 'chambres'
 
     @property
     def values(self):
@@ -276,11 +276,7 @@ class HebComparisonValues(value.ValuesMixin,
         query = query.join('type')
         query = query.filter(
             mappers.Hebergement.heb_pk.in_(self.table.heb_pks))
-        types = []
-        ch_types = ('CH', 'MH', 'CHECR')
-        for heb in query.all():
-            types.append(heb.type_heb_code in ch_types and 'chambres' or 'gites')
-        return set(types)
+        return [self.table._hosting_type(h.type_heb_code) for h in query.all()]
 
     @property
     def query(self):
