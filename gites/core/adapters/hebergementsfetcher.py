@@ -275,43 +275,43 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         if near_to:
             result = get_geocoded_location(near_to)[0]
             point = 'POINT(%s %s)' % (result.coordinates[1],
-                                    result.coordinates[0])
+                                      result.coordinates[0])
             point = geoalchemy.base.WKTSpatialElement(point, srid=3447)
 
-            query = session.query(sa.func.min(Hebergement.heb_nom).label('heb_nom'),
-                                sa.func.sum(Hebergement.heb_location.distance_sphere(point)).label('distance'),
-                                sa.func.sum(Hebergement.heb_cgt_nbre_chmbre).label('heb_cgt_nbre_chmbre'),
-                                sa.func.sum(Hebergement.heb_cgt_cap_min).label('heb_cgt_cap_min'),
-                                sa.func.sum(Hebergement.heb_cgt_cap_max).label('heb_cgt_cap_max'),
-                                sa.literal_column("'gite-groupes'").label('heb_type'),
-                                sa.func.min(TypeHebergement.type_heb_type).label('heb_type_type'),
-                                sa.func.min(TypeHebergement.type_heb_code).label('heb_type_code'),
-                                sa.func.min(Hebergement.heb_code_gdw).label('heb_code_gdw'),
-                                sa.func.min(Hebergement.heb_pk).label('heb_pk'),
-                                sa.func.max(LinkHebergementEpis.heb_nombre_epis).label('heb_nombre_epis'),
-                                sa.func.min(Hebergement.heb_localite).label('heb_localite'),
-                                sa.func.min(Hebergement.heb_gps_long).label('heb_gps_long'),
-                                sa.func.min(Hebergement.heb_gps_lat).label('heb_gps_lat'),
-                                sa.func.min(Hebergement.heb_groupement_pk).label('heb_groupement_pk')
-                                )
+            query = session.query(
+                sa.func.min(Hebergement.heb_nom).label('heb_nom'),
+                sa.func.sum(Hebergement.heb_location.distance_sphere(point)).label('distance'),
+                sa.func.sum(Hebergement.heb_cgt_nbre_chmbre).label('heb_cgt_nbre_chmbre'),
+                sa.func.sum(Hebergement.heb_cgt_cap_min).label('heb_cgt_cap_min'),
+                sa.func.sum(Hebergement.heb_cgt_cap_max).label('heb_cgt_cap_max'),
+                sa.literal_column("'gite-groupes'").label('heb_type'),
+                sa.func.min(TypeHebergement.type_heb_type).label('heb_type_type'),
+                sa.func.min(TypeHebergement.type_heb_code).label('heb_type_code'),
+                sa.func.min(Hebergement.heb_code_gdw).label('heb_code_gdw'),
+                sa.func.min(Hebergement.heb_pk).label('heb_pk'),
+                sa.func.max(LinkHebergementEpis.heb_nombre_epis).label('heb_nombre_epis'),
+                sa.func.min(Hebergement.heb_localite).label('heb_localite'),
+                sa.func.min(Hebergement.heb_gps_long).label('heb_gps_long'),
+                sa.func.min(Hebergement.heb_gps_lat).label('heb_gps_lat'),
+                sa.func.min(Hebergement.heb_groupement_pk).label('heb_groupement_pk'))
         else:
-            query = session.query(sa.func.min(Hebergement.heb_nom).label('heb_nom'),
-                                sa.func.sum(Hebergement.heb_cgt_nbre_chmbre).label('heb_cgt_nbre_chmbre'),
-                                sa.func.sum(Hebergement.heb_cgt_cap_min).label('heb_cgt_cap_min'),
-                                sa.func.sum(Hebergement.heb_cgt_cap_max).label('heb_cgt_cap_max'),
-                                sa.literal_column("'gite-groupes'").label('heb_type'),
-                                sa.func.min(TypeHebergement.type_heb_type).label('heb_type_type'),
-                                sa.func.min(TypeHebergement.type_heb_code).label('heb_type_code'),
-                                sa.func.min(Hebergement.heb_code_gdw).label('heb_code_gdw'),
-                                sa.func.min(Hebergement.heb_pk).label('heb_pk'),
-                                sa.func.max(LinkHebergementEpis.heb_nombre_epis).label('heb_nombre_epis'),
-                                sa.func.min(Hebergement.heb_localite).label('heb_localite'),
-                                sa.func.min(Hebergement.heb_gps_long).label('heb_gps_long'),
-                                sa.func.min(Hebergement.heb_gps_lat).label('heb_gps_lat'),
-                                sa.func.min(Hebergement.heb_groupement_pk).label('heb_groupement_pk')
-                                )
+            query = session.query(
+                sa.func.min(Hebergement.heb_nom).label('heb_nom'),
+                sa.func.sum(Hebergement.heb_cgt_nbre_chmbre).label('heb_cgt_nbre_chmbre'),
+                sa.func.sum(Hebergement.heb_cgt_cap_min).label('heb_cgt_cap_min'),
+                sa.func.sum(Hebergement.heb_cgt_cap_max).label('heb_cgt_cap_max'),
+                sa.literal_column("'gite-groupes'").label('heb_type'),
+                sa.func.min(TypeHebergement.type_heb_type).label('heb_type_type'),
+                sa.func.min(TypeHebergement.type_heb_code).label('heb_type_code'),
+                sa.func.min(Hebergement.heb_code_gdw).label('heb_code_gdw'),
+                sa.func.min(Hebergement.heb_pk).label('heb_pk'),
+                sa.func.max(LinkHebergementEpis.heb_nombre_epis).label('heb_nombre_epis'),
+                sa.func.min(Hebergement.heb_localite).label('heb_localite'),
+                sa.func.min(Hebergement.heb_gps_long).label('heb_gps_long'),
+                sa.func.min(Hebergement.heb_gps_lat).label('heb_gps_lat'),
+                sa.func.min(Hebergement.heb_groupement_pk).label('heb_groupement_pk'))
 
-        query = query.join('proprio').join('epis').join('type')
+        query = query.join('proprio').outerjoin('epis').join('type')
         query = query.filter(Hebergement.heb_groupement_pk != None)
         query = self.apply_filters(query, group=True)
         #XXX
@@ -332,43 +332,43 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         if near_to:
             result = get_geocoded_location(near_to)[0]
             point = 'POINT(%s %s)' % (result.coordinates[1],
-                                    result.coordinates[0])
+                                      result.coordinates[0])
             point = geoalchemy.base.WKTSpatialElement(point, srid=3447)
 
-            query = session.query(Hebergement.heb_nom.label('heb_nom'),
-                                Hebergement.heb_location.distance_sphere(point).label('distance'),
-                                Hebergement.heb_cgt_nbre_chmbre.label('heb_cgt_nbre_chmbre'),
-                                Hebergement.heb_cgt_cap_min.label('heb_cgt_cap_min'),
-                                Hebergement.heb_cgt_cap_max.label('heb_cgt_cap_max'),
-                                TypeHebergement.type_heb_id.label('heb_type'),
-                                TypeHebergement.type_heb_type.label('heb_type_type'),
-                                TypeHebergement.type_heb_code.label('heb_type_code'),
-                                Hebergement.heb_code_gdw.label('heb_code_gdw'),
-                                Hebergement.heb_pk.label('heb_pk'),
-                                LinkHebergementEpis.heb_nombre_epis.label('heb_nombre_epis'),
-                                Hebergement.heb_localite.label('heb_localite'),
-                                Hebergement.heb_gps_long.label('heb_gps_long'),
-                                Hebergement.heb_gps_lat.label('heb_gps_lat'),
-                                Hebergement.heb_groupement_pk.label('heb_groupement_pk')
-                                )
+            query = session.query(
+                Hebergement.heb_nom.label('heb_nom'),
+                Hebergement.heb_location.distance_sphere(point).label('distance'),
+                Hebergement.heb_cgt_nbre_chmbre.label('heb_cgt_nbre_chmbre'),
+                Hebergement.heb_cgt_cap_min.label('heb_cgt_cap_min'),
+                Hebergement.heb_cgt_cap_max.label('heb_cgt_cap_max'),
+                TypeHebergement.type_heb_id.label('heb_type'),
+                TypeHebergement.type_heb_type.label('heb_type_type'),
+                TypeHebergement.type_heb_code.label('heb_type_code'),
+                Hebergement.heb_code_gdw.label('heb_code_gdw'),
+                Hebergement.heb_pk.label('heb_pk'),
+                LinkHebergementEpis.heb_nombre_epis.label('heb_nombre_epis'),
+                Hebergement.heb_localite.label('heb_localite'),
+                Hebergement.heb_gps_long.label('heb_gps_long'),
+                Hebergement.heb_gps_lat.label('heb_gps_lat'),
+                Hebergement.heb_groupement_pk.label('heb_groupement_pk'))
         else:
-            query = session.query(Hebergement.heb_nom.label('heb_nom'),
-                                Hebergement.heb_cgt_nbre_chmbre.label('heb_cgt_nbre_chmbre'),
-                                Hebergement.heb_cgt_cap_min.label('heb_cgt_cap_min'),
-                                Hebergement.heb_cgt_cap_max.label('heb_cgt_cap_max'),
-                                TypeHebergement.type_heb_id.label('heb_type'),
-                                TypeHebergement.type_heb_type.label('heb_type_type'),
-                                TypeHebergement.type_heb_code.label('heb_type_code'),
-                                Hebergement.heb_code_gdw.label('heb_code_gdw'),
-                                Hebergement.heb_pk.label('heb_pk'),
-                                LinkHebergementEpis.heb_nombre_epis.label('heb_nombre_epis'),
-                                Hebergement.heb_localite.label('heb_localite'),
-                                Hebergement.heb_gps_long.label('heb_gps_long'),
-                                Hebergement.heb_gps_lat.label('heb_gps_lat'),
-                                Hebergement.heb_groupement_pk.label('heb_groupement_pk')
-                                )
+            query = session.query(
+                Hebergement.heb_nom.label('heb_nom'),
+                Hebergement.heb_cgt_nbre_chmbre.label('heb_cgt_nbre_chmbre'),
+                Hebergement.heb_cgt_cap_min.label('heb_cgt_cap_min'),
+                Hebergement.heb_cgt_cap_max.label('heb_cgt_cap_max'),
+                TypeHebergement.type_heb_id.label('heb_type'),
+                TypeHebergement.type_heb_type.label('heb_type_type'),
+                TypeHebergement.type_heb_code.label('heb_type_code'),
+                Hebergement.heb_code_gdw.label('heb_code_gdw'),
+                Hebergement.heb_pk.label('heb_pk'),
+                LinkHebergementEpis.heb_nombre_epis.label('heb_nombre_epis'),
+                Hebergement.heb_localite.label('heb_localite'),
+                Hebergement.heb_gps_long.label('heb_gps_long'),
+                Hebergement.heb_gps_lat.label('heb_gps_lat'),
+                Hebergement.heb_groupement_pk.label('heb_groupement_pk'))
 
-        query = query.join('proprio').join('epis').join('type')
+        query = query.join('proprio').outerjoin('epis').join('type')
         query = self.apply_filters(query)
         return query
 
