@@ -101,12 +101,6 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
             $scope.keywords = page_cookie;
         }
         $scope.sort = $cookieStore.get('listing_sort', '');
-        if ($scope.sort === undefined)
-        {
-            // XXX Je ne sais pas savoir ici si on est sur une page geolocalized ou pas?
-            // ainsi j'ajouterai cette condition avant de prendre 'distance' par defaut
-            $scope.sort = "distance";
-        }
     };
 
     var selectedKeywords = function() {

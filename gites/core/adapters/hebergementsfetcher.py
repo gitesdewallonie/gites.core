@@ -50,12 +50,10 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
     def batch_end(self):
         return self.batch_start + self.batch_size
 
-    @memoize
     def selected_order(self):
         return self.data.get('sort', 'hebergement')
 
     @property
-    @memoize
     def data(self):
         return self.request.form
 
@@ -158,10 +156,8 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             return (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'epis':
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
-        elif self.selected_order() == 'distance':
-            return ('distance', )
         else:
-            return ()
+            return ('distance', )
 
 
 class CommuneHebFetcher(BaseHebergementsFetcher):
