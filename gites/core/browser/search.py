@@ -251,6 +251,8 @@ from plone.z3cform import layout
 
 from gites.core.browser import interfaces
 from collective.z3cform.datepicker.widget import DatePickerFieldWidget
+from z3c.form import button
+from Acquisition import aq_inner
 
 
 class BasicForm(form.Form):
@@ -287,6 +289,21 @@ class SearchHostingForm(form.Form):
     fields['fromDate'].widgetFactory = DatePickerFieldWidget
     fields['toDate'].widgetFactory = DatePickerFieldWidget
 
+    @button.buttonAndHandler(_("Search"))
+    def handleSearch(self,action):
+        data, errors = self.extractData()
+        if errors:
+            self.status=self.formErrorsMessage
+            return
+
+    @property
+    def action(self):
+        portal_url=aq_inner(self.context).absolute_url()
+        return "%s/moteur_recherche_view/getBasicSearch" % portal_url
+
+    def updateWidgets(self):
+        form.Form.updateWidgets(self)
+        self.widgets['nearTo'].addClass("geocode_autocomplete_fr")
 
 class SearchHosting(layout.FormWrapper, grok.View):
     grok.context(zope.interface.Interface)
@@ -294,6 +311,3 @@ class SearchHosting(layout.FormWrapper, grok.View):
     grok.require('zope2.Public')
 
     form = SearchHostingForm
-
-    def update(self):
-        zope.interface.alsoProvides(IMapRequest, self.request)

@@ -258,6 +258,30 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         from_date = self.data.get('fromDate')
         to_date = self.data.get('toDate')
         near_to = self.data.get('nearTo')
+
+        smokers = self.data.get('smokers')
+        animals = self.data.get('animals')
+        roomAmount = self.data.get('roomAmount')
+        classification = self.data.get('classification')
+        #11 = Animal
+        #12 = Fumeur
+        import pdb;pdb.set_trace()
+        if animals:
+            subquery = session().query(LinkHebergementMetadata.heb_fk)
+            subquery = subquery.filter(LinkHebergementMetadata.metadata_fk == 11)
+            subquery = subquery.filter(LinkHebergementMetadata.link_met_value == True)
+            subquery = subquery.group_by(LinkHebergementMetadata.heb_fk)
+            subquery = subquery.subquery()
+            query = query.filter(Hebergement.heb_pk == subquery.c.heb_fk)
+
+        if smokers:
+            subquery = session().query(LinkHebergementMetadata.heb_fk)
+            subquery = subquery.filter(LinkHebergementMetadata.metadata_fk == 12)
+            subquery = subquery.filter(LinkHebergementMetadata.link_met_value == True)
+            subquery = subquery.group_by(LinkHebergementMetadata.heb_fk)
+            subquery = subquery.subquery()
+            query = query.filter(Hebergement.heb_pk == subquery.c.heb_fk)
+
         if reference:
             reference = reference.strip()
             query = query.filter(sa.or_(sa.func.unaccent(Hebergement.heb_nom).ilike("%%%s%%" % reference),
