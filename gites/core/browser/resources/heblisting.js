@@ -101,12 +101,6 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
             $scope.keywords = page_cookie;
         }
         $scope.sort = $cookieStore.get('listing_sort', '');
-        if ($scope.sort === undefined)
-        {
-            // XXX Je ne sais pas savoir ici si on est sur une page geolocalized ou pas?
-            // ainsi j'ajouterai cette condition avant de prendre 'distance' par defaut
-            $scope.sort = "distance";
-        }
     };
 
     var selectedKeywords = function() {
@@ -181,14 +175,32 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 
         jQuery('#overlay-comparator').overlay({
             onBeforeLoad: function() {
-                this.getOverlay().height('34px');
-                var wrap = this.getOverlay().find(".contentWrap");
-                wrap.load(comparator_url + comparison_values.join('&heb_pk='));
-            },
-            onLoad: function() {
-                if (this.getOverlay().find('.comparator').height() > 100) {
-                    this.getOverlay().height('80%');
-                }
+                var overlay = this.getOverlay();
+                var wrap = overlay.find('.contentWrap');
+                wrap.hide();
+                overlay.height('34px');
+                wrap.load(comparator_url + comparison_values.join('&heb_pk='), function() {
+                    var overlay = jQuery('#overlay-comparator');
+                    overlay.find('.spinner').hide();
+                    overlay.find('.contentWrap').show();
+                    if(overlay.find('.comparator').height() > 100) {
+                        overlay.height('80%');
+                    }
+                });
+                // Adds the spinner
+                var opts = {
+                    lines: 10, // The number of lines to draw
+                    length: 6, // The length of each line
+                    width: 4, // The line thickness
+                    radius: 6, // The radius of the inner circle
+                    color: '#999', // #rbg or #rrggbb
+                    speed: 1, // Rounds per second
+                    trail: 66, // Afterglow percentage
+                    shadow: false, // Whether to render a shadow
+                    top: '5',
+                    left: '477',
+                };
+                overlay.spin(opts);
             },
         });
         jQuery('#overlay-comparator').overlay().load();

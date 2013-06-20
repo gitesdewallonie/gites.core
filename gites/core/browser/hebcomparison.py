@@ -105,20 +105,4 @@ registerPloneFunction(calsetup%(heb_pk)s);"""
         if len(self.heb_pks) > 4:
             self.error = _(u'compare_more_than_4')
             return False
-        if self._as_heb_mix_type is True:
-            self.error = _(u'compare_mix_type')
-            return False
         return True
-
-    @property
-    def _as_heb_mix_type(self):
-        """ Verifies if there's multiple hosting type """
-        query = session().query(mappers.Hebergement.heb_pk,
-                                mappers.TypeHebergement.type_heb_code)
-        query = query.join('type')
-        query = query.filter(
-            mappers.Hebergement.heb_pk.in_(self.heb_pks))
-        types = []
-        for heb in query.all():
-            types.append(heb.type_heb_code in ('CH', 'MH', 'CHECR'))
-        return len(set(types)) > 1

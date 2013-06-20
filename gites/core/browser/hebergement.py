@@ -205,6 +205,11 @@ class HebergementView(BrowserView):
         return {'id': 'heb_confort_no_fumeur',
                 'title': u'Hébergement non fumeur'}
 
+    def getTableHote(self):
+        table_hote = self.getHebMetadatasByType('tablehote')
+        if table_hote:
+            return table_hote[0]['title']
+
     def render(self):
         return self.template()
 
