@@ -25,6 +25,8 @@ def setupgites(context):
 #    setupProprioPlacefulWorkflow(portal)
     disableGlobalAddingForContentType(portal, 'GeoLocation')
     createLocalFS(portal)
+    if not hasattr(portal, 'idee-sejour'):
+        createFolder(portal, "idee-sejour", "Idee sejour", True)
     ideesSejourFolder = getattr(portal, 'idee-sejour')
     changeFolderView(portal, ideesSejourFolder, 'idee_sejour_root')
 
