@@ -283,7 +283,7 @@ class HebComparisonValues(value.ValuesMixin,
         query = session().query(mappers.Proprio.pro_langue,
                                 mappers.TypeHebergement.type_heb_code,
                                 mappers.LinkHebergementEpis.heb_nombre_epis)
-        query = query.join('hebergements', 'type').join('hebergements', 'epis')
+        query = query.join('hebergements', 'type').outerjoin('hebergements', 'epis')
         for c in self.heb_columns + self.heb_add_columns:
             query = query.add_column(getattr(mappers.Hebergement, c))
         query = query.filter(
