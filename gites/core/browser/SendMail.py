@@ -244,7 +244,7 @@ Il s'agit de :
             mailer.sendAllMail(mail, plaintext=True)
         except SMTPSenderRefused:
             messages = IStatusMessage(self.request)
-            messages.add(_(u"Il y a eu un problème lors de l'envoi de votre demande (SMTPSenderRefused)."), type=u"error")
+            messages.add(_(u"Il y a eu un problème lors de l'envoi de votre demande."), type=u"error")
             return
 
         translate = queryMultiAdapter((self.context, self.request),
