@@ -11,9 +11,9 @@ from gites.db import session
 from gites.db.content import Metadata, Commune, Hebergement
 from gites.core.content.interfaces import IPackage
 from gites.core.interfaces import IHebergementsFetcher, IHebergementInSearch
-from gites.core.browser.moteur_recherche import MoteurRecherche
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from gites.locales import GitesMessageFactory as _
+from gites.core.adapters.hebergementsfetcher import getGeocodedLocation
 
 grok.templatedir('templates')
 grok.context(interface.Interface)
@@ -122,9 +122,10 @@ class HebergementsInListing(grok.Viewlet):
         return len(self._fetcher)
 
     def next_items(self):
-        next_size = LINKS_COUNT + (LINKS_COUNT- len(self.previous_items()))
+        next_size = LINKS_COUNT + (LINKS_COUNT - len(self.previous_items()))
         return range(self.current_page() + 1, min(self.current_page() + next_size,
                                                   self.page_counts()))
+
     def current_page(self):
         return self._fetcher.selected_page()
 
@@ -134,7 +135,7 @@ class HebergementsInListing(grok.Viewlet):
     def previous_items(self):
         def positives(items):
             return [x for x in items if x >= 0]
-        return positives(range(self.current_page() - LINKS_COUNT, self.current_page() ))
+        return positives(range(self.current_page() - LINKS_COUNT, self.current_page()))
 
     def page_counts(self):
         return self.count() / self._fetcher.batch_size + 1
@@ -185,10 +186,6 @@ class HebergementsInCommuneListing(HebergementsInListing):
 
 
 class RechercheListing(HebergementsInListing):
-    grok.view(MoteurRecherche)
-
-
-class RechercheListing(HebergementsInListing):
     grok.context(IPloneSiteRoot)
 
     def sort_items(self):
@@ -204,7 +201,8 @@ class RechercheListing(HebergementsInListing):
         return round(hebergement.distance / 1000, 2)
 
     def isGeoLocalized(self):
-        return self.request.form['nearTo']
+        near_to = self.request.form['nearTo']
+        return getGeocodedLocation(near_to)
 
 
 class HiddenRequestParameters(grok.Viewlet):
