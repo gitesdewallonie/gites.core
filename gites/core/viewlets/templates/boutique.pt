@@ -5,11 +5,16 @@
         <h3>
             <a tal:attributes="href viewlet/getAllBoutiqueItemsView" i18n:translate="la_boutique">La boutique</a>
         </h3>
-        <a tal:attributes="href offre/absolute_url">
-            <img src="" alt="Photo" tal:replace="structure offre/getMiniPhoto"/>
-        </a>
+        <div class="offre-icon">
+            <a tal:attributes="href offre/absolute_url;
+                               title offre/pretty_title_or_id">
+                <img src="" height="115" width="246"
+                     tal:attributes="src string:${offre/absolute_url}/photo"/>
+            </a>
+        </div>
         <div class="break-float"></div>
-        <a tal:attributes="href offre/absolute_url">
+        <a tal:attributes="href offre/absolute_url;
+                           title offre/pretty_title_or_id">
             <span class="bordeaux" tal:replace="offre/pretty_title_or_id"/>
         </a>
         <br />

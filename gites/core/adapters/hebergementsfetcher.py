@@ -149,8 +149,10 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             return (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'epis':
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
-        else:
+        elif self.context.is_geolocalized() or self.selected_order() == 'distance':
             return ('distance', )
+        else:
+            return ('heb_nom', )
 
 
 class CommuneHebFetcher(BaseHebergementsFetcher):
@@ -248,9 +250,9 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         heb_type = self.data.get('form.widgets.hebergementType')
         show_gites = heb_type and 'gite-meuble' in heb_type
         show_chambres = heb_type and 'chambre-hote' in heb_type
-        from_date = self.data.get('fromDate')
-        to_date = self.data.get('toDate')
-
+        from_date = self.data.get('fromDateAvancee', self.data.get('fromDate'))
+        to_date = self.data.get('toDateAvancee', self.data.get('toDate'))
+        near_to = self.data.get('nearTo')
         smokers = self.data.get('form.widgets.smokers')
         animals = self.data.get('form.widgets.animals')
         roomAmount = self.data.get('form.widgets.roomAmount')

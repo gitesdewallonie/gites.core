@@ -6,18 +6,23 @@
         <h3>
             <a tal:attributes="href viewlet/getAllDerniereMinuteLink" i18n:translate="derniere_minute">Dernière minute</a>
         </h3>
-        <a tal:attributes="href hebergement/@@url">
-            <img alt=""
-                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/getVignette}"/>
-        </a>
+        <div class="offre-icon">
+            <a tal:attributes="href hebergement/@@url;
+                               title hebergement/heb_nom">
+                <img src="" height="115" width="246"
+                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/getVignette}"/>
+            </a>
+        </div>
         <span class="bordeaux" tal:replace="offre/pretty_title_or_id" /><br>
-        <p class="red"><span tal:replace="python:viewlet.getNiceEventStartDate(offre)" /> &rarr; <span tal:replace="python:viewlet.getNiceEventEndDate(offre)" /></p>
-        <p><img src="img/bonhomme.png" class="bonhomme" alt="bonhomme"></p>
+        <p class="red">
+            <span tal:replace="python:viewlet.getNiceEventStartDate(offre)" /> &rarr; <span tal:replace="python:viewlet.getNiceEventEndDate(offre)" />
+        </p>
         <p>
             <span tal:condition="python: hebergement.heb_cgt_cap_min != hebergement.heb_cgt_cap_max"
                   tal:content="string: ${hebergement/heb_cgt_cap_min}/${hebergement/heb_cgt_cap_max}" />
             <span tal:condition="python: hebergement.heb_cgt_cap_min == hebergement.heb_cgt_cap_max"
                   tal:content="string: ${hebergement/heb_cgt_cap_min}" />
+            <img src="capacite.png">
         </p>
         <div class="plus-info">
             <a tal:attributes="href viewlet/getAllDerniereMinuteLink"><span i18n:translate="toutes_nos_dernieres_minutes">Toutes nos dernières minutes</span>...</a>

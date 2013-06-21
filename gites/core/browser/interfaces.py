@@ -269,6 +269,14 @@ class ISearchHosting(Interface):
         title=_(u'Stay to'),
         required=False)
 
+    fromDateAvancee = schema.Date(
+        title=_(u'Stay from'),
+        required=False)
+
+    toDateAvancee = schema.Date(
+        title=_(u'Stay to'),
+        required=False)
+
     nearTo = schema.TextLine(
         title=_('Near to'),
         required=False)
