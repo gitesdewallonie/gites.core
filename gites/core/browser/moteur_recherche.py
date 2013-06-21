@@ -7,6 +7,7 @@ from Products.CMFCore.utils import getToolByName
 from z3c.sqlalchemy import getSAWrapper
 from zope.component import getMultiAdapter
 from gites.core.interfaces import IHebergementsFetcher, IMapRequest
+from gites.core.utils import getGeocodedLocation
 
 
 class MoteurRecherche(BrowserView):
@@ -50,3 +51,13 @@ class MoteurRecherche(BrowserView):
         fetcher = getMultiAdapter((self.context, self, self.request),
                                   IHebergementsFetcher)
         return len(fetcher)
+
+    def nearToNotFound(self):
+        """
+        Return near_to value if geolocalising search does not find it
+        """
+        near_to = self.request.form.get('nearTo')
+        if near_to and not getGeocodedLocation(near_to):
+            return near_to
+        else:
+            return None

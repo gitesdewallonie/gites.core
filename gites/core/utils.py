@@ -9,17 +9,20 @@ $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
 from zope.component import getUtility
 from Products.CMFCore.utils import getToolByName
+from plone.memoize import forever
 from plone.portlets.interfaces import IPortletManager
 from plone.portlets.interfaces import IPortletAssignmentMapping
 from plone.app.portlets.portlets import classic
 from zope.component import getMultiAdapter
+from pygeocoder import Geocoder
+from pygeolib import GeocoderError
 
 
 def createPage(parentFolder, documentId, documentTitle, excludeNav=False):
     if documentId not in parentFolder.objectIds():
         parentFolder.invokeFactory('Document', documentId, title=documentTitle)
     document = getattr(parentFolder, documentId)
-    document.exclude_from_nav=excludeNav
+    document.exclude_from_nav = excludeNav
     publishObject(document)
     return document
 
@@ -29,7 +32,7 @@ def createFolder(parentFolder, folderId, folderTitle, excludeNav):
         parentFolder.invokeFactory('Folder', folderId, title=folderTitle, excludeFromNav=excludeNav)
     createdFolder = getattr(parentFolder, folderId)
     createdFolder.reindexObject()
-    createdFolder.exclude_from_nav=excludeNav
+    createdFolder.exclude_from_nav = excludeNav
     createdFolder.reindexObject()
     publishObject(createdFolder)
     createdFolder.reindexObject()
@@ -78,6 +81,7 @@ def changeDocumentView(document, viewname):
     if document.getLayout() != viewname:
         document.setLayout(viewname)
 
+
 def addViewToType(portal, typename, templatename):
     pt = getToolByName(portal, 'portal_types')
     foldertype = getattr(pt, typename)
@@ -85,3 +89,15 @@ def addViewToType(portal, typename, templatename):
     if not templatename in available_views:
         available_views.append(templatename)
         foldertype.manage_changeProperties(view_methods=available_views)
+
+
+@forever.memoize
+def getGeocodedLocation(location):
+    try:
+        locations = Geocoder.geocode(location)
+    except GeocoderError, e:
+        if e.status == u'ZERO_RESULTS':
+            return None
+        else:
+            raise e
+    return locations[0]

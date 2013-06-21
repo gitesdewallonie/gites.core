@@ -12,7 +12,6 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from gites.locales import GitesMessageFactory as _
-from gites.core.interfaces import IMapRequest
 from gites.core.browser.interfaces import (ISearchHebergement,
                                            IBasicSearchHebergement,
                                            IBasicSearchHebergementTooMuch,
@@ -251,8 +250,6 @@ from plone.z3cform import layout
 
 from gites.core.browser import interfaces
 from collective.z3cform.datepicker.widget import DatePickerFieldWidget
-from z3c.form import button
-from Acquisition import aq_inner
 
 
 class BasicForm(form.Form):
@@ -281,6 +278,7 @@ class BasicForm(form.Form):
         heb_type = self.request.form.get('form.widgets.hebergementType')
         if not heb_type or 'chambre-hote' in heb_type:
             return 'checked'
+
 
 class SearchHostingForm(form.Form):
     fields = field.Fields(interfaces.ISearchHosting).select(
@@ -314,6 +312,7 @@ class SearchHostingForm(form.Form):
         heb_type = self.request.form.get('form.widgets.hebergementType')
         if not heb_type or 'chambre-hote' in heb_type:
             return 'checked'
+
 
 class SearchHosting(layout.FormWrapper, grok.View):
     grok.context(zope.interface.Interface)
