@@ -156,8 +156,10 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             return (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'epis':
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
-        else:
+        elif self.context.is_geolocalized() or self.selected_order() == 'distance':
             return ('distance', )
+        else:
+            return ('heb_nom', )
 
 
 class CommuneHebFetcher(BaseHebergementsFetcher):
