@@ -28,6 +28,13 @@
 <div metal:fill-slot="main">
 
  <span tal:define="nbr view/hebergementsCount">
+
+  <div class="error-center"
+      tal:define="nearToNotFound view/nearToNotFound"
+      tal:condition="nearToNotFound">
+      Nous n'avons pas trouv&eacute; votre localisation <tal:near_to tal:replace="nearToNotFound" />. Merci de v&eacute;rifier le nom. Voici les h&eacute;bergements r&eacute;pondant &agrave; vos autres crit&egrave;res.
+  </div>
+
   <h1>
     <span tal:replace="nbr" />
     <span i18n:translate="hebergements_correspondent" tal:condition="python: int(nbr)>1"> h&eacute;bergements correspondent &agrave; votre recherche.</span>

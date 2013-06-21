@@ -237,12 +237,12 @@ class ISearchHosting(Interface):
 
     hebergementType = schema.Choice(
         title=_("Hebergement Type"),
-        required=True,
+        required=False,
         vocabulary="gitescontent.groupedtypehebergement")
 
     classification = schema.Choice(
         title=_('Classification'),
-        required=True,
+        required=False,
         vocabulary="gitescontent.classification")
 
     capacityMin = schema.Int(
@@ -269,6 +269,6 @@ class ISearchHosting(Interface):
         title=_(u'Stay to'),
         required=False)
 
-    nearTo = schema.Text(
+    nearTo = schema.TextLine(
         title=_('Near to'),
         required=False)

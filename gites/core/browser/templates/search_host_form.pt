@@ -1,12 +1,11 @@
-<div id="je-recherche"
+<div id="recherche-avancee"
      i18n:domain="gites">
-    <h2 i18n:translate="label_recherche">Je cherche</h2>
-    <h3><a href="" tal:attributes="href string:${context/@@plone_portal_state/portal_url}/search_hosting.html" i18n:translate="recherche_avancee">Recherche avanc&eacute;e</a></h3>
     <div class="break-float"></div>
 
     <form action=""
           method="post"
           tal:attributes="action string:${context/@@plone_portal_state/portal_url}/moteur_recherche_view/getBasicSearch">
+        <tal:block replace="structure view/widgets/hebergementType/label" />
         <div id="zone-gite-meuble">
             <input type="checkbox"
                    name="form.widgets.hebergementType:list"
@@ -27,17 +26,21 @@
         </div>
         <div class="break-float"></div>
         <div id="date-start" tal:define="widget view/widgets/fromDate">
+            <tal:block replace="structure widget/label" />
             <tal:block replace="structure widget/render" />
         </div>
         <div id="date-end" tal:define="widget view/widgets/toDate">
+            <tal:block replace="structure widget/label" />
             <tal:block replace="structure widget/render" />
         </div>
         <div id="nbre-personne" tal:define="widget view/widgets/capacityMin">
+            <tal:block replace="structure widget/label" />
             <tal:block replace="structure widget/render" />
         </div>
         <div class="break-float"></div>
         <div id="proximite"
              tal:define="lang request/LANGUAGE | fr">
+            <tal:block replace="structure view/widgets/nearTo/label" />
             <input name="form.widgets.nearTo"
                    type="text"
                    autocomplete="off"
@@ -46,7 +49,29 @@
                    i18n:attributes="placeholder a_proximite_de"
                    placeholder="A proximité de"/>
         </div>
+        <div id="classification" tal:define="widget view/widgets/classification">
+            <tal:block replace="structure widget/label" />
+            <tal:block replace="structure widget/render" />
+        </div>
+        <div id="roomAmount" tal:define="widget view/widgets/roomAmount">
+            <tal:block replace="structure widget/label" />
+            <tal:block replace="structure widget/render" />
+        </div>
 
+        <div id="zone-smokers">
+            <input type="checkbox"
+                   name="form.widgets.smokers"
+                   id="smokers"/>
+            <label for="smokers"
+                   i18n:translate="fumeurs_autorises">Fumeurs autorisés</label>
+        </div>
+        <div id="zone-animals">
+            <input type="checkbox"
+                   name="form.widgets.animals"
+                   id="animals"/>
+            <label for="animals"
+                   i18n:translate="animaux_autorises">Animaux autorisés sur demande</label>
+        </div>
         <div>
             <input type="submit"
                    value="Je trouve"
