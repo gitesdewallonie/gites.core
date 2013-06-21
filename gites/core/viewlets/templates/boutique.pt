@@ -8,7 +8,7 @@
         <div class="offre-icon">
             <a tal:attributes="href offre/absolute_url;
                                title offre/pretty_title_or_id">
-                <img src="" height="115" width="246"
+                <img src="" height="156" width="240"
                      tal:attributes="src string:${offre/absolute_url}/photo"/>
             </a>
         </div>

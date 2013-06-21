@@ -68,7 +68,7 @@ schema = Schema((
 
 ##code-section after-local-schema #fill in your manual code here
 schema['photo'].sizes = {'large': (900, 421),
-                         'thumb': (246, 115)}
+                         'thumb': (240, 156)}
 ##/code-section after-local-schema
 
 BoutiqueItem_schema = BaseFolderSchema.copy() + \

@@ -10,7 +10,7 @@
             <tal:vign tal:repeat="vignette vignettes">
                 <a tal:attributes="href offre/getURL;
                                    title offre/pretty_title_or_id">
-                    <img src="" height="115" width="246"
+                    <img src="" height="156" width="240"
                          tal:attributes="src string:${vignette/getURL}"/>
                 </a>
             </tal:vign>
