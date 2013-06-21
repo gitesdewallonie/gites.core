@@ -289,21 +289,21 @@ class SearchHostingForm(form.Form):
     fields['fromDate'].widgetFactory = DatePickerFieldWidget
     fields['toDate'].widgetFactory = DatePickerFieldWidget
 
-    @button.buttonAndHandler(_("Search"))
-    def handleSearch(self,action):
-        data, errors = self.extractData()
-        if errors:
-            self.status=self.formErrorsMessage
-            return
+    template = ViewPageTemplateFile('templates/search_host_form.pt')
 
-    @property
-    def action(self):
-        portal_url=aq_inner(self.context).absolute_url()
-        return "%s/moteur_recherche_view/getBasicSearch" % portal_url
+    def selected_gite(self):
+        """
+        """
+        heb_type = self.request.form.get('form.widgets.hebergementType')
+        if not heb_type or 'gite-meuble' in heb_type:
+            return 'checked'
 
-    def updateWidgets(self):
-        form.Form.updateWidgets(self)
-        self.widgets['nearTo'].addClass("geocode_autocomplete_fr")
+    def selected_chambre(self):
+        """
+        """
+        heb_type = self.request.form.get('form.widgets.hebergementType')
+        if not heb_type or 'chambre-hote' in heb_type:
+            return 'checked'
 
 class SearchHosting(layout.FormWrapper, grok.View):
     grok.context(zope.interface.Interface)
