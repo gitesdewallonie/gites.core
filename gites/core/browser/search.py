@@ -283,11 +283,21 @@ class BasicForm(form.Form):
             return 'checked'
 
 class SearchHostingForm(form.Form):
-    fields = field.Fields(interfaces.ISearchHosting)
+    fields = field.Fields(interfaces.ISearchHosting).select(
+        'hebergementType',
+        'classification',
+        'capacityMin',
+        'roomAmount',
+        'animals',
+        'smokers',
+        'fromDateAvancee',
+        'toDateAvancee',
+        'nearTo')
+
     label = _("Search Hebergement")
     ignoreContext = True
-    fields['fromDate'].widgetFactory = DatePickerFieldWidget
-    fields['toDate'].widgetFactory = DatePickerFieldWidget
+    fields['fromDateAvancee'].widgetFactory = DatePickerFieldWidget
+    fields['toDateAvancee'].widgetFactory = DatePickerFieldWidget
 
     template = ViewPageTemplateFile('templates/search_host_form.pt')
 

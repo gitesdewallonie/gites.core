@@ -25,11 +25,11 @@
                    i18n:translate="chambre_hotes">Chambre d'h&ocirc;tes</label>
         </div>
         <div class="break-float"></div>
-        <div id="date-start" tal:define="widget view/widgets/fromDate">
+        <div id="date-start" tal:define="widget view/widgets/fromDateAvancee">
             <tal:block replace="structure widget/label" />
             <tal:block replace="structure widget/render" />
         </div>
-        <div id="date-end" tal:define="widget view/widgets/toDate">
+        <div id="date-end" tal:define="widget view/widgets/toDateAvancee">
             <tal:block replace="structure widget/label" />
             <tal:block replace="structure widget/render" />
         </div>
