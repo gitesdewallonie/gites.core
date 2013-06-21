@@ -255,9 +255,10 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         to_date = self.data.get('toDate')
         near_to = self.data.get('nearTo')
 
-        smokers = self.data.get('smokers')
-        animals = self.data.get('animals')
-        roomAmount = self.data.get('roomAmount')
+        smokers = self.data.get('form.widgets.smokers')
+        animals = self.data.get('form.widgets.animals')
+        roomAmount = self.data.get('form.widgets.roomAmount')
+
         classification = self.data.get('classification')
         #11 = Animal
         #12 = Fumeur
@@ -277,6 +278,11 @@ class SearchHebFetcher(BaseHebergementsFetcher):
             subquery = subquery.subquery()
             query = query.filter(Hebergement.heb_pk == subquery.c.heb_fk)
 
+        if classification and str(classification) != '-1':
+            query = query.filter(sa.and_(LinkHebergementEpis.heb_nombre_epis == classification,
+                                         Hebergement.heb_pk == LinkHebergementEpis.heb_pk))
+        if roomAmount:
+            query = query.filter(Hebergement.heb_cgt_nbre_chmbre >= roomAmount)
         if reference:
             reference = reference.strip()
             query = query.filter(sa.or_(sa.func.unaccent(Hebergement.heb_nom).ilike("%%%s%%" % reference),
