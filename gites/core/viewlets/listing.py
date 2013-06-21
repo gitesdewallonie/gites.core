@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
+import hashlib
 from five import grok
 from Acquisition import Explicit
 from Products.Maps.interfaces import IMarker
@@ -222,7 +223,31 @@ class HiddenRequestParameters(grok.Viewlet):
     def parameters(self):
         params = self.request_json_parameters()
         params.update(self.request.form.items())
-        return params.items()
+        return self.parse_parameters(params)
+
+    def parse_parameters(self, elements_dict):
+        """ Returns a list of tuple with the key and the value """
+        params = []
+        for param in elements_dict.items():
+            key = self.clear_key(param[0])
+            value = param[1]
+            if isinstance(value, list):
+                for element in value:
+                    params.append((key, element))
+            else:
+                params.append((key, value))
+        return params
+
+    def clear_key(self, key):
+        """ Removes unwanted char from the key """
+        for element in ('[]', ):
+            key = key.replace(element, '')
+        return key
+
+    @property
+    def hash(self):
+        form_json = json.dumps(self.request.form, sort_keys=True)
+        return hashlib.md5(form_json).hexdigest()
 
 
 class HebergementListingViewletManager(grok.ViewletManager):

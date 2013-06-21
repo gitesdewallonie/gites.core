@@ -146,8 +146,8 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
             $cookieStore.put('listing_keywords', $scope.keywords);
         };
         if ( ! jQuery.isEmptyObject($scope.formData) ) {
-	    var data = jQuery.extend({}, $scope.formData);
-	    delete data['page'];
+	          var data = jQuery.extend({}, $scope.formData);
+	          delete data['page'];
             $cookieStore.put('listing_form_data', data);
         };
         $cookieStore.put('listing_sort', $scope.sort);
