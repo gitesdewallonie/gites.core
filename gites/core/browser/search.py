@@ -12,7 +12,6 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from gites.locales import GitesMessageFactory as _
-from gites.core.interfaces import IMapRequest
 from gites.core.browser.interfaces import (ISearchHebergement,
                                            IBasicSearchHebergement,
                                            IBasicSearchHebergementTooMuch,
@@ -280,12 +279,29 @@ class BasicForm(form.Form):
         if not heb_type or 'chambre-hote' in heb_type:
             return 'checked'
 
+
 class SearchHostingForm(form.Form):
     fields = field.Fields(interfaces.ISearchHosting)
     label = _("Search Hebergement")
     ignoreContext = True
     fields['fromDate'].widgetFactory = DatePickerFieldWidget
     fields['toDate'].widgetFactory = DatePickerFieldWidget
+
+    template = ViewPageTemplateFile('templates/search_host_form.pt')
+
+    def selected_gite(self):
+        """
+        """
+        heb_type = self.request.form.get('form.widgets.hebergementType')
+        if not heb_type or 'gite-meuble' in heb_type:
+            return 'checked'
+
+    def selected_chambre(self):
+        """
+        """
+        heb_type = self.request.form.get('form.widgets.hebergementType')
+        if not heb_type or 'chambre-hote' in heb_type:
+            return 'checked'
 
 
 class SearchHosting(layout.FormWrapper, grok.View):
@@ -294,6 +310,3 @@ class SearchHosting(layout.FormWrapper, grok.View):
     grok.require('zope2.Public')
 
     form = SearchHostingForm
-
-    def update(self):
-        zope.interface.alsoProvides(IMapRequest, self.request)
