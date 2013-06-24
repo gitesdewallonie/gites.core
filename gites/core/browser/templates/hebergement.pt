@@ -441,7 +441,8 @@
                     </div>
                 </li>
                 <!-- DISPONIBILITE -->
-                <li class="slide slide3">
+                <li class="slide slide3"
+                    tal:attributes="class python: hasCalendar and 'slide slide3 used' or 'slide slide3 unused'">
                     <div class="slide_handle"
                          tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
                     <div class="slide_content">
