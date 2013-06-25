@@ -1,9 +1,11 @@
 <div id="zone-produit-package"
      i18n:domain="gites">
     <div id="zone-photo"
-         tal:define="packages viewlet/getCarouselPackages">
+         tal:condition="not: context/@@isMobile | nothing">
 
-        <div id="package-carousel" class="carousel slide" tal:condition="packages">
+        <div id="package-carousel" class="carousel slide"
+             tal:define="packages viewlet/getCarouselPackages"
+             tal:condition="packages">
             <ol class="carousel-indicators">
               <tal:bcl tal:repeat="package packages">
                 <li data-target="#package-carousel"

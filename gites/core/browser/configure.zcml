@@ -76,6 +76,14 @@
       permission="zope.Public"
       />
 
+  <browser:page
+      for="*"
+      name="isMobile"
+      attribute="isMobile"
+      class=".responsive.ResponsiveView"
+      permission="zope.Public"
+      />
+
    <browser:page
       for="*"
       name="blog_newsletter_subscribe"
