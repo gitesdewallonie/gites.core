@@ -1,6 +1,7 @@
-<tal:viewlet tal:define="offre viewlet/getRandomBoutiqueItem"
-             tal:condition="python:offre is not None">
+<tal:viewlet tal:condition="not: context/@@isMobile | nothing">
     <div id="zone-la-boutique"
+         tal:define="offre viewlet/getRandomBoutiqueItem"
+         tal:condition="python:offre is not None"
          i18n:domain="gites">
         <h3>
             <a tal:attributes="href viewlet/getAllBoutiqueItemsView" i18n:translate="la_boutique">La boutique</a>
