@@ -148,23 +148,23 @@
                      <div id="description-icone-theme-giteplus">
                         <tal:for repeat="metadata python:view.getHebMetadatasByType('themes')">
                             <div class="button-theme">
-                            <img src=""
-                                 title=""
-                                 alt=""
-                                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
-                                                 alt metadata/title;
-                                                 title metadata/title" />
+                                <img src=""
+                                     title=""
+                                     alt=""
+                                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
+                                                     alt metadata/title;
+                                                     title metadata/title" />
                             </div>
                         </tal:for>
 
                         <tal:for repeat="metadata python:view.getHebMetadatasByType('gitesplus')">
                             <div class="button-theme">
-                            <img src=""
-                                 title=""
-                                 alt=""
-                                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
-                                                 alt metadata/title;
-                                                 title metadata/title" />
+                                <img src=""
+                                     title=""
+                                     alt=""
+                                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
+                                                     alt metadata/title;
+                                                     title metadata/title" />
                             </div>
                         </tal:for>
                     </div>
