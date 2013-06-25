@@ -118,7 +118,7 @@
                  alt=""
                  tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/${type_heb}_${repeat/hebergement/number}.png" />
           </div>
-          <div tal:condition="viewlet/isGeoLocalized"
+          <div tal:condition="viewlet/is_geolocalized"
                id="distance">
             <span tal:define="dist python:viewlet.heb_distance(hebergement)"
                   tal:content="string: ${dist} km">5Km</span>
@@ -231,16 +231,6 @@
                 </a>
               </div>
               <div id="info-bloc-sup">
-                <!--                <div class="digit"-->
-                <!--                     tal:attributes="id string:map_picto_{{groupe.heb_pk}}">-->
-                <!--                  <img src=""-->
-                <!--                       tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/{{groupe.type_heb}}_${repeat/hebergement/number}.png" />-->
-                <!--                </div>-->
-                <!--                <div tal:condition="viewlet/isGeoLocalized"-->
-                <!--                     id="distance">-->
-                <!--                     <span tal:define="dist python:viewlet.heb_distance(hebergement)"-->
-                <!--                           tal:content="string: ${dist} km"> 5Km </span>-->
-                <!--                </div>-->
                 <div id="nom-hebergement">
                   <a href=""
                      tal:attributes="href string:{{groupe.url_heb}}">{{groupe.heb_nom}}</a>

@@ -190,6 +190,10 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         return params
 
     @property
+    def is_geolocalized(self):
+        return self.data.get('nearTo') is not None
+
+    @property
     def geocodedLocation(self):
         near_to = self.data.get('nearTo')
         return getGeocodedLocation(near_to)
@@ -410,7 +414,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
             return (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'epis':
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
-        elif self.selected_order() == 'distance':
+        elif self.is_geolocalized or self.selected_order() == 'distance':
             return ('distance', )
         else:
             return ('heb_nom', )

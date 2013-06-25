@@ -114,7 +114,7 @@ class HebergementsInListing(grok.Viewlet):
     def hebergements(self):
         return self._fetcher()
 
-    def isGeoLocalized(self):
+    def is_geolocalized(self):
         return (component.queryAdapter(self.context, IMarker) is not None and
                 self.context.getRange() is not None)
 
@@ -174,7 +174,7 @@ class HebergementsInPackageListing(HebergementsInListing):
             'room_count': _("nombre-chambres", "Nombre de chambres"),
             'epis': _(u"Epis"),
             'heb_type': _(u"Hebergement Type")}
-        if self.isGeoLocalized():
+        if self.is_geolocalized():
             sortables['distance'] = _('Distance')
         return sortables
 
@@ -194,14 +194,14 @@ class RechercheListing(HebergementsInListing):
             'pers_numbers': _("nombre_personnes", "Nombre de personne"),
             'room_count': _("nombre-chambres", "Nombre de chambres"),
             'epis': _(u"Epis")}
-        if self.isGeoLocalized():
+        if self.is_geolocalized():
             sortables['distance'] = _('Distance')
         return sortables
 
     def heb_distance(self, hebergement):
         return round(hebergement.distance / 1000, 2)
 
-    def isGeoLocalized(self):
+    def is_geolocalized(self):
         near_to = self.request.form['nearTo']
         return getGeocodedLocation(near_to)
 
