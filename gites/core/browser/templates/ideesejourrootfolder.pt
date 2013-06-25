@@ -58,8 +58,8 @@
                      tal:attributes="class python:odd and 'break-float'"></div>
             </tal:block>
         </tal:boucle>
+        <div class="break-float"></div>
     </div>
-    <div class="break-flaot"></div>
 </div>
 
 </body>
