@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
+import zope.interface
 from five import grok
-from zope.interface import implements
 from zope.component import getMultiAdapter
 from .interfaces import IPackageView
 from Products.CMFCore.utils import getToolByName
 
 from gites.core.content.interfaces import IPackage
-from gites.core.interfaces import IHebergementsFetcher
+from gites.core.interfaces import IHebergementsFetcher, IMapRequest
 
 grok.templatedir('templates')
 
@@ -27,10 +27,14 @@ class Package(grok.View):
     """
     View on Idee Sejour
     """
-    implements(IPackageView)
+    grok.implements(IPackageView)
     grok.context(IPackage)
     grok.name('package_view')
     grok.require('zope2.View')
+
+    def update(self):
+        zope.interface.alsoProvides(self.request, IMapRequest)
+        super(Package, self).update()
 
     def getVignetteURL(self):
         return getVignetteURL(self.context)
