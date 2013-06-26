@@ -271,14 +271,14 @@
                             </tr>
                             <tr bgcolor="#ceddce">
                                 <td class="tarif-saison" i18n:translate="garantie">Garantie</td>
-                                <td colspan="2" class="tarif-rpix">
+                                <td colspan="2" class="tarif-prix">
                                     <span tal:content="heb/heb_tarif_garantie" />
                                 </td>
                             </tr>
                             <tr>
                                 <td class="tarif-saison" i18n:translate="charges">Charges</td>
                                 <td colspan="2" class="tarif-prix">
-                                    <span tal:condition="exists: heb/heb_tarif_charge">|
+                                    <span tal:condition="exists: heb/heb_tarif_charge">
                                         <span tal:content="heb/heb_tarif_charge" />
                                         <span tal:content="view/getHebergementCharge" />
                                     </span>
