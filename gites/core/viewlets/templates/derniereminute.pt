@@ -28,14 +28,33 @@
            <span tal:replace="structure offre/getText" />
         </p>
 
-        <p>
+        <div class="etiquette-derniere-minute">
             <span tal:condition="python: hebergement.heb_cgt_cap_min != hebergement.heb_cgt_cap_max"
                   tal:content="string: ${hebergement/heb_cgt_cap_min}/${hebergement/heb_cgt_cap_max}" />
             <span tal:condition="python: hebergement.heb_cgt_cap_min == hebergement.heb_cgt_cap_max"
-                  tal:content="string: ${hebergement/heb_cgt_cap_min}" /> p.
-        </p>
+                  tal:content="string: ${hebergement/heb_cgt_cap_min}" /><br />
+            <span i18n:translate="x_personnes">personnes</span>
+        </div>
+        <div class="etiquette-derniere-minute">
+            <span tal:content="hebergement/heb_cgt_nbre_chmbre" /><br />
+            <span i18n:translate="x_chambres">chambres</span>
+        </div>
+        
+        <tal:block tal:define="epis python:hebergement.epis and hebergement.epis[0] or None;
+                               episValue python:epis and (epis.heb_nombre_epis > 0 and epis.heb_nombre_epis) or '-'">
+            <div class="etiquette-derniere-minute"
+                 tal:condition="python:hebergement.type.type_heb_code == 'MV'">
+                <span tal:content="episValue"/><br />
+                <span i18n:translate="x_cles">cl&eacute;s</span>
+            </div>
+            <div class="etiquette-derniere-minute"
+                 tal:condition="python:hebergement.type.type_heb_code != 'MV'">
+                <span tal:content="episValue"/><br />
+                <span i18n:translate="x_epis">&eacute;pis</span>
+            </div>
+        </tal:block>
 
-
+        <div class="break-float"></div>
         <div class="plus-info">
             <a tal:attributes="href viewlet/getAllDerniereMinuteLink"><span i18n:translate="toutes_nos_dernieres_minutes">Toutes nos dernières minutes</span>...</a>
         </div>
