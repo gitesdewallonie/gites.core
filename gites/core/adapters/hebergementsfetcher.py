@@ -309,7 +309,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
 
             query = session.query(
                 sa.func.min(Hebergement.heb_nom).label('heb_nom'),
-                sa.func.sum(Hebergement.heb_location.distance_sphere(point)).label('distance'),
+                sa.func.average(Hebergement.heb_location.distance_sphere(point)).label('distance'),
                 sa.func.sum(Hebergement.heb_cgt_nbre_chmbre).label('heb_cgt_nbre_chmbre'),
                 sa.func.sum(Hebergement.heb_cgt_cap_min).label('heb_cgt_cap_min'),
                 sa.func.sum(Hebergement.heb_cgt_cap_max).label('heb_cgt_cap_max'),
