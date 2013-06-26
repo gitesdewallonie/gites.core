@@ -293,7 +293,8 @@
                                 </td>
                             </tr>
                          </table>
-                        <div id="description-tarification-divers">
+                        <div id="description-tarification-divers"
+                             tal:condition="heb/heb_tarif_divers">
                             <h3>Divers</h3>
                             <p tal:content="heb/heb_tarif_divers"></p>
                         </div>
@@ -348,7 +349,8 @@
                                 <td class="tarif-prix empty-cell">&nbsp;</td>
                             </tr>
                         </table>
-                        <div id="description-tarification-divers">
+                        <div id="description-tarification-divers"
+                             tal:condition="heb/heb_tarif_chmbr_autre_1p">
                             <h3 i18n:translate="divers">Divers</h3>
                             <span tal:content="heb/heb_tarif_chmbr_autre_1p" />
                         </div>
@@ -356,8 +358,8 @@
 
                         <!-- TABLE TABLE D'HOTE-->
                         <div id="tarification-table-hote"
-                             tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR'"
-                             tal:define="table_hote view/getTableHote">
+                             tal:define="tables_hotes view/getTablesHotes"
+                             tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR' and tables_hotes">
                             <table>
                                 <tr>
                                     <td colspan="2"
@@ -378,8 +380,16 @@
                                         Type
                                     </td>
                                     <td>
-                                        <span tal:content="table_hote">
-                                        </span>
+                                        <tal:blc tal:repeat="table_hote tables_hotes">
+                                            <img src=""
+                                                 title=""
+                                                 alt=""
+                                                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${table_hote/id}.png;
+                                                                 alt table_hote/title;
+                                                                 title table_hote/title" />
+                                            <span class="discreet-info" tal:content="table_hote/title">Titre</span>
+                                            <br />
+                                        </tal:blc>
                                     </td>
                                 </tr>
                             </table>
