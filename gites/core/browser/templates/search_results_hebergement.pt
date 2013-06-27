@@ -41,7 +41,8 @@
     <span i18n:translate="hebergements_correspondent" tal:condition="python: int(nbr)>1"> h&eacute;bergements correspondent &agrave; votre recherche.</span>
     <span i18n:translate="hebergement_correspond" tal:condition="python: int(nbr)<=1"> h&eacute;bergement correspond &agrave; votre recherche.</span>
   </h1>
-  <div>
+
+  <div tal:condition="python: nbr > 0">
     <div id="spin"
          style="display:none;"></div>
     <div id="heb-listing"
@@ -52,8 +53,8 @@
          tal:content="structure provider:gites.mapviewlet"></div>
 
     <div class="break-float"></div>
-
   </div>
+
  </span>
 
 </div>

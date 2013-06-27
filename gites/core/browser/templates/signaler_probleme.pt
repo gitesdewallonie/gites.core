@@ -1,80 +1,73 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xml:lang="en"
-      lang="en"
-      metal:use-macro="here/main_template/macros/master"
-      i18n:domain="gites">
+xml:lang="en"
+lang="en"
+metal:use-macro="here/main_template/macros/master"
+i18n:domain="gites">
 
 <head>
-   <script src="validate_forms.js"
-           type="text/javascript"></script>
+<script src="validate_forms.js"
+type="text/javascript"></script>
 </head>
 
 <body>
-    <metal:javascript_head_slot fill-slot="javascript_head_slot">
-            <script type="text/javascript"
-                    charset="utf-8"
-                    src=""
-                    tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/signalerprobleme.js"></script>
-    </metal:javascript_head_slot>
+<metal:javascript_head_slot fill-slot="javascript_head_slot">
+<script type="text/javascript"
+    charset="utf-8"
+    src=""
+    tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/signalerprobleme.js"></script>
+</metal:javascript_head_slot>
 <div metal:fill-slot="main">
+    
+    <div id="signaler-un-probleme-formulaire"
+         tal:define="send view/sendMailForProblem;
+                     captchaView nocall:context/@@captcha">
+        <h2 i18n:translate="signaler_un_probleme" class="documentFirstHeading">
+            Signaler un problème
+        </h2>
 
-<h1 i18n:translate="signaler_un_probleme" class="documentFirstHeading">
-Signaler un problème
-</h1>
-
-<div id="content-core" class="signaler-probleme" align="center"
-     tal:define="send view/sendMailForProblem">
-
-<form action="signaler_probleme"
-      name="signaler-probleme"
-      onsubmit="return validate(this);"
-      method="post">
-    <table width="95%"
-           border="0"
-           tal:define="captchaView nocall:context/@@captcha"
-           id="table-signaler-probleme">
-        <tr>
-            <td align="right">
+        <form action="signaler_probleme"
+              name="signaler-probleme"
+              onsubmit="return validate(this);"
+              method="post">
+            <div class="formulaire-input">
                 <span class="fieldRequired"
                       title="Required"
                       i18n:attributes="title title_required;"></span>
-                <label for="contactNom" i18n:translate="nom">Nom</label>
-            </td>
-            <td>
+                <label for="contactNom"
+                       i18n:translate="nom">Nom</label>
+                <br />
                 <input type="text"
                        name="contactNom"
-                       size="30"
+                       size="50"
                        class="required"
                        value=""
                        tal:attributes="value request/contactNom | nothing"
                        />
-            </td>
-        </tr>
-        <tr>
-            <td align="right">
+            </div>
+
+            <div class="formulaire-input">
                 <span class="fieldRequired"
                       title="Required"
                       i18n:attributes="title title_required;"></span>
-                <label for="contactPrenom" i18n:translate="prenom">Prénom</label>
-            </td>
-            <td>
+                <label for="contactPrenom"
+                       i18n:translate="prenom">Prénom</label>
+                <br />
                 <input type="text"
                        name="contactPrenom"
-                       size="30"
+                       size="50"
                        class="required"
                        value=""
                        tal:attributes="value request/contactPrenom | nothing"
                        />
-            </td>
-        </tr>
-        <tr class="field">
-            <td align="right">
+            </div>
+
+            <div class="formulaire-input">
                 <span class="fieldRequired"
                       title="Required"
                       i18n:attributes="title title_required;"></span>
-                <label for="contactEmail"  i18n:translate="email">E-mail</label>
-            </td>
-            <td>
+                <label for="contactEmail"
+                       i18n:translate="email">E-mail</label>
+                <br />
                 <input type="text"
                        id="contactEmail"
                        name="contactEmail"
@@ -83,94 +76,86 @@ Signaler un problème
                        value=""
                        tal:attributes="value request/contactEmail | nothing"
                        />
-            </td>
-        </tr>
-        <tr>
-           <td align="right">
-               <label for="contactLangue" i18n:translate="langue">Langue</label>
-           </td>
-           <td>
-              <select name="contactLangue">
-                 <option>...</option>
-                 <option i18n:translate="francais"> Français</option>
-                 <option i18n:translate="neerlandais"> Néerlandais</option>
-                 <option i18n:translate="anglais"> Anglais</option>
-              </select>
-          </td>
-        </tr>
-        <tr>
-           <td align="right">
-               <label for="typeProbleme" i18n:translate="type_de_probleme">Type de problème</label>
-           </td>
-           <td>
-              <select name="typeProbleme" id="typeProbleme" onchange="check();">
-                 <option>...</option>
-                 <option i18n:translate="calendrier_pas_a_jour"> Calendrier pas à jour</option>
-                 <option i18n:translate="coordonnees_incorrectes"> Coordonnées incorrectes</option>
-                 <option i18n:translate="prix_incorrect"> Prix incorrect</option>
-                 <option value="autre" i18n:translate="autre"> Autre</option>
-              </select>
-              <input type="text" style="display: none" name="typeautre" id="typeautre" /><br />
-           </td>
-        </tr>
+            </div>
+            
+            <div class="formulaire-input">
+                <label for="contactLangue"
+                      i18n:translate="langue">Langue</label>
+                <br />
+                <select name="contactLangue">
+                    <option>...</option>
+                    <option i18n:translate="francais"> Français</option>
+                    <option i18n:translate="neerlandais"> Néerlandais</option>
+                    <option i18n:translate="anglais"> Anglais</option>
+                </select>
+            </div>
 
-        <tr>
-            <td align="right">
+            <div class="formulaire-input">
+                <label for="typeProbleme"
+                      i18n:translate="type_de_probleme">Type de problème</label>
+                <br />
+                <select name="typeProbleme"
+                      id="typeProbleme"
+                      onchange="check();">
+                     <option>...</option>
+                     <option i18n:translate="calendrier_pas_a_jour"> Calendrier pas à jour</option>
+                     <option i18n:translate="coordonnees_incorrectes"> Coordonnées incorrectes</option>
+                     <option i18n:translate="prix_incorrect"> Prix incorrect</option>
+                     <option value="autre" i18n:translate="autre"> Autre</option>
+                </select>
+            </div>
+
+            <input type="text" 
+                 style="display: none"
+                 name="typeautre" 
+                 id="typeautre" />
+
+            <div class="formulaire-input">
                 <span class="fieldRequired"
                       title="Required"
                       i18n:attributes="title title_required;"></span>
-                <label for="remarque" i18n:translate="remarques">Remarques</label>
-            </td>
-            <td>
+                <label for="remarque"
+                       i18n:translate="remarques">Remarques</label>
+                <br />
                 <textarea name="remarque"
                           value=""
                           class="required"
-                          tal:attributes="value request/remarque | nothing"
-                          ><span tal:replace="request/remarque | nothing"/></textarea>
-            </td>
-        </tr>
+                          tal:attributes="value request/remarque | nothing">
+                          <span tal:replace="request/remarque | nothing"/></textarea>
+            </div>
 
-        <tr>
-            <td align="right">
-                <div  id="help-captcha">
-                    <span class="fieldRequired"
-                          title="Required"
-                          i18n:attributes="title title_required;"></span>
-                    <label for="captcha" i18n:translate="help_captcha">
-                        Enter the exact word in the image. This is used to fight robots.
-                    </label>
-                </div>
-            </td>
-            <td>
-                <div class="error"
-                     tal:condition="request/captcha | nothing"
-                     i18n:translate="invalid_captcha">
-                    Invalid captcha
-                </div>
-                <span tal:replace="structure captchaView/image_tag" />
-                <input type="text"
-                       class="required"
-                       name="captcha"
-                       value=""
-                       />
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="2" align="center">
-                <br />
+            <div id="help-captcha">
+                <span class="fieldRequired"
+                      title="Required"
+                      i18n:attributes="title title_required;"></span>
+                <label for="captcha"
+                       i18n:translate="help_captcha">
+                    Enter the exact word in the image. This is used to fight robots.
+                </label>
+            </div>
+            <div class="error"
+                 tal:condition="request/captcha | nothing"
+                 i18n:translate="invalid_captcha">
+                Invalid captcha
+            </div>
+            
+            <span tal:replace="structure captchaView/image_tag" />
+            &nbsp;&nbsp;
+            <input type="text"
+                   class="required"
+                   name="captcha"
+                   value=""
+                   />
+            <div class="submit-form">
                 <input type="hidden"
                        name="vecteur"
                        value="" />
                 <input type="submit"
                        i18n:attributes="value envoyer_demande;"
                        value="Envoyer votre demande" />
-            </td>
-        </tr>
-    </table>
-</form>
-
-</div>
+            </div>
+        </form>
+    </div><!--signaler-un-probleme-->
 
 </div><!--div metal-->
 </body>

@@ -29,23 +29,32 @@
                 tal:content="view/dispoCalendarJS"></script>
 
         <script type="text/javascript"
+                charset="utf-8"
+                src=""
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/signalerprobleme.js"></script>
+
+        <script type="text/javascript"
                 src=""
                 charset="utf-8"
+                tal:condition="not: isMobile"
                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/accordeon/jquery.accordionza.min.js"></script>
 
         <script type="text/javascript"
                 src=""
                 charset="utf-8"
+                tal:condition="not: isMobile"
                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/accordeon/script.js"></script>
 
         <script type="text/javascript"
                 src=""
                 charset="utf-8"
+                tal:condition="not: isMobile"
                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/scripts/spin.js"></script>
 
         <script type="text/javascript"
                 charset="utf-8"
                 src=""
+                tal:condition="not: isMobile"
                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/hebergement.js"></script>
     </metal:javascript_head_slot>
 
@@ -115,7 +124,7 @@
             </div><!--info-sup-->
 
             <div id="accordeon-spin"></div>
-            <script language="javascript">
+            <script language="javascript" tal:condition="not: isMobile">
                 var opts = {
                     lines: 12,      // The number of lines to draw
                     length: 7,      // The length of each line
@@ -134,7 +143,7 @@
                 tal:define="lang request/LANGUAGE | fr;
                             languageAwareClass string:slide_handle_${lang}">
 
-                <script language="javascript">
+                <script language="javascript" tal:condition="not: isMobile">
                     jQuery("#descriptif-accordeon").hide();
                 </script>
 
@@ -271,14 +280,14 @@
                             </tr>
                             <tr bgcolor="#ceddce">
                                 <td class="tarif-saison" i18n:translate="garantie">Garantie</td>
-                                <td colspan="2" class="tarif-rpix">
+                                <td colspan="2" class="tarif-prix">
                                     <span tal:content="heb/heb_tarif_garantie" />
                                 </td>
                             </tr>
                             <tr>
                                 <td class="tarif-saison" i18n:translate="charges">Charges</td>
                                 <td colspan="2" class="tarif-prix">
-                                    <span tal:condition="exists: heb/heb_tarif_charge">|
+                                    <span tal:condition="exists: heb/heb_tarif_charge">
                                         <span tal:content="heb/heb_tarif_charge" />
                                         <span tal:content="view/getHebergementCharge" />
                                     </span>
@@ -293,7 +302,8 @@
                                 </td>
                             </tr>
                          </table>
-                        <div id="description-tarification-divers">
+                        <div id="description-tarification-divers"
+                             tal:condition="heb/heb_tarif_divers">
                             <h3>Divers</h3>
                             <p tal:content="heb/heb_tarif_divers"></p>
                         </div>
@@ -348,7 +358,8 @@
                                 <td class="tarif-prix empty-cell">&nbsp;</td>
                             </tr>
                         </table>
-                        <div id="description-tarification-divers">
+                        <div id="description-tarification-divers"
+                             tal:condition="heb/heb_tarif_chmbr_autre_1p">
                             <h3 i18n:translate="divers">Divers</h3>
                             <span tal:content="heb/heb_tarif_chmbr_autre_1p" />
                         </div>
@@ -356,8 +367,8 @@
 
                         <!-- TABLE TABLE D'HOTE-->
                         <div id="tarification-table-hote"
-                             tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR'"
-                             tal:define="table_hote view/getTableHote">
+                             tal:define="tables_hotes view/getTablesHotes"
+                             tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR' and tables_hotes">
                             <table>
                                 <tr>
                                     <td colspan="2"
@@ -378,8 +389,16 @@
                                         Type
                                     </td>
                                     <td>
-                                        <span tal:content="table_hote">
-                                        </span>
+                                        <tal:blc tal:repeat="table_hote tables_hotes">
+                                            <img src=""
+                                                 title=""
+                                                 alt=""
+                                                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${table_hote/id}.png;
+                                                                 alt table_hote/title;
+                                                                 title table_hote/title" />
+                                            <span class="discreet-info" tal:content="table_hote/title">Titre</span>
+                                            <br />
+                                        </tal:blc>
                                     </td>
                                 </tr>
                             </table>
@@ -546,6 +565,7 @@
                                 <span tal:replace="heb/proprio/pro_nom2" />
                             </div>
                             <div id="langue-proprio">
+                                <img src="icon_langue.png" alt="Satisfaction" />
                                 <span tal:replace="heb/proprio/pro_langue" />
                             </div>
                             <div id="phone-proprio">
@@ -576,6 +596,7 @@
                                    target="_blank" />
                             </div>
                             <div id="contacter-proprio">
+                                <img src="icon_contact_proprio.png" alt="Contact" />
                                 <a href=""
                                    tal:attributes="href string:${context/@@plone_portal_state/portal_url}/form_contact_proprio?heb_pk=${heb/heb_pk}">
                                     <span i18n:translate="contactez_le_proprietaire">Contactez le propri&eacute;taire</span>
@@ -594,7 +615,7 @@
             </ul>
             <div id="signaler-un-probleme">
                 <a href="#"
-                   tal:attributes="href string:${context/@@plone_portal_state/portal_url}/signaler_probleme"
+                   tal:attributes="href string:${request/ACTUAL_URL}/signaler_probleme"
                    i18n:translate="signaler-un-probleme"> Signaler un problème </a>
             </div>
             <div class="break-float"></div>

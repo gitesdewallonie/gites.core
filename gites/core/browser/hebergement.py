@@ -20,11 +20,12 @@ from Products.CMFCore.utils import getToolByName
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from z3c.sqlalchemy import getSAWrapper
 from plone import api
+import sqlalchemy as sa
 
 from affinitic.db.cache import FromCache
 from affinitic.pwmanager.interfaces import IPasswordManager
 
-from gites.db.content import Hebergement, TypeHebergement, LinkHebergementEpis
+from gites.db.content import Hebergement, TypeHebergement, LinkHebergementEpis, Proprio
 from gites.db.content.hebergement.metadata import Metadata
 
 from gites.map.browser.interfaces import IMappableView
@@ -205,10 +206,9 @@ class HebergementView(BrowserView):
         return {'id': 'heb_confort_no_fumeur',
                 'title': u'Hébergement non fumeur'}
 
-    def getTableHote(self):
-        table_hote = self.getHebMetadatasByType('tablehote')
-        if table_hote:
-            return table_hote[0]['title']
+    def getTablesHotes(self):
+        tablesHotes = self.getHebMetadatasByType('tablehote')
+        return tablesHotes
 
     def render(self):
         return self.template()
@@ -271,6 +271,8 @@ class HebergementView(BrowserView):
                               )
         query = query.join('proprio').join('epis').join('type')
         query = query.filter(Hebergement.heb_groupement_pk == pk)
+        query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
+                                     Proprio.pro_etat == True))
         hebList = []
         for heb in query.all():
             hebList.append({

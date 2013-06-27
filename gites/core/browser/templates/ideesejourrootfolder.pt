@@ -33,7 +33,6 @@
                                    odd repeat/brain/odd">
                 <article class=""
                          tal:attributes="class python:even and 'float-left article-resume-idee-sejours' or 'float-right article-resume-idee-sejours'">
-                         <!--class="article-resume-idee-sejours"-->
                     <h2>
                       <a href=""
                          tal:attributes="href packageObject/absolute_url">
@@ -58,8 +57,8 @@
                      tal:attributes="class python:odd and 'break-float'"></div>
             </tal:block>
         </tal:boucle>
+        <div class="break-float"></div>
     </div>
-    <div class="break-flaot"></div>
 </div>
 
 </body>
