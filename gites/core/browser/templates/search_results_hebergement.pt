@@ -31,8 +31,9 @@
 
   <div class="error-center"
       tal:define="nearToNotFound view/nearToNotFound"
-      tal:condition="nearToNotFound">
-      Nous n'avons pas trouv&eacute; votre localisation <tal:near_to tal:replace="nearToNotFound" />. Merci de v&eacute;rifier le nom. Voici les h&eacute;bergements r&eacute;pondant &agrave; vos autres crit&egrave;res.
+      tal:condition="nearToNotFound"
+      i18n:translate="erreur_localisation_non_trouvee">
+      Nous n'avons pas trouv&eacute; votre localisation <tal:near_to i18n:name="localisation" tal:replace="nearToNotFound" />. Merci de v&eacute;rifier le nom. Voici les h&eacute;bergements r&eacute;pondant &agrave; vos autres crit&egrave;res.
   </div>
 
   <h1>
@@ -40,7 +41,8 @@
     <span i18n:translate="hebergements_correspondent" tal:condition="python: int(nbr)>1"> h&eacute;bergements correspondent &agrave; votre recherche.</span>
     <span i18n:translate="hebergement_correspond" tal:condition="python: int(nbr)<=1"> h&eacute;bergement correspond &agrave; votre recherche.</span>
   </h1>
-  <div>
+
+  <div tal:condition="python: nbr > 0">
     <div id="spin"
          style="display:none;"></div>
     <div id="heb-listing"
@@ -51,8 +53,8 @@
          tal:content="structure provider:gites.mapviewlet"></div>
 
     <div class="break-float"></div>
-
   </div>
+
  </span>
 
 </div>

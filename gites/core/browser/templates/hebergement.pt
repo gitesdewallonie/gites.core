@@ -6,7 +6,8 @@
 <body>
 
     <metal:javascript_head_slot fill-slot="javascript_head_slot"
-                                tal:define="hasCalendar view/showCalendar">
+                                tal:define="hasCalendar view/showCalendar;
+                                            isMobile context/@@isMobile | nothing">
         <script type="text/javascript"
                 charset="utf-8"
                 src=""
@@ -59,7 +60,8 @@
     </metal:css>
 
 <div metal:fill-slot="main"
-     tal:define="hasCalendar view/showCalendar">
+     tal:define="hasCalendar view/showCalendar;
+                 isMobile context/@@isMobile | nothing">
 
     <div tal:replace="structure provider:plone.abovecontenttitle" />
     <div tal:replace="structure provider:plone.belowcontenttitle" />
@@ -143,6 +145,30 @@
                     <div class="slide_content">
                         <h2 i18n:translate="accueil">Accueil</h2>
                     <div>
+                     <div id="description-icone-theme-giteplus">
+                        <tal:for repeat="metadata python:view.getHebMetadatasByType('themes')">
+                            <div class="button-theme">
+                                <img src=""
+                                     title=""
+                                     alt=""
+                                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
+                                                     alt metadata/title;
+                                                     title metadata/title" />
+                            </div>
+                        </tal:for>
+
+                        <tal:for repeat="metadata python:view.getHebMetadatasByType('gitesplus')">
+                            <div class="button-theme">
+                                <img src=""
+                                     title=""
+                                     alt=""
+                                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
+                                                     alt metadata/title;
+                                                     title metadata/title" />
+                            </div>
+                        </tal:for>
+                    </div>
+
 
                     <div id="accueil-bloc-gauche">
                         <div id="description-photo-heb">
@@ -177,26 +203,6 @@
 
                     <div id="accueil-bloc-droite">
                     <!--TABLE TARIFICATION GITES-->
-
-                    <tal:for repeat="metadata python:view.getHebMetadatasByType('themes')">
-                        <img src=""
-                             title=""
-                             alt=""
-                             class="picto"
-                             tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
-                                             alt metadata/title;
-                                             title metadata/title" />
-                    </tal:for>
-
-                    <tal:for repeat="metadata python:view.getHebMetadatasByType('gitesplus')">
-                        <img src=""
-                             title=""
-                             alt=""
-                             class="picto"
-                             tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
-                                             alt metadata/title;
-                                             title metadata/title" />
-                    </tal:for>
 
                     <div id="tarification-gite"
                          tal:condition="python:heb.type.type_heb_code not in 'CH, MH, CHECR'">
@@ -265,14 +271,14 @@
                             </tr>
                             <tr bgcolor="#ceddce">
                                 <td class="tarif-saison" i18n:translate="garantie">Garantie</td>
-                                <td colspan="2" class="tarif-rpix">
+                                <td colspan="2" class="tarif-prix">
                                     <span tal:content="heb/heb_tarif_garantie" />
                                 </td>
                             </tr>
                             <tr>
                                 <td class="tarif-saison" i18n:translate="charges">Charges</td>
                                 <td colspan="2" class="tarif-prix">
-                                    <span tal:condition="exists: heb/heb_tarif_charge">|
+                                    <span tal:condition="exists: heb/heb_tarif_charge">
                                         <span tal:content="heb/heb_tarif_charge" />
                                         <span tal:content="view/getHebergementCharge" />
                                     </span>
@@ -287,7 +293,8 @@
                                 </td>
                             </tr>
                          </table>
-                        <div id="description-tarification-divers">
+                        <div id="description-tarification-divers"
+                             tal:condition="heb/heb_tarif_divers">
                             <h3>Divers</h3>
                             <p tal:content="heb/heb_tarif_divers"></p>
                         </div>
@@ -342,7 +349,8 @@
                                 <td class="tarif-prix empty-cell">&nbsp;</td>
                             </tr>
                         </table>
-                        <div id="description-tarification-divers">
+                        <div id="description-tarification-divers"
+                             tal:condition="heb/heb_tarif_chmbr_autre_1p">
                             <h3 i18n:translate="divers">Divers</h3>
                             <span tal:content="heb/heb_tarif_chmbr_autre_1p" />
                         </div>
@@ -350,8 +358,8 @@
 
                         <!-- TABLE TABLE D'HOTE-->
                         <div id="tarification-table-hote"
-                             tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR'"
-                             tal:define="table_hote view/getTableHote">
+                             tal:define="tables_hotes view/getTablesHotes"
+                             tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR' and tables_hotes">
                             <table>
                                 <tr>
                                     <td colspan="2"
@@ -372,8 +380,16 @@
                                         Type
                                     </td>
                                     <td>
-                                        <span tal:content="table_hote">
-                                        </span>
+                                        <tal:blc tal:repeat="table_hote tables_hotes">
+                                            <img src=""
+                                                 title=""
+                                                 alt=""
+                                                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${table_hote/id}.png;
+                                                                 alt table_hote/title;
+                                                                 title table_hote/title" />
+                                            <span class="discreet-info" tal:content="table_hote/title">Titre</span>
+                                            <br />
+                                        </tal:blc>
                                     </td>
                                 </tr>
                             </table>
@@ -441,7 +457,8 @@
                     </div>
                 </li>
                 <!-- DISPONIBILITE -->
-                <li class="slide slide3">
+                <li class="slide slide3"
+                    tal:attributes="class python: hasCalendar and 'slide slide3 used' or 'slide slide3 unused'">
                     <div class="slide_handle"
                          tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
                     <div class="slide_content">
@@ -478,7 +495,17 @@
                         <h2 i18n:translate="photos">Photos</h2>
                         <div tal:define="vignettesUrls view/getVignettesUrl;
                                          video heb/video">
-                            <div id="hebergement-carousel" class="carousel slide" tal:condition="python: vignettesUrls or video">
+
+                            <div id="hebergement-carousel" class="slide" tal:condition="python: vignettesUrls and isMobile">
+                                <a id="mobile-gallery-link" href="gallery"
+                                   tal:attributes="href string:${request/ACTUAL_URL}/gallery">
+                                    <img src="" title="" alt=""
+                                         tal:define="vignetteUrl python: vignettesUrls[0]"
+                                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${vignetteUrl}">
+                                </a>
+                            </div>
+
+                            <div id="hebergement-carousel" class="carousel slide" tal:condition="python: (vignettesUrls or video) and not isMobile">
                                 <div class="carousel-inner">
                                   <tal:ifvideo tal:condition="video">
                                     <div class=""
@@ -499,6 +526,7 @@
                                 <a class="left carousel-control" href="#hebergement-carousel" data-slide="prev">&lsaquo;</a>
                                 <a class="right carousel-control" href="#hebergement-carousel" data-slide="next">&rsaquo;</a>
                             </div>
+
                         </div>
                         <br />
                     </div>
@@ -580,7 +608,6 @@
                    i18n:translate="signaler-un-probleme"> Signaler un problème </a>
             </div>
             <div class="break-float"></div>
-            <div tal:replace="structure provider:plone.belowcontentbody" />
 
         </div><!--define-->
 

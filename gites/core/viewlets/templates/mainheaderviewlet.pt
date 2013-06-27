@@ -31,7 +31,8 @@
         </form>
     </div><!--je connais-->
 
-    <div id="je-decouvre" tal:define="translate nocall:here/@@getTranslatedObjectUrl">
+    <div id="je-decouvre" tal:define="translate nocall:here/@@getTranslatedObjectUrl"
+         tal:condition="not: context/@@isMobile | nothing">
         <h2 i18n:translate="je_decouvre">Je découvre</h2>
         <div class="break-float"></div>
         <div id="gitemeuble"><a tal:attributes="href python:translate('type-hebergement')"><span i18n:translate="gites_et_meubles">G&icirc;tes et meubl&eacute;s</span></a></div>

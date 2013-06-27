@@ -104,7 +104,7 @@ class ClassificationVocabulary(object):
         return the classification vocabulary
         """
         classification_items = []
-        blankTerm = SimpleTerm(value=-1, token=-1, title=' ')
+        blankTerm = SimpleTerm(value=0, token=0, title=' ')
         classification_items.append(blankTerm)
         for value in xrange(1, 6):  # classification de 1 a 5
             term = SimpleTerm(value=value,

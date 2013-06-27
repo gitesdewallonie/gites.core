@@ -7,22 +7,27 @@
             Allo chambre d'hôtes
         </a>
     </h3>
-    <div id="allo-qrcode">
+    <div class="offre-icon">
         <a href="http://www.allochambredhotes.be"
            title="Allo chambre d'hôtes"
            target="_blank">
             <img src="++theme++gites.theme/images/allo_chbre_hote_qrcode.png"
-                 alt="chambre">
+                 height="156" width="240">
         </a>
     </div>
     <div class="break-float"></div>
-    <p i18n:translate="allo_chambre_description">A la recherche d'une chambre d'hôtes pour cette nuit?<br />
-    Avec Allo chambre d'hôtes, trouvez une chambre d'hôtes
-    disponible ce soir à proximité de votre destination
-    en Wallonie.</p>
-    <div class="plus-info">
+    <p>
         <a href="http://www.allochambredhotes.be"
            title="Allo chambre d'hôtes"
+           target="_blank"
+           i18n:translate="allo_chambre_question">A la recherche d'une chambre d'hôtes pour cette nuit?</a>
+        <br />
+        <span i18n:translate="allo_chambre_description">Avec Allo chambre d'hôtes, trouvez une chambre d'hôtes
+        disponible ce soir à proximité de votre destination
+        en Wallonie.</span>
+    </p>
+    <div class="plus-info">
+        <a href="http://www.allochambredhotes.be"
            target="_blank">
             <span i18n:translate="plus_dinfos">Plus d'infos</span>...
         </a>

@@ -183,7 +183,7 @@ class ISearchHebergement(Interface):
     classification = schema.Choice(
         title=_('Classification'),
         description=_("Select a classification"),
-        required=True,
+        required=False,
         vocabulary="gitescontent.classification")
 
     capacityMin = schema.Int(

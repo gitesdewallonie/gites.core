@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
+import hashlib
 from five import grok
 from Acquisition import Explicit
 from Products.Maps.interfaces import IMarker
@@ -113,7 +114,7 @@ class HebergementsInListing(grok.Viewlet):
     def hebergements(self):
         return self._fetcher()
 
-    def isGeoLocalized(self):
+    def is_geolocalized(self):
         return (component.queryAdapter(self.context, IMarker) is not None and
                 self.context.getRange() is not None)
 
@@ -173,7 +174,7 @@ class HebergementsInPackageListing(HebergementsInListing):
             'room_count': _("nombre-chambres", "Nombre de chambres"),
             'epis': _(u"Epis"),
             'heb_type': _(u"Hebergement Type")}
-        if self.isGeoLocalized():
+        if self.is_geolocalized():
             sortables['distance'] = _('Distance')
         return sortables
 
@@ -193,14 +194,14 @@ class RechercheListing(HebergementsInListing):
             'pers_numbers': _("nombre_personnes", "Nombre de personne"),
             'room_count': _("nombre-chambres", "Nombre de chambres"),
             'epis': _(u"Epis")}
-        if self.isGeoLocalized():
+        if self.is_geolocalized():
             sortables['distance'] = _('Distance')
         return sortables
 
     def heb_distance(self, hebergement):
         return round(hebergement.distance / 1000, 2)
 
-    def isGeoLocalized(self):
+    def is_geolocalized(self):
         near_to = self.request.form['nearTo']
         return getGeocodedLocation(near_to)
 
@@ -222,7 +223,31 @@ class HiddenRequestParameters(grok.Viewlet):
     def parameters(self):
         params = self.request_json_parameters()
         params.update(self.request.form.items())
-        return params.items()
+        return self.parse_parameters(params)
+
+    def parse_parameters(self, elements_dict):
+        """ Returns a list of tuple with the key and the value """
+        params = []
+        for param in elements_dict.items():
+            key = self.clear_key(param[0])
+            value = param[1]
+            if isinstance(value, list):
+                for element in value:
+                    params.append((key, element))
+            else:
+                params.append((key, value))
+        return params
+
+    def clear_key(self, key):
+        """ Removes unwanted char from the key """
+        for element in ('[]', ):
+            key = key.replace(element, '')
+        return key
+
+    @property
+    def hash(self):
+        form_json = json.dumps(self.request.form, sort_keys=True)
+        return hashlib.md5(form_json).hexdigest()
 
 
 class HebergementListingViewletManager(grok.ViewletManager):

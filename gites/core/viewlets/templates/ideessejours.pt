@@ -6,11 +6,15 @@
         <h3>
             <a tal:attributes="href viewlet/getAllIdeesSejoursView" i18n:translate="idees_sejours">Idées séjours</a>
         </h3>
-        <tal:vign tal:repeat="vignette vignettes">
-            <a tal:attributes="href offre/getURL">
-                <img src="" alt="" tal:attributes="src string:${vignette/getURL}"/>
-            </a>
-        </tal:vign>
+        <div class="offre-icon">
+            <tal:vign tal:repeat="vignette vignettes">
+                <a tal:attributes="href offre/getURL;
+                                   title offre/pretty_title_or_id">
+                    <img src="" height="156" width="240"
+                         tal:attributes="src string:${vignette/getURL}"/>
+                </a>
+            </tal:vign>
+        </div>
         <div class="break-float"></div>
         <a tal:attributes="href offre/getURL">
             <span class="bordeaux" tal:replace="offre/pretty_title_or_id"/>

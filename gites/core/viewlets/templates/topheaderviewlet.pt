@@ -3,7 +3,8 @@
     <div id="titre-site">
         Les Gîtes de Wallonie
     </div>
-    <div id="icone-reseaux-sociaux">
+    <div id="icone-reseaux-sociaux"
+         tal:condition="not: context/@@isMobile | nothing">
         <ul>
             <li>
                 <a href="https://play.google.com/store/apps/details?id=be.gitesdewallonie.allochambresdhotes"

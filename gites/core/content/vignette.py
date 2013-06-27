@@ -24,7 +24,7 @@ Vignette_schema = getattr(ATImage, 'schema', Schema(())).copy() + \
 
 ##code-section after-schema #fill in your manual code here
 Vignette_schema['image'].sizes = {}
-Vignette_schema['image'].sizes['thumb'] = (246, 115)
+Vignette_schema['image'].sizes['thumb'] = (240, 156)
 Vignette_schema['image'].languageIndependent = False
 
 ##/code-section after-schema
