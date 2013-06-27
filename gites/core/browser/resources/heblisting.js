@@ -89,10 +89,11 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
         $scope.listing_url = baseurl + 'update_listing'; // The url of our search
         $scope.map_listing_url = baseurl + 'update_map_listing'; // The url of our search
         $scope.keywords = {};
-        $scope.formData = jQuery('#hiddenForm').serializeObject();
-        var data = jQuery.extend({}, $scope.formData);
-        delete data['page'];
-        if ( data != $cookieStore.get('listing_form_data', {})) {
+        var cookiesData = jQuery('#hiddenForm').serializeObject();
+        $scope.formData = jQuery.parseJSON(cookiesData.request);
+        $scope.hash = cookiesData.hash;
+
+        if ( $scope.hash != $cookieStore.get('listing_hash', '')) {
             $scope.page = 0;
         }
         $scope.reference = $scope.formData.reference;
@@ -148,6 +149,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
         if ( ! jQuery.isEmptyObject($scope.formData) ) {
 	          var data = jQuery.extend({}, $scope.formData);
 	          delete data['page'];
+            $cookieStore.put('listing_hash', $scope.hash);
             $cookieStore.put('listing_form_data', data);
         };
         $cookieStore.put('listing_sort', $scope.sort);
