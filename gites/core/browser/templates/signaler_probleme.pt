@@ -17,19 +17,19 @@ type="text/javascript"></script>
     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/signalerprobleme.js"></script>
 </metal:javascript_head_slot>
 <div metal:fill-slot="main">
-    <h1 i18n:translate="signaler_un_probleme" class="documentFirstHeading">
-        Signaler un problème
-    </h1>
-
+    
     <div id="signaler-un-probleme-formulaire"
          tal:define="send view/sendMailForProblem;
                      captchaView nocall:context/@@captcha">
+        <h2 i18n:translate="signaler_un_probleme" class="documentFirstHeading">
+            Signaler un problème
+        </h2>
 
         <form action="signaler_probleme"
               name="signaler-probleme"
               onsubmit="return validate(this);"
               method="post">
-            <div class="siganler-un-probleme-input">
+            <div class="formulaire-input">
                 <span class="fieldRequired"
                       title="Required"
                       i18n:attributes="title title_required;"></span>
@@ -45,7 +45,7 @@ type="text/javascript"></script>
                        />
             </div>
 
-            <div class="siganler-un-probleme-input">
+            <div class="formulaire-input">
                 <span class="fieldRequired"
                       title="Required"
                       i18n:attributes="title title_required;"></span>
@@ -61,7 +61,7 @@ type="text/javascript"></script>
                        />
             </div>
 
-            <div class="siganler-un-probleme-input">
+            <div class="formulaire-input">
                 <span class="fieldRequired"
                       title="Required"
                       i18n:attributes="title title_required;"></span>
@@ -78,7 +78,7 @@ type="text/javascript"></script>
                        />
             </div>
             
-            <div class="siganler-un-probleme-input">
+            <div class="formulaire-input">
                 <label for="contactLangue"
                       i18n:translate="langue">Langue</label>
                 <br />
@@ -90,7 +90,7 @@ type="text/javascript"></script>
                 </select>
             </div>
 
-            <div class="siganler-un-probleme-input">
+            <div class="formulaire-input">
                 <label for="typeProbleme"
                       i18n:translate="type_de_probleme">Type de problème</label>
                 <br />
@@ -110,7 +110,7 @@ type="text/javascript"></script>
                  name="typeautre" 
                  id="typeautre" />
 
-            <div class="siganler-un-probleme-input">
+            <div class="formulaire-input">
                 <span class="fieldRequired"
                       title="Required"
                       i18n:attributes="title title_required;"></span>
@@ -147,12 +147,12 @@ type="text/javascript"></script>
                    value=""
                    />
             <div class="submit-form">
-            <input type="hidden"
-                   name="vecteur"
-                   value="" />
-            <input type="submit"
-                   i18n:attributes="value envoyer_demande;"
-                   value="Envoyer votre demande" />
+                <input type="hidden"
+                       name="vecteur"
+                       value="" />
+                <input type="submit"
+                       i18n:attributes="value envoyer_demande;"
+                       value="Envoyer votre demande" />
             </div>
         </form>
     </div><!--signaler-un-probleme-->
