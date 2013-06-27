@@ -29,6 +29,11 @@
                 tal:content="view/dispoCalendarJS"></script>
 
         <script type="text/javascript"
+                charset="utf-8"
+                src=""
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/signalerprobleme.js"></script>
+
+        <script type="text/javascript"
                 src=""
                 charset="utf-8"
                 tal:condition="not: isMobile"

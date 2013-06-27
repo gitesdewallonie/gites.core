@@ -199,14 +199,6 @@ Contactez le propri&eacute;taire
                        tal:attributes="value python:request.get('fromDate', '') != 'error' and request.get('fromDate', None) or None"
                        size="12" 
                        name="fromDate"/>
-                <input id="fromDate_trigger" type="button" value="..."/>
-                <script type="text/javascript">
-                    Calendar.setup({
-                    inputField: 'fromDate',
-                    button: 'fromDate_trigger',
-                    ifFormat: '%d/%m/%Y'
-                    });
-                </script>
             </td>
         </tr>
         <tr>
@@ -221,14 +213,6 @@ Contactez le propri&eacute;taire
                        tal:attributes="value request/toDate | nothing"
                        size="12" 
                        name="toDate"/>
-                <input id="toDate_trigger" type="button" value="..."/>
-                <script type="text/javascript">
-                    Calendar.setup({
-                    inputField: 'toDate',
-                    button: 'toDate_trigger',
-                    ifFormat: '%d/%m/%Y'
-                    });
-                </script>
             </td>
         </tr>
         <tr>
