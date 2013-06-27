@@ -241,6 +241,8 @@ app.controller(
         "collapseCtrl",
         function($scope, $http, $compile, $cookieStore){
             $scope.isCollapsed = false;
+            $scope.data = null;
+            jQuery("#groupelist").show();
             $scope.getGroupement = function(pk) {
                 if ($scope.isCollapsed == false){
                 $http({
