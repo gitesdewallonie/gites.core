@@ -565,6 +565,7 @@
                                 <span tal:replace="heb/proprio/pro_nom2" />
                             </div>
                             <div id="langue-proprio">
+                                <img src="icon_langue.png" alt="Satisfaction" />
                                 <span tal:replace="heb/proprio/pro_langue" />
                             </div>
                             <div id="phone-proprio">
@@ -595,6 +596,7 @@
                                    target="_blank" />
                             </div>
                             <div id="contacter-proprio">
+                                <img src="icon_contact_proprio.png" alt="Contact" />
                                 <a href=""
                                    tal:attributes="href string:${context/@@plone_portal_state/portal_url}/form_contact_proprio?heb_pk=${heb/heb_pk}">
                                     <span i18n:translate="contactez_le_proprietaire">Contactez le propri&eacute;taire</span>
