@@ -242,12 +242,6 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         query = query.filter(~Hebergement.heb_pk.in_(busyHebPks))
         return query
 
-    def filter_location(self, query):
-        point = 'POINT(%s %s)' % (self.geocodedLocation.coordinates[1],
-                                  self.geocodedLocation.coordinates[0])
-        point = geoalchemy.base.WKTSpatialElement(point, srid=3447)
-        return query.filter(Hebergement.heb_location.distance_sphere(point) < 10000)
-
     def apply_filters(self, query, group=False):
         reference = self.data.get('reference')
         capacity = self.data.get('capacityMin')
@@ -295,8 +289,6 @@ class SearchHebFetcher(BaseHebergementsFetcher):
             query = self.filter_capacity(capacity, query)
         if from_date or to_date:
             query = self.filter_available_date(from_date, to_date, query)
-        if self.geocodedLocation:
-            query = self.filter_location(query)
         query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
                                      Proprio.pro_etat == True))
         return query
