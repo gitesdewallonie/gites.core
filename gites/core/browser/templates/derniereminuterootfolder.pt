@@ -3,44 +3,38 @@
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="gites">
 
-<body >
+<body>
 
 <div metal:fill-slot="main">
+
     <div id="viewlet-above-content" tal:content="structure provider:plone.abovecontenttitle" />
     <h1 i18n:translate="dernieres_minutes">
         Dernières minutes
     </h1>
 
-  <br /><br />
-  <div class="lastminute-fieldset-container">
-    <div id="dernieres-minute-listing">
+    <div class="lastminute-fieldset-container">
+
         <h2 i18n:translate="dernieres_minutes">Dernières minutes</h2>
-        <center tal:define="lastminutes view/getLastDernieresMinutes">
-           <metal:macro
-                    use-macro="here/hebergement_macro/macros/lastminutes_table" />
-         </center>
+        <tal:def tal:define="lastminutes view/getLastDernieresMinutes">
+           <metal:macro use-macro="here/hebergement_macro/macros/lastminutes_table" />
+        </tal:def>
 
-    </div>
+        <br />
 
-    <div id="promotion-listing">
         <h2 i18n:translate="promotions">Promotions</h2>
-        <center tal:define="promotions view/getLastPromotions">
-           <metal:macro
-                    use-macro="here/hebergement_macro/macros/promotions_table" />
-          </center>
+        <tal:def tal:define="promotions view/getLastPromotions">
+           <metal:macro use-macro="here/hebergement_macro/macros/promotions_table" />
+        </tal:def>
 
-    </div>
+        <br />
 
-    <div id="nouveaux-hebergement-listing">
         <h2 i18n:translate="nouveaux_hebergements">Nouveaux hebergements</h2>
-        <center tal:define="hebergements view/getLastHebergements">
-           <metal:macro
-                    use-macro="here/hebergement_table/macros/hebergement_table" />
-        </center>
+        <tal:def tal:define="hebergements view/getLastHebergements">
+           <metal:macro use-macro="here/hebergement_table/macros/hebergement_table" />
+        </tal:def>
 
     </div>
 
-  </div>
 </div>
 </body>
 </html>
