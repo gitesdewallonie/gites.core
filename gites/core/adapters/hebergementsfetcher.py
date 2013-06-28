@@ -126,11 +126,15 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
         if point is not None:
             query = session().query(Hebergement,
                                     Hebergement.heb_location.distance_sphere(point).label('distance'),
-                                    TypeHebergement.type_heb_code.label('heb_type_code')
+                                    TypeHebergement.type_heb_code.label('heb_type_code'),
+                                    TypeHebergement.type_heb_id.label('heb_type'),
+                                    TypeHebergement.type_heb_type.label('heb_type_type'),
                                     )
         else:
             query = session().query(Hebergement,
-                                    TypeHebergement.type_heb_code.label('heb_type_code')
+                                    TypeHebergement.type_heb_code.label('heb_type_code'),
+                                    TypeHebergement.type_heb_id.label('heb_type'),
+                                    TypeHebergement.type_heb_type.label('heb_type_type'),
                                     )
         query = query.join('type').join('commune').join('epis').join('proprio')
         query = query.options(

@@ -93,11 +93,10 @@ class HebergementInListingView(grok.View):
         return self.context.type.type_heb_type
 
     def heb_type_trad(self):
-        return self.heb_type()
+        return _(self.context.type.type_heb_id)
 
     def heb_type(self):
-        lang = self.request.get('LANGUAGE')
-        return self.context.type.getTitle(languageCode=lang)
+        return self.context.type.type_heb_id
 
     def nombre_epis(self):
         return self.context.epis[0].heb_nombre_epis
