@@ -261,7 +261,6 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         show_chambres = heb_type and 'chambre-hote' in heb_type
         from_date = self.data.get('fromDateAvancee', self.data.get('fromDate'))
         to_date = self.data.get('toDateAvancee', self.data.get('toDate'))
-        near_to = self.data.get('nearTo')
         smokers = self.data.get('form.widgets.smokers')
         animals = self.data.get('form.widgets.animals')
         roomAmount = self.data.get('form.widgets.roomAmount')
