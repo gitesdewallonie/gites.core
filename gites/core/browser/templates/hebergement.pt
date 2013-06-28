@@ -618,6 +618,10 @@
                    tal:attributes="href string:${request/ACTUAL_URL}/signaler_probleme"
                    i18n:translate="signaler-un-probleme"> Signaler un problème </a>
             </div>
+            <div id="sendTo-printThis">
+                <a href=""><img src="icon_print.gif"></a>
+                <a href=""><img src="icon_sendto.gif"></a>
+            </div>
             <div class="break-float"></div>
 
         </div><!--define-->
