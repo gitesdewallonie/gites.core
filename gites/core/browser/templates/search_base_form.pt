@@ -47,11 +47,10 @@
                    placeholder="A proximité de"/>
         </div>
 
-        <div>
-            <input type="submit"
+        <input type="submit"
                    value="Je trouve"
                    class="trouver"
                    i18n:attributes="value je_trouve" />
-        </div>
+        
     </form>
 </div><!--je cherche-->
