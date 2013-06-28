@@ -31,7 +31,7 @@
                  tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
           </div>
           <div id="type"
-               tal:content="heb_view/heb_type"></div>
+               tal:content="heb_view/heb_type_trad"></div>
         </div>
         <!--info-bloc-sup-->
         <div id="info-bloc-inf">
