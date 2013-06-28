@@ -73,13 +73,26 @@
                  isMobile context/@@isMobile | nothing">
 
     <div tal:replace="structure provider:plone.abovecontenttitle" />
-    <div tal:replace="structure provider:plone.belowcontenttitle" />
-    <div tal:replace="structure provider:plone.abovecontentbody" />
 
     <div id="content-core">
         <div id="sendTo-printThis">
-            <div id="print-this-button"><a href=""><img src="icon_print.gif"></a></div>
-            <div id="send-to-button"><a href=""><img src="icon_sendto.gif"></a></div>
+            <div id="print-this-button">
+                <a href="javascript:this.print();"
+                   title="Print this"
+                   i18n:attributes="title print_this">
+                    <img alt="Print this" src="icon_print.gif"
+                         i18n:attributes="alt print_this">
+                </a>
+            </div>
+            <div id="send-to-button">
+                <a href=""
+                   title="Send this page to someone"
+                   tal:attributes="href string:${request/ACTUAL_URL}/sendto_form"
+                   i18n:attributes="title send_to">
+                    <img alt="Send this page to someone" src="icon_sendto.gif"
+                         i18n:attributes="alt send_to">
+                </a>
+            </div>
         </div>
         <div class="break-float"></div>
 
