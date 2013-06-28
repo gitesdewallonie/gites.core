@@ -132,7 +132,7 @@
             </tal:groupe>
           </div>
           <div id="type"
-               tal:content="heb_view/heb_type"></div>
+               tal:content="heb_view/heb_type_trad"></div>
         </div>
         <!--info-bloc-sup-->
         <div id="info-bloc-inf">
@@ -231,7 +231,7 @@
                   <a href=""
                      tal:attributes="href string:{{groupe.url_heb}}">{{groupe.heb_nom}}</a>
                 </div>
-                <div id="type">{{groupe.heb_type}}</div>
+                <div id="type">{{groupe.heb_type_trad}}</div>
               </div>
               <!--info-bloc-sup-->
               <div id="info-bloc-inf">

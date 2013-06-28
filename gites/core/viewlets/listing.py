@@ -75,6 +75,9 @@ class HebergementInSearchListingView(grok.View):
     def heb_type(self):
         return self.context.heb_type
 
+    def heb_type_trad(self):
+        return _(self.context.heb_type)
+
     def nombre_epis(self):
         return self.context.heb_nombre_epis
 

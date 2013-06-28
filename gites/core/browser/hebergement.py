@@ -33,6 +33,7 @@ from gites.map.browser.interfaces import IMappableView
 from gites.core.interfaces import IMapRequest
 from gites.core.browser.interfaces import (IHebergementView,
                                            IHebergementIconsView)
+from gites.locales import GitesMessageFactory as _
 
 
 @forever.memoize
@@ -280,6 +281,7 @@ class HebergementView(BrowserView):
                             'heb_nom': heb.heb_nom,
                             'type_heb': heb.heb_type_type,
                             'heb_type': heb.heb_type,
+                            'heb_type_trad': _(heb.heb_type),
                             'heb_type_code': heb.heb_type_code,
                             'heb_code_gdw': heb.heb_code_gdw,
                             'heb_localite': heb.heb_localite,
