@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 import json
 import hashlib
 from five import grok
@@ -211,14 +212,27 @@ class HiddenRequestParameters(grok.Viewlet):
 
     @property
     def params(self):
-        return json.dumps(self.request.form)
+        return json.dumps(self.form_values)
 
     @property
     def hash(self):
         hash_json = json.dumps([self.context.absolute_url(),
-                                self.request.form],
+                                self.form_values],
                                sort_keys=True)
         return hashlib.md5(hash_json).hexdigest()
+
+    @property
+    def form_values(self):
+        """
+        Returns the form dictionnary of the request to a format that JSON
+        can handle
+        """
+        form = {}
+        for key, value in self.request.form.items():
+            if isinstance(value, datetime.date):
+                value = value.strftime('%d/%m/%Y')
+            form[key] = value
+        return form
 
 
 class HebergementListingViewletManager(grok.ViewletManager):
