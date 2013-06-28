@@ -99,7 +99,10 @@ class HebergementInListingView(grok.View):
         return self.context.type.type_heb_id
 
     def nombre_epis(self):
-        return self.context.epis[0].heb_nombre_epis
+        if len(self.context.epis) > 0:
+            return self.context.epis[0].heb_nombre_epis
+        else:
+            return None
 
     def render(self):
         return None
