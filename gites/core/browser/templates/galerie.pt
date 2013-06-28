@@ -20,7 +20,6 @@
                                      alt context/heb_nom;
                                      title context/heb_nom"
                      class="photo_gallery"/>
-                <br />
             </tal:loop>
 
         </div>

@@ -613,7 +613,7 @@
                     </div>
                 </li>
             </ul>
-            <div id="signaler-un-probleme">
+            <div id="signaler-un-probleme-button">
                 <a href="#"
                    tal:attributes="href string:${request/ACTUAL_URL}/signaler_probleme"
                    i18n:translate="signaler-un-probleme"> Signaler un problème </a>
