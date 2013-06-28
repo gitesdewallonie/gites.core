@@ -43,8 +43,6 @@
   </h1>
 
   <div tal:condition="python: nbr > 0">
-    <div id="spin"
-         style="display:none;"></div>
     <div id="heb-listing"
          tal:content="structure provider:gites.heblisting"></div>
     <div class="break-float"></div>
