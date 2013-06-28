@@ -15,7 +15,7 @@
       <div tal:define="type_heb heb_view/heb_type_type"
            tal:attributes="class python: type_heb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
 
-        <div id="typetype">
+        <div id="typetype">    
           <span tal:content="type_heb"
                 class="texte-vertical" />
           <div class="btn-loupe-listing">
@@ -24,6 +24,15 @@
           </div>
         </div>
         <div id="vignette">
+            <div id="date-promotion">    
+              <div id="start"
+                   tal:content="promotion_view/getNiceEventStartDate"></div>
+              <div id="end"
+                   tal:content="promotion_view/getNiceEventEndDate"></div>
+              <div id="promotion-text"
+                   tal:content="structure promotion_view/getText"></div>
+              <div class="break-float"></div>
+                </div>
             <a href=""
                tal:attributes="href hebergement/@@url_heb">
                <img src=""
@@ -92,14 +101,12 @@
                  tal:define="smoker hebergement/@@is_smoker"
                  tal:attributes="class python: smoker and 'smoke' or 'no-smoke'"></div>
           </div>
+          
+          
           <div id="commune"
                tal:content="hebergement/heb_localite"></div>
-          <div id="start"
-               tal:content="promotion_view/getNiceEventStartDate"></div>
-          <div id="end"
-               tal:content="promotion_view/getNiceEventEndDate"></div>
-          <div id="promotion-text"
-               tal:content="structure promotion_view/getText"></div>
+          <div class="break-float"></div>
+   
         </div>
         <!--info-bloc-inf-->
       </div>
@@ -204,10 +211,6 @@
           </div>
           <div id="commune"
                tal:content="hebergement/heb_localite"></div>
-          <div id="start"
-               tal:content="lastminute_view/getNiceEventStartDate"></div>
-          <div id="end"
-               tal:content="lastminute_view/getNiceEventEndDate"></div>
         </div>
         <!--info-bloc-inf-->
       </div>
