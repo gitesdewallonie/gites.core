@@ -13,32 +13,32 @@
 
   <br /><br />
   <div class="lastminute-fieldset-container">
-    <fieldset>
-        <legend i18n:translate="dernieres_minutes">Dernières minutes</legend>
-            <center tal:define="lastminutes view/getLastDernieresMinutes">
-               <metal:macro
-                        use-macro="here/hebergement_macro/macros/lastminutes_table" />
-              </center>
+    <div id="dernieres-minute-listing">
+        <h2 i18n:translate="dernieres_minutes">Dernières minutes</h2>
+        <center tal:define="lastminutes view/getLastDernieresMinutes">
+           <metal:macro
+                    use-macro="here/hebergement_macro/macros/lastminutes_table" />
+         </center>
 
-    </fieldset>
+    </div>
 
-    <fieldset>
-        <legend i18n:translate="promotions">Promotions</legend>
-            <center tal:define="promotions view/getLastPromotions">
-               <metal:macro
-                        use-macro="here/hebergement_macro/macros/promotions_table" />
-              </center>
+    <div id="promotion-listing">
+        <h2 i18n:translate="promotions">Promotions</h2>
+        <center tal:define="promotions view/getLastPromotions">
+           <metal:macro
+                    use-macro="here/hebergement_macro/macros/promotions_table" />
+          </center>
 
-    </fieldset>
+    </div>
 
-    <fieldset>
-        <legend i18n:translate="nouveaux_hebergements">Nouveaux hebergements</legend>
-            <center tal:define="hebergements view/getLastHebergements">
-               <metal:macro
-                        use-macro="here/hebergement_table/macros/hebergement_table" />
-              </center>
+    <div id="nouveaux-hebergement-listing">
+        <h2 i18n:translate="nouveaux_hebergements">Nouveaux hebergements</h2>
+        <center tal:define="hebergements view/getLastHebergements">
+           <metal:macro
+                    use-macro="here/hebergement_table/macros/hebergement_table" />
+        </center>
 
-    </fieldset>
+    </div>
 
   </div>
 </div>

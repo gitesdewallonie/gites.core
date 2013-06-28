@@ -1,15 +1,8 @@
 <form id="hiddenForm">
   <input type="hidden"
-         ng-model="hidden"
          name="hash"
-         tal:attributes="value viewlet/hash;
-                         ng-init string:hidden.hash='${viewlet/hash}'" />
-<tal:params tal:repeat="param viewlet/parameters">
-  <tal:block tal:define="key python:param[0];
-                         value python:param[1];">
-    <input type="hidden" ng-model="hidden" tal:attributes="name key;
-                                                           value value;
-                                                           ng-init string:hidden.${key}='${value}'"/>
-  </tal:block>
-</tal:params>
+         tal:attributes="value viewlet/hash" />
+  <input type="hidden"
+         name="request"
+         tal:attributes="value viewlet/params" />
 </form>

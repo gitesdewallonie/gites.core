@@ -12,305 +12,267 @@
 <body>
 
 <div metal:fill-slot="main">
-
-<h1 i18n:translate="contactez_le_proprietaire" class="documentFirstHeading">
-Contactez le propri&eacute;taire
-</h1>
-
-<div id="content-core" class="contact-proprio" align="center">
+    <div id="content-core">
+        <div id="contact-proprio-formulaire"
+             tal:define="captchaView nocall:context/@@captcha">
+            <h2 i18n:translate="contactez_le_proprietaire" class="documentFirstHeading">
+                Contactez le propri&eacute;taire
+            </h2>
       
-<form action="form_contact_proprio/sendMailToProprio"
-      name="contact-proprio"
-      onsubmit="return validate(this);"
-      method="post">
-    <table width="95%" 
-           border="0"
-           tal:define="captchaView nocall:context/@@captcha"
-           id="table-contact-proprio-form">
-        <tr>
-           <td Align="right">
-               <label for="contactCivilite" i18n:translate="civilite">Civilité</label>
-           </td>
-           <td>
-              <select name="contactCivilite">
-                 <option>...</option>
-                 <option i18n:translate="madame"> Madame</option>
-                 <option i18n:translate="monsieur"> Monsieur</option>
-              </select>
-           </td>
-        </tr>
-        <tr>
-            <td align="right">
-                <span class="fieldRequired" 
-                      title="Required"
-                      i18n:attributes="title title_required;"></span>
-                <label for="contactNom" i18n:translate="nom">Nom</label>
-            </td>
-            <td>
-                <input type="text"
-                       name="contactNom"
-                       size="30"
-                       class="required"
-                       value=""
-                       tal:attributes="value request/contactNom | nothing"
-                       />
-            </td>
-        </tr>
-        <tr>
-            <td align="right">
-                <span class="fieldRequired" 
-                      title="Required"
-                      i18n:attributes="title title_required;"></span>
-                <label for="contactPrenom" i18n:translate="prenom">Prénom</label>
-            </td>
-            <td>
-                <input type="text"
-                       name="contactPrenom"
-                       size="30"
-                       class="required"
-                       value="" 
-                       tal:attributes="value request/contactPrenom | nothing"
-                       />
-            </td>
-        </tr>
-        <tr>
-            <td align="right">
-                <label for="contactAdresse" i18n:translate="adresse">Adresse</label>
-            </td>
-            <td>
-                <input type="text"
-                       name="contactAdresse"
-                       size="30"
-                       value=""
-                       tal:attributes="value request/contactAdresse | nothing"
-                       />
-            </td>
-        </tr>
-        <tr>
-            <td align="right">
-                <label for="contactCp" i18n:translate="code_postal">Code postal</label>
-            </td>
-            <td>
-                <input type="text"
-                       name="contactCp"
-                       size="7"
-                       value=""
-                       tal:attributes="value request/contactCp | nothing"
-                       />
-            </td>
-        </tr>
-        <tr>
-            <td align="right">
-                <label for="contactLocalite" i18n:translate="localite">Localité</label>
-            </td>
-            <td>
-                <input type="text"
-                       name="contactLocalite"
-                       size="30"
-                       value=""
-                       tal:attributes="value request/contactLocalite | nothing"
-                       />
-            </td>
-        </tr>
-        <tr>
-            <td align="right">
-                <label for="contactPays" i18n:translate="pays">Pays</label>
-            </td>
-            <td>
-                <input type="text"
-                       name="contactPays"
-                       size="30"
-                       value=""
-                       tal:attributes="value request/contactPays | nothing"
-                       />
-            </td>
-        </tr>
-        <tr>
-           <td align="right">
-               <label for="contactLangue" i18n:translate="langue">Langue</label>
-           </td>
-           <td>
-              <select name="contactLangue">
-                 <option>...</option>
-                 <option i18n:translate="francais"> Français</option>
-                 <option i18n:translate="neerlandais"> Néerlandais</option>
-                 <option i18n:translate="anglais"> Anglais</option>
-              </select>
-          </td>
-        </tr>
-        <tr>
-            <td align="right">
-                <label for="contactTelephone" i18n:translate="telephone">Téléphone</label>
-            </td>
-            <td>
-                <input type="text"
-                       name="contactTelephone"
-                       value=""
-                       tal:attributes="value request/contactTelephone | nothing"
-                       />
-            </td>
-        </tr>
-        <tr>
-            <td align="right">
-                <label for="contactFax" i18n:translate="fax">Fax</label>
-            </td>
-            <td>
-                <input type="text"
-                       name="contactFax"
-                       value=""
-                       tal:attributes="value request/contactFax | nothing"
-                       />
-            </td>
-        </tr>
-               
-        <tr class="field">
-            <td align="right">
-                <span class="fieldRequired" 
-                      title="Required"
-                      i18n:attributes="title title_required;"></span>
-                <label for="contactEmail"  i18n:translate="email">E-mail</label>
-            </td>
-            <td>  
-                <input type="text"
-                       id="contactEmail"
-                       name="contactEmail"
-                       size="30"
-                       class="email required"
-                       value=""
-                       tal:attributes="value request/contactEmail | nothing"
-                       />
-            </td>
-        </tr>
-        
-        <tr>
-            <td align="right">
-                <label for="fromDate" i18n:translate="date_debut_sejour">Date début de séjour</label>
-            </td>
-            <td>
-                <div class="error"
-                     tal:condition="python: request.get('fromDate') == 'error'"
-                     i18n:translate="invalid_date">
-                    Remplissez correctement la date de début et de fin du séjour.
+            <form action="form_contact_proprio/sendMailToProprio"
+                  name="contact-proprio"
+                  onsubmit="return validate(this);"
+                  method="post">
+                <div class="formulaire-input">
+                    <label for="contactCivilite"
+                           i18n:translate="civilite">Civilité</label>
+                    <br />
+                    <select name="contactCivilite">
+                        <option>...</option>
+                        <option i18n:translate="madame"> Madame</option>
+                        <option i18n:translate="monsieur"> Monsieur</option>
+                    </select>
                 </div>
-                <input id="fromDate" 
-                       class="textType" 
-                       type="text" 
-                       value=""
-                       tal:attributes="value python:request.get('fromDate', '') != 'error' and request.get('fromDate', None) or None"
-                       size="12" 
-                       name="fromDate"/>
-                <input id="fromDate_trigger" type="button" value="..."/>
-                <script type="text/javascript">
-                    Calendar.setup({
-                    inputField: 'fromDate',
-                    button: 'fromDate_trigger',
-                    ifFormat: '%d/%m/%Y'
-                    });
-                </script>
-            </td>
-        </tr>
-        <tr>
-            <td align="right">
-                <label for="toDate" i18n:translate="date_fin_sejour">Date fin de séjour</label>
-            </td>
-            <td>
-                <input id="toDate" 
-                       class="textType" 
-                       type="text" 
-                       value=""
-                       tal:attributes="value request/toDate | nothing"
-                       size="12" 
-                       name="toDate"/>
-                <input id="toDate_trigger" type="button" value="..."/>
-                <script type="text/javascript">
-                    Calendar.setup({
-                    inputField: 'toDate',
-                    button: 'toDate_trigger',
-                    ifFormat: '%d/%m/%Y'
-                    });
-                </script>
-            </td>
-        </tr>
-        <tr>
-            <td align="right">
-                <label for="nombrePersonne" i18n:translate="nombre_personnes">Nombre de personne</label>
-            </td>
-            <td>
-               <input type="text"
-                      name="nombrePersonne"
-                      size="4"
-                      value=""
-                      tal:attributes="value request/nombrePersonne | nothing"
-                      />
-            </td>
-        </tr>
-        <tr>
-            <td align="right">
-                <label for="remarque" i18n:translate="remarques">Remarques</label>
-            </td>
-            <td>
-                <textarea name="remarque"
-                          value=""
-                          tal:attributes="value request/remarque | nothing"
-                          ><span tal:replace="request/remarque | nothing"/></textarea>
-            </td>
-        </tr>
-        <tr>
-            <td align="right">
-                <label for="newsletter" i18n:translate="subscribe_to_newsletter">Inscription à la newsletter</label>
-            </td>
-            <td>
-               <input type="checkbox"
-                      name="newsletter" />
-            </td>
-        </tr>
 
-        <tr>
-            <td align="right">
-                <div  id="help-captcha">
+                <div class="formulaire-input">
                     <span class="fieldRequired" 
                           title="Required"
                           i18n:attributes="title title_required;"></span>
-                    <label for="captcha" i18n:translate="help_captcha">
-                        Enter the exact word in the image. This is used to fight robots. 
-                    </label>
+                    <label for="contactNom"
+                           i18n:translate="nom">Nom</label>
+                    <br />
+                    <input type="text"
+                           name="contactNom"
+                           size="30"
+                           class="required"
+                           value=""
+                           tal:attributes="value request/contactNom | nothing" />
                 </div>
-            </td>
-            <td>
-                <div class="error"
-                     tal:condition="request/captcha | nothing"
-                     i18n:translate="invalid_captcha">
-                    Invalid captcha
+
+                <div class="formulaire-input">
+                    <span class="fieldRequired" 
+                          title="Required"
+                          i18n:attributes="title title_required;"></span>
+                    <label for="contactPrenom"
+                           i18n:translate="prenom">Prénom</label>
+                    <br />
+                    <input type="text"
+                           name="contactPrenom"
+                           size="30"
+                           class="required"
+                           value="" 
+                           tal:attributes="value request/contactPrenom | nothing" />
                 </div>
-                <span tal:replace="structure captchaView/image_tag" />
-                <input type="text" 
-                       class="required"
-                       name="captcha"
-                       value=""
-                       /> 
-            </td>
-        </tr>
 
-        <tr>
-            <td colspan="2" align="center">
-                <br />
-                <input type="hidden"
-                       name="vecteur"
-                       value="" />
-                <input type="hidden"
-                       name="heb_pk"
-                       value=""
-                       tal:attributes="value request/heb_pk">
-                <input type="submit"
-                       i18n:attributes="value envoyer_demande;"
-                       value="Envoyer votre demande" />
-            </td>
-        </tr>
-    </table>
-</form>
+                <div class="formulaire-input">
+                    <label for="contactAdresse"
+                           i18n:translate="adresse">Adresse</label>
+                    <br />
+                    <input type="text"
+                           name="contactAdresse"
+                           size="30"
+                           value=""
+                           tal:attributes="value request/contactAdresse | nothing" />
+                </div>
 
-</div>
+                <div class="formulaire-input">
+                    <label for="contactCp"
+                           i18n:translate="code_postal">Code postal</label>
+                    <br />
+                    <input type="text"
+                           name="contactCp"
+                           size="7"
+                           value=""
+                           tal:attributes="value request/contactCp | nothing" />
+                </div>
 
+                <div class="formulaire-input">
+                    <label for="contactLocalite"
+                           i18n:translate="localite">Localité</label>
+                    <br />
+                    <input type="text"
+                           name="contactLocalite"
+                           size="30"
+                           value=""
+                           tal:attributes="value request/contactLocalite | nothing" />
+                </div>
+
+                <div class="formulaire-input">       
+                    <label for="contactPays"
+                           i18n:translate="pays">Pays</label>
+                    <br />
+                    <input type="text"
+                           name="contactPays"
+                           size="30"
+                           value=""
+                           tal:attributes="value request/contactPays | nothing" />
+                </div>
+
+                <div class="formulaire-input">
+                    <label for="contactLangue" i18n:translate="langue">Langue</label>
+                    <br />
+                    <select name="contactLangue">
+                        <option>...</option>
+                        <option i18n:translate="francais"> Français</option>
+                        <option i18n:translate="neerlandais"> Néerlandais</option>
+                        <option i18n:translate="anglais"> Anglais</option>
+                    </select>
+                </div>
+
+                <div class="formulaire-input">
+                    <label for="contactTelephone"
+                           i18n:translate="telephone">Téléphone</label>
+                    <br />
+                    <input type="text"
+                           name="contactTelephone"
+                           value=""
+                           tal:attributes="value request/contactTelephone | nothing" />
+                </div>
+                
+                <div class="formulaire-input">
+                    <label for="contactFax"
+                           i18n:translate="fax">Fax</label>
+                    <br />
+                    <input type="text"
+                           name="contactFax"
+                           value=""
+                           tal:attributes="value request/contactFax | nothing" />
+                </div>
+
+                <div class="formulaire-input">
+                    <span class="fieldRequired" 
+                          title="Required"
+                          i18n:attributes="title title_required;"></span>
+                    <label for="contactEmail"
+                           i18n:translate="email">E-mail</label>
+                    <br />
+                    <input type="text"
+                           id="contactEmail"
+                           name="contactEmail"
+                           size="30"
+                           class="email required"
+                           value=""
+                           tal:attributes="value request/contactEmail | nothing" />
+                </div>
+
+
+                <div class="formulaire-input">
+                    <label for="fromDate"
+                           i18n:translate="date_debut_sejour">Date début de séjour</label>
+                    <div class="error"
+                         tal:condition="python: request.get('fromDate') == 'error'"
+                         i18n:translate="invalid_date">
+                        Remplissez correctement la date de début et de fin du séjour.
+                    </div>
+                    <br />
+                    <input id="fromDate" 
+                           class="textType" 
+                           type="text" 
+                           value=""
+                           tal:attributes="value python:request.get('fromDate', '') != 'error' and request.get('fromDate', None) or None"
+                           size="12" 
+                           name="fromDate" />
+                    <input id="fromDate_trigger"
+                           type="button"
+                           value="..." />
+                    <script type="text/javascript">
+                        Calendar.setup({
+                            inputField: 'fromDate',
+                            button: 'fromDate_trigger',
+                            ifFormat: '%d/%m/%Y'
+                        });
+                    </script>
+                </div>
+
+                <div class="formulaire-input">
+                    <label for="toDate"
+                           i18n:translate="date_fin_sejour">Date fin de séjour</label>
+                    <br />
+                    <input id="toDate" 
+                           class="textType" 
+                           type="text" 
+                           value=""
+                           tal:attributes="value request/toDate | nothing"
+                           size="12" 
+                           name="toDate" />
+                    <input id="toDate_trigger"
+                           type="button"
+                           value="..." />
+                    <script type="text/javascript">
+                        Calendar.setup({
+                            inputField: 'toDate',
+                            button: 'toDate_trigger',
+                            ifFormat: '%d/%m/%Y'
+                        });
+                    </script>
+                </div>
+
+                <div class="formulaire-input">
+                    <label for="nombrePersonne"
+                           i18n:translate="nombre_personnes">Nombre de personne</label>
+                    <br />
+                    <input type="text"
+                           name="nombrePersonne"
+                           size="4"
+                           value=""
+                           tal:attributes="value request/nombrePersonne | nothing" />
+                </div>
+
+                <div class="formulaire-input">
+                    <label for="remarque" i18n:translate="remarques">Remarques</label>
+                    <br />
+                    <textarea name="remarque"
+                              value=""
+                              tal:attributes="value request/remarque | nothing">
+                    <span tal:replace="request/remarque | nothing"/></textarea>
+                </div>
+
+                <div class="formulaire-input">
+                    <label for="newsletter"
+                           i18n:translate="subscribe_to_newsletter">Inscription à la newsletter</label>
+                    <input type="checkbox"
+                           name="newsletter" />
+
+                    <div  id="help-captcha">
+                        <span class="fieldRequired" 
+                              title="Required"
+                              i18n:attributes="title title_required;"></span>
+                        <label for="captcha"
+                               i18n:translate="help_captcha">
+                            Enter the exact word in the image. This is used to fight robots. 
+                        </label>
+                    </div>
+
+
+                    <div class="error"
+                         tal:condition="request/captcha | nothing"
+                         i18n:translate="invalid_captcha">
+                        Invalid captcha
+                    </div>
+                    <span tal:replace="structure captchaView/image_tag" />
+                    &nbsp;&nbsp;
+                    <input type="text" 
+                           class="required"
+                           name="captcha"
+                           value=""
+                    /> 
+                </div>
+
+                <div class="submit-form">
+                    <input type="hidden"
+                           name="vecteur"
+                           value="" />
+                    <input type="hidden"
+                           name="heb_pk"
+                           value=""
+                           tal:attributes="value request/heb_pk">
+                    <input type="submit"
+                           i18n:attributes="value envoyer_demande;"
+                           value="Envoyer votre demande" />
+                </div>
+            </form>
+        </div><!--contact-proprio-formulaire-->
+    </div><!--content-core-->
 </div><!--div metal-->
 </body>
 </html>

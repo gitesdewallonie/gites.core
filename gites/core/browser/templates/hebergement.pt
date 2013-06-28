@@ -29,23 +29,32 @@
                 tal:content="view/dispoCalendarJS"></script>
 
         <script type="text/javascript"
+                charset="utf-8"
+                src=""
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/signalerprobleme.js"></script>
+
+        <script type="text/javascript"
                 src=""
                 charset="utf-8"
+                tal:condition="not: isMobile"
                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/accordeon/jquery.accordionza.min.js"></script>
 
         <script type="text/javascript"
                 src=""
                 charset="utf-8"
+                tal:condition="not: isMobile"
                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/accordeon/script.js"></script>
 
         <script type="text/javascript"
                 src=""
                 charset="utf-8"
+                tal:condition="not: isMobile"
                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/scripts/spin.js"></script>
 
         <script type="text/javascript"
                 charset="utf-8"
                 src=""
+                tal:condition="not: isMobile"
                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/hebergement.js"></script>
     </metal:javascript_head_slot>
 
@@ -115,7 +124,7 @@
             </div><!--info-sup-->
 
             <div id="accordeon-spin"></div>
-            <script language="javascript">
+            <script language="javascript" tal:condition="not: isMobile">
                 var opts = {
                     lines: 12,      // The number of lines to draw
                     length: 7,      // The length of each line
@@ -134,7 +143,7 @@
                 tal:define="lang request/LANGUAGE | fr;
                             languageAwareClass string:slide_handle_${lang}">
 
-                <script language="javascript">
+                <script language="javascript" tal:condition="not: isMobile">
                     jQuery("#descriptif-accordeon").hide();
                 </script>
 
@@ -556,6 +565,7 @@
                                 <span tal:replace="heb/proprio/pro_nom2" />
                             </div>
                             <div id="langue-proprio">
+                                <img src="icon_langue.png" alt="Satisfaction" />
                                 <span tal:replace="heb/proprio/pro_langue" />
                             </div>
                             <div id="phone-proprio">
@@ -586,6 +596,7 @@
                                    target="_blank" />
                             </div>
                             <div id="contacter-proprio">
+                                <img src="icon_contact_proprio.png" alt="Contact" />
                                 <a href=""
                                    tal:attributes="href string:${context/@@plone_portal_state/portal_url}/form_contact_proprio?heb_pk=${heb/heb_pk}">
                                     <span i18n:translate="contactez_le_proprietaire">Contactez le propri&eacute;taire</span>
@@ -602,9 +613,9 @@
                     </div>
                 </li>
             </ul>
-            <div id="signaler-un-probleme">
+            <div id="signaler-un-probleme-button">
                 <a href="#"
-                   tal:attributes="href string:${context/@@plone_portal_state/portal_url}/signaler_probleme"
+                   tal:attributes="href string:${request/ACTUAL_URL}/signaler_probleme"
                    i18n:translate="signaler-un-probleme"> Signaler un problème </a>
             </div>
             <div class="break-float"></div>
