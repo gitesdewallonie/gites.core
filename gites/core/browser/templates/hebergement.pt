@@ -77,6 +77,11 @@
     <div tal:replace="structure provider:plone.abovecontentbody" />
 
     <div id="content-core">
+        <div id="sendTo-printThis">
+            <a href=""><img src="icon_print.gif"></a>
+            <a href=""><img src="icon_sendto.gif"></a>
+        </div>
+        <div class="break-float"></div>
 
         <div id="description-heb"
              tal:define="heb context;
