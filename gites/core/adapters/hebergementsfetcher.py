@@ -5,6 +5,7 @@ from dateutil.relativedelta import relativedelta
 import sqlalchemy as sa
 from plone.memoize.instance import memoize
 from five import grok
+from zope.component import getMultiAdapter
 from zope.interface import Interface, directlyProvides
 from zope.publisher.interfaces.browser import IBrowserRequest
 from affinitic.db.cache import FromCache
@@ -84,6 +85,16 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
                 hebergements.append(heb)
             else:
                 hebergements.append(heb)
+        reference = self.data.get('reference')
+        if len(hebergements) == 1 and reference:
+            # if searching by name and finding only one gite, redirect to its
+            # description
+            hebPk = hebergements[0].heb_pk
+            hebergement = session().query(Hebergement).get(hebPk)
+            hebURL = getMultiAdapter((hebergement.__of__(self.context.hebergement),
+                                      self.request), name="url")
+            self.request.response.redirect(str(hebURL))
+            return ''
         return hebergements
 
     def __len__(self):
