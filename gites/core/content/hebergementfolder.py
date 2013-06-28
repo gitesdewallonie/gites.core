@@ -191,7 +191,7 @@ class HebergementFolder(ATFolder):
         """
         default give back a search form
         """
-        url = "%s/search.html" % self.absolute_url()
+        url = "%s/search_hosting.html" % self.absolute_url()
         return REQUEST.RESPONSE.redirect(url)
 
 

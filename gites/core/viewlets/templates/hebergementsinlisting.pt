@@ -132,7 +132,7 @@
             </tal:groupe>
           </div>
           <div id="type"
-               tal:content="heb_view/heb_type"></div>
+               tal:content="heb_view/heb_type_trad"></div>
         </div>
         <!--info-bloc-sup-->
         <div id="info-bloc-inf">
@@ -193,9 +193,9 @@
       <!--attributes-->
       <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
         <div style="display: none" id="groupelist" collapse="!isCollapsed" class="{{(data[0].type_heb == 'gite') && 'collapse-gite-listing-detail' || 'collapse-chambre-listing-detail'}}">
+         <div id="titre-groupe">Groupement</div>    
           <div data-ng-repeat="groupe in data">
             <div class="{{(groupe.type_heb == 'gite') && 'hebergement-gite-listing-detail' || 'hebergement-chambre-listing-detail'}}">
-
               <div id="typetype">
                 <span class="texte-vertical">{{groupe.type_heb}}</span>
                 <div class="btn-loupe-listing">
@@ -231,7 +231,7 @@
                   <a href=""
                      tal:attributes="href string:{{groupe.url_heb}}">{{groupe.heb_nom}}</a>
                 </div>
-                <div id="type">{{groupe.heb_type}}</div>
+                <div id="type">{{groupe.heb_type_trad}}</div>
               </div>
               <!--info-bloc-sup-->
               <div id="info-bloc-inf">

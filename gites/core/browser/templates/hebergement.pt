@@ -73,10 +73,28 @@
                  isMobile context/@@isMobile | nothing">
 
     <div tal:replace="structure provider:plone.abovecontenttitle" />
-    <div tal:replace="structure provider:plone.belowcontenttitle" />
-    <div tal:replace="structure provider:plone.abovecontentbody" />
 
     <div id="content-core">
+        <div id="sendTo-printThis">
+            <div id="print-this-button">
+                <a href="javascript:this.print();"
+                   title="Print this"
+                   i18n:attributes="title print_this">
+                    <img alt="Print this" src="icon_print.gif"
+                         i18n:attributes="alt print_this">
+                </a>
+            </div>
+            <div id="send-to-button">
+                <a href=""
+                   title="Send this page to someone"
+                   tal:attributes="href string:${request/ACTUAL_URL}/sendto_form"
+                   i18n:attributes="title send_to">
+                    <img alt="Send this page to someone" src="icon_sendto.gif"
+                         i18n:attributes="alt send_to">
+                </a>
+            </div>
+        </div>
+        <div class="break-float"></div>
 
         <div id="description-heb"
              tal:define="heb context;
@@ -591,16 +609,15 @@
                                  tal:condition="python: heb.proprio.pro_url">
                                 <img src="icon_lien.gif" alt="Site web" />
                                 <a href=""
-                                   tal:attributes="href string: http://${heb/proprio/pro_url}"
-                                   tal:content="string: http://${heb/proprio/pro_url}"
+                                   tal:attributes="href string:http://${heb/proprio/pro_url}"
+                                   tal:content="string:http://${heb/proprio/pro_url}"
                                    target="_blank" />
                             </div>
                             <div id="contacter-proprio">
                                 <img src="icon_contact_proprio.png" alt="Contact" />
                                 <a href=""
-                                   tal:attributes="href string:${context/@@plone_portal_state/portal_url}/form_contact_proprio?heb_pk=${heb/heb_pk}">
-                                    <span i18n:translate="contactez_le_proprietaire">Contactez le propri&eacute;taire</span>
-                                </a>
+                                   tal:attributes="href string:${context/@@plone_portal_state/portal_url}/form_contact_proprio?heb_pk=${heb/heb_pk}"
+                                   i18n:translate="contactez_le_proprietaire">Contactez le propri&eacute;taire</a>
                             </div>
                         </div><!--descriptif coordonnee-->
                         <div id="description-photo-proprio"
@@ -608,12 +625,12 @@
                             <img src="" width="196" height="170" alt=""
                                  tal:condition="photocontact"
                                  tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_proprio/${heb/proprio/pro_pk}.jpg" />
-                        </div><!-- descriptif p hoto proprio-->
+                        </div><!-- descriptif photo proprio-->
                         <div class="break-float"></div>
                     </div>
                 </li>
             </ul>
-            <div id="signaler-un-probleme">
+            <div id="signaler-un-probleme-button">
                 <a href="#"
                    tal:attributes="href string:${request/ACTUAL_URL}/signaler_probleme"
                    i18n:translate="signaler-un-probleme"> Signaler un problème </a>

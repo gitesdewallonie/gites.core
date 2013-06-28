@@ -9,7 +9,7 @@ jQuery(document).ready(function($) {
         }
     );
 
-    $('#signaler-un-probleme a').prepOverlay(
+    $('#signaler-un-probleme-button a').prepOverlay(
         {
             subtype: 'ajax',
             filter: '#content-for-khevine>*:not(div.configlet),dl.portalMessage.error,dl.portalMessage.info',

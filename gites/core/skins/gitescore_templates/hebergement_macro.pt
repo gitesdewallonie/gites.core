@@ -5,134 +5,221 @@
 <body>
 
 <tal:main metal:define-macro="promotions_table">
-    <span tal:define="thclass string:sort">
-              <table class="listing" width="95%"
-                     tal:condition="promotions">
-                <thead>
-                  <th class="nosort">&nbsp;</th>
-                  <th i18n:translate="nom_hebergement" class="" tal:attributes="class thclass">Nom </th>
-                  <th i18n:translate="type_hebergement" class="" tal:attributes="class thclass">Type</th>
-                  <th i18n:translate="localite_hebergement" class="" tal:attributes="class thclass">Localit&eacute;</th>
-                  <th i18n:translate="epis_hebergement" class="" tal:attributes="class thclass">Classification</th>
-                  <th class="" tal:attributes="class thclass">
-                    <span id="capacite">
-                      <img src="capacite.png"
-                           title="Capacite"
-                           alt="Capacite"
-                           i18n:attributes="alt capacite; title capacite" />
-                  </th>
-                  <th class="" tal:attributes="class thclass">
-                      <img src="lit_double.png"
-                           title="Nombre de chambres"
-                           alt="Nombre de chambres"
-                           i18n:attributes="alt nombre-chambres; title nombre-chambres" />
-                  </th>
-                  <th i18n:translate="date_debut" class="" tal:attributes="class thclass">Date de d&eacute;but</th>
-                  <th i18n:translate="date_fin" class="" tal:attributes="class thclass">Date de fin</th>
-                  <th i18n:translate="texte_promotion" class="" tal:attributes="class thclass">Promotion</th>
-                </thead>
-                <tbody>
-                  <tal:loop tal:repeat="promotion promotions">
-                  <tr tal:define="oddrow repeat/promotion/odd;
-                                  promotion_view nocall:promotion/@@dernieres_minutes_view;
-                                  hebergement promotion/getHebergement"
-                      tal:condition="hebergement"
-                      tal:attributes="class python:test(oddrow, 'draggable even', 'draggable odd');">
-                    <td><a href="" tal:attributes="href hebergement/@@url"> <img src="" alt="" border="0" tal:attributes="src string:${context/@@plone_portal_state/portal_url}/vignettes_heb/${hebergement/getVignette}" /></a></td>
-                    <td><a href="" tal:attributes="href hebergement/@@url" tal:content="hebergement/heb_nom"></a></td>
-                    <td tal:define="hebergementView nocall:hebergement/@@hebergement_view;"
-                        tal:content="hebergementView/getTypeHebergement"/>
-                    <td tal:content="hebergement/heb_localite"/>
-                      <td tal:define="hebergementIcons hebergement/@@hebergement_icons"
-                          tal:content="structure hebergementIcons/getEpis">
-                            <span i18n:translate="epis">Les &eacute;pis</span>
-                      </td>
-                      <td>
-                          <span tal:condition="python: hebergement.heb_cgt_cap_min != hebergement.heb_cgt_cap_max"
-                                tal:content="string: ${hebergement/heb_cgt_cap_min}/${hebergement/heb_cgt_cap_max}" />
-                          <span tal:condition="python: hebergement.heb_cgt_cap_min == hebergement.heb_cgt_cap_max"
-                                tal:content="string: ${hebergement/heb_cgt_cap_min}" />
-                      </td>
-                      <td class="centered-column" tal:content="hebergement/heb_cgt_nbre_chmbre"/>
-                      <td tal:content="promotion_view/getNiceEventStartDate" />
-                      <td tal:content="promotion_view/getNiceEventEndDate" />
-                      <td tal:content="structure promotion_view/getText" />
-                    </tr>
 
-                  </tal:loop>
-                </tbody>
-              </table>
-    </span>
+  <div tal:condition="promotions"
+       tal:repeat="promotion promotions"
+       i18n:domain="gites">
+    <tal:def define="hebergement promotion/getHebergement;
+                     promotion_view nocall:promotion/@@dernieres_minutes_view;
+                     heb_view nocall:hebergement/@@view">
+      <div tal:define="type_heb heb_view/heb_type_type"
+           tal:attributes="class python: type_heb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
 
-              <div i18n:translate="not_promotion_correspondant"
-                   class="error"
-                   tal:condition="not:promotions">Il n'y a aucune promotion</div>
+        <div id="typetype">    
+          <span tal:content="type_heb"
+                class="texte-vertical" />
+          <div class="btn-loupe-listing">
+            <a href=""
+               tal:attributes="href hebergement/@@url_heb"></a>
+          </div>
+        </div>
+        <div id="vignette">
+            <div id="date-promotion">    
+              <div id="start"
+                   tal:content="promotion_view/getNiceEventStartDate"></div>
+              <div id="end"
+                   tal:content="promotion_view/getNiceEventEndDate"></div>
+              <div id="promotion-text"
+                   tal:content="structure promotion_view/getText"></div>
+              <div class="break-float"></div>
+                </div>
+            <a href=""
+               tal:attributes="href hebergement/@@url_heb">
+               <img src=""
+                    width="181"
+                    height="115"
+                    tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/heb_code_gdw}00.jpg" />
+            </a>
+        </div>
+        <div id="info-bloc-sup">
+          <div id="nom-hebergement">
+              <a href=""
+                 tal:attributes="href hebergement/@@url_heb"
+                 tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
+          </div>
+          <div id="type"
+               tal:content="heb_view/heb_type_trad"></div>
+        </div>
+        <!--info-bloc-sup-->
+        <div id="info-bloc-inf">
+          <div id="capacite-max">
+            <span tal:condition="python: hebergement.heb_cgt_cap_min != hebergement.heb_cgt_cap_max"
+                  tal:content="string: ${hebergement/heb_cgt_cap_min}/${hebergement/heb_cgt_cap_max}"
+                  class="nombre" />
+            <span tal:condition="python: hebergement.heb_cgt_cap_min == hebergement.heb_cgt_cap_max"
+                  tal:content="string: ${hebergement/heb_cgt_cap_min}"
+                  class="nombre" />
+            <span tal:omit-tag=""
+                  i18n:translate="x_personnes">personnes</span>
+          </div>
+          <div id="nbre-chambre">
+            <span tal:content="hebergement/heb_cgt_nbre_chmbre"
+                  class="nombre" />
+            <span tal:omit-tag=""
+                  i18n:translate="x_chambres">chambres</span>
+          </div>
+          <div id="nbre-cle"
+               tal:condition="python:hebergement.type.type_heb_code == 'MV'">
+            <div id="cle-nbre">
+              <span tal:condition="heb_view/nombre_epis"
+                    tal:content="heb_view/nombre_epis"
+                    class="nombre" />
+              <span tal:condition="not: heb_view/nombre_epis"
+                    class="nombre">-</span>
+              <span tal:omit-tag=""
+                    i18n:translate="x_cles">cl&eacute;s</span>
+            </div>
+          </div>
+          <div id="nbre-epis"
+               tal:condition="python:hebergement.type.type_heb_code != 'MV'">
+            <div id="epis-nbre">
+              <span tal:condition="heb_view/nombre_epis"
+                    tal:content="heb_view/nombre_epis"
+                    class="nombre" />
+              <span tal:condition="not: heb_view/nombre_epis"
+                    class="nombre">-</span>
+              <span tal:omit-tag=""
+                    i18n:translate="x_epis">&eacute;pis</span>
+            </div>
+          </div>
+          <div id="icon-confort">
+            <div id="icon-confort-dog"
+                 tal:define="dog hebergement/@@accept_dogs"
+                 tal:attributes="class python: dog and 'dog' or 'no-dog'"></div>
+            <div id="icon-confort-smoker"
+                 tal:condition="not:smoker"
+                 tal:define="smoker hebergement/@@is_smoker"
+                 tal:attributes="class python: smoker and 'smoke' or 'no-smoke'"></div>
+          </div>
+          
+          
+          <div id="commune"
+               tal:content="hebergement/heb_localite"></div>
+          <div class="break-float"></div>
+   
+        </div>
+        <!--info-bloc-inf-->
+      </div>
+    </tal:def>
+  </div>
+
+  <div i18n:translate="not_promotion_correspondant"
+       class="error"
+       tal:condition="not:promotions">Il n'y a aucune promotion</div>
+
 </tal:main>
 
 
 
 <tal:main metal:define-macro="lastminutes_table">
-    <span tal:define="thclass string:sort">
-              <table class="listing" width="95%"
-                     tal:condition="lastminutes">
-                <thead>
-                  <th class="nosort">&nbsp;</th>
-                  <th i18n:translate="nom_hebergement" class="" tal:attributes="class thclass">Nom </th>
-                  <th i18n:translate="type_hebergement" class="" tal:attributes="class thclass">Type</th>
-                  <th i18n:translate="localite_hebergement" class="" tal:attributes="class thclass">Localit&eacute;</th>
-                  <th i18n:translate="epis_hebergement" class="" tal:attributes="class thclass">Classification</th>
-                  <th class="" tal:attributes="class thclass">
-                    <span id="capacite">
-                      <img src="capacite.png"
-                           title="Capacite"
-                           alt="Capacite"
-                           i18n:attributes="alt capacite; title capacite" />
-                  </th>
-                  <th class="" tal:attributes="class thclass">
-                      <img src="lit_double.png"
-                           title="Nombre de chambres"
-                           alt="Nombre de chambres"
-                           i18n:attributes="alt nombre-chambres; title nombre-chambres" />
-                  </th>
-                  <th i18n:translate="date_debut" class="" tal:attributes="class thclass">Date de d&eacute;but</th>
-                  <th i18n:translate="date_fin" class="" tal:attributes="class thclass">Date de fin</th>
-                </thead>
-                <tbody>
-                  <tal:loop tal:repeat="lastminute lastminutes">
-                  <tr tal:define="oddrow repeat/lastminute/odd;
-                                  lastminute_view nocall:lastminute/@@dernieres_minutes_view;
-                                  hebergement lastminute/getHebergement"
-                      tal:condition="hebergement"
-                      tal:attributes="class python:test(oddrow, 'draggable even', 'draggable odd');">
-                    <td><a href="" tal:attributes="href hebergement/@@url"> <img src="" border="0" alt="" tal:attributes="src string:${context/@@plone_portal_state/portal_url}/vignettes_heb/${hebergement/getVignette}" /></a></td>
-                    <td><a href="" tal:attributes="href hebergement/@@url" tal:content="hebergement/heb_nom"></a></td>
-                    <td tal:define="hebergementView nocall:hebergement/@@hebergement_view"
-                        tal:content="hebergementView/getTypeHebergement"/>
-                    <td tal:content="hebergement/heb_localite"/>
-                      <td tal:define="hebergementIcons hebergement/@@hebergement_icons;"
-                          tal:content="structure hebergementIcons/getEpis">
-                            <span i18n:translate="epis">Les &eacute;pis</span>
-                      </td>
 
-                      <td>
-                          <span tal:condition="python: hebergement.heb_cgt_cap_min != hebergement.heb_cgt_cap_max"
-                                tal:content="string: ${hebergement/heb_cgt_cap_min}/${hebergement/heb_cgt_cap_max}" />
-                          <span tal:condition="python: hebergement.heb_cgt_cap_min == hebergement.heb_cgt_cap_max"
-                                tal:content="string: ${hebergement/heb_cgt_cap_min}" />
-                      </td>
-                      <td class="centered-column" tal:content="hebergement/heb_cgt_nbre_chmbre"/>
-                      <td tal:content="lastminute_view/getNiceEventStartDate" />
-                      <td tal:content="lastminute_view/getNiceEventEndDate" />
-                    </tr>
+  <div tal:condition="lastminutes"
+       tal:repeat="lastminute lastminutes"
+       i18n:domain="gites">
+    <tal:def define="lastminute_view nocall:lastminute/@@dernieres_minutes_view;
+                     hebergement lastminute/getHebergement;
+                     heb_view nocall:hebergement/@@view">
+      <div tal:define="type_heb heb_view/heb_type_type"
+           tal:attributes="class python: type_heb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
 
-                  </tal:loop>
-                </tbody>
-              </table>
-    </span>
+        <div id="typetype">
+          <span tal:content="type_heb"
+                class="texte-vertical" />
+          <div class="btn-loupe-listing">
+            <a href=""
+               tal:attributes="href hebergement/@@url_heb"></a>
+          </div>
+        </div>
+        <div id="vignette">
+            <a href=""
+               tal:attributes="href hebergement/@@url_heb">
+               <img src=""
+                    width="181"
+                    height="115"
+                    tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/heb_code_gdw}00.jpg" />
+            </a>
+        </div>
+        <div id="info-bloc-sup">
+          <div id="nom-hebergement">
+              <a href=""
+                 tal:attributes="href hebergement/@@url_heb"
+                 tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
+          </div>
+          <div id="type"
+               tal:content="heb_view/heb_type_trad"></div>
+        </div>
+        <!--info-bloc-sup-->
+        <div id="info-bloc-inf">
+          <div id="capacite-max">
+            <span tal:condition="python: hebergement.heb_cgt_cap_min != hebergement.heb_cgt_cap_max"
+                  tal:content="string: ${hebergement/heb_cgt_cap_min}/${hebergement/heb_cgt_cap_max}"
+                  class="nombre" />
+            <span tal:condition="python: hebergement.heb_cgt_cap_min == hebergement.heb_cgt_cap_max"
+                  tal:content="string: ${hebergement/heb_cgt_cap_min}"
+                  class="nombre" />
+            <span tal:omit-tag=""
+                  i18n:translate="x_personnes">personnes</span>
+          </div>
+          <div id="nbre-chambre">
+            <span tal:content="hebergement/heb_cgt_nbre_chmbre"
+                  class="nombre" />
+            <span tal:omit-tag=""
+                  i18n:translate="x_chambres">chambres</span>
+          </div>
+          <div id="nbre-cle"
+               tal:condition="python:hebergement.type.type_heb_code == 'MV'">
+            <div id="cle-nbre">
+              <span tal:condition="heb_view/nombre_epis"
+                    tal:content="heb_view/nombre_epis"
+                    class="nombre" />
+              <span tal:condition="not: heb_view/nombre_epis"
+                    class="nombre">-</span>
+              <span tal:omit-tag=""
+                    i18n:translate="x_cles">cl&eacute;s</span>
+            </div>
+          </div>
+          <div id="nbre-epis"
+               tal:condition="python:hebergement.type.type_heb_code != 'MV'">
+            <div id="epis-nbre">
+              <span tal:condition="heb_view/nombre_epis"
+                    tal:content="heb_view/nombre_epis"
+                    class="nombre" />
+              <span tal:condition="not: heb_view/nombre_epis"
+                    class="nombre">-</span>
+              <span tal:omit-tag=""
+                    i18n:translate="x_epis">&eacute;pis</span>
+            </div>
+          </div>
+          <div id="icon-confort">
+            <div id="icon-confort-dog"
+                 tal:define="dog hebergement/@@accept_dogs"
+                 tal:attributes="class python: dog and 'dog' or 'no-dog'"></div>
+            <div id="icon-confort-smoker"
+                 tal:condition="not:smoker"
+                 tal:define="smoker hebergement/@@is_smoker"
+                 tal:attributes="class python: smoker and 'smoke' or 'no-smoke'"></div>
+          </div>
+          <div id="commune"
+               tal:content="hebergement/heb_localite"></div>
+        </div>
+        <!--info-bloc-inf-->
+      </div>
+    </tal:def>
+  </div>
 
-              <div i18n:translate="not_lastminute_correspondant"
-                   class="error"
-                   tal:condition="not:lastminutes">Il n'y a aucune derni&egrave;re minute</div>
+  <div i18n:translate="not_lastminute_correspondant"
+       class="error"
+       tal:condition="not:lastminutes">Il n'y a aucune derni&egrave;re minute</div>
 
 </tal:main>
 
