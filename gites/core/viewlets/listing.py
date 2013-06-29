@@ -169,7 +169,7 @@ class HebergementsInListing(grok.Viewlet):
         return self._fetcher.selected_page() == 0
 
     def sort_items(self):
-        return {'pers_numbers': _("nombre_personnes", "Nombre de personne"),
+        return {'pers_numbers': _("nombre_personnes", "Nombre de personnes"),
                 'room_count': _("nombre-chambres", "Nombre de chambres"),
                 'epis': _(u"Epis")}
 
@@ -179,7 +179,7 @@ class HebergementsInPackageListing(HebergementsInListing):
 
     def sort_items(self):
         sortables = {
-            'pers_numbers': _("nombre_personnes", "Nombre de personne"),
+            'pers_numbers': _("nombre_personnes", "Nombre de personnes"),
             'room_count': _("nombre-chambres", "Nombre de chambres"),
             'epis': _(u"Epis"),
             'heb_type': _(u"Hebergement Type")}
@@ -200,7 +200,7 @@ class RechercheListing(HebergementsInListing):
 
     def sort_items(self):
         sortables = {
-            'pers_numbers': _("nombre_personnes", "Nombre de personne"),
+            'pers_numbers': _("nombre_personnes", "Nombre de personnes"),
             'room_count': _("nombre-chambres", "Nombre de chambres"),
             'epis': _(u"Epis")}
         if self.is_geolocalized():

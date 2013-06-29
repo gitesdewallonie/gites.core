@@ -209,7 +209,7 @@
 
                 <div class="formulaire-input">
                     <label for="nombrePersonne"
-                           i18n:translate="nombre_personnes">Nombre de personne</label>
+                           i18n:translate="nombre_personnes">Nombre de personnes</label>
                     <br />
                     <input type="text"
                            name="nombrePersonne"
