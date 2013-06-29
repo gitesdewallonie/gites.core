@@ -108,7 +108,9 @@ type="text/javascript"></script>
             <input type="text" 
                  style="display: none"
                  name="typeautre" 
-                 id="typeautre" />
+                 id="typeautre"
+                 i18n:attributes="placeholder autre"
+                 placeholder="Autre"/>
 
             <div class="formulaire-input">
                 <span class="fieldRequired"
