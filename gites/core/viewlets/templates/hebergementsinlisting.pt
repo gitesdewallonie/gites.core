@@ -59,7 +59,6 @@
     <tal:def define="heb_view nocall:hebergement/@@view">
       <div tal:define="type_heb heb_view/heb_type_type"
            tal:attributes="class python: type_heb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
-
         <div id="typetype">
           <span tal:content="type_heb"
                 class="texte-vertical" />
@@ -200,7 +199,7 @@
       </div>
       <!--attributes-->
       <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
-        <div style="display: none"
+        <div style="display:none;"
              id="groupelist"
              collapse="!isCollapsed"
              class="{{(data[0].type_heb == 'gite') && 'collapse-gite-listing-detail' || 'collapse-chambre-listing-detail'}}">
@@ -291,7 +290,7 @@
         </div>
       </tal:groupe>
     </tal:def>
-  </div>
+    </div>
   <div id="listing-result-info"
        i18n:domain="gites"
        tal:condition="viewlet/show_batch">
