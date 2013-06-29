@@ -86,7 +86,7 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
             else:
                 hebergements.append(heb)
         reference = self.data.get('reference')
-        if len(hebergements) == 1 and reference:
+        if len(hebergements) == 1 and reference and self.selected_page() != 0:
             # if searching by name and finding only one gite, redirect to its
             # description
             hebPk = hebergements[0].heb_pk
