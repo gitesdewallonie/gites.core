@@ -24,15 +24,6 @@
           </div>
         </div>
         <div id="vignette">
-            <div id="date-promotion">    
-              <div id="start"
-                   tal:content="promotion_view/getNiceEventStartDate"></div>
-              <div id="end"
-                   tal:content="promotion_view/getNiceEventEndDate"></div>
-              <div id="promotion-text"
-                   tal:content="structure promotion_view/getText"></div>
-              <div class="break-float"></div>
-                </div>
             <a href=""
                tal:attributes="href hebergement/@@url_heb">
                <img src=""
@@ -49,6 +40,15 @@
           </div>
           <div id="type"
                tal:content="heb_view/heb_type_trad"></div>
+          <div class="break-float"></div>   
+          <div id="date-promotion">
+              <span tal:content="promotion_view/getNiceEventStartDate" />
+              &nbsp;-&nbsp;
+              <span tal:content="promotion_view/getNiceEventEndDate" />
+              &nbsp;&nbsp;-&nbsp;&nbsp;
+              <span tal:content="structure promotion_view/getText" />
+              <div class="break-float"></div>
+            </div>
         </div>
         <!--info-bloc-sup-->
         <div id="info-bloc-inf">
