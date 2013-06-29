@@ -131,14 +131,15 @@
                  tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
             </tal:groupe>
           </div>
-<!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  -->
           <div id="type"
-               tal:condition="python: heb_view.heb_type_trad == 'Groupement'">
+               style="cursor: pointer;"
+               tal:condition="python:heb_view.heb_type() == 'gite-groupes'"
+               tal:attributes="ng-click string:getGroupement(${hebergement/heb_groupement_pk})">
                 <span tal:content="heb_view/heb_type_trad" />  ▼
           </div>
           <div id="type"
-               tal:condition="python: heb_view.heb_type_trad != 'Groupement'">
-                <span tal:content="heb_view/heb_type_trad" />  ▼
+               tal:condition="python:heb_view.heb_type() != 'gite-groupes'">
+                <span tal:content="heb_view/heb_type_trad" />
           </div>
         </div>
         <!--info-bloc-sup-->
