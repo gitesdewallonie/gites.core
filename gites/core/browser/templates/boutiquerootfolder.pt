@@ -1,0 +1,65 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="gites">
+
+<body>
+
+<div metal:fill-slot="main">
+
+    <div id="viewlet-above-content" tal:content="structure provider:plone.abovecontenttitle" />
+    <h1 i18n:translate="boutique">
+        Boutique
+    </h1>
+    <a href=""
+       class="link-parent"
+       tal:define="parent_url python:here.navigationParent(here, template.getId())"
+       tal:condition="parent_url"
+       tal:attributes="href parent_url"
+       i18n:translate="go_to_parent_url">
+        Up one level
+    </a>
+
+    <p class="documentDescription"
+       tal:content="here/Description"
+       tal:condition="here/Description">
+        Description
+    </p>
+    <div id="boutique-listing"
+         tal:define="package view/getPackages">
+        <tal:boucle tal:repeat="brain  package">
+            <tal:block tal:define="packageObject python:brain.getObject();
+                                   even repeat/brain/even;
+                                   odd repeat/brain/odd">
+                <article class=""
+                         tal:attributes="class python:even and 'float-left article-resume-boutique' or 'float-right article-resume-boutique'">
+                    <h2>
+                      <a href=""
+                         tal:attributes="href packageObject/absolute_url">
+                              <span tal:content="packageObject/Title" /></a>
+                    </h2>
+
+                    <div tal:define="packageObjectUrl python: '/'.join(packageObject.getPhysicalPath());
+                                     vignette python:view.getVignette(packageObjectUrl)"
+                         class="logo-package">
+                          <a href="" tal:attributes="href packageObject/absolute_url" tal:condition="vignette">
+                             <img src="" alt="" tal:attributes="src string:${vignette/getURL}"/><br />
+                          </a>
+                    </div>
+
+                    <div class="info">
+                          <p class="description-package">
+                              <span tal:content="structure packageObject/Description"/>
+                          </p>
+                    </div>
+                </article>
+                <div class=""
+                     tal:attributes="class python:odd and 'break-float'"></div>
+            </tal:block>
+        </tal:boucle>
+        <div class="break-float"></div>
+    </div>
+    
+</div>
+</body>
+</html>

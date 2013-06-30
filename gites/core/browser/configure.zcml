@@ -139,6 +139,11 @@
       for="gites.skin.interfaces.IDerniereMinuteRootFolder"
       />
 
+  <browser:defaultView
+      name="boutique_root_folder"
+      for="gites.skin.interfaces.IBoutiqueRootFolder"
+      />
+
   <browser:page
       for="*"
       name="moteur_recherche_view"
