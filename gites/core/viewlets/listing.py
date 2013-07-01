@@ -2,6 +2,7 @@
 import datetime
 import json
 import hashlib
+import re
 from five import grok
 from Acquisition import Explicit
 from Products.Maps.interfaces import IMarker
@@ -237,6 +238,7 @@ class HiddenRequestParameters(grok.Viewlet):
         """
         form = {}
         for key, value in self.request.form.items():
+            key = re.sub('\[\]','', key)
             if isinstance(value, datetime.date):
                 value = value.strftime('%d/%m/%Y')
             form[key] = value
