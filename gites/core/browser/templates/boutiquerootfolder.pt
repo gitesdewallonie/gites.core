@@ -8,9 +8,7 @@
 <div metal:fill-slot="main">
 
     <div id="viewlet-above-content" tal:content="structure provider:plone.abovecontenttitle" />
-    <h1 i18n:translate="boutique">
-        Boutique
-    </h1>
+    <h1 i18n:translate="la_boutique">La boutique</h1>
     <a href=""
        class="link-parent"
        tal:define="parent_url python:here.navigationParent(here, template.getId())"
