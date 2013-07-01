@@ -92,9 +92,9 @@ def addViewToType(portal, typename, templatename):
 
 
 @forever.memoize
-def getGeocodedLocation(location):
+def getGeocodedLocation(location, language='en'):
     try:
-        locations = Geocoder.geocode(location)
+        locations = Geocoder.geocode(location, language=language)
     except GeocoderError, e:
         if e.status == u'ZERO_RESULTS':
             return None

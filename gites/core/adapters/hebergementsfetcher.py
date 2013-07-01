@@ -208,7 +208,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
     @property
     def geocodedLocation(self):
         near_to = self.data.get('nearTo')
-        return getGeocodedLocation(near_to)
+        return getGeocodedLocation(near_to, self.request.get('LANGUAGE'))
 
     def filter_capacity(self, capacityMin, query):
         if capacityMin:
