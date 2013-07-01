@@ -214,7 +214,7 @@ class RechercheListing(HebergementsInListing):
     @property
     def is_geolocalized(self):
         near_to = self.request.form['nearTo']
-        return getGeocodedLocation(near_to)
+        return getGeocodedLocation(near_to) and True or False
 
 
 class HiddenRequestParameters(grok.Viewlet):
