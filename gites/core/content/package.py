@@ -193,6 +193,7 @@ class Package(ATFolder):
 
     schema = Package_schema
 
+    @property
     def is_geolocalized(self):
         geomarker = IMarker(self)
         user_range = self.getRange()

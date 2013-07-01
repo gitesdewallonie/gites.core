@@ -34,7 +34,8 @@
         </div>
         <div id="nbre-personne" tal:define="widget view/widgets/capacityMin">
             <tal:block replace="structure widget/render" />
-            <img src="++theme++gites.theme/images/icon_gugus.png" alt="" title=""
+            <img src="++theme++gites.theme/images/icon_gugus.png"
+                 alt="Nombre de personnes" title="Nombre de personnes"
                  i18n:attributes="alt nombre_personnes;
                                   title nombre_personnes" />
         </div>
