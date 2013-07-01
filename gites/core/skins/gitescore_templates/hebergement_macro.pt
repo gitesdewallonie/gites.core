@@ -157,16 +157,14 @@
           </div>
           <div id="type"
                tal:content="heb_view/heb_type_trad"></div>
-        </div>
-        <div id="date-promotion">
-              <span tal:content="lastminute/getNiceEventStartDate" />
+          <div class="break-float"></div>   
+          <div id="date-promotion">
+              <span tal:content="lastminute_view/getNiceEventStartDate" />
               &nbsp;-&nbsp;
-              <span tal:content="lastminute/getNiceEventEndDate" />
-              &nbsp;&nbsp;-&nbsp;&nbsp;
-              <span tal:content="structure lastminute/getText" />
+              <span tal:content="lastminute_view/getNiceEventEndDate" />
               <div class="break-float"></div>
           </div>
-
+        </div>
         <!--info-bloc-sup-->
         <div id="info-bloc-inf">
           <div id="capacite-max">
