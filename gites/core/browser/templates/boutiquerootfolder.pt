@@ -26,30 +26,28 @@
         Description
     </p>
     <div id="boutique-listing"
-         tal:define="package view/getPackages">
-        <tal:boucle tal:repeat="brain  package">
-            <tal:block tal:define="packageObject python:brain.getObject();
+         tal:define="items view/getBoutiqueItems">
+        <tal:boucle tal:repeat="brain items">
+            <tal:block tal:define="boutiqueObject python:brain.getObject();
                                    even repeat/brain/even;
                                    odd repeat/brain/odd">
                 <article class=""
                          tal:attributes="class python:even and 'float-left article-resume-boutique' or 'float-right article-resume-boutique'">
                     <h2>
                       <a href=""
-                         tal:attributes="href packageObject/absolute_url">
-                              <span tal:content="packageObject/Title" /></a>
+                         tal:attributes="href boutiqueObject/absolute_url">
+                              <span tal:content="boutiqueObject/Title" /></a>
                     </h2>
 
-                    <div tal:define="packageObjectUrl python: '/'.join(packageObject.getPhysicalPath());
-                                     vignette python:view.getVignette(packageObjectUrl)"
-                         class="logo-package">
-                          <a href="" tal:attributes="href packageObject/absolute_url" tal:condition="vignette">
-                             <img src="" alt="" tal:attributes="src string:${vignette/getURL}"/><br />
+                    <div class="logo-item">
+                          <a href="" tal:attributes="href boutiqueObject/absolute_url">
+                             <img src="" alt="" tal:attributes="src string:${boutiqueObject/absolute_url}/photo"/><br />
                           </a>
                     </div>
 
                     <div class="info">
                           <p class="description-package">
-                              <span tal:content="structure packageObject/Description"/>
+                              <span tal:content="structure boutiqueObject/Description"/>
                           </p>
                     </div>
                 </article>

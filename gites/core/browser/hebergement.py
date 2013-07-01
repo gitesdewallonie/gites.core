@@ -270,7 +270,7 @@ class HebergementView(BrowserView):
                               Hebergement.heb_gps_lat.label('heb_gps_lat'),
                               Hebergement.heb_groupement_pk.label('heb_groupement_pk')
                               )
-        query = query.join('proprio').join('epis').join('type')
+        query = query.join('proprio').outerjoin('epis').join('type')
         query = query.filter(Hebergement.heb_groupement_pk == pk)
         query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
                                      Proprio.pro_etat == True))

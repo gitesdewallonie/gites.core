@@ -140,7 +140,7 @@
       />
 
   <browser:defaultView
-      name="boutique_root_folder"
+      name="boutique_root"
       for="gites.skin.interfaces.IBoutiqueRootFolder"
       />
 
