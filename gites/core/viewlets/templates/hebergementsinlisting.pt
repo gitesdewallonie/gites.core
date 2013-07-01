@@ -1,6 +1,5 @@
-<div id="listing-result-block">
-  <div id="listing-result-info"
-       i18n:domain="gites">
+<div id="listing-result-block" i18n:domain="gites">
+  <div id="listing-result-info">
     <div id="listing-result-batch"
          tal:condition="viewlet/show_batch">
       <a href=""
@@ -359,6 +358,7 @@
     <input type="button"
            value="Comparer"
            id="comparison-button"
+           i18n:attributes="value comparer"
            src="@@hebergement-comparison?heb_pk="
            ng-click="compareHeb()" />
     <div id="overlay-container"></div>
