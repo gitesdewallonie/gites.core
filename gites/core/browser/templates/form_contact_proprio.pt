@@ -19,7 +19,7 @@
                 Contactez le propri&eacute;taire
             </h2>
       
-            <form action="form_contact_proprio/sendMailToProprio"
+            <form action="send_mail_to_proprio"
                   name="contact-proprio"
                   onsubmit="return validate(this);"
                   method="post">
@@ -166,21 +166,21 @@
                     </div>
                     <br />
                     <input id="fromDate" 
-                           class="textType" 
+                           class="datepicker-widget" 
                            type="text" 
                            value=""
                            tal:attributes="value python:request.get('fromDate', '') != 'error' and request.get('fromDate', None) or None"
                            size="12" 
                            name="fromDate" />
-                    <input id="fromDate_trigger"
-                           type="button"
-                           value="..." />
                     <script type="text/javascript">
-                        Calendar.setup({
-                            inputField: 'fromDate',
-                            button: 'fromDate_trigger',
-                            ifFormat: '%d/%m/%Y'
-                        });
+                      (function($){
+                        $(".datepicker-widget").datepicker({
+                                                            dateFormat: "dd/mm/yy",
+                                                            showOn: "both",
+                                                            buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
+                                                            buttonImageOnly: true,
+                                                           });
+                                  })(jQuery);
                     </script>
                 </div>
 
@@ -189,21 +189,21 @@
                            i18n:translate="date_fin_sejour">Date fin de séjour</label>
                     <br />
                     <input id="toDate" 
-                           class="textType" 
+                           class="datepicker-widget" 
                            type="text" 
                            value=""
                            tal:attributes="value request/toDate | nothing"
                            size="12" 
                            name="toDate" />
-                    <input id="toDate_trigger"
-                           type="button"
-                           value="..." />
                     <script type="text/javascript">
-                        Calendar.setup({
-                            inputField: 'toDate',
-                            button: 'toDate_trigger',
-                            ifFormat: '%d/%m/%Y'
-                        });
+                      (function($){
+                        $(".datepicker-widget").datepicker({
+                                                            dateFormat: "dd/mm/yy",
+                                                            showOn: "both",
+                                                            buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
+                                                            buttonImageOnly: true,
+                                                           });
+                                  })(jQuery);
                     </script>
                 </div>
 
@@ -226,7 +226,7 @@
                               tal:attributes="value request/remarque | nothing">
                     <span tal:replace="request/remarque | nothing"/></textarea>
                 </div>
-
+                <input id="datepicker" />
                 <div class="formulaire-input">
                     <label for="newsletter"
                            i18n:translate="subscribe_to_newsletter">Inscription à la newsletter</label>

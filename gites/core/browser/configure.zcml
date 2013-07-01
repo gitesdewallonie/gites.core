@@ -115,6 +115,15 @@
 
   <browser:page
       for="*"
+      name="send_mail_to_proprio"
+      permission="zope.Public"
+      allowed_interface=".interfaces.ISendMail"
+      class=".SendMail.SendMail"
+      attribute="sendMailToProprio"
+      />
+
+  <browser:page
+      for="*"
       name="boutique_item_view"
       template="templates/boutique_item_view.pt"
       permission="zope.Public"
