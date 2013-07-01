@@ -118,7 +118,7 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
     @property
     def _query(self):
         point = None
-        if self.context.is_geolocalized():
+        if self.context.is_geolocalized:
             geomarker = IMarker(self.context)
             user_range = self.context.getRange()
             point = 'POINT(%s %s)' % (geomarker.longitude, geomarker.latitude)
@@ -147,7 +147,7 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             subquery = subquery.having(sa.func.count() == len(criteria))
             subquery = subquery.subquery()
             query = query.filter(Hebergement.heb_pk == subquery.c.heb_fk)
-        if self.context.is_geolocalized():
+        if self.context.is_geolocalized:
             query = query.filter(Hebergement.heb_location.distance_sphere(point) < 1000 * user_range)
         query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
                                      Proprio.pro_etat == True))
@@ -160,7 +160,7 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             return (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'epis':
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
-        elif self.context.is_geolocalized():
+        elif self.context.is_geolocalized:
             self.request.response.setCookie('listing_sort', 'distance')
             return ('distance', )
         else:
