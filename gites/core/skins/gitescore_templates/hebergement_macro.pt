@@ -40,12 +40,13 @@
           </div>
           <div id="type"
                tal:content="heb_view/heb_type_trad"></div>
-          <div class="break-float"></div>   
+          <div class="break-float"></div> 
+  
           <div id="date-promotion">
               <span tal:content="promotion_view/getNiceEventStartDate" />
-              &nbsp;-&nbsp;
+              &nbsp;&#8594;&nbsp;
               <span tal:content="promotion_view/getNiceEventEndDate" />
-              &nbsp;&nbsp;-&nbsp;&nbsp;
+              &nbsp;&nbsp;::&nbsp;&nbsp;
               <span tal:content="structure promotion_view/getText" />
               <div class="break-float"></div>
           </div>
