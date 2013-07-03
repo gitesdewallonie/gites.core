@@ -1,4 +1,5 @@
-<tal:viewlet tal:define="offre viewlet/getRandomDerniereMinute;"
+<tal:viewlet tal:define="offre viewlet/getRandomDerniereMinute;
+                         promotion_view nocall:offre/@@dernieres_minutes_view"
              tal:condition="python:offre is not None">
     <div id="zone-derniere-minute"
          i18n:domain="gites"
@@ -34,7 +35,7 @@
         &rarr;
         <span tal:content="python:viewlet.getNiceEventEndDate(offre)" />
         ::
-        <span tal:content="structure offre/getText" />
+        <span tal:content="structure promotion_view/getText" />
         </div>
 
         <div class="etiquette-derniere-minute">
