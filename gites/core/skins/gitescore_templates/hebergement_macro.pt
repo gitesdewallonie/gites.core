@@ -161,7 +161,7 @@
           <div class="break-float"></div>   
           <div id="date-promotion">
               <span tal:content="lastminute_view/getNiceEventStartDate" />
-              &nbsp;-&nbsp;
+              &nbsp;&#8594;&nbsp;
               <span tal:content="lastminute_view/getNiceEventEndDate" />
               <div class="break-float"></div>
           </div>

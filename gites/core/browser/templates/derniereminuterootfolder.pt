@@ -8,30 +8,34 @@
 <div metal:fill-slot="main">
 
     <div id="viewlet-above-content" tal:content="structure provider:plone.abovecontenttitle" />
-    <h1 i18n:translate="dernieres_minutes">
-        Dernières minutes
+    <h1 i18n:translate="dernieres_minutes_promotions">
+        Dernières minutes et promotions
     </h1>
 
     <div class="lastminute-fieldset-container">
 
-        <h2 i18n:translate="dernieres_minutes">Dernières minutes</h2>
-        <tal:def tal:define="lastminutes view/getLastDernieresMinutes">
-           <metal:macro use-macro="here/hebergement_macro/macros/lastminutes_table" />
-        </tal:def>
+        <div id="listing-dernieres-minutes">
+            <h2 i18n:translate="dernieres_minutes">Dernières minutes</h2>
+            <tal:def tal:define="lastminutes view/getLastDernieresMinutes">
+                <metal:macro use-macro="here/hebergement_macro/macros/lastminutes_table" />
+            </tal:def>
+        </div>
 
-        <br />
 
-        <h2 i18n:translate="promotions">Promotions</h2>
-        <tal:def tal:define="promotions view/getLastPromotions">
-           <metal:macro use-macro="here/hebergement_macro/macros/promotions_table" />
-        </tal:def>
+        <div id="listing-promotions">
+            <h2 i18n:translate="promotions">Promotions</h2>
+            <tal:def tal:define="promotions view/getLastPromotions">
+                <metal:macro use-macro="here/hebergement_macro/macros/promotions_table" />
+            </tal:def>
+        </div>
 
-        <br />
 
-        <h2 i18n:translate="nouveaux_hebergements">Nouveaux hebergements</h2>
-        <tal:def tal:define="hebergements view/getLastHebergements">
-           <metal:macro use-macro="here/hebergement_table/macros/hebergement_table" />
-        </tal:def>
+        <div id="listing-nouveaux-hebergements">
+            <h2 i18n:translate="nouveaux_hebergements">Nouveaux hebergements</h2>
+            <tal:def tal:define="hebergements view/getLastHebergements">
+                <metal:macro use-macro="here/hebergement_table/macros/hebergement_table" />
+            </tal:def>
+        </div>
 
     </div>
 
