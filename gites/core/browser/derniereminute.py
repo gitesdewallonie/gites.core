@@ -40,8 +40,11 @@ class DerniereMinuteView(grok.View):
         """
         texte = self.context.getText()
         b = BeautifulSoup(texte)
-        texteClean = b.find('p').renderContents()
-        return texteClean
+        paragraph = b.find('p')
+        if paragraph:
+            return paragraph.renderContents()
+        else:
+            return texte
 
     def getTypeHebergement(self):
         language = self.request.get('LANGUAGE', 'en')
