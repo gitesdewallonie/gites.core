@@ -10,6 +10,7 @@ $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 from embedly import Embedly
 from plone.memoize import instance, forever
 from urlparse import urljoin
+from zope.i18n import translate
 from zope.traversing.browser.interfaces import IAbsoluteURL
 from Products.Five import BrowserView
 from Acquisition import aq_inner
@@ -275,24 +276,26 @@ class HebergementView(BrowserView):
         query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
                                      Proprio.pro_etat == True))
         hebList = []
+
         for heb in query.all():
+            msg = _(heb.heb_type)
+            heb_type_translated = translate(msg, context=self.request)
             hebList.append({
-                            'heb_pk': heb.heb_pk,
-                            'heb_nom': heb.heb_nom,
-                            'type_heb': heb.heb_type_type,
-                            'heb_type': heb.heb_type,
-                            'heb_type_trad': _(heb.heb_type),
-                            'heb_type_code': heb.heb_type_code,
-                            'heb_code_gdw': heb.heb_code_gdw,
-                            'heb_localite': heb.heb_localite,
-                            'heb_nombre_epis': heb.heb_nombre_epis,
-                            'heb_cgt_cap_min': heb.heb_cgt_cap_min,
-                            'heb_cgt_cap_max': heb.heb_cgt_cap_max,
-                            'heb_cgt_nbre_chmbre': heb.heb_cgt_nbre_chmbre,
-                            'heb_fumeur': self._get_metadata('heb_fumeur', heb.heb_pk),
-                            'heb_animal': self._get_metadata('heb_animal', heb.heb_pk),
-                            'url_heb': self._get_url(heb.heb_pk),
-                            })
+                'heb_pk': heb.heb_pk,
+                'heb_nom': heb.heb_nom,
+                'type_heb': heb.heb_type_type,
+                'heb_type': heb.heb_type,
+                'heb_type_trad': heb_type_translated,
+                'heb_type_code': heb.heb_type_code,
+                'heb_code_gdw': heb.heb_code_gdw,
+                'heb_localite': heb.heb_localite,
+                'heb_nombre_epis': heb.heb_nombre_epis,
+                'heb_cgt_cap_min': heb.heb_cgt_cap_min,
+                'heb_cgt_cap_max': heb.heb_cgt_cap_max,
+                'heb_cgt_nbre_chmbre': heb.heb_cgt_nbre_chmbre,
+                'heb_fumeur': self._get_metadata('heb_fumeur', heb.heb_pk),
+                'heb_animal': self._get_metadata('heb_animal', heb.heb_pk),
+                'url_heb': self._get_url(heb.heb_pk)})
         return json.dumps(hebList)
 
     def _get_metadata(self, metadata_id, heb_pk):
