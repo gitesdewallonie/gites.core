@@ -118,16 +118,20 @@
                   tal:content="string: ${dist} km">5Km</span>
           </div>
           <div id="nom-hebergement">
-            <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
-              <a href=""
-                 tal:attributes="ng-click string:getGroupement(${hebergement/heb_groupement_pk})"
-                 tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
-            </tal:groupe>
-            <tal:groupe condition="python:heb_view.heb_type() != 'gite-groupes'">
-              <a href=""
-                 tal:attributes="href hebergement/@@url_heb"
-                 tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
-            </tal:groupe>
+              <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
+                  <a href=""
+                     class=""
+                     tal:attributes="ng-click string:getGroupement(${hebergement/heb_groupement_pk});
+                                     class python: type_heb=='gite' and 'gite' or 'chambre'"
+                     tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
+              </tal:groupe>
+              <tal:groupe condition="python:heb_view.heb_type() != 'gite-groupes'">
+                  <a href=""
+                     class=""
+                     tal:attributes="href hebergement/@@url_heb;
+                                     class python: type_heb=='gite' and 'gite' or 'chambre'"
+                     tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
+              </tal:groupe>
           </div>
           <div id="type"
                style="cursor: pointer;"
@@ -202,7 +206,7 @@
              id="groupelist"
              collapse="!isCollapsed"
              class="{{(data[0].type_heb == 'gite') && 'collapse-gite-listing-detail' || 'collapse-chambre-listing-detail'}}">
-         <div id="titre-groupe">Groupement</div>    
+         <div id="titre-groupe">Groupement</div>
           <div data-ng-repeat="groupe in data">
             <div class="{{(groupe.type_heb == 'gite') && 'hebergement-gite-listing-detail' || 'hebergement-chambre-listing-detail'}}">
               <div id="typetype">
