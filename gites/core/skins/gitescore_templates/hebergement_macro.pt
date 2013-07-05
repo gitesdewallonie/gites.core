@@ -35,7 +35,9 @@
         <div id="info-bloc-sup">
           <div id="nom-hebergement">
               <a href=""
-                 tal:attributes="href hebergement/@@url_heb"
+                 class=""
+                 tal:attributes="href hebergement/@@url_heb;
+                                 class python: type_heb=='gite' and 'gite' or 'chambre'"
                  tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
           </div>
           <div id="type"
@@ -152,7 +154,9 @@
         <div id="info-bloc-sup">
           <div id="nom-hebergement">
               <a href=""
-                 tal:attributes="href hebergement/@@url_heb"
+                 class=""
+                 tal:attributes="href hebergement/@@url_heb;
+                                 class python: type_heb=='gite' and 'gite' or 'chambre'"
                  tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
           </div>
           <div id="type"

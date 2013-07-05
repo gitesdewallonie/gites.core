@@ -19,7 +19,7 @@
         <div id="titre-promotion">
             <a tal:attributes="href hebergement/@@url;
                                title hebergement/heb_nom">
-                <span class="bordeaux" tal:replace="offre/pretty_title_or_id"/><br />
+                <span tal:replace="offre/pretty_title_or_id"/><br />
             </a>
         </div>
 
