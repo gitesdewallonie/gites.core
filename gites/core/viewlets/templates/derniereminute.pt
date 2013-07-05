@@ -16,7 +16,7 @@
                      tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/getVignette}"/>
             </a>
         </div>
-        <div id="titre-derniere-minute">
+        <div id="titre-promotion">
             <a tal:attributes="href hebergement/@@url;
                                title hebergement/heb_nom">
                 <span class="bordeaux" tal:replace="offre/pretty_title_or_id"/><br />

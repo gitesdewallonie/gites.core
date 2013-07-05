@@ -15,7 +15,7 @@
       <div tal:define="type_heb heb_view/heb_type_type"
            tal:attributes="class python: type_heb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
 
-        <div id="typetype">    
+        <div id="typetype">
           <span tal:content="type_heb"
                 class="texte-vertical" />
           <div class="btn-loupe-listing">
@@ -40,8 +40,8 @@
           </div>
           <div id="type"
                tal:content="heb_view/heb_type_trad"></div>
-          <div class="break-float"></div> 
-  
+          <div class="break-float"></div>
+
           <div id="date-promotion">
               <span tal:content="promotion_view/getNiceEventStartDate" />
               &nbsp;&#8594;&nbsp;
@@ -102,12 +102,11 @@
                  tal:define="smoker hebergement/@@is_smoker"
                  tal:attributes="class python: smoker and 'smoke' or 'no-smoke'"></div>
           </div>
-          
-          
+
           <div id="commune"
                tal:content="hebergement/heb_localite"></div>
           <div class="break-float"></div>
-   
+
         </div>
         <!--info-bloc-inf-->
       </div>
@@ -158,7 +157,7 @@
           </div>
           <div id="type"
                tal:content="heb_view/heb_type_trad"></div>
-          <div class="break-float"></div>   
+          <div class="break-float"></div>
           <div id="date-promotion">
               <span tal:content="lastminute_view/getNiceEventStartDate" />
               &nbsp;&#8594;&nbsp;

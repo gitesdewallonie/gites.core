@@ -2,7 +2,14 @@
      i18n:domain="gites">
     <div id="titre-site">
         Les Gîtes de Wallonie
+        &nbsp;&nbsp;
+        <a href="" tal:attributes="href string:${context/portal_url}/"><img src="++theme++gites.theme/images/btn_home.png"></a>
+        &nbsp;&nbsp;
+        <a href="" tal:attributes="href string:${context/portal_url}/"><img src="++theme++gites.theme/images/btn_home_blanc.png"></a>
+         &nbsp;&nbsp;
+        <a href="" tal:attributes="href string:${context/portal_url}/"><img src="++theme++gites.theme/images/btn_home_3.png"></a>
     </div>
+    
     <div id="icone-reseaux-sociaux"
          tal:condition="not: context/@@isMobile | nothing">
         <ul>
