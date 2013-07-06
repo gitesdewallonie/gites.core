@@ -37,7 +37,7 @@
               <a href=""
                  class=""
                  tal:attributes="href hebergement/@@url_heb;
-                                 class python: type_heb=='gite' and 'gite' or 'chambre'"
+                                 class python: type_heb=='gite' and 'gite-nom' or 'chambre-nom'"
                  tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
           </div>
           <div id="type"
@@ -156,7 +156,7 @@
               <a href=""
                  class=""
                  tal:attributes="href hebergement/@@url_heb;
-                                 class python: type_heb=='gite' and 'gite' or 'chambre'"
+                                 class python: type_heb=='gite' and 'gite-nom' or 'chambre-nom'"
                  tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
           </div>
           <div id="type"

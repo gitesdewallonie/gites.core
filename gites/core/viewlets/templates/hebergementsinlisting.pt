@@ -119,17 +119,17 @@
           </div>
           <div id="nom-hebergement">
               <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
-                  <a href=""
+                 <a href=""
                      class=""
                      tal:attributes="ng-click string:getGroupement(${hebergement/heb_groupement_pk});
-                                     class python: type_heb=='gite' and 'gite' or 'chambre'"
+                                     class python: type_heb=='gite' and 'gite-nom' or 'chambre-nom'"
                      tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
               </tal:groupe>
               <tal:groupe condition="python:heb_view.heb_type() != 'gite-groupes'">
-                  <a href=""
+                 <a href=""
                      class=""
                      tal:attributes="href hebergement/@@url_heb;
-                                     class python: type_heb=='gite' and 'gite' or 'chambre'"
+                                     class python: type_heb=='gite' and 'gite-nom' or 'chambre-nom'"
                      tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
               </tal:groupe>
           </div>
@@ -242,6 +242,7 @@
               <div id="info-bloc-sup">
                 <div id="nom-hebergement">
                   <a href=""
+                     class="{{(groupe.type_heb == 'gite') && 'gite-nom' || 'chambre-nom'}}"
                      tal:attributes="href string:{{groupe.url_heb}}">{{groupe.heb_nom}}</a>
                 </div>
                 <div id="type">{{groupe.heb_type_trad}}</div>
