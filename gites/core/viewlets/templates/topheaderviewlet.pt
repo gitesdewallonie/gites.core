@@ -47,7 +47,7 @@
             <li>
                 <a href=""
                    id="mail"
-                   tal:attributes="href string:${request/ACTUAL_URL}/sendto_form">
+                   tal:attributes="href string:${context/@@plone_portal_state/portal_url}/sendto_form">
                 </a>
             </li>
         </ul>

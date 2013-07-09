@@ -109,7 +109,7 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
         elif self.selected_order() == 'epis':
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
         else:
-            return (Hebergement.heb_nom, )
+            return (Hebergement.heb_nom, TypeHebergement.type_heb_type)
 
 
 class PackageHebergementFetcher(BaseHebergementsFetcher):
@@ -126,11 +126,13 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
         if point is not None:
             query = session().query(Hebergement,
                                     Hebergement.heb_location.distance_sphere(point).label('distance'),
-                                    TypeHebergement.type_heb_code.label('heb_type_code')
+                                    TypeHebergement.type_heb_code.label('heb_type_code'),
+                                    TypeHebergement.type_heb_type.label('heb_type_type')
                                     )
         else:
             query = session().query(Hebergement,
-                                    TypeHebergement.type_heb_code.label('heb_type_code')
+                                    TypeHebergement.type_heb_code.label('heb_type_code'),
+                                    TypeHebergement.type_heb_type.label('heb_type_type')
                                     )
         query = query.join('type').join('commune').join('epis').join('proprio')
         query = query.options(
@@ -160,11 +162,13 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             return (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'epis':
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
+        elif self.selected_order() == 'heb_type':
+            return (TypeHebergement.type_heb_type.desc(), Hebergement.heb_nom)
         elif self.context.is_geolocalized:
             self.request.response.setCookie('listing_sort', 'distance')
             return ('distance', )
         else:
-            return ('heb_nom', )
+            return ('heb_nom', 'heb_type_type' )
 
 
 class CommuneHebFetcher(BaseHebergementsFetcher):
@@ -185,6 +189,36 @@ class CommuneHebFetcher(BaseHebergementsFetcher):
 
 class SearchHebFetcher(BaseHebergementsFetcher):
     grok.adapts(Interface, MoteurRecherche, IBrowserRequest)
+
+    def __call__(self):
+        hebergements = super(SearchHebFetcher, self).__call__()
+        hebergements = self._group_grouped_hebs(hebergements)
+        return hebergements
+
+    def _group_grouped_hebs(self, hebergements):
+        """
+        We want:
+            heb1,heb2,heb3,group
+        But not:
+            heb1,group,heb2,heb3
+        """
+        position = {}
+        heblist = []
+        hebgrplist = []
+        i = 0
+        for hebergement in hebergements:
+            if hebergement.heb_groupement_pk != None:
+                position[hebergement.heb_groupement_pk] = i
+            i+=1
+            if hebergement.heb_type == 'gite-groupes':
+                hebgrplist.append(hebergement)
+            else:
+                heblist.append(hebergement)
+        if not hebgrplist:
+            return hebergements
+        for heb in hebgrplist:
+            heblist.insert(position[heb.heb_groupement_pk], heb)
+        return heblist
 
     def _get_data_from_form(self):
         from gites.core.browser.search import SearchHostingForm
@@ -421,7 +455,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
             self.request.response.setCookie('listing_sort', 'distance')
             return ('distance', )
         else:
-            return ('heb_nom', )
+            return ('heb_nom', 'heb_type_type' )
 
     def __len__(self):
         return len(self._query.all())
