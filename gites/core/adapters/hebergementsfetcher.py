@@ -95,7 +95,33 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
                                       self.request), name="url")
             self.request.response.redirect(str(hebURL))
             return ''
+        hebergements = self._group_grouped_hebs(hebergements)
         return hebergements
+
+    def _group_grouped_hebs(self, hebergements):
+        """
+        We want:
+            heb1,heb2,heb3,group
+        But not:
+            heb1,group,heb2,heb3
+        """
+        position = {}
+        heblist = []
+        hebgrplist = []
+        i = 0
+        for hebergement in hebergements:
+            if hebergement.heb_groupement_pk != None:
+                position[hebergement.heb_groupement_pk] = i
+            i+=1
+            if hebergement.heb_type == 'gite-groupes':
+                hebgrplist.append(hebergement)
+            else:
+                heblist.append(hebergement)
+        if not hebgrplist:
+            return hebergements
+        for heb in hebgrplist:
+            heblist.insert(position[heb.heb_groupement_pk], heb)
+        return heblist
 
     def __len__(self):
         count = self._query.count()
@@ -109,7 +135,7 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
         elif self.selected_order() == 'epis':
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
         else:
-            return (Hebergement.heb_nom, )
+            return (Hebergement.heb_nom, TypeHebergement.type_heb_type)
 
 
 class PackageHebergementFetcher(BaseHebergementsFetcher):
@@ -164,7 +190,7 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             self.request.response.setCookie('listing_sort', 'distance')
             return ('distance', )
         else:
-            return ('heb_nom', )
+            return ('heb_nom', 'heb_type_type' )
 
 
 class CommuneHebFetcher(BaseHebergementsFetcher):
@@ -421,7 +447,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
             self.request.response.setCookie('listing_sort', 'distance')
             return ('distance', )
         else:
-            return ('heb_nom', )
+            return ('heb_nom', 'heb_type_type' )
 
     def __len__(self):
         return len(self._query.all())
