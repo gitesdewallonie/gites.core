@@ -5,14 +5,20 @@
 
   <monkey:patch
     description="Patch to include new parameter"
-	class="collective.z3cform.datepicker.widget.DatePickerWidget"
-	original="update"
-	replacement=".patch.date_update" />
+    class="collective.z3cform.datepicker.widget.DatePickerWidget"
+    original="update"
+    replacement=".patch.date_update" />
 
   <monkey:patch
     description="Patch for the date converter"
-	class="collective.z3cform.datepicker.widget.DateConverter"
-	original="toFieldValue"
-	replacement=".patch.date_converter" />
+    class="collective.z3cform.datepicker.widget.DateConverter"
+    original="toFieldValue"
+    replacement=".patch.date_converter" />
+
+  <monkey:patch
+    description="Patch for ticket #5140 trac affinitic"
+    class="Products.SQLAlchemyDA.da.SAWrapper"
+    original="query"
+    replacement=".patch.SQLAlchemyDA_query_patch" />
 
 </configure>
