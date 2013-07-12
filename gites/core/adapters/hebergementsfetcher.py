@@ -465,7 +465,6 @@ class SearchHebFetcher(BaseHebergementsFetcher):
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
         elif self.is_geolocalized:
             self.update_cookie_sort('distance')
-            self.request.response.setCookie('listing_sort', 'distance')
             return ('distance', )
         else:
             return ('heb_nom', 'heb_type_type' )
