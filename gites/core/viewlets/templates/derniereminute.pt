@@ -1,9 +1,9 @@
-<tal:viewlet tal:define="offre viewlet/getRandomDerniereMinute;
-                         promotion_view nocall:offre/@@dernieres_minutes_view"
-             tal:condition="python:offre is not None">
+<tal:viewlet define="offre viewlet/getRandomDerniereMinute"
+             condition="offre">
     <div id="zone-derniere-minute"
          i18n:domain="gites"
-         tal:define="hebergement offre/getHebergement;
+         tal:define="promotion_view nocall:offre/@@dernieres_minutes_view;
+                     hebergement offre/getHebergement;
                      promotion python: offre.getCategory() == 'promotion'">
         <h3>
             <a tal:attributes="href viewlet/getAllDerniereMinuteLink"
