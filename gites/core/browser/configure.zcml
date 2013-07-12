@@ -7,7 +7,15 @@
   <grok:grok package="."/>
 
 
-  <browser:page
+   <browser:page
+      for="*"
+      name="sendto_form"
+      class=".sendtoform.SendToFormView"
+      template="templates/sendto_form.pt"
+      permission="zope.Public"
+      />
+
+   <browser:page
       for="*"
       name="getGroupementByPk"
       attribute="getGroupementByPk"
