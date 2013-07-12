@@ -16,12 +16,13 @@
         </a>
     </div>
     <div class="break-float"></div>
-    <p>
+    <div id="titre-promotion">
         <a href="http://www.allochambredhotes.be"
            title="Allo chambre d'hôtes"
            target="_blank"
            i18n:translate="allo_chambre_question">A la recherche d'une chambre d'hôtes pour cette nuit?</a>
-        <br />
+    </div>
+    <p>
         <span i18n:translate="allo_chambre_description">Avec Allo chambre d'hôtes, trouvez une chambre d'hôtes
         disponible ce soir à proximité de votre destination
         en Wallonie.</span>

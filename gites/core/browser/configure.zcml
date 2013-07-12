@@ -6,8 +6,15 @@
   <include file="hebergement.zcml"/>
   <grok:grok package="."/>
 
+   <browser:page
+      for="*"
+      name="gdw_sendto_form"
+      class=".sendtoform.SendToFormView"
+      template="templates/sendto_form.pt"
+      permission="zope.Public"
+      />
 
-  <browser:page
+   <browser:page
       for="*"
       name="getGroupementByPk"
       attribute="getGroupementByPk"
@@ -115,6 +122,15 @@
 
   <browser:page
       for="*"
+      name="send_mail_to_proprio"
+      permission="zope.Public"
+      allowed_interface=".interfaces.ISendMail"
+      class=".SendMail.SendMail"
+      attribute="sendMailToProprio"
+      />
+
+  <browser:page
+      for="*"
       name="boutique_item_view"
       template="templates/boutique_item_view.pt"
       permission="zope.Public"
@@ -137,6 +153,11 @@
   <browser:defaultView
       name="derniere_minute_root_folder"
       for="gites.skin.interfaces.IDerniereMinuteRootFolder"
+      />
+
+  <browser:defaultView
+      name="boutique_root"
+      for="gites.skin.interfaces.IBoutiqueRootFolder"
       />
 
   <browser:page

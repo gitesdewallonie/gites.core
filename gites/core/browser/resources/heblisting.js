@@ -242,8 +242,9 @@ app.controller(
         function($scope, $http, $compile, $cookieStore){
             $scope.isCollapsed = false;
             $scope.data = null;
-            jQuery("#groupelist").show();
             $scope.getGroupement = function(pk) {
+                jQuery(".collapse-gite-listing-detail").show();
+                jQuery(".collapse-chambre-listing-detail").show();
                 if ($scope.isCollapsed == false){
                 $http({
                         url: "getGroupementByPk",

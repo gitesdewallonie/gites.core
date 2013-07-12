@@ -2,6 +2,7 @@
 import datetime
 import json
 import hashlib
+import re
 from five import grok
 from Acquisition import Explicit
 from Products.Maps.interfaces import IMarker
@@ -123,6 +124,7 @@ class HebergementsInListing(grok.Viewlet):
     def hebergements(self):
         return self._fetcher()
 
+    @property
     def is_geolocalized(self):
         return (component.queryAdapter(self.context, IMarker) is not None and
                 self.context.getRange() is not None)
@@ -169,7 +171,7 @@ class HebergementsInListing(grok.Viewlet):
         return self._fetcher.selected_page() == 0
 
     def sort_items(self):
-        return {'pers_numbers': _("nombre_personnes", "Nombre de personne"),
+        return {'pers_numbers': _("nombre_personnes", "Nombre de personnes"),
                 'room_count': _("nombre-chambres", "Nombre de chambres"),
                 'epis': _(u"Epis")}
 
@@ -179,11 +181,11 @@ class HebergementsInPackageListing(HebergementsInListing):
 
     def sort_items(self):
         sortables = {
-            'pers_numbers': _("nombre_personnes", "Nombre de personne"),
+            'pers_numbers': _("nombre_personnes", "Nombre de personnes"),
             'room_count': _("nombre-chambres", "Nombre de chambres"),
             'epis': _(u"Epis"),
             'heb_type': _(u"Hebergement Type")}
-        if self.is_geolocalized():
+        if self.is_geolocalized:
             sortables['distance'] = _('Distance')
         return sortables
 
@@ -200,19 +202,20 @@ class RechercheListing(HebergementsInListing):
 
     def sort_items(self):
         sortables = {
-            'pers_numbers': _("nombre_personnes", "Nombre de personne"),
+            'pers_numbers': _("nombre_personnes", "Nombre de personnes"),
             'room_count': _("nombre-chambres", "Nombre de chambres"),
             'epis': _(u"Epis")}
-        if self.is_geolocalized():
+        if self.is_geolocalized:
             sortables['distance'] = _('Distance')
         return sortables
 
     def heb_distance(self, hebergement):
         return round(hebergement.distance / 1000, 2)
 
+    @property
     def is_geolocalized(self):
         near_to = self.request.form['nearTo']
-        return getGeocodedLocation(near_to)
+        return getGeocodedLocation(near_to) and True or False
 
 
 class HiddenRequestParameters(grok.Viewlet):
@@ -242,6 +245,7 @@ class HiddenRequestParameters(grok.Viewlet):
         """
         form = {}
         for key, value in self.request.form.items():
+            key = re.sub('\[\]','', key)
             if isinstance(value, datetime.date):
                 value = value.strftime('%d/%m/%Y')
             form[key] = value

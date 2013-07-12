@@ -5,7 +5,18 @@ jQuery(document).ready(function($) {
             subtype: 'ajax',
             filter: '#content-for-khevine>*:not(div.configlet),dl.portalMessage.error,dl.portalMessage.info',
             cssclass: 'overlay-contact',
-            formselector: 'form[name="contact-proprio"]'
+            formselector: 'form[name="contact-proprio"]',
+            config: {
+            onBeforeLoad : function (e) {
+              $(".datepicker-widget").datepicker({
+                                                   dateFormat: "dd/mm/yy",
+                                                   showOn: "both",
+                                                   buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
+                                                   buttonImageOnly: true,
+                                                 });
+            return true;
+            }
+        }
         }
     );
 

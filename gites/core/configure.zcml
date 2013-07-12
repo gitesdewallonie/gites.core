@@ -4,6 +4,8 @@
            xmlns:meta="http://namespaces.zope.org/meta"
            i18n_domain="gites">
 
+  <include file="patch.zcml" />
+
   <meta:directives namespace="http://namespaces.zope.org/tales">
 
     <meta:directive name="expressiontype"

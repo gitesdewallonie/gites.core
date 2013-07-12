@@ -10,6 +10,7 @@ $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 from five import grok
 from gites.core.content.interfaces import IDerniereMinute
 from zope.interface import Interface
+from bs4 import BeautifulSoup
 
 grok.context(Interface)
 
@@ -35,7 +36,15 @@ class DerniereMinuteView(grok.View):
         return endDate.strftime("%d-%m")
 
     def getText(self):
-        return self.context.getText()
+        """
+        """
+        texte = self.context.getText()
+        b = BeautifulSoup(texte)
+        paragraph = b.find('p')
+        if paragraph:
+            return paragraph.renderContents()
+        else:
+            return texte
 
     def getTypeHebergement(self):
         language = self.request.get('LANGUAGE', 'en')

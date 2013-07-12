@@ -145,7 +145,7 @@ Il s'agit de :
     * E-mail : %s
     * Date début séjour  : %s
     * Date fin séjour  : %s
-    * Nombre de personne : %s
+    * Nombre de personnes : %s
     * Remarque : %s
 """ \
               % (hebNom, \

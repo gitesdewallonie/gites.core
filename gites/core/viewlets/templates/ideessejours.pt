@@ -16,13 +16,13 @@
             </tal:vign>
         </div>
         <div class="break-float"></div>
-        <a tal:attributes="href offre/getURL">
-            <span class="bordeaux" tal:replace="offre/pretty_title_or_id"/>
-        </a>
-        <br />
+        <div id="titre-promotion">
+            <a tal:attributes="href offre/getURL">
+                <span class="bordeaux" tal:replace="offre/pretty_title_or_id"/>
+            </a>
+        </div>
         <p>
             <tal:desc tal:replace="offre/Description"/>
-            <br>
         </p>
         <div class="plus-info">
             <a tal:attributes="href viewlet/getAllIdeesSejoursView"><span

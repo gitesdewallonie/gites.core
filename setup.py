@@ -44,6 +44,7 @@ setup(name='gites.core',
           'z3c.table',
           'z3c.sqlalchemy',
           'z3c.unconfigure',
+          'beautifulsoup4',
           'zope.ramcache'],
       extras_require=dict(
           scripts=[]),

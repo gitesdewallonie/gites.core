@@ -87,7 +87,7 @@
             <div id="send-to-button">
                 <a href=""
                    title="Send this page to someone"
-                   tal:attributes="href string:${request/ACTUAL_URL}/sendto_form"
+                   tal:attributes="href string:${request/ACTUAL_URL}/gdw_sendto_form"
                    i18n:attributes="title send_to">
                     <img alt="Send this page to someone" src="icon_sendto.gif"
                          i18n:attributes="alt send_to">
@@ -481,6 +481,59 @@
                                                          title metadata/title" />
                                 </tal:for>
                         </div><!--icone-confort-->
+                        <div id="description-icone-literie">
+                            <span class="literie">
+                                <img src="heb_confort_chambre.png"
+                                     title=""
+                                     alt=""
+                                     class="picto"
+                                     i18n:attributes="alt nombre_de_chambre;
+                                                      title nombre_de_chambre" />
+                                <span tal:content="heb/heb_cgt_nbre_chmbre" />
+                            </span>
+                            <span tal:condition="python: heb.heb_lit_1p > '0'"
+                                  class="literie">
+                                <img src="lit_1p.png"
+                                     title=""
+                                     alt=""
+                                     class="picto"
+                                     i18n:attributes="alt lit_1_personne;
+                                                      title lit_1_personne" />
+                                <span tal:content="heb/heb_lit_1p" />
+                            </span>
+                            <span tal:condition="python: heb.heb_lit_2p > '0'"
+                                  class="literie">
+                                <img src="lit_double.png"
+                                     title=""
+                                     alt=""
+                                     class="picto"
+                                     i18n:attributes="alt lit_2_personne;
+                                                      title lit_2_personne" />
+                                <span tal:content="heb/heb_lit_2p" />
+                            </span>
+                            <span tal:condition="python: heb.heb_lit_sup > '0'"
+                                  class="literie">
+                                <img src="lit_superpose.png"
+                                     title=""
+                                     alt=""
+                                     class="picto"
+                                     i18n:attributes="alt lit_superpose;
+                                                      title lit_superpose" />
+                                <span tal:content="heb/heb_lit_sup" />
+                            </span>
+                            <span tal:condition="python: heb.heb_lit_enf > '0'"
+                                  class="literie">
+                                <img src="lit_enfant.png"
+                                     title=""
+                                     alt=""
+                                     class="picto"
+                                     i18n:attributes="alt lit_enfant;
+                                                      title lit_enfant" />
+                                <span tal:content="heb/heb_lit_enf" />
+                            </span>
+                            <div class="break-float"></div>
+                        </div><!--icone-literie-->
+                        
                     </div>
                 </li>
                 <!-- DISPONIBILITE -->

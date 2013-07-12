@@ -1,0 +1,64 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="gites">
+
+<body>
+
+<div metal:fill-slot="main">
+
+    <div id="viewlet-above-content" tal:content="structure provider:plone.abovecontenttitle" />
+    <h1 i18n:translate="la_boutique">La boutique</h1>
+    <a href=""
+       class="link-parent"
+       tal:define="parent_url python:here.navigationParent(here, template.getId())"
+       tal:condition="parent_url"
+       tal:attributes="href parent_url"
+       i18n:translate="go_to_parent_url">
+        Up one level
+    </a>
+
+    <p class="documentDescription"
+       tal:content="here/Description"
+       tal:condition="here/Description">
+        Description
+    </p>
+    <div id="boutique-listing"
+         tal:define="items view/getBoutiqueItems">
+        <tal:boucle tal:repeat="brain items">
+            <tal:block tal:define="boutiqueObject python:brain.getObject();
+                                   even repeat/brain/even;
+                                   odd repeat/brain/odd">
+                <article class=""
+                         tal:attributes="class python:even and 'float-left article-resume-boutique' or 'float-right article-resume-boutique'">
+                    <h2>
+                      <a href=""
+                         tal:attributes="href boutiqueObject/absolute_url">
+                              <span tal:content="boutiqueObject/Title" /></a>
+                    </h2>
+
+                    <div class="logo-item">
+                          <a href="" tal:attributes="href boutiqueObject/absolute_url">
+                             <img src="" alt="" tal:attributes="src string:${boutiqueObject/absolute_url}/photo"/><br />
+                          </a>
+                    </div>
+
+                    <div class="info">
+                          <p class="price">
+                              <span tal:content="python: brain.price and view.twoPrecision(brain.price)"/> &euro;
+                          </p>
+                          <p class="description-package">
+                              <span tal:content="structure boutiqueObject/Description"/>
+                          </p>
+                    </div>
+                </article>
+                <div class=""
+                     tal:attributes="class python:odd and 'break-float'"></div>
+            </tal:block>
+        </tal:boucle>
+        <div class="break-float"></div>
+    </div>
+    
+</div>
+</body>
+</html>

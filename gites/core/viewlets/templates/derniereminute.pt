@@ -1,11 +1,13 @@
-<tal:viewlet tal:define="offre viewlet/getRandomDerniereMinute;"
+<tal:viewlet tal:define="offre viewlet/getRandomDerniereMinute;
+                         promotion_view nocall:offre/@@dernieres_minutes_view"
              tal:condition="python:offre is not None">
     <div id="zone-derniere-minute"
          i18n:domain="gites"
          tal:define="hebergement offre/getHebergement;
                      promotion python: offre.getCategory() == 'promotion'">
         <h3>
-            <a tal:attributes="href viewlet/getAllDerniereMinuteLink" i18n:translate="derniere_minute">Dernière minute</a>
+            <a tal:attributes="href viewlet/getAllDerniereMinuteLink"
+               i18n:translate="derniere_minute">Dernières minutes</a>
         </h3>
         <div class="offre-icon">
             <a tal:attributes="href hebergement/@@url;
@@ -14,47 +16,52 @@
                      tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/getVignette}"/>
             </a>
         </div>
-
-        <a tal:attributes="href hebergement/@@url;
-                           title hebergement/heb_nom">
-            <span class="bordeaux" tal:replace="offre/pretty_title_or_id"/><br />
-        </a>
-
-        <p class="red">
-            <span tal:replace="python:viewlet.getNiceEventStartDate(offre)" /> &rarr; <span tal:replace="python:viewlet.getNiceEventEndDate(offre)" />
-        </p>
-
-        <p class="promotion-text" tal:condition="promotion">
-           <span tal:replace="structure offre/getText" />
-        </p>
-
-        <div class="etiquette-derniere-minute">
-            <span tal:condition="python: hebergement.heb_cgt_cap_min != hebergement.heb_cgt_cap_max"
-                  tal:content="string: ${hebergement/heb_cgt_cap_min}/${hebergement/heb_cgt_cap_max}" />
-            <span tal:condition="python: hebergement.heb_cgt_cap_min == hebergement.heb_cgt_cap_max"
-                  tal:content="string: ${hebergement/heb_cgt_cap_min}" /><br />
-            <span i18n:translate="x_personnes">personnes</span>
+        <div id="titre-promotion">
+            <a tal:attributes="href hebergement/@@url;
+                               title hebergement/heb_nom">
+                <span tal:replace="offre/pretty_title_or_id"/><br />
+            </a>
         </div>
-        <div class="etiquette-derniere-minute">
-            <span tal:content="hebergement/heb_cgt_nbre_chmbre" /><br />
-            <span i18n:translate="x_chambres">chambres</span>
-        </div>
-        
-        <tal:block tal:define="epis python:hebergement.epis and hebergement.epis[0] or None;
-                               episValue python:epis and (epis.heb_nombre_epis > 0 and epis.heb_nombre_epis) or '-'">
-            <div class="etiquette-derniere-minute"
-                 tal:condition="python:hebergement.type.type_heb_code == 'MV'">
-                <span tal:content="episValue"/><br />
-                <span i18n:translate="x_cles">cl&eacute;s</span>
-            </div>
-            <div class="etiquette-derniere-minute"
-                 tal:condition="python:hebergement.type.type_heb_code != 'MV'">
-                <span tal:content="episValue"/><br />
-                <span i18n:translate="x_epis">&eacute;pis</span>
-            </div>
-        </tal:block>
 
-        <div class="break-float"></div>
+        <div id="promotion-derniere-minute">
+            <span tal:content="python:viewlet.getNiceEventStartDate(offre)" />
+            &rarr;
+            <span tal:content="python:viewlet.getNiceEventEndDate(offre)" />
+            <span tal:condition="python: len(promotion_view.getText()) > 0">
+                ::
+                <span tal:content="structure promotion_view/getText" />
+            </span>
+        </div>
+
+        <div id="info-derniere-minute">
+            <div class="etiquette-derniere-minute">
+                <span tal:condition="python: hebergement.heb_cgt_cap_min != hebergement.heb_cgt_cap_max"
+                      tal:content="string: ${hebergement/heb_cgt_cap_min}/${hebergement/heb_cgt_cap_max}" />
+                <span tal:condition="python: hebergement.heb_cgt_cap_min == hebergement.heb_cgt_cap_max"
+                      tal:content="string: ${hebergement/heb_cgt_cap_min}" /><br />
+                <span i18n:translate="x_personnes">personnes</span>
+            </div>
+            <div class="etiquette-derniere-minute">
+                <span tal:content="hebergement/heb_cgt_nbre_chmbre" /><br />
+                <span i18n:translate="x_chambres">chambres</span>
+            </div>
+
+            <tal:block tal:define="epis python:hebergement.epis and hebergement.epis[0] or None;
+                                   episValue python:epis and (epis.heb_nombre_epis > 0 and epis.heb_nombre_epis) or '-'">
+                <div class="etiquette-derniere-minute"
+                     tal:condition="python:hebergement.type.type_heb_code == 'MV'">
+                    <span tal:content="episValue"/><br />
+                    <span i18n:translate="x_cles">cl&eacute;s</span>
+                </div>
+                <div class="etiquette-derniere-minute"
+                     tal:condition="python:hebergement.type.type_heb_code != 'MV'">
+                    <span tal:content="episValue"/><br />
+                    <span i18n:translate="x_epis">&eacute;pis</span>
+                </div>
+            </tal:block>
+
+            <div class="break-float"></div>
+        </div>
         <div class="plus-info">
             <a tal:attributes="href viewlet/getAllDerniereMinuteLink"><span i18n:translate="toutes_nos_dernieres_minutes">Toutes nos dernières minutes</span>...</a>
         </div>
