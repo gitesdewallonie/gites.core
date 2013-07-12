@@ -6,10 +6,9 @@
   <include file="hebergement.zcml"/>
   <grok:grok package="."/>
 
-
    <browser:page
       for="*"
-      name="sendto_form"
+      name="gdw_sendto_form"
       class=".sendtoform.SendToFormView"
       template="templates/sendto_form.pt"
       permission="zope.Public"

@@ -5,17 +5,12 @@
       metal:use-macro="context/main_template/macros/master"
       i18n:domain="plone">
 
-<metal:block fill-slot="top_slot"
-             tal:define="dummy python:request.set('disable_border',1)" />
-
-  <metal:head fill-slot="head_slot">
-    <meta name="robots" content="noindex,follow" />
-  </metal:head>
+<metal:block fill-slot="top_slot" />
 
   <body>
 
     <metal:main fill-slot="main"
-         tal:define="errors request">
+         tal:define="errors view/validateAndSend">
 
       <h1 class="documentFirstHeading"
           i18n:translate="heading_send_page_to">Send this page to someone</h1>
@@ -32,14 +27,14 @@
                 action="sendto_form"
                 method="post"
                 enctype="multipart/form-data"
-                tal:attributes="action string:${context/@@plone_context_state/object_url}/${template/getId}">
+                tal:attributes="action string:${request/ACTUAL_URL}">
 
             <fieldset>
 
               <legend i18n:translate="legend_address_info">Address info</legend>
 
               <div class="field"
-                   tal:define="error errors/send_to_address|nothing;"
+                   tal:define="error python:errors and errors['send_to_address'] or None"
                    tal:attributes="class python:error and 'field error' or 'field'">
 
                 <label for="send_to_address" i18n:translate="label_send_to_mail">Send to</label>
@@ -63,7 +58,7 @@
               </div>
 
               <div class="field"
-                   tal:define="error errors/send_from_address|nothing;"
+                   tal:define="error python:errors and errors['send_from_address'] or None"
                    tal:attributes="class python:error and 'field error' or 'field'">
 
                 <label for="send_from_address" i18n:translate="label_send_from">From</label>
