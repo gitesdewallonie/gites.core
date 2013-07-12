@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import hashlib
 import json
 import geoalchemy
 from dateutil.relativedelta import relativedelta
@@ -111,6 +112,17 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
         else:
             return (Hebergement.heb_nom, )
 
+    @property
+    def cookie_key(self):
+        """ Returns the cookie key for the current context """
+        return hashlib.md5(self.context.absolute_url()).hexdigest()
+
+    def update_cookie_sort(self, value):
+        """ Updates the cookie to correctly display the sort value """
+        self.request.response.setCookie(
+            '%s_sort' % self.cookie_key,
+            value)
+
 
 class PackageHebergementFetcher(BaseHebergementsFetcher):
     grok.adapts(IPackage, Interface, IBrowserRequest)
@@ -161,7 +173,7 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
         elif self.selected_order() == 'epis':
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
         elif self.context.is_geolocalized():
-            self.request.response.setCookie('listing_sort', 'distance')
+            self.update_cookie_sort('distance')
             return ('distance', )
         else:
             return ('heb_nom', )
@@ -418,6 +430,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         elif self.selected_order() == 'epis':
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
         elif self.is_geolocalized:
+            self.update_cookie_sort('distance')
             self.request.response.setCookie('listing_sort', 'distance')
             return ('distance', )
         else:

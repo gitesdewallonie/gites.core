@@ -84,41 +84,47 @@ var app = angular.module('listing', ['ngSanitize', 'ngCookies', 'ui.bootstrap'])
 app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 
     $scope.init = function() {
-        $scope.page = $cookieStore.get('listing_page', 0);
         var baseurl = calculateBase();
         $scope.listing_url = baseurl + 'update_listing'; // The url of our search
         $scope.map_listing_url = baseurl + 'update_map_listing'; // The url of our search
-        $scope.keywords = {};
-        var cookiesData = jQuery('#hiddenForm').serializeObject();
-        $scope.formData = jQuery.parseJSON(cookiesData.request);
-        $scope.hash = cookiesData.hash;
+        var cookieData = jQuery('#hiddenForm').serializeObject();
+        $scope.cookieKey = cookieData.cookie_key;
+        $scope.parameters = $cookieStore.get($scope.cookieKey);
 
-        if ( $scope.hash != $cookieStore.get('listing_hash', '')) {
-            $scope.page = 0;
+        if ($scope.parameters === undefined) {
+            $scope.parameters = {
+                'keywords': {},
+                'page': undefined,
+                'hash': undefined,
+                'sort': $cookieStore.get($scope.cookieKey + '_sort'),
+                'data': undefined};
         }
-        $scope.reference = $scope.formData.reference;
-        var page_cookie = $cookieStore.get('listing_keywords');
-        if ( page_cookie ) {
-            $scope.keywords = page_cookie;
+        $scope.parameters.data = jQuery.parseJSON(cookieData.request);
+
+        if ( cookieData.hash != $scope.parameters.hash ) {
+            $scope.parameters.page = 0;
+            $scope.parameters.hash = cookieData.hash;
         }
-        $scope.sort = $cookieStore.get('listing_sort', '');
+        $scope.sort = $scope.parameters.sort;
+        $scope.keywords = $scope.parameters.keywords;
     };
 
     var selectedKeywords = function() {
-    var selected_keywords = [];
-    for (var keyword in $scope.keywords) {
-        if ( $scope.keywords[keyword] === true ) {
-            selected_keywords.push(keyword);
+        var selected_keywords = [];
+        for (var keyword in $scope.parameters.keywords) {
+            if ( $scope.parameters.keywords[keyword] === true ) {
+                selected_keywords.push(keyword);
+            };
         };
-    };
-    return selected_keywords;
+        return selected_keywords;
     }
 
     $scope.updatePostData = function() {
-        $scope.postData = jQuery.extend($scope.formData, {'keywords': selectedKeywords(),
-                                                     'page': $scope.page,
-                                                     'sort': $scope.sort,
-                                                     'reference': $scope.reference});
+        $scope.postData = jQuery.extend($scope.parameters.data,
+                                        {'keywords': selectedKeywords(),
+                                         'page': $scope.parameters.page,
+                                         'sort': $scope.parameters.sort,
+                                         'reference': $scope.parameters.data.reference});
     }
 
     var serializeToHTTPPost = function(data){
@@ -143,16 +149,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 
     $scope.update = function() {
         $scope.updatePostData();
-        if ( ! jQuery.isEmptyObject($scope.keywords) ) {
-            $cookieStore.put('listing_keywords', $scope.keywords);
-        };
-        if ( ! jQuery.isEmptyObject($scope.formData) ) {
-	          var data = jQuery.extend({}, $scope.formData);
-	          delete data['page'];
-            $cookieStore.put('listing_hash', $scope.hash);
-            $cookieStore.put('listing_form_data', data);
-        };
-        $cookieStore.put('listing_sort', $scope.sort);
+        $cookieStore.put($scope.cookieKey, $scope.parameters)
 
         $http.post($scope.listing_url, $scope.postData, httpPostconfig).
         success(function(data, status) {
@@ -209,23 +206,24 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
     };
 
     $scope.goToNextPage = function(){
-        $scope.page++
-        $scope.goToPage($scope.page);
+        $scope.parameters.page++
+        $scope.goToPage($scope.parameters.page);
     }
 
     $scope.goToPreviousPage = function(){
-        $scope.page--;
-        $scope.goToPage($scope.page);
+        $scope.parameters.page--;
+        $scope.goToPage($scope.parameters.page);
     }
 
 
     $scope.goToPage = function(page){
-        $scope.page = page;
-        $cookieStore.put('listing_page', page);
+        $scope.parameters.page = page;
+        $cookieStore.put($scope.cookieKey, $scope.parameters);
         $scope.update();
     }
 
     $scope.updateSort = function() {
+        $scope.parameters.sort = $scope.sort;
         $scope.goToPage(0);
     }
 

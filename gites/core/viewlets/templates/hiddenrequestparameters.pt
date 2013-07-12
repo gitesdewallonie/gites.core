@@ -5,4 +5,7 @@
   <input type="hidden"
          name="request"
          tal:attributes="value viewlet/params" />
+  <input type="hidden"
+         name="cookie_key"
+         tal:attributes="value viewlet/cookie_key" />
 </form>
