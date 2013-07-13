@@ -176,7 +176,7 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
         elif self.selected_order() == 'heb_type':
             return (TypeHebergement.type_heb_type.desc(), Hebergement.heb_nom)
-        elif self.context.is_geolocalized():
+        elif self.context.is_geolocalized:
             self.update_cookie_sort('distance')
             return ('distance', )
         else:
