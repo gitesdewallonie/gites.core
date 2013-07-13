@@ -81,7 +81,11 @@ var calculateBase = function() {
 
 
 var app = angular.module('listing', ['ngSanitize', 'ngCookies', 'ui.bootstrap']);
-app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
+app.controller('SearchCtrl', function($scope, $http, $compile) {
+
+    var parseJSON = function(value) {
+        return value ? JSON.parse(value) : undefined;
+    };
 
     $scope.init = function() {
         var baseurl = calculateBase();
@@ -89,17 +93,17 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
         $scope.map_listing_url = baseurl + 'update_map_listing'; // The url of our search
         var cookieData = jQuery('#hiddenForm').serializeObject();
         $scope.cookieKey = cookieData.cookie_key;
-        $scope.parameters = $cookieStore.get($scope.cookieKey);
+        $scope.parameters = parseJSON(jQuery.cookie($scope.cookieKey));
 
         if ($scope.parameters === undefined) {
             $scope.parameters = {
                 'keywords': {},
                 'page': undefined,
                 'hash': undefined,
-                'sort': $cookieStore.get($scope.cookieKey + '_sort'),
+                'sort': jQuery.cookie($scope.cookieKey + '_sort'),
                 'data': undefined};
         }
-        $scope.parameters.data = jQuery.parseJSON(cookieData.request);
+        $scope.parameters.data = parseJSON(cookieData.request);
 
         if ( cookieData.hash != $scope.parameters.hash ) {
             $scope.parameters.page = 0;
@@ -149,7 +153,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 
     $scope.update = function() {
         $scope.updatePostData();
-        $cookieStore.put($scope.cookieKey, $scope.parameters)
+        jQuery.cookie($scope.cookieKey, JSON.stringify($scope.parameters), {path: '/'});
 
         $http.post($scope.listing_url, $scope.postData, httpPostconfig).
         success(function(data, status) {
@@ -218,7 +222,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 
     $scope.goToPage = function(page){
         $scope.parameters.page = page;
-        $cookieStore.put($scope.cookieKey, $scope.parameters);
+        jQuery.cookie($scope.cookieKey, JSON.stringify($scope.parameters), {path: '/'});
         $scope.update();
     }
 
@@ -239,7 +243,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile, $cookieStore) {
 
 app.controller(
         "collapseCtrl",
-        function($scope, $http, $compile, $cookieStore){
+        function($scope, $http, $compile){
             $scope.isCollapsed = false;
             $scope.data = null;
             $scope.getGroupement = function(pk) {
