@@ -5,7 +5,7 @@
     <div class="break-float"></div>
 
     <form action=""
-          method="post"
+          method="get"
           tal:attributes="action string:${context/@@plone_portal_state/portal_url}/moteur_recherche_view/getBasicSearch">
         <div id="zone-gite-meuble">
             <input type="checkbox"
@@ -55,6 +55,6 @@
                    value="Je trouve"
                    class="trouver"
                    i18n:attributes="value je_trouve" />
-        
+
     </form>
 </div><!--je cherche-->
