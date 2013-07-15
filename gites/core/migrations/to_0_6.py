@@ -8,6 +8,7 @@ Copyright by Affinitic sprl
 from Products.CMFCore.utils import getToolByName
 from zope.interface import alsoProvides
 from gites.core.interfaces import ISearch
+from gites.core.utils import publishObject
 
 
 def migrate(context):
@@ -16,3 +17,4 @@ def migrate(context):
     portal.invokeFactory('Folder', id='search')
     searchFolder = getattr(portal, 'search')
     alsoProvides(searchFolder, ISearch)
+    publishObject(searchFolder)
