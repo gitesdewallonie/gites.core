@@ -50,5 +50,13 @@
       profile="gites.core:default"
       />
 
+  <genericsetup:upgradeStep
+      title="gites core 0.6"
+      description="Add search folder"
+      handler=".migrations.to_0_6.migrate"
+      destination="0.6"
+      profile="gites.core:default"
+      />
+
 </configure>
 
