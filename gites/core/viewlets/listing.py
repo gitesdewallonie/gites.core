@@ -233,6 +233,11 @@ class HiddenRequestParameters(grok.Viewlet):
         return hashlib.md5(hash_json).hexdigest()
 
     @property
+    def cookie_key(self):
+        """ Returns a hash to identify the cookie """
+        return hashlib.md5(self.context.absolute_url()).hexdigest()
+
+    @property
     def form_values(self):
         """
         Returns the form dictionnary of the request to a format that JSON

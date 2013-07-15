@@ -42,3 +42,6 @@ class BoutiqueRootFolder(grok.View):
         results = cat.queryCatalog(contentFilter)
         results = list(results)
         return results
+
+    def twoPrecision(self, decimal):
+        return "%.2f" % decimal
