@@ -7,7 +7,7 @@
                      promotion python: offre.getCategory() == 'promotion'">
         <h3>
             <a tal:attributes="href viewlet/getAllDerniereMinuteLink"
-               i18n:translate="derniere_minute">Dernières minutes</a>
+               i18n:translate="dernieres_minutes">Dernières minutes</a>
         </h3>
         <div class="offre-icon">
             <a tal:attributes="href hebergement/@@url;
