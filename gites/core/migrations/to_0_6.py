@@ -18,3 +18,5 @@ def migrate(context):
     searchFolder = getattr(portal, 'search')
     alsoProvides(searchFolder, ISearch)
     publishObject(searchFolder)
+    searchFolder.setLanguage('')
+    searchFolder.manage_addProperty('layout', 'searchhosting', 'string')
