@@ -11,12 +11,13 @@ from affinitic.db.cache import FromCache
 from zope.contentprovider.interfaces import IContentProvider
 from plone.memoize.instance import memoize
 from gites.db import session
-from gites.db.content import Metadata, Commune, Hebergement
+from gites.db.content import Metadata, Commune, Hebergement, MetadataType
 from gites.core.content.interfaces import IPackage
-from gites.core.interfaces import IHebergementsFetcher, IHebergementInSearch
+from gites.core.interfaces import IHebergementsFetcher, IHebergementInSearch, ISearch
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from gites.locales import GitesMessageFactory as _
 from gites.core.adapters.hebergementsfetcher import getGeocodedLocation
+from gites.core.browser.vocabulary import CitiesVocabularyFactory
 
 grok.templatedir('templates')
 grok.context(interface.Interface)
@@ -42,14 +43,9 @@ class HebergementUpdateListing(grok.View):
 LINKS_COUNT = 5
 
 
-class HebergementListingForm(grok.Viewlet):
-    grok.order(10)
-    grok.context(IPackage)
+class BaseListingForm(grok.Viewlet):
+    grok.baseclass()
 
-    def filters(self):
-        userCriteria = self.context.userCriteria
-        query = session().query(Metadata).filter(Metadata.met_pk.in_(userCriteria))
-        return query.all()
 
     @memoize
     def count_hebs(self, metadata_id):
@@ -65,6 +61,34 @@ class HebergementListingForm(grok.Viewlet):
         query = query.filter(LinkHebergementMetadata.metadata_fk == metadata_id)
         query = query.filter(LinkHebergementMetadata.heb_fk == subquery.c.heb_pk)
         return query.count()
+
+class HebergementListingForm(BaseListingForm):
+    grok.order(10)
+    grok.context(IPackage)
+
+    def filters(self):
+        userCriteria = self.context.userCriteria
+        query = session().query(Metadata).filter(Metadata.met_pk.in_(userCriteria))
+        return query.all()
+
+
+class HebergementListingFormInAdvancedSearch(BaseListingForm):
+    grok.order(10)
+    grok.context(ISearch)
+
+    def filters(self):
+        filters = {}
+        for metadataType in MetadataType.get():
+            metadataTypeTitle = metadataType.met_typ_titre
+            query = session().query(Metadata).filter(Metadata.met_filterable == True,
+                                                     Metadata.metadata_type_id == metadataType.met_typ_id)
+            metadata = query.all()
+            if metadata:
+                filters[metadataTypeTitle] = metadata
+        return filters
+
+    def cities(self):
+        return CitiesVocabularyFactory.getDisplayList(None)
 
 
 class HebergementInSearchListingView(grok.View):
@@ -195,6 +219,10 @@ class HebergementsInPackageListing(HebergementsInListing):
 
 class HebergementsInCommuneListing(HebergementsInListing):
     grok.context(Commune)
+
+
+class HebergementsInAdvancedSearchListing(HebergementsInListing):
+    grok.context(ISearch)
 
 
 class RechercheListing(HebergementsInListing):

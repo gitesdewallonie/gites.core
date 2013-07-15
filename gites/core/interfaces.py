@@ -52,3 +52,7 @@ class IHebergementComparisonThree(IHebergementComparisonTable):
 
 class IHebergementComparisonFour(IHebergementComparisonThree):
     """ Marker interface for the comparison of four hostings """
+
+
+class ISearch(Interface):
+    """ Marker interface for search context """

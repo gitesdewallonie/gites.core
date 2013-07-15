@@ -66,7 +66,7 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
 
     def selected_keywords(self):
         keywords = self.data.get('keywords[]', [])
-        if isinstance(keywords, str):
+        if isinstance(keywords, (str, unicode)):
             keywords = [keywords]
         return keywords
 
@@ -127,10 +127,13 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
 class PackageHebergementFetcher(BaseHebergementsFetcher):
     grok.adapts(IPackage, Interface, IBrowserRequest)
 
+    def getCriteria(self):
+        return self.context.getCriteria()
+
     @property
     def _query(self):
         point = None
-        if self.context.is_geolocalized:
+        if hasattr(self.context, 'is_geolocalized') and self.context.is_geolocalized:
             geomarker = IMarker(self.context)
             user_range = self.context.getRange()
             point = 'POINT(%s %s)' % (geomarker.longitude, geomarker.latitude)
@@ -152,7 +155,7 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
         subquery = session().query(LinkHebergementMetadata.heb_fk)
         criteria = set()
         criteria.update(
-            self.context.getCriteria(),
+            self.getCriteria(),
             self.selected_keywords())
         if criteria:
             subquery = subquery.filter(LinkHebergementMetadata.metadata_fk.in_(criteria))
@@ -161,7 +164,7 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             subquery = subquery.having(sa.func.count() == len(criteria))
             subquery = subquery.subquery()
             query = query.filter(Hebergement.heb_pk == subquery.c.heb_fk)
-        if self.context.is_geolocalized:
+        if hasattr(self.context, 'is_geolocalized') and self.context.is_geolocalized:
             query = query.filter(Hebergement.heb_location.distance_sphere(point) < 1000 * user_range)
         query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
                                      Proprio.pro_etat == True))
@@ -176,7 +179,7 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
         elif self.selected_order() == 'heb_type':
             return (TypeHebergement.type_heb_type.desc(), Hebergement.heb_nom)
-        elif self.context.is_geolocalized:
+        elif hasattr(self.context, 'is_geolocalized') and self.context.is_geolocalized:
             self.update_cookie_sort('distance')
             return ('distance', )
         else:
@@ -302,7 +305,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
 
     def apply_filters(self, query, group=False):
         reference = self.data.get('reference')
-        capacity = self.data.get('capacityMin')
+        capacity = self.data.get('capacityMin') or self.data.get('form.widgets.capacityMin')
         heb_type = self.data.get('form.widgets.hebergementType') or self.data.get('form.widgets.hebergementType[]')
         show_gites = heb_type and 'gite-meuble' in heb_type
         show_chambres = heb_type and 'chambre-hote' in heb_type
@@ -475,3 +478,28 @@ class SearchHebFetcher(BaseHebergementsFetcher):
 
 class SearchHebFetcherOnRoot(SearchHebFetcher):
     grok.adapts(IPloneSiteRoot, Interface, IBrowserRequest)
+
+
+from gites.core.interfaces import ISearch
+
+
+class AdvancedSearchHebergementFetcher(PackageHebergementFetcher, SearchHebFetcher):
+    grok.adapts(ISearch, Interface, IBrowserRequest)
+
+    def getCriteria(self):
+        return []
+
+    __call__ = PackageHebergementFetcher.__call__
+
+    @property
+    def _query(self):
+        query = PackageHebergementFetcher._query.fget(self)
+        return self.apply_filters(query)
+
+    def apply_filters(self, query, group=False):
+        query = super(AdvancedSearchHebergementFetcher, self).apply_filters(query, group)
+        location = self.data.get('form.widgets.nearTo')
+        if location:
+            query = query.join('commune')
+            query = query.filter(Commune.com_pk == location)
+        return query

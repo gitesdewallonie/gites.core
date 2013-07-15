@@ -12,10 +12,13 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from gites.locales import GitesMessageFactory as _
+from gites.core.interfaces import ISearch
 from gites.core.browser.interfaces import (ISearchHebergement,
                                            IBasicSearchHebergement,
                                            IBasicSearchHebergementTooMuch,
                                            ISearchHebergementTooMuch)
+
+
 
 
 class SearchHebergement(formbase.PageForm):
@@ -297,7 +300,6 @@ class SearchHostingForm(form.Form):
     fields['fromDateAvancee'].widgetFactory = DatePickerFieldWidget
     fields['toDateAvancee'].widgetFactory = DatePickerFieldWidget
 
-    template = ViewPageTemplateFile('templates/search_host_form.pt')
 
     def selected_gite(self):
         """
@@ -314,9 +316,9 @@ class SearchHostingForm(form.Form):
             return 'checked'
 
 
-class SearchHosting(layout.FormWrapper, grok.View):
-    grok.context(zope.interface.Interface)
-    grok.name('search_hosting.html')
-    grok.require('zope2.Public')
+grok.templatedir('templates')
 
-    form = SearchHostingForm
+
+class SearchHosting(grok.View):
+    grok.context(ISearch)
+    grok.require('zope2.Public')

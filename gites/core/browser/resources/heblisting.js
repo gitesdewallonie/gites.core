@@ -101,7 +101,12 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
                 'page': undefined,
                 'hash': undefined,
                 'sort': jQuery.cookie($scope.cookieKey + '_sort'),
-                'data': undefined};
+                'data': undefined,
+	        'hebergementType': {},
+                'fromDate': undefined,
+                'toDate': undefined,
+                'capacity': undefined,
+	        'nearTo': undefined};
         }
         $scope.parameters.data = parseJSON(cookieData.request);
 
@@ -111,6 +116,11 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
         }
         $scope.sort = $scope.parameters.sort;
         $scope.keywords = $scope.parameters.keywords;
+        $scope.hebergementType = $scope.parameters.hebergementType;
+        $scope.fromDate = $scope.parameters.fromDate;
+        $scope.toDate = $scope.parameters.toDate;
+        $scope.capacity = $scope.parameters.capacity;
+        $scope.nearTo = $scope.parameters.nearTo;
     };
 
     var selectedKeywords = function() {
@@ -128,7 +138,18 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
                                         {'keywords': selectedKeywords(),
                                          'page': $scope.parameters.page,
                                          'sort': $scope.parameters.sort,
-                                         'reference': $scope.parameters.data.reference});
+                                         'reference': $scope.parameters.data.reference,
+                                         'form.widgets.fromDateAvancee': $scope.fromDate,
+                                         'form.widgets.toDateAvancee': $scope.toDate,
+                                         'form.widgets.capacityMin': $scope.capacity,
+					 'form.widgets.nearTo': $scope.nearTo});
+        var hebTypes = [];
+	Object.keys($scope.parameters.hebergementType).forEach(function(hebtype) {;
+		if ( $scope.parameters.hebergementType[hebtype] === true ) {
+		hebTypes.push(hebtype);
+		};
+	});
+        $scope.postData = jQuery.extend($scope.parameters.data, {'form.widgets.hebergementType': hebTypes});
     }
 
     var serializeToHTTPPost = function(data){
@@ -141,6 +162,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
     };
 
     $scope.updateMap = function() {
+	$scope.spin();
         $scope.updatePostData();
         $http.post($scope.map_listing_url, $scope.postData, httpPostconfig).
         success(function(data, status) {
@@ -152,6 +174,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
     };
 
     $scope.update = function() {
+	$scope.spin();
         $scope.updatePostData();
         jQuery.cookie($scope.cookieKey, JSON.stringify($scope.parameters), {path: '/'});
 
@@ -160,7 +183,9 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
             $scope.status = status;
             $scope.listcontainer = data;
         });
-        $scope.updateMap();
+	if (jQuery('#viewlet-map').length) {
+            $scope.updateMap();
+	}
     };
 
     $scope.compareHeb = function() {
@@ -235,6 +260,21 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
         $scope.goToPage(0);
     }
 
+    $scope.spin = function () {
+        var opts = {
+            lines: 12, // The number of lines to draw
+            length: 7, // The length of each line
+            width: 5, // The line thickness
+            radius: 10, // The radius of the inner circle
+            color: '#fff', // #rbg or #rrggbb
+            speed: 1, // Rounds per second
+            trail: 66, // Afterglow percentage
+            shadow: true // Whether to render a shadow
+        };
+        jQuery("#spin").show().spin(opts);
+    };
+
+
     // initialize values
     $scope.init();
 
@@ -281,25 +321,7 @@ app.directive('angularHtmlBind', function($compile) {
     };
 });
 
-app.config(function ($httpProvider) {
-        $httpProvider.responseInterceptors.push('myHttpInterceptor');
-        var spinnerFunction = function (data, headersGetter) {
-        var opts = {
-            lines: 12, // The number of lines to draw
-            length: 7, // The length of each line
-            width: 5, // The line thickness
-            radius: 10, // The radius of the inner circle
-            color: '#fff', // #rbg or #rrggbb
-            speed: 1, // Rounds per second
-            trail: 66, // Afterglow percentage
-            shadow: true // Whether to render a shadow
-        };
-        jQuery("#spin").show().spin(opts);
-            return data;
-        };
-        $httpProvider.defaults.transformRequest.push(spinnerFunction);
-    })
-    .factory('myHttpInterceptor', function ($q, $window) {
+app.factory('myHttpInterceptor', function ($q, $window) {
         return function (promise) {
             return promise.then(function (response) {
         jQuery("#spin").hide()
@@ -310,4 +332,30 @@ app.config(function ($httpProvider) {
                 return $q.reject(response);
             });
         };
-    })
+    });
+
+app.config(function ($httpProvider) {
+        $httpProvider.responseInterceptors.push('myHttpInterceptor');
+    });
+
+app.directive('datepick', function() {
+    return {
+        restrict: 'A',
+        require : 'ngModel',
+        link : function (scope, element, attrs, ngModelCtrl) {
+            $(function(){
+                jQuery(element).datepicker({
+                    dateFormat:'dd/mm/yy',
+		    buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
+		    buttonImageOnly: true,
+                    showOn: "both",
+                    onSelect:function (date) {
+                        ngModelCtrl.$setViewValue(date);
+                        scope.$apply();
+                        scope.updateKeywords();
+                    }
+                });
+            });
+        }
+    }
+});

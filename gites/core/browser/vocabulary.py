@@ -9,6 +9,7 @@ from Products.Archetypes.interfaces import IVocabulary
 from Products.Archetypes.atapi import DisplayList
 from Products.CMFCore.utils import getToolByName
 from zope.component import queryMultiAdapter
+from plone.memoize import forever
 
 CARDS = ['carte01.jpg']
 
@@ -134,3 +135,30 @@ class CriteriaVocabulary(object):
         return DisplayList(criteria)
 
 CriteriaVocabularyFactory = CriteriaVocabulary()
+
+
+class CitiesVocabulary(object):
+    """
+    Vocabulaire Archetypes pour les critères
+    """
+    implements(IVocabulary)
+
+    @forever.memoize
+    def getDisplayList(self, instance):
+        wrapper = getSAWrapper('gites_wallons')
+        communeTable = wrapper.getMapper('commune')
+        hebergementTable = wrapper.getMapper('hebergement')
+        query = select([communeTable.com_nom,
+                        communeTable.com_pk],
+                       distinct=communeTable.com_nom)
+        query.append_whereclause(hebergementTable.heb_com_fk == communeTable.com_pk)
+        query = query.order_by(communeTable.com_nom)
+        cities = [SimpleTerm(value=None, token=None, title=u'')]
+        for city in query.execute().fetchall():
+            term = SimpleTerm(value=city.com_pk,
+                              token=city.com_pk,
+                              title=city.com_nom)
+            cities.append(term)
+        return SimpleVocabulary(cities)
+
+CitiesVocabularyFactory = CitiesVocabulary()
