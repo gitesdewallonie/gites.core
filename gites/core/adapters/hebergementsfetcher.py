@@ -183,7 +183,7 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             self.update_cookie_sort('distance')
             return ('distance', )
         else:
-            return ('heb_nom', 'heb_type_type' )
+            return ('heb_nom', 'heb_type_type')
 
 
 class CommuneHebFetcher(BaseHebergementsFetcher):
@@ -224,7 +224,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         for hebergement in hebergements:
             if hebergement.heb_groupement_pk != None:
                 position[hebergement.heb_groupement_pk] = i
-            i+=1
+            i += 1
             if hebergement.heb_type == 'gite-groupes':
                 hebgrplist.append(hebergement)
             else:
@@ -252,7 +252,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
 
     @property
     def is_geolocalized(self):
-        return self.data.get('nearTo') is not None
+        return self.geocodedLocation is not None
 
     @property
     def geocodedLocation(self):
@@ -470,7 +470,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
             self.update_cookie_sort('distance')
             return ('distance', )
         else:
-            return ('heb_nom', 'heb_type_type' )
+            return ('heb_nom', 'heb_type_type')
 
     def __len__(self):
         return len(self._query.all())
