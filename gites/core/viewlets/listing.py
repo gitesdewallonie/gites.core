@@ -17,7 +17,7 @@ from gites.core.interfaces import IHebergementsFetcher, IHebergementInSearch, IS
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from gites.locales import GitesMessageFactory as _
 from gites.core.adapters.hebergementsfetcher import getGeocodedLocation
-from gites.core.browser.vocabulary import CitiesVocabularyFactory
+from gites.core.browser.vocabulary import CitiesVocabularyFactory, ClassificationVocabularyFactory
 
 grok.templatedir('templates')
 grok.context(interface.Interface)
@@ -89,6 +89,21 @@ class HebergementListingFormInAdvancedSearch(BaseListingForm):
 
     def cities(self):
         return CitiesVocabularyFactory.getDisplayList(None)
+
+    def classifications(self):
+        return ClassificationVocabularyFactory(None)
+
+    def count_classifications(self, classification):
+        fetcher = component.getMultiAdapter((self.context, self.view,
+                                            self.request),
+                                            IHebergementsFetcher)
+        subquery = fetcher._query.subquery()
+        from gites.db.content import LinkHebergementEpis
+        query = session().query(LinkHebergementEpis.heb_pk)
+        query = query.options(FromCache('gdw'))
+        query = query.filter(LinkHebergementEpis.heb_nombre_epis == int(classification))
+        query = query.filter(LinkHebergementEpis.heb_pk == subquery.c.heb_pk)
+        return query.count()
 
 
 class HebergementInSearchListingView(grok.View):
