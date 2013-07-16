@@ -29,6 +29,7 @@ __docformat__ = 'plaintext'
 
 from AccessControl import ClassSecurityInfo
 from zope.interface import implements
+from affinitic.db.cache import FromCache
 from gites.core.config import PROJECTNAME
 from gites.core.widgets import DBReferenceWidget
 from gites.core.content.interfaces import IDerniereMinute
@@ -279,7 +280,9 @@ class DerniereMinute(ATFolder):
             wrapper = getSAWrapper('gites_wallons')
             Hebergements = wrapper.getMapper('hebergement')
             session = wrapper.session
-            hebergement = session.query(Hebergements).filter(Hebergements.heb_pk==self.getHebergementsConcernes()[0]).one()
+            query = session.query(Hebergements)
+            query = query.options(FromCache('gdw'))
+            hebergement = query.filter(Hebergements.heb_pk==self.getHebergementsConcernes()[0]).one()
             return hebergement.__of__(self.hebergement)
         else:
             return None

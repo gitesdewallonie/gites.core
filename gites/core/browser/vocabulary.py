@@ -9,7 +9,7 @@ from Products.Archetypes.interfaces import IVocabulary
 from Products.Archetypes.atapi import DisplayList
 from Products.CMFCore.utils import getToolByName
 from zope.component import queryMultiAdapter
-from plone.memoize import forever
+from plone.memoize import instance
 
 CARDS = ['carte01.jpg']
 
@@ -123,6 +123,7 @@ class CriteriaVocabulary(object):
     """
     implements(IVocabulary)
 
+    @instance.memoize
     def getDisplayList(self, instance):
         wrapper = getSAWrapper('gites_wallons')
         metadataTable = wrapper.getMapper('metadata')
@@ -143,7 +144,7 @@ class CitiesVocabulary(object):
     """
     implements(IVocabulary)
 
-    @forever.memoize
+    @instance.memoize
     def getDisplayList(self, instance):
         wrapper = getSAWrapper('gites_wallons')
         communeTable = wrapper.getMapper('commune')
