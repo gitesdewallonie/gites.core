@@ -21,12 +21,13 @@ from Products.CMFCore.utils import getToolByName
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from z3c.sqlalchemy import getSAWrapper
 from plone import api
+from plone.memoize.instance import memoize
 import sqlalchemy as sa
 
 from affinitic.db.cache import FromCache
 from affinitic.pwmanager.interfaces import IPasswordManager
 
-from gites.db.content import Hebergement, TypeHebergement, LinkHebergementEpis, Proprio
+from gites.db.content import Hebergement, TypeHebergement, LinkHebergementEpis, Proprio, Commune
 from gites.db.content.hebergement.metadata import Metadata
 
 from gites.map.browser.interfaces import IMappableView
@@ -272,6 +273,7 @@ class HebergementView(BrowserView):
                               Hebergement.heb_groupement_pk.label('heb_groupement_pk')
                               )
         query = query.join('proprio').outerjoin('epis').join('type')
+        query = query.options(FromCache('gdw'))
         query = query.filter(Hebergement.heb_groupement_pk == pk)
         query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
                                      Proprio.pro_etat == True))
@@ -347,7 +349,7 @@ class HebergementExternCalendarView(BrowserView):
             int(heb_pk)
         except ValueError:
             return None
-        hebergement = session.query(HebTable).get(heb_pk)
+        hebergement = session.query(HebTable).options(FromCache('gdw')).get(heb_pk)
         if (hebergement and
                 int(hebergement.heb_site_public) == 1 and
                 hebergement.proprio.pro_etat):
@@ -433,6 +435,13 @@ class HebergementIconsView(BrowserView):
 class HebergementAbsoluteURL(BrowserView):
     implements(IAbsoluteURL)
 
+    @memoize
+    def getHebType(self, typeheb, language):
+        from gites.db import session
+        session = session()
+        typeHeb = session.query(TypeHebergement).filter_by(type_heb_pk=typeheb).first()
+        return typeHeb.getId(language)
+
     def __str__(self):
         if isinstance(self.context, tuple):
             if hasattr(self.context, 'heb_pk'):
@@ -443,13 +452,16 @@ class HebergementAbsoluteURL(BrowserView):
             context = aq_inner(self.context)
         portal = api.portal.get()
         container = portal.hebergement
-        commune = context.commune.com_id
+        from gites.db import session
+        session = session()
+        commune = session.query(Commune.com_id).options(FromCache('gdw')).filter_by(com_pk=context.heb_com_fk).first()
         language = self.request.get('LANGUAGE', 'en')
-        typeHeb = context.type.getId(language)
+        typeHeb = session.query(TypeHebergement).options(FromCache('gdw')).filter_by(type_heb_pk=context.heb_typeheb_fk).first()
         hebId = context.heb_id
         return "%s/%s/%s/%s" % (container.absolute_url(),
-                                typeHeb,
-                                commune,
+                                #self.getHebType(self.context.heb_typeheb_fk, language),
+                                typeHeb.getId(language),
+                                commune.com_id,
                                 hebId,
                                 )
 

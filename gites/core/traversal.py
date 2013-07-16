@@ -13,6 +13,7 @@ from zope.component import adapts, getMultiAdapter, queryMultiAdapter
 from zope.app.publisher.browser import getDefaultViewName
 from ZPublisher.BaseRequest import DefaultPublishTraverse
 from gites.core.interfaces import IHebergementFolder
+from affinitic.db.cache import FromCache
 from z3c.sqlalchemy import getSAWrapper
 from zExceptions import NotFound
 
@@ -78,7 +79,8 @@ class HebergementFolderTraversable(DefaultPublishTraverse):
         wrapper = getSAWrapper('gites_wallons')
         session = wrapper.session
         Hebergement = wrapper.getMapper('hebergement')
-        return session.query(Hebergement).get(heb_pk)
+
+        return session.query(Hebergement).options(FromCache('gdw')).get(heb_pk)
 
     def getDefaultViewForObject(self, obj, view_name):
         obj = obj.__of__(self.context)

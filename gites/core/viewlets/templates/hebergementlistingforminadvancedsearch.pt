@@ -1,6 +1,7 @@
 <div id="listing-result-advanced-gite-theme"
      i18n:domain="gites"
-     tal:define="filters viewlet/filters"
+     tal:define="filters viewlet/filters;
+                 classifications viewlet/classifications"
      tal:condition="filters">
     <form>
 
@@ -57,6 +58,27 @@
         </div>
         <div id="classification">
             <label i18n:translate="">Classification</label>
+            <div id="classes">
+        <tal:block tal:repeat="classification classifications">
+            <tal:inputs tal:define="heb_count python:viewlet.count_classifications(classification.value)">
+                <input type="checkbox"
+                       id="gite-classification"
+                       name="gite-classification"
+                       value="foo"
+                       class="input-medium search-query"
+                       tal:attributes="value classification/value;
+                                       ng-model string:classifications['${classification/value}'];
+                                       disabled not:heb_count"
+                       ng-click="updateKeywords()" />
+                <label for="gite-theme">
+                    <span tal:replace="classification/value"/>
+                    (<span tal:replace="heb_count"/>)
+               </label>
+                <br />
+            </tal:inputs>
+        </tal:block>
+        </diV>
+
         </div>
 
         </div>

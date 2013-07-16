@@ -17,7 +17,7 @@ from gites.core.interfaces import IHebergementsFetcher, IHebergementInSearch, IS
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from gites.locales import GitesMessageFactory as _
 from gites.core.adapters.hebergementsfetcher import getGeocodedLocation
-from gites.core.browser.vocabulary import CitiesVocabularyFactory
+from gites.core.browser.vocabulary import CitiesVocabularyFactory, ClassificationVocabularyFactory
 
 grok.templatedir('templates')
 grok.context(interface.Interface)
@@ -46,14 +46,11 @@ LINKS_COUNT = 5
 class BaseListingForm(grok.Viewlet):
     grok.baseclass()
 
-
-    @memoize
     def count_hebs(self, metadata_id):
         fetcher = component.getMultiAdapter((self.context, self.view,
                                             self.request),
                                             IHebergementsFetcher)
         subquery = fetcher._query.subquery()
-        from gites.db import session
         from gites.db.content import LinkHebergementMetadata
         query = session().query(LinkHebergementMetadata.heb_fk)
         query = query.options(FromCache('gdw'))
@@ -62,13 +59,16 @@ class BaseListingForm(grok.Viewlet):
         query = query.filter(LinkHebergementMetadata.heb_fk == subquery.c.heb_pk)
         return query.count()
 
+
 class HebergementListingForm(BaseListingForm):
     grok.order(10)
     grok.context(IPackage)
 
     def filters(self):
         userCriteria = self.context.userCriteria
-        query = session().query(Metadata).filter(Metadata.met_pk.in_(userCriteria))
+        query = session().query(Metadata)
+        query = query.options(FromCache('gdw'))
+        query = query.filter(Metadata.met_pk.in_(userCriteria))
         return query.all()
 
 
@@ -80,7 +80,9 @@ class HebergementListingFormInAdvancedSearch(BaseListingForm):
         filters = {}
         for metadataType in MetadataType.get():
             metadataTypeTitle = metadataType.met_typ_titre
-            query = session().query(Metadata).filter(Metadata.met_filterable == True,
+            query = session().query(Metadata)
+            query = query.options(FromCache('gdw'))
+            query = query.filter(Metadata.met_filterable == True,
                                                      Metadata.metadata_type_id == metadataType.met_typ_id)
             metadata = query.all()
             if metadata:
@@ -89,6 +91,21 @@ class HebergementListingFormInAdvancedSearch(BaseListingForm):
 
     def cities(self):
         return CitiesVocabularyFactory.getDisplayList(None)
+
+    def classifications(self):
+        return ClassificationVocabularyFactory(None)
+
+    def count_classifications(self, classification):
+        fetcher = component.getMultiAdapter((self.context, self.view,
+                                            self.request),
+                                            IHebergementsFetcher)
+        subquery = fetcher._query.subquery()
+        from gites.db.content import LinkHebergementEpis
+        query = session().query(LinkHebergementEpis.heb_pk)
+        query = query.options(FromCache('gdw'))
+        query = query.filter(LinkHebergementEpis.heb_nombre_epis == int(classification))
+        query = query.filter(LinkHebergementEpis.heb_pk == subquery.c.heb_pk)
+        return query.count()
 
 
 class HebergementInSearchListingView(grok.View):
@@ -273,7 +290,7 @@ class HiddenRequestParameters(grok.Viewlet):
         """
         form = {}
         for key, value in self.request.form.items():
-            key = re.sub('\[\]','', key)
+            key = re.sub('\[\]', '', key)
             if isinstance(value, datetime.date):
                 value = value.strftime('%d/%m/%Y')
             form[key] = value
