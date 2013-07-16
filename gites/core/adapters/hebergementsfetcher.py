@@ -70,6 +70,12 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
             keywords = [keywords]
         return keywords
 
+    def selected_classifications(self):
+        classes = self.data.get('classification', []) or self.data.get('form.widgets.classification[]', [])
+        if isinstance(classes, (str, unicode)):
+            classes = [classes]
+        return classes
+
     def __call__(self):
         query = self._query.order_by(*self.order_by())
         query = query.slice(self.batch_start, self.batch_end)
@@ -314,8 +320,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         smokers = self.data.get('form.widgets.smokers')
         animals = self.data.get('form.widgets.animals')
         roomAmount = self.data.get('form.widgets.roomAmount')
-
-        classification = self.data.get('classification')
+        classifications = self.selected_classifications()
         #11 = Animal
         #12 = Fumeur
         if animals:
@@ -334,8 +339,8 @@ class SearchHebFetcher(BaseHebergementsFetcher):
             subquery = subquery.subquery()
             query = query.filter(Hebergement.heb_pk == subquery.c.heb_fk)
 
-        if classification and str(classification) != '-1':
-            query = query.filter(sa.and_(LinkHebergementEpis.heb_nombre_epis == classification,
+        if classifications:
+            query = query.filter(sa.and_(LinkHebergementEpis.heb_nombre_epis.in_(classifications),
                                          Hebergement.heb_pk == LinkHebergementEpis.heb_pk))
         if roomAmount:
             query = query.filter(Hebergement.heb_cgt_nbre_chmbre >= roomAmount)
