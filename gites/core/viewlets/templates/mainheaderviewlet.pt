@@ -11,7 +11,7 @@
         <h2 i18n:translate="je_connais">Je connais</h2>
         <div class="break-float"></div>
         <form action=""
-              method="post"
+              method="get"
               tal:attributes="action string:${context/@@plone_portal_state/portal_url}/moteur_recherche_view/getHebergementByNameOrPk">
             <div id="nom-ou-reference">
                 <label for="nom-reference"
