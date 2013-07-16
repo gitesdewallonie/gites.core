@@ -88,6 +88,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
     };
 
     $scope.init = function() {
+        $scope.needUpdate = false;
         var baseurl = calculateBase();
         $scope.listing_url = baseurl + 'update_listing'; // The url of our search
         $scope.map_listing_url = baseurl + 'update_map_listing'; // The url of our search
@@ -107,11 +108,14 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
                 'toDate': undefined,
                 'capacity': undefined,
 	              'nearTo': undefined};
+        } else {
+            $scope.needUpdate = true;
         }
         $scope.parameters.data = parseJSON(cookieData.request);
 
         if ( cookieData.hash != $scope.parameters.hash ) {
             $scope.parameters.page = 0;
+            $scope.needUpdate = ($scope.parameters.hash === undefined)? false : true;
             $scope.parameters.hash = cookieData.hash;
         }
         $scope.sort = $scope.parameters.sort;
@@ -174,15 +178,17 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
     };
 
     $scope.update = function() {
-        $scope.spin();
-        $scope.updatePostData();
-        jQuery.cookie($scope.cookieKey, JSON.stringify($scope.parameters), {path: '/'});
+        if ($scope.needUpdate === true) {
+            $scope.spin();
+            $scope.updatePostData();
+            jQuery.cookie($scope.cookieKey, JSON.stringify($scope.parameters), {path: '/'});
 
-        $http.post($scope.listing_url, $scope.postData, httpPostconfig).
-        success(function(data, status) {
-            $scope.status = status;
-            $scope.listcontainer = data;
-        });
+            $http.post($scope.listing_url, $scope.postData, httpPostconfig).
+            success(function(data, status) {
+                $scope.status = status;
+                $scope.listcontainer = data;
+            });
+        }
 	      if (jQuery('#viewlet-map').length) {
             $scope.updateMap();
 	      }
@@ -246,6 +252,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
 
 
     $scope.goToPage = function(page){
+        $scope.needUpdate = true;
         $scope.parameters.page = page;
         jQuery.cookie($scope.cookieKey, JSON.stringify($scope.parameters), {path: '/'});
         $scope.update();
