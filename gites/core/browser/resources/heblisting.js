@@ -113,11 +113,11 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
                 'hash': undefined,
                 'sort': jQuery.cookie($scope.cookieKey + '_sort'),
                 'data': undefined,
-	        'hebergementType': {},
+                'hebergementType': {},
                 'fromDate': undefined,
                 'toDate': undefined,
                 'capacity': undefined,
-	        'nearTo': undefined};
+	              'nearTo': undefined};
         }
         $scope.parameters.data = parseJSON(cookieData.request);
 
@@ -160,7 +160,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
     };
 
     $scope.updateMap = function() {
-	$scope.spin();
+        $scope.spin();
         $scope.updatePostData();
         $http.post($scope.map_listing_url, $scope.postData, httpPostconfig).
         success(function(data, status) {
@@ -168,11 +168,11 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
                 googleMapAPI.updateHebergementsMarkers(data);
                 giteMapHandlers.initExternalDigitMarkerHandlers();
             }
-        })
+        });
     };
 
     $scope.update = function() {
-	$scope.spin();
+        $scope.spin();
         $scope.updatePostData();
         jQuery.cookie($scope.cookieKey, JSON.stringify($scope.parameters), {path: '/'});
 
@@ -181,9 +181,9 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
             $scope.status = status;
             $scope.listcontainer = data;
         });
-	if (jQuery('#viewlet-map').length) {
+	      if (jQuery('#viewlet-map').length) {
             $scope.updateMap();
-	}
+	      }
     };
 
     $scope.compareHeb = function() {
@@ -320,21 +320,20 @@ app.directive('angularHtmlBind', function($compile) {
 });
 
 app.factory('myHttpInterceptor', function ($q, $window) {
-        return function (promise) {
-            return promise.then(function (response) {
-        jQuery("#spin").hide()
-                return response;
-
-            }, function (response) {
-        jQuery("#spin").hide()
-                return $q.reject(response);
-            });
-        };
-    });
+    return function (promise) {
+        return promise.then(function (response) {
+            jQuery("#spin").hide();
+            return response;
+        }, function (response) {
+            jQuery("#spin").hide();
+            return $q.reject(response);
+        });
+    };
+});
 
 app.config(function ($httpProvider) {
-        $httpProvider.responseInterceptors.push('myHttpInterceptor');
-    });
+    $httpProvider.responseInterceptors.push('myHttpInterceptor');
+});
 
 app.directive('datepick', function() {
     return {
@@ -344,8 +343,8 @@ app.directive('datepick', function() {
             $(function(){
                 jQuery(element).datepicker({
                     dateFormat:'dd/mm/yy',
-		    buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
-		    buttonImageOnly: true,
+                    buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
+                    buttonImageOnly: true,
                     showOn: "both",
                     onSelect:function (date) {
                         ngModelCtrl.$setViewValue(date);
