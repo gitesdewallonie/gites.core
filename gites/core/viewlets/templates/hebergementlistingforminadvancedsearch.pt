@@ -27,84 +27,97 @@
                       i18n:translate="chambre_hotes">Chambre d'h&ocirc;tes</label>
 
             </div>
-
-        <div id="date-start-advanced">
-            <input type="text" placeholder="Stay from" size="10"
-                   datepick
-                   i18n:attributes="placeholder"
-                   name="form.widgets.fromDateAvancee"
-                   ng-model="fromDate"
-                   id="form-widgets-fromDateAvancee"/>
-        </div>
-        <div id="date-end-advanced">
-            <input type="text" placeholder="Stay to" size="10"
-                   datepick
-                   i18n:attributes="placeholder"
-                   name="form.widgets.toDateAvancee"
-                   ng-model="toDate"
-                   id="form-widgets-toDateAvancee"/>
-        </div>
-        <div id="nbre-personne">
-            <input type="text" value="" class="text-widget int-field" name="form.widgets.capacityMin" id="form-widgets-capacityMin"
-                   ng-change="updateKeywords()"
-                   ng-model="capacity">
-            <img title="Number of people" alt="Number of people" src="++theme++gites.theme/images/icon_gugus.png">
-        </div>
-        <div id="city">
-            <label i18n:translate="">City</label>
-            <select ng-change="updateKeywords()" ng-model="nearTo">
-              <option tal:repeat="city viewlet/cities" tal:attributes="value city/value" tal:content="city/title"/>
-            </select>
-        </div>
-        <div id="classification">
-            <label i18n:translate="">Classification</label>
-            <div id="classes">
-        <tal:block tal:repeat="classification classifications">
-            <tal:inputs tal:define="heb_count python:viewlet.count_classifications(classification.value)">
-                <input type="checkbox"
-                       id="gite-classification"
-                       name="gite-classification"
-                       value="foo"
-                       class="input-medium search-query"
-                       tal:attributes="value classification/value;
-                                       ng-model string:classifications['${classification/value}'];
-                                       disabled not:heb_count"
-                       ng-click="updateKeywords()" />
-                <label for="gite-theme">
-                    <span tal:replace="classification/value"/>
-                    (<span tal:replace="heb_count"/>)
-               </label>
+            <div id="date-start-advanced">
+                <input type="text"
+                       placeholder="Stay from"
+                       size="14"
+                       datepick
+                       i18n:attributes="placeholder"
+                       name="form.widgets.fromDateAvancee"
+                       ng-model="fromDate"
+                       id="form-widgets-fromDateAvancee" />
+            </div>
+            <div id="date-end-advanced">
+                <input type="text"
+                       placeholder="Stay to"
+                       size="14"
+                       datepick
+                       i18n:attributes="placeholder"
+                       name="form.widgets.toDateAvancee"
+                       ng-model="toDate"
+                       id="form-widgets-toDateAvancee"/>
+            </div>
+            <div id="nbre-personne">
+                <input type="text"
+                       value=""
+                       class="text-widget int-field"
+                       name="form.widgets.capacityMin"
+                       id="form-widgets-capacityMin"
+                       ng-change="updateKeywords()"
+                       ng-model="capacity">
+                <img title="Number of people"
+                     alt="Number of people"
+                     src="++theme++gites.theme/images/icon_gugus.png">
+            </div>
+            <div id="city">
+                <label i18n:translate="">City</label>
+                <select ng-change="updateKeywords()" ng-model="nearTo">
+                    <option tal:repeat="city viewlet/cities"
+                          tal:attributes="value city/value"
+                          tal:content="city/title"/>
+                </select>
+            </div>
+            <div id="classification">
+                <label i18n:translate="">Classification</label>
                 <br />
-            </tal:inputs>
-        </tal:block>
-        </diV>
-
+                <tal:block tal:repeat="classification classifications">
+                    <tal:inputs tal:define="heb_count python:viewlet.count_classifications(classification.value)">
+                        <input type="checkbox"
+                               id="gite-classification"
+                               name="gite-classification"
+                               value="foo"
+                               class="input-medium search-query"
+                               tal:attributes="value classification/value;
+                                               ng-model string:classifications['${classification/value}'];
+                                               disabled not:heb_count"
+                               ng-click="updateKeywords()" />
+                        <label for="gite-theme">
+                            <span tal:replace="classification/value"/>
+                            <span class="discreet-info">
+                                (<span tal:replace="heb_count"/>)
+                            </span>
+                        </label>
+                        <br />
+                    </tal:inputs>
+                </tal:block>
+            </div>
         </div>
 
-        </div>
         <tal:block tal:repeat="filter_type filters">
-           <div class="filter_type">
-           <h3 tal:content="filter_type"/>
-           <tal:block tal:repeat="filter python:filters[filter_type]">
-            <tal:inputs tal:define="heb_count python:viewlet.count_hebs(filter.met_pk)">
-                <input type="checkbox"
-                       id="gite-theme"
-                       name="gite-theme"
-                       value="foo"
-                       ng-model="keywords['foo']"
-                       class="input-medium search-query"
-                       tal:attributes="value filter/met_id;
-                                       ng-model string:keywords['${filter/met_pk}'];
-                                       disabled not:heb_count"
-                       ng-click="updateKeywords()" />
-                <label for="gite-theme">
-                    <span tal:replace="filter/Title"/>
-                    (<span tal:replace="heb_count"/>)
-               </label>
-                <br />
-            </tal:inputs>
-        </tal:block>
-        </div>
+            <div class="filter_type">
+                <h3 tal:content="filter_type"/>
+                <tal:block tal:repeat="filter python:filters[filter_type]">
+                    <tal:inputs tal:define="heb_count python:viewlet.count_hebs(filter.met_pk)">
+                            <input type="checkbox"
+                                   id="gite-theme"
+                                   name="gite-theme"
+                                   value="foo"
+                                   ng-model="keywords['foo']"
+                                   class="input-medium search-query"
+                                   tal:attributes="value filter/met_id;
+                                                   ng-model string:keywords['${filter/met_pk}'];
+                                                   disabled not:heb_count"
+                                   ng-click="updateKeywords()" />
+                            <label for="gite-theme">
+                                <span tal:replace="filter/Title"/>
+                                <span class="discreet-info">
+                                    (<span tal:replace="heb_count" />)
+                                </span>
+                           </label>
+                            <br />
+                    </tal:inputs>
+                </tal:block>
+            </div>
         </tal:block>
     </form>
 </div>
