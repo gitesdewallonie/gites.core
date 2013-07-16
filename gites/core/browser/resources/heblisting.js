@@ -79,6 +79,16 @@ var calculateBase = function() {
     return base;
 };
 
+var filterValues = function(dict) {
+        var selected_values = [];
+        for (var key in dict) {
+            if ( dict[key] === true ) {
+                selected_values.push(key);
+            };
+        };
+        return selected_values;
+}
+
 
 var app = angular.module('listing', ['ngSanitize', 'ngCookies', 'ui.bootstrap']);
 app.controller('SearchCtrl', function($scope, $http, $compile) {
@@ -98,6 +108,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
         if ($scope.parameters === undefined) {
             $scope.parameters = {
                 'keywords': {},
+	        'classifications': {},
                 'page': undefined,
                 'hash': undefined,
                 'sort': jQuery.cookie($scope.cookieKey + '_sort'),
@@ -116,6 +127,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
         }
         $scope.sort = $scope.parameters.sort;
         $scope.keywords = $scope.parameters.keywords;
+        $scope.classifications = $scope.parameters.classifications;
         $scope.hebergementType = $scope.parameters.hebergementType;
         $scope.fromDate = $scope.parameters.fromDate;
         $scope.toDate = $scope.parameters.toDate;
@@ -123,32 +135,18 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
         $scope.nearTo = $scope.parameters.nearTo;
     };
 
-    var selectedKeywords = function() {
-        var selected_keywords = [];
-        for (var keyword in $scope.parameters.keywords) {
-            if ( $scope.parameters.keywords[keyword] === true ) {
-                selected_keywords.push(keyword);
-            };
-        };
-        return selected_keywords;
-    }
-
     $scope.updatePostData = function() {
         $scope.postData = jQuery.extend($scope.parameters.data,
-                                        {'keywords': selectedKeywords(),
+                                        {'keywords': filterValues($scope.parameters.keywords),
                                          'page': $scope.parameters.page,
                                          'sort': $scope.parameters.sort,
                                          'reference': $scope.parameters.data.reference,
                                          'form.widgets.fromDateAvancee': $scope.fromDate,
+		                         'form.widgets.classification': filterValues($scope.parameters.classifications),
                                          'form.widgets.toDateAvancee': $scope.toDate,
                                          'form.widgets.capacityMin': $scope.capacity,
 					 'form.widgets.nearTo': $scope.nearTo});
-        var hebTypes = [];
-	Object.keys($scope.parameters.hebergementType).forEach(function(hebtype) {;
-		if ( $scope.parameters.hebergementType[hebtype] === true ) {
-		hebTypes.push(hebtype);
-		};
-	});
+        var hebTypes = filterValues($scope.parameters.hebergementType);
         $scope.postData = jQuery.extend($scope.parameters.data, {'form.widgets.hebergementType': hebTypes});
     }
 
