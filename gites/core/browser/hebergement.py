@@ -199,7 +199,7 @@ class HebergementView(BrowserView):
                 return {'id': 'heb_confort_animal',
                         'title': item['title']}
         return {'id': 'heb_confort_no_animal',
-                'title': u'Animaux de compagnie non autorisés'}
+                'title': _(u'animaux_interdits')}
 
     def getFumeur(self):
         list = self.getHebMetadatasByType('autorisations')
@@ -208,7 +208,7 @@ class HebergementView(BrowserView):
                 return {'id': 'heb_confort_fumeur',
                         'title': item['title']}
         return {'id': 'heb_confort_no_fumeur',
-                'title': u'Hébergement non fumeur'}
+                'title': _(u'hebergement_non_fumeur')}
 
     def getTablesHotes(self):
         tablesHotes = self.getHebMetadatasByType('tablehote')
