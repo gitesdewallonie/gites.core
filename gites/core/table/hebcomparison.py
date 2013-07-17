@@ -13,9 +13,11 @@ import zope.component
 import zope.interface
 import zope.publisher
 from five import grok
+
 from z3c.table import column, interfaces as table_interfaces, table, value
 from zope.i18n import translate
 
+from affinitic.db.cache import FromCache
 from gites.db import content as mappers, session
 from gites.locales import GitesMessageFactory as _
 
@@ -273,6 +275,7 @@ class HebComparisonValues(value.ValuesMixin,
     def heb_types(self):
         query = session().query(mappers.Hebergement.heb_pk,
                                 mappers.TypeHebergement.type_heb_code)
+        query = query.options(FromCache('gdw'))
         query = query.join('type')
         query = query.filter(
             mappers.Hebergement.heb_pk.in_(self.table.heb_pks))
@@ -283,6 +286,7 @@ class HebComparisonValues(value.ValuesMixin,
         query = session().query(mappers.Proprio.pro_langue,
                                 mappers.TypeHebergement.type_heb_code,
                                 mappers.LinkHebergementEpis.heb_nombre_epis)
+        query = query.options(FromCache('gdw'))
         query = query.join('hebergements', 'type').outerjoin('hebergements', 'epis')
         for c in self.heb_columns + self.heb_add_columns:
             query = query.add_column(getattr(mappers.Hebergement, c))
