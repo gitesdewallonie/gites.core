@@ -77,16 +77,20 @@ class HebergementListingFormInAdvancedSearch(BaseListingForm):
     grok.context(ISearch)
 
     def filters(self):
-        filters = {}
-        for metadataType in MetadataType.get():
-            metadataTypeTitle = metadataType.met_typ_titre
+        filters = []
+        query = session().query(MetadataType)
+        query = query.order_by(MetadataType.met_typ_sort_ord)
+        metadataTypes = query.all()
+        for metadataType in metadataTypes:
+            metadataTypeId = metadataType.met_typ_id
             query = session().query(Metadata)
             query = query.options(FromCache('gdw'))
             query = query.filter(Metadata.met_filterable == True,
-                                                     Metadata.metadata_type_id == metadataType.met_typ_id)
+                                 Metadata.metadata_type_id == metadataType.met_typ_id)
             metadata = query.all()
             if metadata:
-                filters[metadataTypeTitle] = metadata
+                filters.append({'id': metadataTypeId,
+                                'metadata': metadata})
         return filters
 
     def cities(self):

@@ -60,7 +60,9 @@
            tal:attributes="class python: type_heb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
         <div id="typetype">
           <span tal:content="type_heb"
-                class="texte-vertical" />
+                i18n:translate=""
+                class="texte-vertical">
+          </span>
           <div class="btn-loupe-listing">
             <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
               <a href=""
@@ -206,11 +208,11 @@
              id="groupelist"
              collapse="!isCollapsed"
              class="{{(data[0].type_heb == 'gite') && 'collapse-gite-listing-detail' || 'collapse-chambre-listing-detail'}}">
-         <div id="titre-groupe">Groupement</div>
+         <div id="titre-groupe" i18n:translate="gite-groupes">Groupement</div>
           <div data-ng-repeat="groupe in data">
             <div class="{{(groupe.type_heb == 'gite') && 'hebergement-gite-listing-detail' || 'hebergement-chambre-listing-detail'}}">
               <div id="typetype">
-                <span class="texte-vertical">{{groupe.type_heb}}</span>
+                <span class="texte-vertical">{{groupe.type_heb_title}}</span>
                 <div class="btn-loupe-listing">
                   <a href=""
                      tal:attributes="href string:{{groupe.url_heb}}"></a>
