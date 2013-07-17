@@ -35,6 +35,7 @@ from gites.map.browser.interfaces import IMappableView
 from gites.core.interfaces import IMapRequest
 from gites.core.browser.interfaces import (IHebergementView,
                                            IHebergementIconsView)
+
 from gites.locales import GitesMessageFactory as _
 
 
@@ -280,12 +281,15 @@ class HebergementView(BrowserView):
         hebList = []
 
         for heb in query.all():
-            msg = _(heb.heb_type)
-            heb_type_translated = translate(msg, context=self.request)
+            heb_type_translated = translate(_(heb.heb_type),
+                                            context=self.request)
+            heb_type_type_translated = translate(_(heb.heb_type_type),
+                                                 context=self.request)
             hebList.append({
                 'heb_pk': heb.heb_pk,
                 'heb_nom': heb.heb_nom,
                 'type_heb': heb.heb_type_type,
+                'type_heb_title': heb_type_type_translated,
                 'heb_type': heb.heb_type,
                 'heb_type_trad': heb_type_translated,
                 'heb_type_code': heb.heb_type_code,
