@@ -93,10 +93,12 @@
             </div>
         </div>
 
-        <tal:block tal:repeat="filter_type filters">
-            <div class="filter_type" tal:attributes="class string:filter_type ${filter_type}">
-                <h3 tal:content="filter_type"/>
-                <tal:block tal:repeat="filter python:filters[filter_type]">
+        <tal:block tal:repeat="filterInfo filters">
+            <div tal:define="filter_type filterInfo/id"
+                 class="filter_type" tal:attributes="class string:filter_type ${filter_type}">
+                <h3 tal:content="filter_type"
+                    i18n:translate="" />
+                <tal:block tal:repeat="filter filterInfo/metadata">
                     <tal:inputs tal:define="heb_count python:viewlet.count_hebs(filter.met_pk)">
                             <input type="checkbox"
                                    id="gite-theme"
