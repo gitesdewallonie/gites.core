@@ -153,7 +153,7 @@ class CitiesVocabulary(object):
         query = query.options(FromCache('gdw'))
         query = query.filter(Hebergement.heb_site_public == '1')
         query = query.filter(Proprio.pro_etat == True)
-        return {city.com_nom for city in query.all()}
+        return [city.com_nom for city in query.all()]
 
     def localities(self):
         query = session().query(distinct(Hebergement.heb_localite).label('heb_localite'))
@@ -161,7 +161,7 @@ class CitiesVocabulary(object):
         query = query.options(FromCache('gdw'))
         query = query.filter(Hebergement.heb_site_public == '1')
         query = query.filter(Proprio.pro_etat == True)
-        return {heb.heb_localite for heb in query.all()}
+        return [heb.heb_localite for heb in query.all()]
 
     @instance.memoize
     def getDisplayList(self, instance):
