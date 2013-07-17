@@ -501,10 +501,20 @@ class AdvancedSearchHebergementFetcher(PackageHebergementFetcher, SearchHebFetch
         query = PackageHebergementFetcher._query.fget(self)
         return self.apply_filters(query)
 
+    @memoize
+    def getCommuneForLocalite(self, localite):
+        query = session().query(Commune.com_nom)
+        query = query.join('relatedHebergement')
+        query = query.options(FromCache('gdw'))
+        query = query.filter(Hebergement.heb_localite == localite)
+        query = query.limit(1)
+        return query.scalar()
+
     def apply_filters(self, query, group=False):
         query = super(AdvancedSearchHebergementFetcher, self).apply_filters(query, group)
         location = self.data.get('form.widgets.nearTo')
         if location:
+            location = self.getCommuneForLocalite(location) or location
             query = query.join('commune')
-            query = query.filter(Commune.com_pk == location)
+            query = query.filter(Commune.com_nom == location)
         return query

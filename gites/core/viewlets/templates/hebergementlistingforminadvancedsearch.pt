@@ -63,7 +63,7 @@
                 <label i18n:translate="">City</label>
                 <select ng-change="updateKeywords()" ng-model="nearTo">
                     <option tal:repeat="city viewlet/cities"
-                          tal:attributes="value city/value"
+                          tal:attributes="value city/title"
                           tal:content="city/title"/>
                 </select>
             </div>

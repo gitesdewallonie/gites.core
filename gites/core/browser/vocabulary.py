@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from sqlalchemy import select
+from sqlalchemy import select, distinct
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from z3c.sqlalchemy import getSAWrapper
 from zope.interface import implements
@@ -10,6 +10,9 @@ from Products.Archetypes.atapi import DisplayList
 from Products.CMFCore.utils import getToolByName
 from zope.component import queryMultiAdapter
 from plone.memoize import instance
+from affinitic.db.cache import FromCache
+from gites.db import session
+from gites.db.content import Commune, Hebergement, Proprio
 
 CARDS = ['carte01.jpg']
 
@@ -144,22 +147,33 @@ class CitiesVocabulary(object):
     """
     implements(IVocabulary)
 
+    def cities(self):
+        query = session().query(distinct(Commune.com_nom).label('com_nom'))
+        query = query.join('relatedHebergement', 'proprio')
+        query = query.options(FromCache('gdw'))
+        query = query.filter(Hebergement.heb_site_public == '1')
+        query = query.filter(Proprio.pro_etat == True)
+        return {city.com_nom for city in query.all()}
+
+    def localities(self):
+        query = session().query(distinct(Hebergement.heb_localite).label('heb_localite'))
+        query = query.join('proprio')
+        query = query.options(FromCache('gdw'))
+        query = query.filter(Hebergement.heb_site_public == '1')
+        query = query.filter(Proprio.pro_etat == True)
+        return {heb.heb_localite for heb in query.all()}
+
     @instance.memoize
     def getDisplayList(self, instance):
-        wrapper = getSAWrapper('gites_wallons')
-        communeTable = wrapper.getMapper('commune')
-        hebergementTable = wrapper.getMapper('hebergement')
-        query = select([communeTable.com_nom,
-                        communeTable.com_pk],
-                       distinct=communeTable.com_nom)
-        query.append_whereclause(hebergementTable.heb_com_fk == communeTable.com_pk)
-        query = query.order_by(communeTable.com_nom)
-        cities = [SimpleTerm(value=None, token=None, title=u'')]
-        for city in query.execute().fetchall():
-            term = SimpleTerm(value=city.com_pk,
-                              token=city.com_pk,
-                              title=city.com_nom)
-            cities.append(term)
-        return SimpleVocabulary(cities)
+        cities_localities_terms = [SimpleTerm(value=None, token=None, title=u'')]
+        cities_localities = set()
+        cities_localities = cities_localities.union(self.localities())
+        cities_localities = cities_localities.union(self.cities())
+        for city in sorted(cities_localities):
+            term = SimpleTerm(value=city,
+                              token=city.encode('ascii', 'ignore'),
+                              title=city)
+            cities_localities_terms.append(term)
+        return SimpleVocabulary(cities_localities_terms)
 
 CitiesVocabularyFactory = CitiesVocabulary()
