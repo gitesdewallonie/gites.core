@@ -73,7 +73,8 @@
                  tal:attributes="href hebergement/@@url_heb"></a>
             </tal:groupe>
           </div>
-          <div class="comparer" tal:condition="python:heb_view.heb_type() != 'gite-groupes'">
+          <div class="comparer"
+               tal:condition="python:heb_view.heb_type() != 'gite-groupes' and viewlet.count() > 1">
             <input type="checkbox"
                    value=""
                    name="heb-comparison:list"
@@ -217,7 +218,8 @@
                   <a href=""
                      tal:attributes="href string:{{groupe.url_heb}}"></a>
                 </div>
-                <div class="comparer">
+                <div class="comparer"
+                     tal:condition="python: viewlet.count() > 1">
                     <input type="checkbox"
                         value=""
                         name="heb-comparison:list"
