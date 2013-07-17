@@ -481,6 +481,17 @@
                                                          title metadata/title" />
                                 </tal:for>
                         </div><!--icone-confort-->
+                        <div id="description-icone-activite">
+                                <tal:for repeat="metadata python:view.getHebMetadatasByType('activites')">
+                                    <img src=""
+                                         title=""
+                                         alt=""
+                                         class="picto"
+                                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
+                                                         alt metadata/title;
+                                                         title metadata/title" />
+                                </tal:for>
+                        </div><!--icone-activite-->
                         <div id="description-icone-literie">
                             <span class="literie">
                                 <img src="heb_confort_chambre.png"
