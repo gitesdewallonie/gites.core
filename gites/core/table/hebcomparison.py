@@ -333,7 +333,8 @@ class HebComparisonValues(value.ValuesMixin,
         for column in self.comparison_list.columns:
             column_values = {'description': column.translation}
             for idx, row in enumerate(values):
-                column_values['col_%s' % str(idx + 1)] = row[column.key]
+                if column.key in row:
+                    column_values['col_%s' % str(idx + 1)] = row[column.key]
             new_values.append(column_values)
         return new_values
 
