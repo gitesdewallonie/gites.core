@@ -687,6 +687,9 @@
                         <div id="description-photo-proprio"
                              tal:define="photocontact view/getPhotoContact">
                             <img src="" width="196" height="170" alt=""
+                                 tal:condition="not: photocontact"
+                                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/images/bg_photo_proprio.png" />
+                            <img src="" width="196" height="170" alt=""
                                  tal:condition="photocontact"
                                  tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_proprio/${heb/proprio/pro_pk}.jpg" />
                         </div><!-- descriptif photo proprio-->
