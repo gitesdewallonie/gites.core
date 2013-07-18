@@ -199,7 +199,7 @@ class CommuneHebFetcher(BaseHebergementsFetcher):
     def _query(self):
         query = session().query(Hebergement,
                                 TypeHebergement.type_heb_code.label('heb_type_code'),
-                                ).join('type').join('commune').join('epis').join('proprio')
+                                ).join('type').join('commune').outerjoin('epis').join('proprio')
         query = query.options(
             FromCache('gdw'))
         typeHeb = self.context.aq_parent
