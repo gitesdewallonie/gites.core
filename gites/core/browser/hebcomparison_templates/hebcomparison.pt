@@ -1,5 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xml:lang="en" lang="en"
+      tal:define="validation view/validate"
       i18n:domain="gites">
 <head>
     <script type="text/javascript"
@@ -14,14 +15,14 @@
 
     <script type="text/javascript"
             charset="utf-8"
+            tal:condition="validation"
             tal:content="view/calendarJS"></script>
 
     <link rel="stylesheet" href="" type="text/css" media="screen" title="timeframe" charset="utf-8"
           tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++timeframe.css"/>
 </head>
 <body>
-<div class="comparator"
-     tal:define="validation view/validate">
+<div class="comparator">
   <tal:block condition="validation">
     <div tal:content="structure view/get_table" />
   </tal:block>
