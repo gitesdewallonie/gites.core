@@ -1,7 +1,10 @@
 <div id="zone-allo-chambre-hote"
-     i18n:domain="gites">
+     i18n:domain="gites"
+     tal:define="lang request/LANGUAGE | en;
+                 allo_lang python: lang in ['it', 'de'] and 'en' or lang">
     <h3>
         <a href="http://www.allochambredhotes.be"
+           tal:attributes="href string:http://www.allochambredhotes.be?set_language=${allo_lang}"
            title="Allo chambre d'hôtes"
            target="_blank">
             Allo chambre d'hôtes
@@ -9,6 +12,7 @@
     </h3>
     <div class="offre-icon">
         <a href="http://www.allochambredhotes.be"
+           tal:attributes="href string:http://www.allochambredhotes.be?set_language=${allo_lang}"
            title="Allo chambre d'hôtes"
            target="_blank">
             <img src="++theme++gites.theme/images/allo_chbre_hote_qrcode.png"
@@ -18,6 +22,7 @@
     <div class="break-float"></div>
     <div id="titre-promotion">
         <a href="http://www.allochambredhotes.be"
+           tal:attributes="href string:http://www.allochambredhotes.be?set_language=${allo_lang}"
            title="Allo chambre d'hôtes"
            target="_blank"
            i18n:translate="allo_chambre_question">A la recherche d'une chambre d'hôtes pour cette nuit?</a>
@@ -29,6 +34,7 @@
     </p>
     <div class="plus-info">
         <a href="http://www.allochambredhotes.be"
+           tal:attributes="href string:http://www.allochambredhotes.be?set_language=${allo_lang}"
            target="_blank">
             <span i18n:translate="plus_dinfos">Plus d'infos</span>...
         </a>
