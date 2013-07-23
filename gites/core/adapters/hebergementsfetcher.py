@@ -2,6 +2,7 @@
 import hashlib
 import json
 import geoalchemy
+from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import sqlalchemy as sa
 from plone.memoize.instance import memoize
@@ -317,8 +318,12 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         heb_type = self.data.get('form.widgets.hebergementType') or self.data.get('form.widgets.hebergementType[]')
         show_gites = heb_type and 'gite-meuble' in heb_type
         show_chambres = heb_type and 'chambre-hote' in heb_type
-        from_date = self.data.get('fromDateAvancee') or self.data.get('form.widgets.fromDate')
-        to_date = self.data.get('toDateAvancee') or self.data.get('form.widgets.toDate')
+        # collective.z3cform.datepicker DateTimePickerWidget extract a string but not a date
+        # Actual format date is in gites.core.widget.datepicker_input.pt
+        from_date = self.data.get('fromDateAvancee')\
+            or self.data.get('form.widgets.fromDate') and datetime.strptime(self.data.get('form.widgets.fromDate'), '%d/%m/%Y')
+        to_date = self.data.get('toDateAvancee')\
+            or self.data.get('form.widgets.toDate') and datetime.strptime(self.data.get('form.widgets.toDate'), '%d/%m/%Y')
         smokers = self.data.get('form.widgets.smokers')
         animals = self.data.get('form.widgets.animals')
         roomAmount = self.data.get('form.widgets.roomAmount')
