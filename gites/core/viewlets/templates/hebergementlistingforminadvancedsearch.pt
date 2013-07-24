@@ -9,21 +9,21 @@
             <div id="zone-gite-meuble">
                 <input type="checkbox"
                       name="form.widgets.hebergementType"
-                      id="gite-meuble"
+                      id="gite-meuble-avance"
                       ng-model="hebergementType['gite-meuble']"
                       ng-click="updateKeywords()"
                       value="gite-meuble"/>
-                <label for="gite-meuble"
+                <label for="gite-meuble-avance"
                       i18n:translate="gites_et_meubles">G&icirc;tes et meubl&eacute;s</label>
             </div>
             <div id="zone-chambre-hote">
                 <input type="checkbox"
                       name="form.widgets.hebergementType"
                       ng-model="hebergementType['chambre-hote']"
-                      id="chambre-hote"
+                      id="chambre-hote-avance"
                       ng-click="updateKeywords()"
                       value="chambre-hote" />
-                <label for="chambre-hote"
+                <label for="chambre-hote-avance"
                       i18n:translate="chambre_hotes">Chambre d'h&ocirc;tes</label>
 
             </div>
