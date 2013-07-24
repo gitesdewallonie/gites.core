@@ -109,7 +109,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
         if ($scope.parameters === undefined) {
             $scope.parameters = {
                 'keywords': {},
-	        'classifications': {},
+                'classifications': {},
                 'page': undefined,
                 'hash': undefined,
                 'sort': jQuery.cookie($scope.cookieKey + '_sort'),
@@ -118,7 +118,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
                 'fromDate': undefined,
                 'toDate': undefined,
                 'capacity': undefined,
-	              'nearTo': undefined};
+                'nearTo': undefined};
         } else {
             $scope.needUpdate = true;
         }
@@ -146,12 +146,12 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
                                          'sort': $scope.parameters.sort,
                                          'reference': $scope.parameters.data.reference,
                                          'form.widgets.fromDateAvancee': $scope.fromDate,
-		                         'form.widgets.classification': filterValues($scope.parameters.classifications),
+                                         'form.widgets.classification': filterValues($scope.parameters.classifications),
                                          'form.widgets.toDateAvancee': $scope.toDate,
                                          'form.widgets.capacityMin': $scope.capacity,
-					 'form.widgets.nearTo': $scope.nearTo});
+                                         'form.widgets.nearTo': $scope.nearTo});
         var hebTypes = filterValues($scope.parameters.hebergementType);
-        $scope.postData = jQuery.extend($scope.parameters.data, {'form.widgets.hebergementType': hebTypes});
+        $scope.postData = jQuery.extend($scope.parameters.data, {'form.widgets.hebergementType': hebTypes});   
     }
 
     var serializeToHTTPPost = function(data){
@@ -187,9 +187,9 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
                 $scope.listcontainer = data;
             });
         }
-	      if (jQuery('#viewlet-map').length) {
+          if (jQuery('#viewlet-map').length) {
             $scope.updateMap();
-	      }
+          }
     };
 
     $scope.compareHeb = function() {
