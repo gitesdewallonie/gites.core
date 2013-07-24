@@ -151,7 +151,9 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
                                          'form.widgets.capacityMin': $scope.capacity,
                                          'form.widgets.nearTo': $scope.nearTo});
         var hebTypes = filterValues($scope.parameters.hebergementType);
-        $scope.postData = jQuery.extend($scope.parameters.data, {'form.widgets.hebergementType': hebTypes});   
+        if (hebTypes.length != 0) {
+            $scope.postData = jQuery.extend($scope.parameters.data, {'form.widgets.hebergementType': hebTypes});   
+        }
     }
 
     var serializeToHTTPPost = function(data){
