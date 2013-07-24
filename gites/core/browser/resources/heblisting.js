@@ -152,7 +152,11 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
                                          'form.widgets.nearTo': $scope.nearTo});
         var hebTypes = filterValues($scope.parameters.hebergementType);
         if (hebTypes.length != 0) {
-            $scope.postData = jQuery.extend($scope.parameters.data, {'form.widgets.hebergementType': hebTypes});   
+            $scope.postData = jQuery.extend($scope.parameters.data, {'form.widgets.hebergementType': hebTypes});
+        }
+        else {
+            // If no heb type selected, select both
+            $scope.postData = jQuery.extend($scope.parameters.data, {'form.widgets.hebergementType': ['gite-meuble', 'chambre-hote']});
         }
     }
 
@@ -189,9 +193,9 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
                 $scope.listcontainer = data;
             });
         }
-          if (jQuery('#viewlet-map').length) {
+        if (jQuery('#viewlet-map').length) {
             $scope.updateMap();
-          }
+        }
     };
 
     $scope.compareHeb = function() {
