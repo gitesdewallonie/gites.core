@@ -39,6 +39,7 @@ class ISendToFormView(Interface):
     """
     """
 
+
 class IHebergementView(Interface):
     """
     View for the full description of an hebergement

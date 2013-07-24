@@ -22,7 +22,7 @@
                       ng-model="hebergementType['chambre-hote']"
                       id="chambre-hote"
                       ng-click="updateKeywords()"
-                      value="guestroom" />
+                      value="chambre-hote" />
                 <label for="chambre-hote"
                       i18n:translate="chambre_hotes">Chambre d'h&ocirc;tes</label>
 

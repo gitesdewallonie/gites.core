@@ -19,8 +19,6 @@ from gites.core.browser.interfaces import (ISearchHebergement,
                                            ISearchHebergementTooMuch)
 
 
-
-
 class SearchHebergement(formbase.PageForm):
     """
     A search module to search hebergement
@@ -246,10 +244,8 @@ class BasicSearchHebergement(SearchHebergement):
 ## z3c.form ##
 ##############
 
-import zope.interface
 from z3c.form import form, field
 from five import grok
-from plone.z3cform import layout
 
 from gites.core.browser import interfaces
 from collective.z3cform.datepicker.widget import DatePickerFieldWidget
@@ -299,7 +295,6 @@ class SearchHostingForm(form.Form):
     ignoreContext = True
     fields['fromDateAvancee'].widgetFactory = DatePickerFieldWidget
     fields['toDateAvancee'].widgetFactory = DatePickerFieldWidget
-
 
     def selected_gite(self):
         """
