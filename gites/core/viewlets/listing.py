@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import math
 import datetime
 import json
 import hashlib
@@ -192,7 +193,8 @@ class HebergementsInListing(grok.Viewlet):
         return positives(range(self.current_page() - LINKS_COUNT, self.current_page()))
 
     def page_counts(self):
-        return self.count() / self._fetcher.batch_size + 1
+        pageCountFloat = float(self.count()) / self._fetcher.batch_size
+        return int(math.ceil(pageCountFloat))
 
     def pages(self):
         return range(self.page_counts())
