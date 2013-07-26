@@ -2,7 +2,7 @@
 import hashlib
 import json
 import geoalchemy
-from datetime import datetime
+from datetime import datetime, date, time
 from dateutil.relativedelta import relativedelta
 import sqlalchemy as sa
 from plone.memoize.instance import memoize
@@ -360,6 +360,12 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         if capacity and not group:
             query = self.filter_capacity(capacity, query)
         if from_date or to_date:
+            # Don't search in the past
+            today = datetime.combine(date.today(), time())
+            if from_date and from_date < today:
+                from_date = today
+            if to_date and to_date < today:
+                to_date = today
             query = self.filter_available_date(from_date, to_date, query)
         query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
                                      Proprio.pro_etat == True))
