@@ -355,6 +355,7 @@ app.directive('datepick', function() {
         link : function (scope, element, attrs, ngModelCtrl) {
             $(function(){
                 jQuery(element).datepicker({
+                    minDate: 0,
                     dateFormat:'dd/mm/yy',
                     buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
                     buttonImageOnly: true,

@@ -175,6 +175,7 @@
                     <script type="text/javascript">
                       (function($){
                         $(".datepicker-widget").datepicker({
+                                                            minDate: 0,
                                                             dateFormat: "dd/mm/yy",
                                                             showOn: "both",
                                                             buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
@@ -198,6 +199,7 @@
                     <script type="text/javascript">
                       (function($){
                         $(".datepicker-widget").datepicker({
+                                                            minDate: 0,
                                                             dateFormat: "dd/mm/yy",
                                                             showOn: "both",
                                                             buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
@@ -226,7 +228,7 @@
                               tal:attributes="value request/remarque | nothing">
                     <span tal:replace="request/remarque | nothing"/></textarea>
                 </div>
-                <input id="datepicker" />
+
                 <div class="formulaire-input">
                     <label for="newsletter"
                            i18n:translate="subscribe_to_newsletter">Inscription à la newsletter</label>
@@ -242,7 +244,6 @@
                             Enter the exact word in the image. This is used to fight robots. 
                         </label>
                     </div>
-
 
                     <div class="error"
                          tal:condition="request/captcha | nothing"

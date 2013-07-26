@@ -9,6 +9,7 @@ jQuery(document).ready(function($) {
             config: {
             onBeforeLoad : function (e) {
               $(".datepicker-widget").datepicker({
+                                                   minDate: 0,
                                                    dateFormat: "dd/mm/yy",
                                                    showOn: "both",
                                                    buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
