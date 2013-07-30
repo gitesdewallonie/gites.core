@@ -2,7 +2,7 @@
 import hashlib
 import json
 import geoalchemy
-from datetime import datetime, date, time
+from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 import sqlalchemy as sa
 from plone.memoize.instance import memoize
@@ -321,9 +321,13 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         # collective.z3cform.datepicker DateTimePickerWidget extract a string but not a date
         # Actual format date is in gites.core.widget.datepicker_input.pt
         from_date = self.data.get('fromDateAvancee')\
-            or self.data.get('form.widgets.fromDate') and datetime.strptime(self.data.get('form.widgets.fromDate'), '%d/%m/%Y')
+                    or self.data.get('form.widgets.fromDate')\
+                    and datetime.strptime(self.data.get('form.widgets.fromDate'),
+                                          '%d/%m/%Y').date()
         to_date = self.data.get('toDateAvancee')\
-            or self.data.get('form.widgets.toDate') and datetime.strptime(self.data.get('form.widgets.toDate'), '%d/%m/%Y')
+                  or self.data.get('form.widgets.toDate')\
+                  and datetime.strptime(self.data.get('form.widgets.toDate'),
+                                        '%d/%m/%Y').date()
         smokers = self.data.get('form.widgets.smokers')
         animals = self.data.get('form.widgets.animals')
         roomAmount = self.data.get('form.widgets.roomAmount')
@@ -361,7 +365,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
             query = self.filter_capacity(capacity, query)
         if from_date or to_date:
             # Don't search in the past
-            today = datetime.combine(date.today(), time())
+            today = date.today()
             if from_date and from_date < today:
                 from_date = today
             if to_date and to_date < today:
