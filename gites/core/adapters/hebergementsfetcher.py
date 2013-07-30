@@ -178,19 +178,29 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
         return query
 
     def order_by(self):
+        distance = False
+        if hasattr(self.context, 'is_geolocalized') and self.context.is_geolocalized:
+            distance = True
+        sort = ()
         if self.selected_order() == 'pers_numbers':
-            return (Hebergement.heb_cgt_cap_min.asc(), Hebergement.heb_nom)
+            sort = (Hebergement.heb_cgt_cap_min.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'room_count':
-            return (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
+            sort = (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'epis':
-            return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
+            sort = (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
         elif self.selected_order() == 'heb_type':
-            return (TypeHebergement.type_heb_type.desc(), Hebergement.heb_nom)
-        elif hasattr(self.context, 'is_geolocalized') and self.context.is_geolocalized:
+            sort = (TypeHebergement.type_heb_type.desc(), Hebergement.heb_nom)
+        elif distance:
             self.update_cookie_sort('distance')
             return ('distance', )
         else:
             return ('heb_nom', 'heb_type_type')
+        if distance:
+            # Distance should always be the secondary sort criterion
+            sortList = list(sort)
+            sortList.insert(1, 'distance')
+            sort = tuple(sortList)
+        return sort
 
 
 class CommuneHebFetcher(BaseHebergementsFetcher):
@@ -482,17 +492,27 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         return query.union(self._query_grouped_heb(sess))
 
     def order_by(self):
+        distance = False
+        if self.is_geolocalized:
+            distance = True
+        sort = ()
         if self.selected_order() == 'pers_numbers':
-            return ('heb_cgt_cap_min asc', 'heb_nom')
+            sort = ('heb_cgt_cap_min asc', 'heb_nom')
         elif self.selected_order() == 'room_count':
-            return (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
+            sort = (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
         elif self.selected_order() == 'epis':
-            return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
-        elif self.is_geolocalized:
+            sort = (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
+        elif distance:
             self.update_cookie_sort('distance')
             return ('distance', )
         else:
             return ('heb_nom', 'heb_type_type')
+        if distance:
+            # Distance should always be the secondary sort criterion
+            sortList = list(sort)
+            sortList.insert(1, 'distance')
+            sort = tuple(sortList)
+        return sort
 
     def __len__(self):
         return len(self._query.all())
