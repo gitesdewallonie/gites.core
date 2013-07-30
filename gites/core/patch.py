@@ -11,6 +11,13 @@ import time
 from Products.SQLAlchemyDA.da import types_mapping, LOG
 
 
+def jQueryPackPatch(self, content):
+    """
+    We do not want packing for jQueryUI javascripts (#5251)
+    """
+    return content
+
+
 def SQLAlchemyDA_query_patch(self, query_string, max_rows=None, query_data=None):
     """ *The* query() method as used by the internal ZSQL
         machinery.
