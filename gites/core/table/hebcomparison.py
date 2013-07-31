@@ -136,7 +136,7 @@ class HebComparisonValues(value.ValuesMixin,
                              u'%s / %s' % (self.translate('Epis'),
                                            self.translate('Cles')),
                              table='epis'),
-            ComparisonColumn(u'capacity', self.translate('capacite')),
+            ComparisonColumn(u'capacity', self.translate('nombre_personnes')),
             ComparisonColumn(u'heb_cgt_nbre_chmbre',
                              self.translate('Chambres'),
                              table='hebergement'),
@@ -233,7 +233,7 @@ class HebComparisonValues(value.ValuesMixin,
             self.comparison_list.add_type(heb_type)
         self.add_metadata_columns()
         self.comparison_list.add_element(ComparisonColumn(
-            u'calendar', _('calendrier')))
+            u'calendar', self.translate('calendrier')))
         self.heb_columns = self.comparison_list.get_columns_keys('hebergement')
 
         return self.rows_to_cols(self.rows)
