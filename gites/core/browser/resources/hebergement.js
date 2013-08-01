@@ -13,8 +13,15 @@ jQuery(document).ready(function($) {
                                                    dateFormat: "dd/mm/yy",
                                                    showOn: "both",
                                                    buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
-                                                   buttonImageOnly: true,
+                                                   buttonImageOnly: true
                                                  });
+              $("#fromDate").datepicker('option', 'onSelect', function(date) {
+                  $("#toDate").datepicker("option", "minDate", date);
+              });
+              $("#toDate").datepicker('option', 'onSelect', function(date) {
+                  $("#fromDate").datepicker("option", "minDate", date);
+              });
+
             return true;
             }
         }
@@ -32,6 +39,6 @@ jQuery(document).ready(function($) {
 
     $('.carousel').carousel({  
       interval: false
-    })  
+    });
 
 });

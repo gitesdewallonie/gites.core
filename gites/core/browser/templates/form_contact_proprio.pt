@@ -180,6 +180,9 @@
                                                             showOn: "both",
                                                             buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
                                                             buttonImageOnly: true,
+                                                            onSelect: function(date) {
+                                                               $("#toDate").datepicker("option", "minDate", date);
+                                                            },
                                                            });
                                   })(jQuery);
                     </script>
@@ -204,6 +207,9 @@
                                                             showOn: "both",
                                                             buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
                                                             buttonImageOnly: true,
+                                                            onSelect: function(date) {
+                                                               $("#fromDate").datepicker("option", "maxDate", date);
+                                                            },
                                                            });
                                   })(jQuery);
                     </script>

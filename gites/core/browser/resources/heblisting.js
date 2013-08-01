@@ -364,11 +364,6 @@ app.directive('datepick', function() {
                     buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
                     buttonImageOnly: true,
                     showOn: "both",
-                    onSelect:function (date) {
-                        ngModelCtrl.$setViewValue(date);
-                        scope.$apply();
-                        scope.updateKeywords();
-                    }
                 });
             });
         }

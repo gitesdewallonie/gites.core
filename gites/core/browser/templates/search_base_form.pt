@@ -1,3 +1,8 @@
+<script type="text/javascript"
+        charset="utf-8"
+        src=""
+        tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/formchoices.js"></script>
+
 <div id="je-recherche"
      i18n:domain="gites">
     <h2 i18n:translate="label_recherche">Je cherche</h2>
