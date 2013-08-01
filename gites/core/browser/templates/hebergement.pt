@@ -322,7 +322,7 @@
                          </table>
                         <div id="description-tarification-divers"
                              tal:condition="heb/heb_tarif_divers">
-                            <h3>Divers</h3>
+                            <h3 i18n:translate="divers">Divers</h3>
                             <p tal:content="heb/heb_tarif_divers"></p>
                         </div>
                     </div>
