@@ -191,7 +191,6 @@ Il s'agit de :
             return ""
 
         gdwMail = u'info@gitesdewallonie.be'
-#        gdwMail = u'francois@affinitic.be'
         typeProbleme = self.request.get('typeProbleme', None)
         if not typeProbleme or typeProbleme.strip() == '...':
             typeProbleme = u'Non spécifié'
@@ -205,6 +204,7 @@ Il s'agit de :
             contactLangue = LANG_MAP.get(language, '')
             contactLangue = contactLangue.decode('utf-8')
         contactEmail = self.request.get('contactEmail', None)
+        hebPk = self.request.get('heb_pk', '')
         remarque = self.request.get('remarque', '')
 
         fromMail = "info@gitesdewallonie.be"
@@ -216,7 +216,6 @@ Il s'agit de :
                 pass
 
         mailer = Mailer("localhost", fromMail)
-#        mailer = Mailer("relay.skynet.be", fromMail)
         mailer.setSubject("[SIGNALER UN PROBLEME PAR LE SITE DES GITES DE WALLONIE]")
         mailer.setRecipients(gdwMail)
         mail = """:: SIGNALER UN PROBLEME ::
@@ -229,6 +228,7 @@ Il s'agit de :
     * Prénom : %s
     * Langue : %s
     * E-mail : %s
+    * Hébergement concerné : %s
     * Type de problème : %s
     * Remarque : %s
 """ \
@@ -238,6 +238,7 @@ Il s'agit de :
               unicode(contactPrenom).encode('utf-8'), \
               unicode(contactLangue).encode('utf-8'), \
               unicode(contactEmail).encode('utf-8'), \
+              unicode(hebPk).encode('utf-8'), \
               unicode(typeProbleme).encode('utf-8'), \
               unicode(remarque).encode('utf-8'))
         try:

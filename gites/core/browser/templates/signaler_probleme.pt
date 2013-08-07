@@ -122,8 +122,7 @@ type="text/javascript"></script>
                 <textarea name="remarque"
                           value=""
                           class="required"
-                          tal:attributes="value request/remarque | nothing">
-                          <span tal:replace="request/remarque | nothing"/></textarea>
+                          tal:attributes="value request/remarque | nothing"><span tal:replace="request/remarque | nothing"/></textarea>
             </div>
 
             <div id="help-captcha">
@@ -149,6 +148,10 @@ type="text/javascript"></script>
                    value=""
                    />
             <div class="submit-form">
+                <input type="hidden"
+                       name="heb_pk"
+                       tal:attributes="value context/heb_pk | nothing"
+                       value="" />
                 <input type="hidden"
                        name="vecteur"
                        value="" />
