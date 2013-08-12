@@ -194,7 +194,7 @@ Il s'agit de :
         typeProbleme = self.request.get('typeProbleme', None)
         if not typeProbleme or typeProbleme.strip() == '...':
             typeProbleme = u'Non spécifié'
-        elif typeProbleme == "autre":
+        elif typeProbleme == "Autre":
             typeProbleme = self.request.get('typeautre')
         contactNom = self.request.get('contactNom', '')
         contactPrenom = self.request.get('contactPrenom', '')

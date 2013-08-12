@@ -82,11 +82,21 @@ type="text/javascript"></script>
                 <label for="contactLangue"
                       i18n:translate="langue">Langue</label>
                 <br />
-                <select name="contactLangue">
+                <select name="contactLangue"
+                        tal:define="previousvalue request/contactLangue | nothing">
                     <option>...</option>
-                    <option i18n:translate="francais"> Français</option>
-                    <option i18n:translate="neerlandais"> Néerlandais</option>
-                    <option i18n:translate="anglais"> Anglais</option>
+                    <option selected=""
+                            value="Francais"
+                            tal:attributes="selected python:previousvalue == 'Francais' and 'SELECTED' or ''"
+                            i18n:translate="francais"> Français</option>
+                    <option selected=""
+                            value="Neerlandais"
+                            tal:attributes="selected python:previousvalue == 'Neerlandais' and 'SELECTED' or ''"
+                            i18n:translate="neerlandais"> Néerlandais</option>
+                    <option selected=""
+                            value="Anglais"
+                            tal:attributes="selected python:previousvalue == 'Anglais' and 'SELECTED' or ''"
+                            i18n:translate="anglais"> Anglais</option>
                 </select>
             </div>
 
@@ -95,22 +105,37 @@ type="text/javascript"></script>
                       i18n:translate="type_de_probleme">Type de problème</label>
                 <br />
                 <select name="typeProbleme"
-                      id="typeProbleme"
-                      onchange="check();">
+                        id="typeProbleme"
+                        tal:define="previousvalue request/typeProbleme | nothing"
+                        onchange="check();">
                      <option>...</option>
-                     <option i18n:translate="calendrier_pas_a_jour"> Calendrier pas à jour</option>
-                     <option i18n:translate="coordonnees_incorrectes"> Coordonnées incorrectes</option>
-                     <option i18n:translate="prix_incorrect"> Prix incorrect</option>
-                     <option value="autre" i18n:translate="autre"> Autre</option>
+                     <option selected=""
+                             value="Calendrier pas a jour"
+                             tal:attributes="selected python:previousvalue == 'Calendrier pas a jour' and 'SELECTED' or ''"
+                             i18n:translate="calendrier_pas_a_jour"> Calendrier pas à jour</option>
+                     <option selected=""
+                             value="Coordonnees incorrectes"
+                             tal:attributes="selected python:previousvalue == 'Coordonnees incorrectes' and 'SELECTED' or ''"
+                             i18n:translate="coordonnees_incorrectes"> Coordonnées incorrectes</option>
+                     <option selected=""
+                             value="Prix incorrect"
+                             tal:attributes="selected python:previousvalue == 'Prix incorrect' and 'SELECTED' or ''"
+                             i18n:translate="prix_incorrect"> Prix incorrect</option>
+                     <option selected=""
+                             value="Autre"
+                             tal:attributes="selected python:previousvalue == 'Autre' and 'SELECTED' or ''"
+                             i18n:translate="autre"> Autre</option>
                 </select>
             </div>
 
             <input type="text" 
-                 style="display: none"
-                 name="typeautre" 
-                 id="typeautre"
-                 i18n:attributes="placeholder autre"
-                 placeholder="Autre"/>
+                   style="display: none"
+                   name="typeautre" 
+                   value=""
+                   id="typeautre"
+                   i18n:attributes="placeholder autre"
+                   tal:attributes="value request/typeautre | nothing"
+                   placeholder="Autre"/>
 
             <div class="formulaire-input">
                 <span class="fieldRequired"
@@ -150,7 +175,8 @@ type="text/javascript"></script>
             <div class="submit-form">
                 <input type="hidden"
                        name="heb_pk"
-                       tal:attributes="value context/heb_pk | nothing"
+                       tal:define="previousvalue request/heb_pk | nothing"
+                       tal:attributes="value context/heb_pk | previousvalue"
                        value="" />
                 <input type="hidden"
                        name="vecteur"
