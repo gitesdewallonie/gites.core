@@ -196,18 +196,18 @@ class HebergementView(BrowserView):
         list = self.getHebMetadatasByType('autorisations')
         for item in list:
             if item['id'] == 'heb_animal':
-                return {'id': 'heb_confort_animal',
+                return {'id': 'heb_animal',
                         'title': item['title']}
-        return {'id': 'heb_confort_no_animal',
+        return {'id': 'heb_animal_off',
                 'title': _(u'animaux_interdits')}
 
     def getFumeur(self):
         list = self.getHebMetadatasByType('autorisations')
         for item in list:
             if item['id'] == 'heb_fumeur':
-                return {'id': 'heb_confort_fumeur',
+                return {'id': 'heb_fumeur',
                         'title': item['title']}
-        return {'id': 'heb_confort_no_fumeur',
+        return {'id': 'heb_fumeur_off',
                 'title': _(u'hebergement_non_fumeur')}
 
     def getTablesHotes(self):

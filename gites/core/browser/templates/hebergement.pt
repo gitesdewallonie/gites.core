@@ -466,7 +466,7 @@
                                          title=""
                                          alt=""
                                          class="picto"
-                                         tal:condition="python:metadata['id'] == 'heb_confort_no_fumeur'"
+                                         tal:condition="python:metadata['id'] == 'heb_fumeur_off'"
                                          tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
                                                          alt metadata/title;
                                                          title metadata/title" />
