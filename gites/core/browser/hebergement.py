@@ -9,7 +9,6 @@ $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
 from embedly import Embedly
 from plone.memoize import instance, forever
-from urlparse import urljoin
 from zope.i18n import translate
 from zope.traversing.browser.interfaces import IAbsoluteURL
 from Products.Five import BrowserView
@@ -327,75 +326,6 @@ class HebergementView(BrowserView):
                                 commune,
                                 hebId,
                                 )
-
-
-class HebergementExternCalendarView(BrowserView):
-    """
-    View for extern calendars
-    """
-    implements(IHebergementView)
-    template = ViewPageTemplateFile("templates/externcalendar.pt")
-
-    def __init__(self, context, request):
-        hebPk = request.get('pk')
-        hebergement = self.getHebergementByPk(hebPk)
-        self.hebergement = hebergement
-        super(BrowserView, self).__init__(context, request)
-
-    def getHebergementByPk(self, heb_pk):
-        """
-        Get the url of the hebergement by Pk
-        """
-        wrapper = getSAWrapper('gites_wallons')
-        session = wrapper.session
-        HebTable = wrapper.getMapper('hebergement')
-        try:
-            int(heb_pk)
-        except ValueError:
-            return None
-        hebergement = session.query(HebTable).options(FromCache('gdw')).get(heb_pk)
-        if (hebergement and
-                int(hebergement.heb_site_public) == 1 and
-                hebergement.proprio.pro_etat):
-            return hebergement
-        else:
-            return None
-
-    def showCalendar(self):
-        """
-        Is the calendar activated for showing on external sites ?
-        (if the calendar has been blocked due to inactivity, it will not
-        appear because heb_calendrier_proprio will be 'bloque' by cron)
-        """
-        return (self.hebergement.heb_calendrier_proprio == 'actif')
-
-    def getCustomStylesheet(self):
-        """
-        Returns referer stylesheet URL where proprio can customize calendar
-        CSS
-        """
-        referer = self.request.get('HTTP_REFERER', None)
-        customCssUrl = urljoin(referer, 'calendar-custom.css')
-        return customCssUrl
-
-    def calendarJS(self):
-        """
-        Calendar javascript
-        """
-        return """
-        //<![CDATA[
-            new GiteTimeframe('calendars', {
-                              startField: 'start',
-                              endField: 'end',
-                              resetButton: 'reset',
-                              weekOffset: 1,
-                              hebPk: %s,
-                              months:1,
-                              language: '%s',
-                              earliest: new Date()});
-        //]]>
-
-        """ % (self.hebergement.heb_pk, 'fr')
 
 
 class HebergementIconsView(BrowserView):

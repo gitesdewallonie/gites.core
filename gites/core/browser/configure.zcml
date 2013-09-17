@@ -56,10 +56,19 @@
    <browser:page
       for="*"
       name="extern-calendar"
-      class=".hebergement.HebergementExternCalendarView"
+      class=".externcalendar.HebergementExternCalendarView"
       allowed_interface=".interfaces.IHebergementView"
       permission="zope.Public"
       template="templates/externcalendar.pt"
+      />
+
+   <browser:page
+      for="*"
+      name="extern-monthly-calendar"
+      class=".externcalendar.HebergementExternMonthlyCalendarView"
+      allowed_interface=".interfaces.IHebergementView"
+      permission="zope.Public"
+      template="templates/externmonthlycalendar.pt"
       />
 
   <browser:resourceDirectory
