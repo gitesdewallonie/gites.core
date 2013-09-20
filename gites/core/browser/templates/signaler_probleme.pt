@@ -20,7 +20,7 @@ type="text/javascript"></script>
     
     <div id="signaler-un-probleme-formulaire"
          tal:define="send view/sendMailForProblem;
-                     captchaView nocall:context/@@captcha">
+                     captchaView view/getCaptchaView">
         <h2 i18n:translate="signaler_un_probleme" class="documentFirstHeading">
             Signaler un problème
         </h2>
@@ -165,7 +165,7 @@ type="text/javascript"></script>
                 Invalid captcha
             </div>
             
-            <span tal:replace="structure captchaView/image_tag" />
+            <span tal:replace="structure captchaView/image_tag_hacked" />
             &nbsp;&nbsp;
             <input type="text"
                    class="required"
