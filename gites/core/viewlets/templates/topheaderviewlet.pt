@@ -2,6 +2,9 @@
      i18n:domain="gites">
     <div id="titre-site">
         <a href="" tal:attributes="href string:${context/portal_url}/"><img src="++theme++gites.theme/images/btn_home.png"></a>
+        <a class="home-link"
+           href="" tal:attributes="href string:${context/portal_url}/"
+           i18n:domain="plone" i18n:translate="">Home</a>
         &nbsp;&nbsp;
         Les Gîtes de Wallonie
     </div>
