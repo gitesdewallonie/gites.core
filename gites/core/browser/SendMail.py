@@ -2,6 +2,7 @@
 from datetime import date
 from mailer import Mailer
 from smtplib import SMTPSenderRefused
+import uuid
 import time
 
 from collective.captcha.browser.captcha import Captcha
@@ -51,20 +52,35 @@ Une demande d'inscription a été envoyée via le blog :
     * Nom : %s
     * Email : %s
 """ \
-           %(unicode(nom, 'utf-8'), \
-             unicode(email, 'utf-8'))
+           % (unicode(nom, 'utf-8'),
+              unicode(email, 'utf-8'))
         mailer.sendAllMail(mail.encode('utf-8'), plaintext=True)
+
+    def getCaptchaView(self):
+        captchaView = Captcha(self.context, self.request)
+
+        # Allow the image to not be cached in overlay
+        image = captchaView.image_tag()
+        image = image.replace('/image"', '/image?%s"' % str(uuid.uuid1()))
+        captchaView.image_tag_hacked = image
+        return captchaView
 
     def sendMailToProprio(self):
         """
         envoi d'un mail au proprio suite a un contact via hebergement description
         """
+        self.request['errors'] = []
+
+        if self.request.get('vecteur') is None:
+            return
+
         hebPk = self.request.get('heb_pk')
-        captcha = self.request.get('captcha', '')
-        captchaView = Captcha(self.context, self.request)
-        isCorrectCaptcha = captchaView.verify(captcha)
+        captchaView = self.getCaptchaView()
+        captchaText = self.request.get('captchaText', '')
+        isCorrectCaptcha = captchaView.verify(captchaText)
         if not isCorrectCaptcha:
-            return self()
+            self.request['errors'].append(_(u"Erreur d'encodage du code du captcha."))
+            return ""
 
         dateDebutStr = self.request.get('fromDate')
         dateFinStr = self.request.get('toDate')
@@ -73,23 +89,17 @@ Une demande d'inscription a été envoyée via le blog :
                 dateDebut = date.fromtimestamp(time.mktime(time.strptime(dateDebutStr, '%d/%m/%Y')))
                 dateFin = date.fromtimestamp(time.mktime(time.strptime(dateFinStr, '%d/%m/%Y')))
             except ValueError:
-                self.request['fromDate'] = 'error'
-                self.request['toDate'] = ''
-                self.request['captcha'] = ''
-                return self()
+                self.request['errors'].append(_(u"Erreur d'encodage d'une date."))
+                return ""
             else:
                 if dateDebut >= dateFin:
-                    self.request['fromDate'] = 'error'
-                    self.request['toDate'] = ''
-                    self.request['captcha'] = ''
-                    return self()
+                    self.request['errors'].append(_(u"Date de début supérieure à date de fin."))
+                    return ""
         else:
             if dateDebutStr or dateFinStr:
                 # une seule date a été remplie
-                self.request['fromDate'] = 'error'
-                self.request['toDate'] = ''
-                self.request['captcha'] = ''
-                return self()
+                self.request['errors'].append(_(u"Une seule date a été remplie."))
+                return ""
 
         wrapper = getSAWrapper('gites_wallons')
         session = wrapper.session
@@ -127,7 +137,7 @@ Une demande d'inscription a été envoyée via le blog :
         mailer = Mailer("localhost", fromMail)
         mailer.setSubject("[DEMANDE D'INFORMATION PAR LE SITE DES GITES DE WALLONIE]")
         mailer.setRecipients(proprioMail)
-        mail = u""":: DEMANDE D'INFORMATION ::
+        mail = """:: DEMANDE D'INFORMATION ::
 
 Une demande d'information vient d'être réalisée via le site des Gîtes de Wallonie pour %s (référence %s).
 
@@ -148,27 +158,27 @@ Il s'agit de :
     * Nombre de personnes : %s
     * Remarque : %s
 """ \
-              % (hebNom, \
-                hebPk, \
-                contactCivilite, \
-                unicode(contactNom, 'utf-8'), \
-                unicode(contactPrenom, 'utf-8'), \
-                unicode(contactAdresse, 'utf-8'), \
-                contactCp, \
-                unicode(contactLocalite, 'utf-8'), \
-                unicode(contactPays, 'utf-8'), \
-                unicode(contactLangue, 'utf-8'), \
-                contactTelephone, \
-                contactFax, \
-                unicode(contactEmail, 'utf-8'), \
-                dateDebutStr, \
-                dateFinStr, \
-                nombrePersonne,\
-                unicode(remarque, 'utf-8'))
-        mailer.sendAllMail(mail.encode('utf-8'), plaintext=True)
+              % (unicode(hebNom).encode('utf-8'),
+                 unicode(hebPk).encode('utf-8'),
+                 unicode(contactCivilite).encode('utf-8'),
+                 unicode(contactNom).encode('utf-8'),
+                 unicode(contactPrenom).encode('utf-8'),
+                 unicode(contactAdresse).encode('utf-8'),
+                 unicode(contactCp).encode('utf-8'),
+                 unicode(contactLocalite).encode('utf-8'),
+                 unicode(contactPays).encode('utf-8'),
+                 contactLangue,
+                 unicode(contactTelephone).encode('utf-8'),
+                 unicode(contactFax).encode('utf-8'),
+                 unicode(contactEmail).encode('utf-8'),
+                 unicode(dateDebutStr).encode('utf-8'),
+                 unicode(dateFinStr).encode('utf-8'),
+                 unicode(nombrePersonne).encode('utf-8'),
+                 unicode(remarque).encode('utf-8'))
+        mailer.sendAllMail(mail, plaintext=True)
 
         translate = queryMultiAdapter((self.context, self.request),
-                                       name='getTranslatedObjectUrl')
+                                      name='getTranslatedObjectUrl')
 
         if self.request.get('newsletter', False):
             url = translate('newsletter')
@@ -232,15 +242,15 @@ Il s'agit de :
     * Type de problème : %s
     * Remarque : %s
 """ \
-            % (unicode(contactNom).encode('utf-8'), \
-              unicode(contactPrenom).encode('utf-8'), \
-              unicode(contactNom).encode('utf-8'), \
-              unicode(contactPrenom).encode('utf-8'), \
-              unicode(contactLangue).encode('utf-8'), \
-              unicode(contactEmail).encode('utf-8'), \
-              unicode(hebPk).encode('utf-8'), \
-              unicode(typeProbleme).encode('utf-8'), \
-              unicode(remarque).encode('utf-8'))
+            % (unicode(contactNom).encode('utf-8'),
+               unicode(contactPrenom).encode('utf-8'),
+               unicode(contactNom).encode('utf-8'),
+               unicode(contactPrenom).encode('utf-8'),
+               unicode(contactLangue).encode('utf-8'),
+               unicode(contactEmail).encode('utf-8'),
+               unicode(hebPk).encode('utf-8'),
+               unicode(typeProbleme).encode('utf-8'),
+               unicode(remarque).encode('utf-8'))
         try:
             mailer.sendAllMail(mail, plaintext=True)
         except SMTPSenderRefused:
@@ -249,7 +259,7 @@ Il s'agit de :
             return
 
         translate = queryMultiAdapter((self.context, self.request),
-                                       name='getTranslatedObjectUrl')
+                                      name='getTranslatedObjectUrl')
 
         url = translate('mailsent')
         self.request.RESPONSE.redirect(url)

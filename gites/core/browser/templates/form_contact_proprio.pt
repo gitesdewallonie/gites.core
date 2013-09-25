@@ -14,12 +14,13 @@
 <div metal:fill-slot="main">
     <div id="content-core">
         <div id="contact-proprio-formulaire"
-             tal:define="captchaView nocall:context/@@captcha">
+             tal:define="send view/sendMailToProprio">
             <h2 i18n:translate="contactez_le_proprietaire" class="documentFirstHeading">
                 Contactez le propri&eacute;taire
             </h2>
       
-            <form action="send_mail_to_proprio"
+            <form action="form_contact_proprio"
+                  id="form_contact_proprio"
                   name="contact-proprio"
                   onsubmit="return validate(this);"
                   method="post">
@@ -172,20 +173,6 @@
                            tal:attributes="value python:request.get('fromDate', '') != 'error' and request.get('fromDate', None) or None"
                            size="12" 
                            name="fromDate" />
-                    <script type="text/javascript">
-                      (function($){
-                        $(".datepicker-widget").datepicker({
-                                                            minDate: 0,
-                                                            dateFormat: "dd/mm/yy",
-                                                            showOn: "both",
-                                                            buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
-                                                            buttonImageOnly: true,
-                                                            onSelect: function(date) {
-                                                               $("#toDate").datepicker("option", "minDate", date);
-                                                            },
-                                                           });
-                                  })(jQuery);
-                    </script>
                 </div>
 
                 <div class="formulaire-input">
@@ -199,20 +186,6 @@
                            tal:attributes="value request/toDate | nothing"
                            size="12" 
                            name="toDate" />
-                    <script type="text/javascript">
-                      (function($){
-                        $(".datepicker-widget").datepicker({
-                                                            minDate: 0,
-                                                            dateFormat: "dd/mm/yy",
-                                                            showOn: "both",
-                                                            buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
-                                                            buttonImageOnly: true,
-                                                            onSelect: function(date) {
-                                                               $("#fromDate").datepicker("option", "maxDate", date);
-                                                            },
-                                                           });
-                                  })(jQuery);
-                    </script>
                 </div>
 
                 <div class="formulaire-input">
@@ -231,11 +204,19 @@
                     <br />
                     <textarea name="remarque"
                               value=""
-                              tal:attributes="value request/remarque | nothing">
-                    <span tal:replace="request/remarque | nothing"/></textarea>
+                              tal:attributes="value request/remarque | nothing"><span tal:replace="request/remarque | nothing"/></textarea>
                 </div>
 
-                <div class="formulaire-input">
+                <div class="formulaire-input error-center"
+                     tal:define="errors python: view.request.get('errors', [])"
+                     tal:condition="errors">
+                    <span tal:repeat="error errors">
+                        <span tal:replace="error" /><br />
+                    </span>
+                </div>
+
+                <div class="formulaire-input"
+                     tal:define="captchaView view/getCaptchaView">
                     <label for="newsletter"
                            i18n:translate="subscribe_to_newsletter">Inscription à la newsletter</label>
                     <input type="checkbox"
@@ -251,16 +232,11 @@
                         </label>
                     </div>
 
-                    <div class="error"
-                         tal:condition="request/captcha | nothing"
-                         i18n:translate="invalid_captcha">
-                        Invalid captcha
-                    </div>
-                    <span tal:replace="structure captchaView/image_tag" />
+                    <span tal:replace="structure captchaView/image_tag_hacked" />
                     &nbsp;&nbsp;
                     <input type="text" 
                            class="required"
-                           name="captcha"
+                           name="captchaText"
                            value=""
                     /> 
                 </div>
