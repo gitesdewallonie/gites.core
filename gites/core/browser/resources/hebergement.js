@@ -8,11 +8,13 @@ jQuery(document).ready(function($) {
                                            buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
                                            buttonImageOnly: true
                                          });
+
       $("#fromDate").datepicker('option', 'onSelect', function(date) {
           $("#toDate").datepicker("option", "minDate", date);
       });
+
       $("#toDate").datepicker('option', 'onSelect', function(date) {
-          $("#fromDate").datepicker("option", "minDate", date);
+          $("#fromDate").datepicker("option", "maxDate", date);
       });
     };
 
