@@ -102,6 +102,22 @@ class IHebergementIconsView(Interface):
         """
 
 
+class ITypeHebView(Interface):
+    """
+    Vue sur un type d hebergement
+    """
+
+    def typeHebergementName():
+        """
+        Get the hebergement type title translated
+        """
+
+    def getHebergements():
+        """
+        Return the concerned hebergements for the selected type of hebergement
+        """
+
+
 class ITypeHebCommuneView(Interface):
     """
     Vue sur un type d hebergement et une commune

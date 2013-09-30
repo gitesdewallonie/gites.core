@@ -191,6 +191,12 @@
       class=".typehebcommune.TypeHebCommuneView"/>
 
    <browser:page
+      for="gites.db.interfaces.ITypeHebergement"
+      name="index.html"
+      permission="zope.Public"
+      class=".typeheb.TypeHebView"/>
+
+   <browser:page
       for="gites.db.interfaces.IHebergement"
       name="plone_layout"
       permission="zope.Public"

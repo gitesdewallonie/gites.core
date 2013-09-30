@@ -1,0 +1,56 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="gites">
+
+      <metal:javascript_head_slot fill-slot="javascript_head_slot">
+        <script type="text/javascript"
+                src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+        <script type="text/javascript"
+                src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-cookies.min.js"></script>
+        <script type="text/javascript"
+                src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-sanitize.min.js"></script>
+        <script type="text/javascript"
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/scripts/spin.js"></script>
+        <script type="text/javascript"
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/heblisting.js"></script>
+        <script type="text/javascript"
+                tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/scripts/package.js"></script>
+        <script type="text/javascript"
+                tal:attributes="src string:$portal_url/++resource++gdwcore/ui-bootstrap-0.4.0.min.js"></script>
+        <script type="text/javascript"
+                tal:attributes="src string:$portal_url/++resource++gdwcore/jquery-cookie.js"></script>
+      </metal:javascript_head_slot>
+
+      <metal:css fill-slot="css_slot">
+        <link rel="stylesheet"
+              type="text/css"
+              tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/heblisting.css" />
+      </metal:css>
+
+<body>
+<div metal:fill-slot="main">
+
+    <h1>
+      <span tal:replace="view/typeHebergementName"/>
+    </h1>
+
+    <div id="viewlet-above-content"
+         tal:content="structure provider:plone.abovecontenttitle">
+    </div>
+
+    <div class="break-float"></div>
+
+    <div id="spin"
+         style="display:none;"></div>
+
+    <div id="heb-listing"
+         tal:content="structure provider:gites.heblisting"></div>
+
+    <div class="break-float"></div>
+
+    <div id="viewlet-map"
+         tal:content="structure provider:gites.mapviewlet"></div>
+</div>
+</body>
+</html>

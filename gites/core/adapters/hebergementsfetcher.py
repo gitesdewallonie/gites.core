@@ -13,7 +13,7 @@ from zope.publisher.interfaces.browser import IBrowserRequest
 from affinitic.db.cache import FromCache
 from Products.Maps.interfaces import IMarker
 from gites.db import session
-from gites.db.interfaces import ICommune
+from gites.db.interfaces import ICommune, ITypeHebergement
 from gites.db.content import (LinkHebergementMetadata, Hebergement,
                               LinkHebergementEpis, Commune, Proprio,
                               TypeHebergement, ReservationProprio)
@@ -216,6 +216,23 @@ class CommuneHebFetcher(BaseHebergementsFetcher):
         typeHeb = self.context.aq_parent
         query = query.filter(sa.and_(Commune.com_id == self.context.com_id,
                                      Hebergement.heb_typeheb_fk == typeHeb.type_heb_pk))
+        query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
+                                     Proprio.pro_etat == True))
+        return query
+
+
+class TypeHebFetcher(BaseHebergementsFetcher):
+    grok.adapts(ITypeHebergement, Interface, IBrowserRequest)
+
+    @property
+    def _query(self):
+        query = session().query(Hebergement,
+                                TypeHebergement.type_heb_code.label('heb_type_code'),
+                                ).join('type').join('commune').outerjoin('epis').join('proprio')
+        query = query.options(
+            FromCache('gdw'))
+        typeHeb = self.context
+        query = query.filter(Hebergement.heb_typeheb_fk == typeHeb.type_heb_pk)
         query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
                                      Proprio.pro_etat == True))
         return query

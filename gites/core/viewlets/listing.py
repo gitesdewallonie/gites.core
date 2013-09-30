@@ -12,7 +12,8 @@ from affinitic.db.cache import FromCache
 from zope.contentprovider.interfaces import IContentProvider
 from plone.memoize.instance import memoize
 from gites.db import session
-from gites.db.content import Metadata, Commune, Hebergement, MetadataType
+from gites.db.content import (Metadata, Commune, Hebergement, MetadataType,
+                              TypeHebergement)
 from gites.core.content.interfaces import IPackage
 from gites.core.interfaces import IHebergementsFetcher, IHebergementInSearch, ISearch
 from Products.CMFPlone.interfaces import IPloneSiteRoot
@@ -235,6 +236,10 @@ class HebergementsInPackageListing(HebergementsInListing):
 
     def heb_distance(self, hebergement):
         return round(hebergement.distance / 1000, 2)
+
+
+class HebergementTypeListing(HebergementsInListing):
+    grok.context(TypeHebergement)
 
 
 class HebergementsInCommuneListing(HebergementsInListing):

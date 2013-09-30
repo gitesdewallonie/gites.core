@@ -97,6 +97,25 @@ class HebergementFolderTraversable(DefaultPublishTraverse):
             return self.getDefaultViewForObject(context, view_name)
         lenSub = len(sub)
         if sub:
+            if (lenSub == 1 and sub[0] in self.context.known_types_id) or \
+               (lenSub == 2 and sub[0] in self.context.known_types_id and \
+                sub[1] in ['update_listing', 'update_map_listing']):
+                # /hebergement/gites/
+                #              NAME
+                # affichage type de gites
+                wrapper = getSAWrapper('gites_wallons')
+                session = wrapper.session
+                typeHeb = self.context.known_types_id.get(sub[0])
+                TypeHebs = wrapper.getMapper('type_heb')
+                typeHeb = session.query(TypeHebs).get(int(typeHeb))
+                typeHeb = typeHeb.__of__(self.context)
+                name = 'index.html'
+                if lenSub == 2:
+                    name = sub[1]
+                return queryMultiAdapter((typeHeb,
+                                          self.request),
+                                          name=name)
+
             if (lenSub == 2 and sub[1] in self.context.known_communes_id \
                 and sub[0] in self.context.known_types_id) or \
                (lenSub == 3 and sub[1] in self.context.known_communes_id \
@@ -104,9 +123,7 @@ class HebergementFolderTraversable(DefaultPublishTraverse):
                 sub[2] in ['update_listing', 'update_map_listing']):
                 # /hebergement/gites/villlers/
                 #              NAME * SUB[0]
-                #
                 # affichage type de gites pour ville
-                #
                 wrapper = getSAWrapper('gites_wallons')
                 session = wrapper.session
                 typeHeb = self.context.known_types_id.get(sub[0])
