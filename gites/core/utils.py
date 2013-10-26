@@ -82,6 +82,12 @@ def changeDocumentView(document, viewname):
         document.setLayout(viewname)
 
 
+def changeFolderView(portal, folder, viewname):
+    addViewToType(portal, 'Folder', viewname)
+    if folder.getLayout() != viewname:
+        folder.setLayout(viewname)
+
+
 def addViewToType(portal, typename, templatename):
     pt = getToolByName(portal, 'portal_types')
     foldertype = getattr(pt, typename)

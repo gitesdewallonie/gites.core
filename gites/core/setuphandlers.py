@@ -12,7 +12,7 @@ import tempfile
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlacefulWorkflow.PlacefulWorkflowTool import WorkflowPolicyConfig_id
 from Products.LocalFS.LocalFS import manage_addLocalFS
-from gites.core.utils import createFolder
+from gites.core.utils import createFolder, changeFolderView
 logger = logging.getLogger('gites.core')
 
 
@@ -43,21 +43,6 @@ def createLocalFS(portal):
     if 'photos_proprio_tmp' not in portal.objectIds():
         manage_addLocalFS(portal, 'photos_proprio_tmp', 'Photos proprio temporaires',
                           tempfile.gettempdir())
-
-
-def addViewToType(portal, typename, templatename):
-    pt = getToolByName(portal, 'portal_types')
-    foldertype = getattr(pt, typename)
-    available_views = list(foldertype.getAvailableViewMethods(portal))
-    if not templatename in available_views:
-        available_views.append(templatename)
-        foldertype.manage_changeProperties(view_methods=available_views)
-
-
-def changeFolderView(portal, folder, viewname):
-    addViewToType(portal, 'Folder', viewname)
-    if folder.getLayout() != viewname:
-        folder.setLayout(viewname)
 
 
 def disableGlobalAddingForContentType(portal, contentTypeName):
