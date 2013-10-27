@@ -87,6 +87,7 @@ class SearchHebergement(formbase.PageForm):
         wrapper = getSAWrapper('gites_wallons')
         session = wrapper.session
         hebergementTable = wrapper.getMapper('hebergement')
+        HebergementAppTable = wrapper.getMapper('hebergement_app')
         proprioTable = wrapper.getMapper('proprio')
         reservationsTable = wrapper.getMapper('reservation_proprio')
         provincesTable = wrapper.getMapper('province')
@@ -109,7 +110,7 @@ class SearchHebergement(formbase.PageForm):
         utranslate = translation_service.utranslate
         lang = self.request.get('LANGUAGE', 'en')
 
-        query = session.query(hebergementTable).join('province').join('proprio')
+        query = session.query(hebergementTable).join('province').join('proprio').join('app')
         query = query.filter(hebergementTable.heb_site_public == '1')
         query = query.filter(proprioTable.pro_etat == True)
 
@@ -181,7 +182,7 @@ class SearchHebergement(formbase.PageForm):
             busyHebPks = [heb.heb_fk for heb in busyHeb]
             query = query.filter(~hebergementTable.heb_pk.in_(busyHebPks))
 
-        query = query.order_by(hebergementTable.heb_nom)
+        query = query.order_by(HebergementAppTable.heb_app_sort_order)
         results = query.all()
         results = self.sortSearchResults(results, communeLocalite)
         self.selectedHebergements = [hebergement.__of__(self.context.hebergement) for hebergement in results]

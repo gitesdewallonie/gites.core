@@ -16,7 +16,8 @@ from gites.db import session
 from gites.db.interfaces import ICommune, ITypeHebergement
 from gites.db.content import (LinkHebergementMetadata, Hebergement,
                               LinkHebergementEpis, Commune, Proprio,
-                              TypeHebergement, ReservationProprio)
+                              TypeHebergement, ReservationProprio,
+                              HebergementApp)
 from gites.core.interfaces import IHebergementsFetcher, IHebergementInSearch
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from gites.core.browser.moteur_recherche import MoteurRecherche
@@ -111,13 +112,13 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
 
     def order_by(self):
         if self.selected_order() == 'pers_numbers':
-            return (Hebergement.heb_cgt_cap_min.asc(), Hebergement.heb_nom)
+            return (Hebergement.heb_cgt_cap_min.asc(), HebergementApp.heb_app_sort_order)
         elif self.selected_order() == 'room_count':
-            return (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
+            return (Hebergement.heb_cgt_nbre_chmbre.asc(), HebergementApp.heb_app_sort_order)
         elif self.selected_order() == 'epis':
-            return (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
+            return (LinkHebergementEpis.heb_nombre_epis.desc(), HebergementApp.heb_app_sort_order)
         else:
-            return (Hebergement.heb_nom, TypeHebergement.type_heb_type)
+            return (HebergementApp.heb_app_sort_order, )
 
     @property
     def cookie_key(self):
@@ -156,7 +157,7 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
                                     TypeHebergement.type_heb_code.label('heb_type_code'),
                                     TypeHebergement.type_heb_type.label('heb_type_type')
                                     )
-        query = query.join('type').join('commune').outerjoin('epis').join('proprio')
+        query = query.join('type').join('commune').outerjoin('epis').join('proprio').join('app')
         query = query.options(
             FromCache('gdw'))
         subquery = session().query(LinkHebergementMetadata.heb_fk)
@@ -183,18 +184,18 @@ class PackageHebergementFetcher(BaseHebergementsFetcher):
             distance = True
         sort = ()
         if self.selected_order() == 'pers_numbers':
-            sort = (Hebergement.heb_cgt_cap_min.asc(), Hebergement.heb_nom)
+            sort = (Hebergement.heb_cgt_cap_min.asc(), HebergementApp.heb_app_sort_order)
         elif self.selected_order() == 'room_count':
-            sort = (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
+            sort = (Hebergement.heb_cgt_nbre_chmbre.asc(), HebergementApp.heb_app_sort_order)
         elif self.selected_order() == 'epis':
-            sort = (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
+            sort = (LinkHebergementEpis.heb_nombre_epis.desc(), HebergementApp.heb_app_sort_order)
         elif self.selected_order() == 'heb_type':
-            sort = (TypeHebergement.type_heb_type.desc(), Hebergement.heb_nom)
+            sort = (TypeHebergement.type_heb_type.desc(), HebergementApp.heb_app_sort_order)
         elif distance:
             self.update_cookie_sort('distance')
             return ('distance', )
         else:
-            return ('heb_nom', 'heb_type_type')
+            return ('heb_app_sort_order', )
         if distance:
             # Distance should always be the secondary sort criterion
             sortList = list(sort)
@@ -210,7 +211,7 @@ class CommuneHebFetcher(BaseHebergementsFetcher):
     def _query(self):
         query = session().query(Hebergement,
                                 TypeHebergement.type_heb_code.label('heb_type_code'),
-                                ).join('type').join('commune').outerjoin('epis').join('proprio')
+                                ).join('type').join('commune').outerjoin('epis').join('proprio').join('app')
         query = query.options(
             FromCache('gdw'))
         typeHeb = self.context.aq_parent
@@ -228,7 +229,7 @@ class TypeHebFetcher(BaseHebergementsFetcher):
     def _query(self):
         query = session().query(Hebergement,
                                 TypeHebergement.type_heb_code.label('heb_type_code'),
-                                ).join('type').join('commune').outerjoin('epis').join('proprio')
+                                ).join('type').join('commune').outerjoin('epis').join('proprio').join('app')
         query = query.options(
             FromCache('gdw'))
         typeHeb = self.context
@@ -410,6 +411,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
 
             query = session.query(
                 sa.func.min(Hebergement.heb_nom).label('heb_nom'),
+                sa.func.min(HebergementApp.heb_app_sort_order).label('heb_app_sort_order'),
                 sa.func.avg(Hebergement.heb_location.distance_sphere(point)).label('distance'),
                 sa.func.sum(Hebergement.heb_cgt_nbre_chmbre).label('heb_cgt_nbre_chmbre'),
                 sa.func.sum(Hebergement.heb_cgt_cap_min).label('heb_cgt_cap_min'),
@@ -427,6 +429,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         else:
             query = session.query(
                 sa.func.min(Hebergement.heb_nom).label('heb_nom'),
+                sa.func.min(HebergementApp.heb_app_sort_order).label('heb_app_sort_order'),
                 sa.func.sum(Hebergement.heb_cgt_nbre_chmbre).label('heb_cgt_nbre_chmbre'),
                 sa.func.sum(Hebergement.heb_cgt_cap_min).label('heb_cgt_cap_min'),
                 sa.func.sum(Hebergement.heb_cgt_cap_max).label('heb_cgt_cap_max'),
@@ -441,7 +444,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                 sa.func.min(Hebergement.heb_gps_lat).label('heb_gps_lat'),
                 sa.func.min(Hebergement.heb_groupement_pk).label('heb_groupement_pk'))
 
-        query = query.join('proprio').outerjoin('epis').join('type')
+        query = query.join('proprio').outerjoin('epis').join('type').join('app')
         query = query.filter(Hebergement.heb_groupement_pk != None)
         query = self.apply_filters(query, group=True)
         #XXX
@@ -465,6 +468,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
 
             query = session.query(
                 Hebergement.heb_nom.label('heb_nom'),
+                HebergementApp.heb_app_sort_order.label('heb_app_sort_order'),
                 Hebergement.heb_location.distance_sphere(point).label('distance'),
                 Hebergement.heb_cgt_nbre_chmbre.label('heb_cgt_nbre_chmbre'),
                 Hebergement.heb_cgt_cap_min.label('heb_cgt_cap_min'),
@@ -482,6 +486,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         else:
             query = session.query(
                 Hebergement.heb_nom.label('heb_nom'),
+                HebergementApp.heb_app_sort_order.label('heb_app_sort_order'),
                 Hebergement.heb_cgt_nbre_chmbre.label('heb_cgt_nbre_chmbre'),
                 Hebergement.heb_cgt_cap_min.label('heb_cgt_cap_min'),
                 Hebergement.heb_cgt_cap_max.label('heb_cgt_cap_max'),
@@ -496,7 +501,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                 Hebergement.heb_gps_lat.label('heb_gps_lat'),
                 Hebergement.heb_groupement_pk.label('heb_groupement_pk'))
 
-        query = query.join('proprio').outerjoin('epis').join('type')
+        query = query.join('proprio').outerjoin('epis').join('type').join('app')
         query = self.apply_filters(query)
         return query
 
@@ -514,16 +519,16 @@ class SearchHebFetcher(BaseHebergementsFetcher):
             distance = True
         sort = ()
         if self.selected_order() == 'pers_numbers':
-            sort = ('heb_cgt_cap_min asc', 'heb_nom')
+            sort = ('heb_cgt_cap_min asc', 'heb_app_sort_order')
         elif self.selected_order() == 'room_count':
-            sort = (Hebergement.heb_cgt_nbre_chmbre.asc(), Hebergement.heb_nom)
+            sort = (Hebergement.heb_cgt_nbre_chmbre.asc(), HebergementApp.heb_app_sort_order)
         elif self.selected_order() == 'epis':
-            sort = (LinkHebergementEpis.heb_nombre_epis.desc(), Hebergement.heb_nom)
+            sort = (LinkHebergementEpis.heb_nombre_epis.desc(), HebergementApp.heb_app_sort_order)
         elif distance:
             self.update_cookie_sort('distance')
             return ('distance', )
         else:
-            return ('heb_nom', 'heb_type_type')
+            return ('heb_app_sort_order', )
         if distance:
             # Distance should always be the secondary sort criterion
             sortList = list(sort)

@@ -50,14 +50,15 @@ class TypeHebCommuneView(BrowserView):
         wrapper = getSAWrapper('gites_wallons')
         session = wrapper.session
         HebergementTable = wrapper.getMapper('hebergement')
+        HebergementAppTable = wrapper.getMapper('hebergement_app')
         CommuneTable = wrapper.getMapper('commune')
         ProprioTable = wrapper.getMapper('proprio')
-        query = session.query(HebergementTable).join('commune').join('proprio')
+        query = session.query(HebergementTable).join('commune').join('proprio').join('app')
         hebergements = query.filter(and_(CommuneTable.com_id == self.commune.com_id,
                                          HebergementTable.heb_typeheb_fk == self.typeHeb.type_heb_pk))
         hebergements = hebergements.filter(and_(HebergementTable.heb_site_public == '1',
                                                 ProprioTable.pro_etat == True))
-        hebergements = hebergements.order_by(HebergementTable.heb_nom)
+        hebergements = hebergements.order_by(HebergementAppTable.heb_app_sort_order)
         hebergements = [hebergement.__of__(self.context.hebergement) for hebergement in hebergements]
         return hebergements
 
