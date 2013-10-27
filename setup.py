@@ -53,5 +53,6 @@ setup(name='gites.core',
           'console_scripts': [
               'groupement_update = gites.core.scripts.groupement_update:main',
               'geometry_columns_update = gites.core.scripts.geometry_columns_update:main',
+              'sort_order_update = gites.core.scripts.sort_order_update:main',
           ]}
       )
