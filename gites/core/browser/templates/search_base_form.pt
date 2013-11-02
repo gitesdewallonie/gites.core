@@ -4,9 +4,11 @@
         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/formchoices.js"></script>
 
 <div id="je-recherche"
+     tal:define="translate nocall:here/@@getTranslatedObjectUrl"
      i18n:domain="gites">
     <h2 i18n:translate="label_recherche">Je cherche</h2>
     <h3><a href="" tal:attributes="href string:${context/@@plone_portal_state/portal_url}/search" i18n:translate="recherche_avancee">Recherche avanc&eacute;e</a></h3>
+    <h3 style="display:none"><a href="" tal:attributes="href python:translate('map-search')" i18n:translate="recherche_cartographique">Recherche cartographique</a></h3>
     <div class="break-float"></div>
 
     <form action=""
