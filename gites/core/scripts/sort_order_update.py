@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from sqlalchemy import func
+from affinitic.caching.memcached import memcachedClient
 
 from gites.db import session as DBSession
 from gites.db.content import Hebergement
@@ -26,6 +27,9 @@ def updateHebsSortOrder():
 
     session.commit()
     session.flush()
+
+    memcache = memcachedClient()
+    memcache.invalidateAll()
 
 
 if __name__ == "__main__":
