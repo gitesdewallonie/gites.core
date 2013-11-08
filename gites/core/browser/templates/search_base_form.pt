@@ -16,7 +16,7 @@
         <div id="recherche-cartographique">
             <h3><a href=""
                    tal:attributes="href python:translate('map-search')"
-                   i18n:translate="recherche_cartographie">Recherche cartographique</a></h3>
+                   i18n:translate="recherche_cartographique">Recherche cartographique</a></h3>
         </div>
     <div class="break-float"></div>
 
