@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Responsive design</title>
+<link rel="stylesheet"
+      href="main.css">
+<meta name="viewport"
+      content="initial-scale=1, maximum-scale=1"> 
+<style>
+body{
+margin:0;
+padding:0;
+}
+#portrait,
+#payasage{
+display:none;
+}
+
+
+/* 1 - pour les tablettes en mode portrait*/
+@media screen and (max-width:1030px) {
+    #portrait {
+        display:none;  
+    }
+    #paysage {
+        display:block;
+    }
+}
+
+/* 1 - pour les tablettes en mode paysage */
+@media screen and (max-width:780px) {
+    #paysage {
+        display:none;  
+    }
+    #portrait {
+        display:block;
+    }
+}
+</style>
+</head>
+
+<body>
+    <div id="portrait">
+        <a href="http://www.gitesdewallonie.be/idee-sejour/sejours-a-bois-ouverts"><img src="metro/gdw_bois_ouvert_768_916_fr_1.jpg" /></a>
+    </div>
+    <div id="paysage">
+        <a href="http://www.gitesdewallonie.be/idee-sejour/sejours-a-bois-ouverts"><img src="metro/gdw_bois_ouvert_1024_660_fr_1.jpg" /></a>
+    </div>
+</body>
+</html>

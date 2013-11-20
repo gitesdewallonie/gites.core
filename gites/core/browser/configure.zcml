@@ -8,6 +8,35 @@
 
    <browser:page
       for="*"
+      name="sejour-a-bois-ouvert"
+      template="templates/metro/bois_ouvert_fr.pt"
+      permission="zope.Public"
+      />
+   <browser:page
+      for="*"
+      name="open-bosverblijven"
+      template="templates/metro/bois_ouvert_nl.pt"
+      permission="zope.Public"
+      />
+   <browser:page
+      for="*"
+      name="sejour-memoire-et-sepulture"
+      template="templates/metro/sejour_memoire_fr.pt"
+      permission="zope.Public"
+      />
+   <browser:page
+      for="*"
+      name="verblijven-herdenking-en-begraafplaatsen"
+      template="templates/metro/sejour_memoire_nl.pt"
+      permission="zope.Public"
+      />
+
+
+
+
+
+   <browser:page
+      for="*"
       name="gdw_sendto_form"
       class=".sendtoform.SendToFormView"
       template="templates/sendto_form.pt"
