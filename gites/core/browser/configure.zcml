@@ -177,6 +177,13 @@
       allowed_interface=".interfaces.IMoteurRecherche"
       />
 
+  <browser:page
+      for="*"
+      name="code"
+      permission="zope.Public"
+      template="templates/search_by_code.pt"
+      />
+
    <browser:page
       for="*"
       name="unknown_gites"
