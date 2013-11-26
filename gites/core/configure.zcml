@@ -30,6 +30,12 @@
       provides="zope.publisher.interfaces.IPublishTraverse"
       factory=".traversal.HebergementFolderTraversable" />
 
+  <adapter
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot
+           zope.publisher.interfaces.http.IHTTPRequest"
+      provides="zope.publisher.interfaces.IPublishTraverse"
+      factory=".traversal.RootFolderTraversable" />
+
   <include package="affinitic.pwmanager" />
   <include package="Products.LinguaPlone" />
   <include file="permissions.zcml" />

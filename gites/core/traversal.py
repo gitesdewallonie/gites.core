@@ -12,20 +12,45 @@ from zope.publisher.interfaces.http import IHTTPRequest
 from zope.component import adapts, getMultiAdapter, queryMultiAdapter
 from zope.app.publisher.browser import getDefaultViewName
 from ZPublisher.BaseRequest import DefaultPublishTraverse
+from Products.CMFPlone.interfaces import IPloneSiteRoot
 from gites.core.interfaces import IHebergementFolder
 from affinitic.db.cache import FromCache
 from z3c.sqlalchemy import getSAWrapper
 from zExceptions import NotFound
 
 
+def isInt(name):
+    m = re.compile(r'^([+-])?\d+$')
+    return bool(m.match(name))
+
+
+class RootFolderTraversable(DefaultPublishTraverse):
+    """
+    """
+    adapts(IPloneSiteRoot, IHTTPRequest)
+
+    def publishTraverse(self, request, name):
+        """
+        Directly traverse to an accommodation if a PK is specified in URL
+        """
+        if isInt(name):
+            hebPk = int(name)
+            wrapper = getSAWrapper('gites_wallons')
+            session = wrapper.session
+            Hebergement = wrapper.getMapper('hebergement')
+            heb = session.query(Hebergement).options(FromCache('gdw')).get(hebPk)
+            if heb and int(heb.heb_site_public) == 1 and heb.proprio.pro_etat:
+                hebURL = getMultiAdapter((heb.__of__(self.context.hebergement),
+                                          request), name="url")
+                request.response.redirect(str(hebURL))
+                return ''
+        return super(RootFolderTraversable, self).publishTraverse(request, name)
+
+
 class HebergementFolderTraversable(DefaultPublishTraverse):
     """
     """
     adapts(IHebergementFolder, IHTTPRequest)
-
-    def isInt(self, name):
-        m = re.compile(r'^([+-])?\d+$')
-        return bool(m.match(name))
 
     def publishTraverse(self, request, name):
         """Interpret any remaining names on the traversal stack as keywords
@@ -90,7 +115,7 @@ class HebergementFolderTraversable(DefaultPublishTraverse):
         return view.__of__(self.context)
 
     def getContext(self, name, sub, view_name):
-        if self.isInt(name):
+        if isInt(name):
             context = self.getHebergementByPk(int(name))
             if context is None:
                 raise NotFound
