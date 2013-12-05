@@ -10,11 +10,20 @@ from Products.Archetypes.atapi import DisplayList
 from Products.CMFCore.utils import getToolByName
 from zope.component import queryMultiAdapter
 from plone.memoize import instance
+from affinitic.caching.memoize import cache_for_instances
 from affinitic.db.cache import FromCache
 from gites.db import session
 from gites.db.content import Commune, Hebergement, Proprio
 
 CARDS = ['carte01.jpg']
+
+
+def one_minute_memoize_for_instances(func):
+    """
+    Use this to decorate class instances methods only
+    Cached return values are cleared every minute
+    """
+    return cache_for_instances(func, lifetime=60)
 
 
 class CartesVocabulary(object):
@@ -126,7 +135,7 @@ class CriteriaVocabulary(object):
     """
     implements(IVocabulary)
 
-    @instance.memoize
+    @one_minute_memoize_for_instances
     def getDisplayList(self, instance):
         wrapper = getSAWrapper('gites_wallons')
         metadataTable = wrapper.getMapper('metadata')
