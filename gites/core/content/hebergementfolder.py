@@ -180,9 +180,7 @@ class HebergementFolder(ATFolder):
     def update(self, REQUEST=None):
         """
         """
-        self.updateHebergement()
-        self.updateCommune()
-        self.updateType()
+        return
 
     def view(self, REQUEST):
         """
