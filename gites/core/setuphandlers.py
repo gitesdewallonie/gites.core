@@ -29,8 +29,9 @@ def setupgites(context):
         createFolder(portal, "idee-sejour", "Idee sejour", True)
     ideesSejourFolder = getattr(portal, 'idee-sejour')
     changeFolderView(portal, ideesSejourFolder, 'idee_sejour_root')
-    boutiqueFolder = getattr(portal, 'shop')
-    changeFolderView(portal, boutiqueFolder, 'boutique_root')
+    boutiqueFolder = getattr(portal, 'shop', None)
+    if boutiqueFolder is not None:
+        changeFolderView(portal, boutiqueFolder, 'boutique_root')
 
 
 def createLocalFS(portal):
