@@ -10,8 +10,18 @@
       provides="zope.publisher.interfaces.IPublishTraverse"
       factory=".traversal.HebergementFolderTraversable" />
 
-  <include file="profiles.zcml" />
+  <include package="zope.component" file="meta.zcml"/>
+  <include package="zope.component"/>
 
+  <include package="Products.Five"/>
+  <include package="five.grok"/>
+
+  <include package="z3c.amf" file="meta.zcml"/>
+  <include package="z3c.amf"/>
+  <include package="z3c.autoinclude" file="meta.zcml"/>
+
+
+  <include file="profiles.zcml" />
   <include package=".adapters"/>
   <include package=".browser"/>
   <include package=".flash"/>
