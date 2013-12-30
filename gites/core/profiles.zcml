@@ -10,6 +10,15 @@
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
 
+  <genericsetup:registerProfile
+      name="testing"
+      title="gites.core"
+      directory="profiles/testing"
+      description="Extension profile for gites.core"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+
   <genericsetup:upgradeStep
       title="gites core 0.1"
       description=""
