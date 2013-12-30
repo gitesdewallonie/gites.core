@@ -20,6 +20,7 @@ def setupgites(context):
     logger.debug('Setup gites core')
     portal = context.getSite()
     createFolder(portal, "zone-membre", "Zone Membre", True)
+    createFolder(portal, "idee-sejour", "Idee sejour", True)
     setupProprioPlacefulWorkflow(portal)
 
 
