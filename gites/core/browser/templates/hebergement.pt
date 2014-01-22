@@ -72,8 +72,6 @@
      tal:define="hasCalendar view/showCalendar;
                  isMobile context/@@isMobile | nothing">
 
-    <div tal:replace="structure provider:plone.abovecontenttitle" />
-
     <div id="content-core">
 
         <div tal:replace="structure provider:gites.hebergement" />
