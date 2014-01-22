@@ -75,25 +75,9 @@
     <div tal:replace="structure provider:plone.abovecontenttitle" />
 
     <div id="content-core">
-        <div id="sendTo-printThis">
-            <div id="print-this-button">
-                <a href="javascript:this.print();"
-                   title="Print this"
-                   i18n:attributes="title print_this">
-                    <img alt="Print this" src="icon_print.gif"
-                         i18n:attributes="alt print_this">
-                </a>
-            </div>
-            <div id="send-to-button">
-                <a href=""
-                   title="Send this page to someone"
-                   tal:attributes="href string:${request/ACTUAL_URL}/gdw_sendto_form"
-                   i18n:attributes="title send_to">
-                    <img alt="Send this page to someone" src="icon_sendto.gif"
-                         i18n:attributes="alt send_to">
-                </a>
-            </div>
-        </div>
+
+        <div tal:replace="structure provider:gites.hebergement" />
+
         <div class="break-float"></div>
 
         <div id="description-heb"
