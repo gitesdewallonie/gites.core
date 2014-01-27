@@ -50,6 +50,8 @@ class HebergementExternCalendarView(BrowserView):
         (if the calendar has been blocked due to inactivity, it will not
         appear because heb_calendrier_proprio will be 'bloque' by cron)
         """
+        if self.hebergement is None:
+            return False
         return (self.hebergement.heb_calendrier_proprio == 'actif')
 
     def getCustomStylesheet(self):
