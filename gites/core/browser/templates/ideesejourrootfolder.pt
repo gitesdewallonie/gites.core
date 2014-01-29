@@ -34,7 +34,7 @@
                            vignette python:view.getRandomVignette(ideeSejourTypeUrl)[0]"
                id="logo">
                   <a href="" tal:attributes="href ideeSejourType/absolute_url">
-                     <img src="" tal:attributes="src string:${vignette/getURL}/image_thumb"/><br />
+                     <img src="" tal:attributes="src string:${vignette/getURL}"/><br />
                   </a>
             </p>
 
