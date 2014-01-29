@@ -74,17 +74,19 @@
                     <tal:inputs tal:define="heb_count python:viewlet.count_classifications(classification.value);
                                             disabled not:heb_count">
                         <input type="checkbox"
-                               id="gite-classification"
+                               id=""
                                name="gite-classification"
                                value="foo"
                                class="input-medium search-query"
                                tal:attributes="value classification/value;
+                                               id classification/value;
                                                ng-model string:classifications['${classification/value}'];
                                                disabled disabled"
                                ng-click="updateKeywords()" />
-                        <label for="gite-theme"
+                        <label for=""
                                class=""
-                               tal:attributes="class python: disabled and 'disabled' or ''">
+                               tal:attributes="for classification/value;
+                                               class python: disabled and 'disabled' or ''">
                             <span tal:replace="classification/value"/>
                             <span class="discreet-info">
                                 (<span tal:replace="heb_count"/>)
@@ -105,18 +107,21 @@
                     <tal:inputs tal:define="heb_count python:viewlet.count_hebs(filter.met_pk);
                                             disabled not:heb_count">
                             <input type="checkbox"
-                                   id="gite-theme"
-                                   name="gite-theme"
+                                   id=""
+                                   name=""
                                    value="foo"
                                    ng-model="keywords['foo']"
                                    class="input-medium search-query"
-                                   tal:attributes="value filter/met_id;
+                                   tal:attributes="name filter_type;
+                                                   id filter/met_id;
+                                                   value filter/met_id;
                                                    ng-model string:keywords['${filter/met_pk}'];
                                                    disabled disabled"
                                    ng-click="updateKeywords()" />
-                            <label for="gite-theme"
+                            <label for=""
                                    class=""
-                                   tal:attributes="class python: disabled and 'disabled' or ''">
+                                   tal:attributes="for filter/met_id;
+                                                   class python: disabled and 'disabled' or ''">
                                 <span tal:replace="filter/Title"/>
                                 <span class="discreet-info">
                                     (<span tal:replace="heb_count" />)
