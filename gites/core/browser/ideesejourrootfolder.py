@@ -46,7 +46,7 @@ class IdeeSejourRootFolder(grok.View):
         results = list(results)
         return results
 
-    def getRandomVignette(self, sejour_url, amount=1):
+    def getRandomVignette(self, sejour_url):
         """
         Return a random vignette for a sejour fute
         """
@@ -55,4 +55,7 @@ class IdeeSejourRootFolder(grok.View):
                                     path={'query': sejour_url})
         results = list(results)
         random.shuffle(results)
-        return results[:amount]
+        if results:
+            return results[0]
+        else:
+            return None

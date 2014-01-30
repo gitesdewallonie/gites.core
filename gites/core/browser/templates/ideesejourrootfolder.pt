@@ -31,7 +31,8 @@
           <div tal:define="ideeSejourType python:brain.getObject()"
                id="div_idee_sejours">
             <p tal:define="ideeSejourTypeUrl python: '/'.join(ideeSejourType.getPhysicalPath());
-                           vignette python:view.getRandomVignette(ideeSejourTypeUrl)[0]"
+                           vignette python:view.getRandomVignette(ideeSejourTypeUrl)"
+               tal:condition="vignette"
                id="logo">
                   <a href="" tal:attributes="href ideeSejourType/absolute_url">
                      <img src="" tal:attributes="src string:${vignette/getURL}"/><br />
