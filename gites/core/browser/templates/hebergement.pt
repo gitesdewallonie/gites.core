@@ -651,12 +651,12 @@
                                 <img src="icon_email.gif" alt="E-mail" />
                                 <span tal:replace="heb/proprio/pro_email" />
                             </div>
-                            <div id="url-proprio"
-                                 tal:condition="python: heb.proprio.pro_url">
+                            <div id="url-heb"
+                                 tal:condition="heb/heb_url">
                                 <img src="icon_lien.gif" alt="Site web" />
                                 <a href=""
-                                   tal:attributes="href string:http://${heb/proprio/pro_url}"
-                                   tal:content="string:http://${heb/proprio/pro_url}"
+                                   tal:attributes="href string:http://${heb/heb_url}"
+                                   tal:content="string:http://${heb/heb_url}"
                                    target="_blank" />
                             </div>
                             <div id="contacter-proprio">
