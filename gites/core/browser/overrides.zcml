@@ -1,0 +1,12 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           i18n_domain="gites">
+
+   <browser:page
+      for="*"
+      name="search"
+      class=".search.PloneSearch"
+      permission="zope.Public"
+      />
+
+</configure>

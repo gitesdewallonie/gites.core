@@ -9,6 +9,7 @@ from five.formlib import formbase
 
 import plone.z3cform.z2
 from Products.CMFCore.utils import getToolByName
+from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from gites.locales import GitesMessageFactory as _
@@ -17,6 +18,17 @@ from gites.core.browser.interfaces import (ISearchHebergement,
                                            IBasicSearchHebergement,
                                            IBasicSearchHebergementTooMuch,
                                            ISearchHebergementTooMuch)
+
+
+class PloneSearch(BrowserView):
+    """
+    Override default Plone search to redirect to ours
+    """
+
+    def __call__(self):
+        portal_url = getToolByName(self.context, 'portal_url')()
+        search_url = "%s/search" % portal_url
+        return self.request.response.redirect(search_url)
 
 
 class SearchHebergement(formbase.PageForm):
