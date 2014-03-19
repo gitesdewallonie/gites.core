@@ -66,8 +66,9 @@ def setGroupementPk(hebs, groupementPk):
     fill heb_groupement_pk for hebs by heb_pk
     """
     for heb in hebs:
-        heb.heb_groupement_pk = groupementPk
-        heb.update()
+        if heb.heb_groupement_pk != groupementPk:
+            heb.heb_groupement_pk = groupementPk
+            heb.update()
 
 
 def emptyGroupementPk(heb):
