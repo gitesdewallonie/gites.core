@@ -167,7 +167,7 @@ Il s'agit de :
                  unicode(contactCp).encode('utf-8'),
                  unicode(contactLocalite).encode('utf-8'),
                  unicode(contactPays).encode('utf-8'),
-                 contactLangue,
+                 unicode(contactLangue).encode('utf-8'),
                  unicode(contactTelephone).encode('utf-8'),
                  unicode(contactFax).encode('utf-8'),
                  unicode(contactEmail).encode('utf-8'),
