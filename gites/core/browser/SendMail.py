@@ -17,10 +17,10 @@ from zope.interface import implements
 from gites.locales import GitesMessageFactory as _
 from interfaces import ISendMail
 
-LANG_MAP = {'en': 'Anglais',
-            'fr': 'Français',
-            'nl': 'Néerlandais',
-            'de': 'Allemand'}
+LANG_MAP = {'en': u'Anglais',
+            'fr': u'Français',
+            'nl': u'Néerlandais',
+            'de': u'Allemand'}
 
 
 class SendMail(BrowserView):
