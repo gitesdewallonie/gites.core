@@ -58,5 +58,13 @@
       profile="gites.core:default"
       />
 
+  <genericsetup:upgradeStep
+      title="gites core 0.7"
+      description="Add carousel folder"
+      handler=".migrations.to_0_7.migrate"
+      destination="0.7"
+      profile="gites.core:default"
+      />
+
 </configure>
 
