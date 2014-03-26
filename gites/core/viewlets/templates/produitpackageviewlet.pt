@@ -3,6 +3,24 @@
     <div id="zone-photo"
          tal:condition="not: context/@@isMobile | nothing">
 
+     <tal:def tal:define="imageInfos viewlet/getVisualImage;
+                          shouldShowCarousel not: imageInfos">
+
+      <tal:if-images tal:condition="not: shouldShowCarousel">
+
+        <div id="visuel-photo">
+            <a href=""
+               tal:attributes="href imageInfos/linkhref">
+                <img src=""
+                     alt=""
+                     tal:attributes="src string: ${imageInfos/imagesrc}">
+            </a>
+        </div>
+
+      </tal:if-images>
+
+      <tal:else tal:condition="shouldShowCarousel">
+
         <div id="package-carousel" class="carousel slide"
              tal:define="packages viewlet/getCarouselPackages"
              tal:condition="packages">
@@ -34,6 +52,11 @@
             <a class="left carousel-control" href="#package-carousel" data-slide="prev">&lsaquo;</a>
             <a class="right carousel-control" href="#package-carousel" data-slide="next">&rsaquo;</a>
         </div>
+
+      </tal:else>
+
+     </tal:def>
+
 
         <div id="zone-packperm-membre"
              tal:define="translate nocall:here/@@getTranslatedObjectUrl">
