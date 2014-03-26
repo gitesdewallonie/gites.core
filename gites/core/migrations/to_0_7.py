@@ -17,6 +17,6 @@ def migrate(context):
     publishObject(carouselFolder)
     carouselFolder.setLanguage('')
     carouselFolder.setConstrainTypesMode(1)
-    carouselFolder.setLocallyAllowedTypes(['Image', 'Link'])
-    carouselFolder.setImmediatelyAddableTypes(['Image', 'Link'])
+    carouselFolder.setLocallyAllowedTypes(['Document', 'Image', 'Link'])
+    carouselFolder.setImmediatelyAddableTypes(['Document', 'Image', 'Link'])
     carouselFolder.reindexObject()
