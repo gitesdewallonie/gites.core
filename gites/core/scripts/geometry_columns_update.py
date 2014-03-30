@@ -42,6 +42,7 @@ def updateHebergement():
     session.flush()
     session.commit()
 
+
 def updateInfoTour():
     session = DBSession()
 
@@ -110,8 +111,8 @@ def updateExtData():
     for extData in extDatas:
         point = 'POINT(%s %s)' % (extData.ext_data_longitude, extData.ext_data_latitude)
         point = geoalchemy.base.WKTSpatialElement(point, srid=3447)
-        if tuple(extData.infoprat_location.coords(session)) != \
-           tuple([extData.ext_gps_long, extData.ext_gps_lat]):
+        if tuple(extData.ext_data_location.coords(session)) != \
+           tuple([extData.ext_data_longitude, extData.ext_data_latitude]):
             extData.ext_data_location = point
 
     session.commit()
