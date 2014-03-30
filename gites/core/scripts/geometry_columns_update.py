@@ -36,7 +36,8 @@ def updateHebergement():
     for heb in hebs:
         point = 'POINT(%s %s)' % (heb.heb_gps_long, heb.heb_gps_lat)
         point = geoalchemy.base.WKTSpatialElement(point, srid=3447)
-        if tuple(heb.heb_location.coords(session)) != \
+        if heb.heb_location is None or \
+           tuple(heb.heb_location.coords(session)) != \
            tuple([heb.heb_gps_long, heb.heb_gps_lat]):
             heb.heb_location = point
     session.flush()
@@ -54,7 +55,8 @@ def updateInfoTour():
     for infoTour in infoTours:
         point = 'POINT(%s %s)' % (infoTour.infotour_gps_long, infoTour.infotour_gps_lat)
         point = geoalchemy.base.WKTSpatialElement(point, srid=3447)
-        if tuple(infoTour.infotour_location.coords(session)) != \
+        if infoTour.infotour_location is None or \
+           tuple(infoTour.infotour_location.coords(session)) != \
            tuple([infoTour.infotour_gps_long, infoTour.infotour_gps_lat]):
             infoTour.infotour_location = point
 
@@ -73,7 +75,8 @@ def updateInfoPrat():
     for infoPrat in infoPrats:
         point = 'POINT(%s %s)' % (infoPrat.infoprat_gps_long, infoPrat.infoprat_gps_lat)
         point = geoalchemy.base.WKTSpatialElement(point, srid=3447)
-        if tuple(infoPrat.infoprat_location.coords(session)) != \
+        if infoPrat.infoprat_location is None or \
+           tuple(infoPrat.infoprat_location.coords(session)) != \
            tuple([infoPrat.infoprat_gps_long, infoPrat.infoprat_gps_lat]):
             infoPrat.infoprat_location = point
 
@@ -92,7 +95,8 @@ def updateMaison():
     for maisonTour in maisonTours:
         point = 'POINT(%s %s)' % (maisonTour.mais_gps_long, maisonTour.mais_gps_lat)
         point = geoalchemy.base.WKTSpatialElement(point, srid=3447)
-        if tuple(maisonTour.mais_location.coords(session)) != \
+        if maisonTour.mais_location is None or \
+           tuple(maisonTour.mais_location.coords(session)) != \
            tuple([maisonTour.mais_gps_long, maisonTour.mais_gps_lat]):
             maisonTour.mais_location = point
 
@@ -111,7 +115,8 @@ def updateExtData():
     for extData in extDatas:
         point = 'POINT(%s %s)' % (extData.ext_data_longitude, extData.ext_data_latitude)
         point = geoalchemy.base.WKTSpatialElement(point, srid=3447)
-        if tuple(extData.ext_data_location.coords(session)) != \
+        if extData.ext_data_location is None or \
+           tuple(extData.ext_data_location.coords(session)) != \
            tuple([extData.ext_data_longitude, extData.ext_data_latitude]):
             extData.ext_data_location = point
 
