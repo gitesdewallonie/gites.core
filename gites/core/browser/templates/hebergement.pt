@@ -369,6 +369,11 @@
                             <h3 i18n:translate="divers">Divers</h3>
                             <span tal:content="heb/heb_tarif_chmbr_autre_1p" />
                         </div>
+                        <div id="lien-tarification">
+                            <a href=""
+                               tal:attributes="href python:translate('tarification')"
+                               i18n:translate="rates_for_gites">Tarification des Gîtes et Meublés</a>
+                        </div>
                  </div><!--tarif hebergement-->
 
                         <!-- TABLE TABLE D'HOTE-->
