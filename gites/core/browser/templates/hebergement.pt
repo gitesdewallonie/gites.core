@@ -72,7 +72,8 @@
      tal:define="hasCalendar view/showCalendar;
                  isMobile context/@@isMobile | nothing">
 
-    <div id="content-core">
+    <div id="content-core"
+         tal:define="translate nocall:here/@@getTranslatedObjectUrl">
 
         <div tal:replace="structure provider:gites.hebergement" />
 
@@ -306,6 +307,11 @@
                              tal:condition="heb/heb_tarif_divers">
                             <h3 i18n:translate="divers">Divers</h3>
                             <p tal:content="heb/heb_tarif_divers"></p>
+                        </div>
+                        <div id="lien-tarification">
+                            <a href=""
+                               tal:attributes="href python:translate('tarification')"
+                               i18n:translate="rates_for_gites">Tarification des Gîtes et Meublés</a>
                         </div>
                     </div>
 
