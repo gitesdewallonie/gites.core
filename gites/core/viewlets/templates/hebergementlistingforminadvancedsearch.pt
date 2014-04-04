@@ -55,9 +55,25 @@
                        id="form-widgets-capacityMin"
                        ng-change="updateKeywords()"
                        ng-model="capacity">
-                <img title="Number of people"
-                     alt="Number of people"
+                <img title="Nombre de personnes"
+                     alt="Nombre de personnes"
+                     i18n:attributes="title nombre_personnes;
+                                      alt nombre_personnes"
                      src="++theme++gites.theme/images/icon_gugus.png">
+            </div>
+            <div id="nbre-chambre">
+                <input type="text"
+                       value=""
+                       class="text-widget int-field"
+                       name="form.widgets.roomAmount"
+                       id="form-widgets-roomAmount"
+                       ng-change="updateKeywords()"
+                       ng-model="rooms">
+                <img title="Nombre de chambres"
+                     alt="Nombre de chambres"
+                     i18n:attributes="title nombre-chambres;
+                                      alt nombre-chambres"
+                     src="++theme++gites.theme/images/icon_chambres.png">
             </div>
             <div id="city">
                 <label i18n:translate="">City</label>

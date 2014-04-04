@@ -149,6 +149,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
                                          'form.widgets.classification': filterValues($scope.parameters.classifications),
                                          'form.widgets.toDateAvancee': $scope.toDate,
                                          'form.widgets.capacityMin': $scope.capacity,
+                                         'form.widgets.roomAmount': $scope.rooms,
                                          'form.widgets.nearTo': $scope.nearTo});
         var hebTypes = filterValues($scope.parameters.hebergementType);
 	var formHebTypes = $scope.parameters.data['form.widgets.hebergementType'];
