@@ -73,7 +73,7 @@
                      alt="Nombre de chambres"
                      i18n:attributes="title nombre-chambres;
                                       alt nombre-chambres"
-                     src="++theme++gites.theme/images/icon_gugus.png">
+                     src="++theme++gites.theme/images/icon_chambres.png">
             </div>
             <div id="city">
                 <label i18n:translate="">City</label>
