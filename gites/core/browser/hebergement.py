@@ -26,7 +26,7 @@ import sqlalchemy as sa
 from affinitic.db.cache import FromCache
 from affinitic.pwmanager.interfaces import IPasswordManager
 
-from gites.db.content import Hebergement, TypeHebergement, LinkHebergementEpis, Proprio, Commune
+from gites.db.content import Hebergement, HebergementApp, TypeHebergement, LinkHebergementEpis, Proprio, Commune
 from gites.db.content.hebergement.metadata import Metadata
 
 from gites.map.browser.interfaces import IMappableView
@@ -270,9 +270,11 @@ class HebergementView(BrowserView):
                               Hebergement.heb_localite.label('heb_localite'),
                               Hebergement.heb_gps_long.label('heb_gps_long'),
                               Hebergement.heb_gps_lat.label('heb_gps_lat'),
-                              Hebergement.heb_groupement_pk.label('heb_groupement_pk')
+                              Hebergement.heb_groupement_pk.label('heb_groupement_pk'),
+                              HebergementApp.heb_app_groupement_line_length.label('heb_app_groupement_line_length'),
+                              HebergementApp.heb_app_groupement_angle_start.label('heb_app_groupement_angle_start')
                               )
-        query = query.join('proprio').outerjoin('epis').join('type')
+        query = query.join('proprio').outerjoin('epis').join('type').join('app')
         query = query.options(FromCache('gdw'))
         query = query.filter(Hebergement.heb_groupement_pk == pk)
         query = query.filter(sa.and_(Hebergement.heb_site_public == '1',

@@ -425,7 +425,10 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                 sa.func.min(Hebergement.heb_localite).label('heb_localite'),
                 sa.func.min(Hebergement.heb_gps_long).label('heb_gps_long'),
                 sa.func.min(Hebergement.heb_gps_lat).label('heb_gps_lat'),
-                sa.func.min(Hebergement.heb_groupement_pk).label('heb_groupement_pk'))
+                sa.func.min(Hebergement.heb_groupement_pk).label('heb_groupement_pk'),
+                sa.func.min(HebergementApp.heb_app_groupement_line_length).label('heb_app_groupement_line_length'),
+                sa.func.min(HebergementApp.heb_app_groupement_angle_start).label('heb_app_groupement_angle_start'),
+            )
         else:
             query = session.query(
                 sa.func.min(Hebergement.heb_nom).label('heb_nom'),
@@ -442,7 +445,10 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                 sa.func.min(Hebergement.heb_localite).label('heb_localite'),
                 sa.func.min(Hebergement.heb_gps_long).label('heb_gps_long'),
                 sa.func.min(Hebergement.heb_gps_lat).label('heb_gps_lat'),
-                sa.func.min(Hebergement.heb_groupement_pk).label('heb_groupement_pk'))
+                sa.func.min(Hebergement.heb_groupement_pk).label('heb_groupement_pk'),
+                sa.func.min(HebergementApp.heb_app_groupement_line_length).label('heb_app_groupement_line_length'),
+                sa.func.min(HebergementApp.heb_app_groupement_angle_start).label('heb_app_groupement_angle_start'),
+            )
 
         query = query.join('proprio').outerjoin('epis').join('type').join('app')
         query = query.filter(Hebergement.heb_groupement_pk != None)
@@ -482,7 +488,10 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                 Hebergement.heb_localite.label('heb_localite'),
                 Hebergement.heb_gps_long.label('heb_gps_long'),
                 Hebergement.heb_gps_lat.label('heb_gps_lat'),
-                Hebergement.heb_groupement_pk.label('heb_groupement_pk'))
+                Hebergement.heb_groupement_pk.label('heb_groupement_pk'),
+                HebergementApp.heb_app_groupement_line_length.label('heb_app_groupement_line_length'),
+                HebergementApp.heb_app_groupement_angle_start.label('heb_app_groupement_angle_start'),
+            )
         else:
             query = session.query(
                 Hebergement.heb_nom.label('heb_nom'),
@@ -499,7 +508,10 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                 Hebergement.heb_localite.label('heb_localite'),
                 Hebergement.heb_gps_long.label('heb_gps_long'),
                 Hebergement.heb_gps_lat.label('heb_gps_lat'),
-                Hebergement.heb_groupement_pk.label('heb_groupement_pk'))
+                Hebergement.heb_groupement_pk.label('heb_groupement_pk'),
+                HebergementApp.heb_app_groupement_line_length.label('heb_app_groupement_line_length'),
+                HebergementApp.heb_app_groupement_angle_start.label('heb_app_groupement_angle_start'),
+            )
 
         query = query.join('proprio').outerjoin('epis').join('type').join('app')
         query = self.apply_filters(query)
