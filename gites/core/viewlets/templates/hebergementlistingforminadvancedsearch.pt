@@ -59,6 +59,18 @@
                      alt="Number of people"
                      src="++theme++gites.theme/images/icon_gugus.png">
             </div>
+            <div id="nbre-chambre">
+                <input type="text"
+                       value=""
+                       class="text-widget int-field"
+                       name="form.widgets.roomAmount"
+                       id="form-widgets-roomAmount"
+                       ng-change="updateKeywords()"
+                       ng-model="rooms">
+                <img title="Number of rooms"
+                     alt="Number of rooms"
+                     src="++theme++gites.theme/images/icon_gugus.png">
+            </div>
             <div id="city">
                 <label i18n:translate="">City</label>
                 <select ng-change="updateKeywords()" ng-model="nearTo">
