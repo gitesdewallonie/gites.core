@@ -105,7 +105,7 @@ class HebergementListingFormInAdvancedSearch(BaseListingForm):
         fetcher = component.getMultiAdapter((self.context, self.view,
                                             self.request),
                                             IHebergementsFetcher)
-        subquery = fetcher._query.subquery()
+        subquery = fetcher._classifications_query.subquery()
         from gites.db.content import LinkHebergementEpis
         query = session().query(LinkHebergementEpis.heb_pk)
         query = query.options(FromCache('gdw'))

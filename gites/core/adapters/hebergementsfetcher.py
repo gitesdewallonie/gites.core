@@ -340,7 +340,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
         query = query.filter(~Hebergement.heb_pk.in_(busyHebPks))
         return query
 
-    def apply_filters(self, query, group=False):
+    def apply_filters(self, query, group=False, ignore_classification=False):
         reference = self.data.get('reference')
         capacity = self.data.get('capacityMin') or self.data.get('form.widgets.capacityMin')
         heb_type = self.data.get('form.widgets.hebergementType') or self.data.get('form.widgets.hebergementType[]')
@@ -378,7 +378,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
             subquery = subquery.subquery()
             query = query.filter(Hebergement.heb_pk == subquery.c.heb_fk)
 
-        if classifications:
+        if classifications and not ignore_classification:
             query = query.filter(sa.and_(LinkHebergementEpis.heb_nombre_epis.in_(classifications),
                                          Hebergement.heb_pk == LinkHebergementEpis.heb_pk))
         if roomAmount:
@@ -572,6 +572,11 @@ class AdvancedSearchHebergementFetcher(PackageHebergementFetcher, SearchHebFetch
         query = PackageHebergementFetcher._query.fget(self)
         return self.apply_filters(query)
 
+    @property
+    def _classifications_query(self):
+        query = PackageHebergementFetcher._query.fget(self)
+        return self.apply_filters(query, ignore_classification=True)
+
     @memoize
     def getCommuneForLocalite(self, localite):
         query = session().query(Commune.com_nom)
@@ -581,8 +586,10 @@ class AdvancedSearchHebergementFetcher(PackageHebergementFetcher, SearchHebFetch
         query = query.limit(1)
         return query.scalar()
 
-    def apply_filters(self, query, group=False):
-        query = super(AdvancedSearchHebergementFetcher, self).apply_filters(query, group)
+    def apply_filters(self, query, group=False, ignore_classification=False):
+        query = super(AdvancedSearchHebergementFetcher, self).apply_filters(query,
+                                                                            group,
+                                                                            ignore_classification=ignore_classification)
         location = self.data.get('form.widgets.nearTo')
         if location:
             location = self.getCommuneForLocalite(location) or location
