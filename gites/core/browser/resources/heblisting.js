@@ -276,6 +276,25 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
         $scope.goToPage(0);
     }
 
+    $scope.reset = function() {
+        $scope.parameters.keywords = {};
+        $scope.parameters.classifications = {};
+        $scope.parameters.page = undefined;
+        $scope.parameters.hebergementType = {};
+        $scope.parameters.fromDate = undefined;
+        $scope.parameters.toDate = undefined;
+        $scope.parameters.capacity = undefined;
+        $scope.parameters.nearTo = undefined;
+        $scope.keywords = $scope.parameters.keywords;
+        $scope.classifications = $scope.parameters.classifications;
+        $scope.hebergementType = $scope.parameters.hebergementType;
+        $scope.fromDate = $scope.parameters.fromDate;
+        $scope.toDate = $scope.parameters.toDate;
+        $scope.capacity = $scope.parameters.capacity;
+        $scope.nearTo = $scope.parameters.nearTo;
+        $scope.updateKeywords();
+    };
+
     $scope.spin = function () {
         var opts = {
             lines: 12, // The number of lines to draw

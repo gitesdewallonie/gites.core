@@ -5,6 +5,8 @@
      tal:condition="filters">
     <form>
 
+        <button ng-click="reset()">Reset</button>
+
         <div class="filter_type">
             <div id="zone-gite-meuble">
                 <input type="checkbox"
