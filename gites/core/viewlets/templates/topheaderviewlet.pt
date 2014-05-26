@@ -13,7 +13,7 @@
          tal:condition="not: context/@@isMobile | nothing">
         <ul>
             <li>
-                <a href="https://play.google.com/store/apps/details?id=be.gitesdewallonie.allochambresdhotes"
+                <a href="https://play.google.com/store/apps/details?id=be.gitesdewallonie.allochambredhotes"
                    id="android"
                    target="_blank"></a>
             </li>
