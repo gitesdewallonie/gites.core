@@ -23,5 +23,5 @@ def initializeDB(module):
 
 def parseZCML(package, file='configure.zcml'):
     context = xmlconfig._getContext()
-    xmlconfig.include(context, 'configure.zcml', package)
+    xmlconfig.include(context, file, package)
     context.execute_actions()
