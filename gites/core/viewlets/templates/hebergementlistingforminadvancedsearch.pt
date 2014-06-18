@@ -5,6 +5,11 @@
      tal:condition="filters">
     <form>
 
+        <div class="reset_criteria">
+            <button ng-click="reset()"
+                    i18n:translate="reset">Reset</button>
+        </div>
+
         <div class="filter_type">
             <div id="zone-gite-meuble">
                 <input type="checkbox"
