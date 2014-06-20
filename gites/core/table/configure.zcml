@@ -2,6 +2,5 @@
            xmlns:grok="http://namespaces.zope.org/grok">
 
    <grok:grok package=".hebcomparison" />
-   <grok:grok package=".tarif_edition" />
 
 </configure>

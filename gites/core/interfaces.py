@@ -56,7 +56,3 @@ class IHebergementComparisonFour(IHebergementComparisonThree):
 
 class ISearch(Interface):
     """ Marker interface for search context """
-
-
-class ITarifEditionTable(Interface):
-    """ Marker interface for the tarif edition table """
