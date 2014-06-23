@@ -15,7 +15,7 @@ from five import grok
 from z3c.table import column, interfaces as table_interfaces, table, value
 
 from gites.core import interfaces
-from gites.db.content import Tarifs
+from gites.db.content import Tarifs, TarifsType
 
 
 class TarifEditionTable(table.Table):
@@ -48,7 +48,19 @@ class TarifEditionValues(value.ValuesMixin,
         if not heb_pk:
             return []
         else:
-            return Tarifs.get_hebergement_tarifs(heb_pk)
+            tarifs_types = TarifsType.get()
+            self.tarifs = Tarifs.get_hebergement_tarifs(heb_pk)
+            tarifs_table = []
+            for tarifs_type in tarifs_types:
+                tarifs_table.append(self._get_tarif_line(tarifs_type))
+        return tarifs_table
+
+    def _get_tarif_line(self, tarifs_type):
+        for tarif in self.tarifs:
+            if (tarif.type == tarifs_type.type and
+               tarif.subtype == tarifs_type.subtype):
+                return tarif
+        return tarifs_type
 
 
 class TarifEditionColumn(column.GetAttrColumn):
@@ -79,7 +91,8 @@ class TarifEditionColumnDate(TarifEditionColumn, grok.MultiAdapter):
     weight = 30
 
     def renderCell(self, item):
-        return getattr(item, 'date').strftime('%d-%m-%Y')
+        tarif_date = getattr(item, 'date', None)
+        return tarif_date and tarif_date.strftime('%d-%m-%Y') or ''
 
 
 class TarifEditionColumnUser(TarifEditionColumn, grok.MultiAdapter):
@@ -95,12 +108,24 @@ class TarifEditionColumnMin(TarifEditionColumn, grok.MultiAdapter):
     attrName = u'min'
     weight = 50
 
+    def renderCell(self, item):
+        min = getattr(item, 'min', '') or ''
+
+        render = u"""<input type="text" class="tarif-min-input" name="tarif_min_{0}_{1}" value="{2}"/>""".format(item.type, item.subtype, min)
+        return render
+
 
 class TarifEditionColumnMax(TarifEditionColumn, grok.MultiAdapter):
     grok.name('max')
     header = u'Maximum'
     attrName = u'max'
     weight = 60
+
+    def renderCell(self, item):
+        max = getattr(item, 'max', '') or ''
+
+        render = u"""<input type="text" class="tarif-max-input" name="tarif_max_{0}_{1}" value="{2}"/>""".format(item.type, item.subtype, max)
+        return render
 
 
 class TarifEditionColumnCmt(TarifEditionColumn, grok.MultiAdapter):
@@ -109,9 +134,8 @@ class TarifEditionColumnCmt(TarifEditionColumn, grok.MultiAdapter):
     attrName = u'cmt'
     weight = 70
 
+    def renderCell(self, item):
+        cmt = getattr(item, 'cmt', '') or ''
 
-class TarifEditionColumnValid(TarifEditionColumn, grok.MultiAdapter):
-    grok.name('valid')
-    header = u'Valide'
-    attrName = u'valid'
-    weight = 80
+        render = u"""<input type="text" name="tarif_cmt_{0}_{1}" value="{2}"/>""".format(item.type, item.subtype, cmt)
+        return render

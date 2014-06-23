@@ -11,6 +11,7 @@ import zope.interface
 from five import grok
 
 from gites.core.table import tarif_edition
+from gites.db.content import TarifsType
 
 
 class TarifEditionView(grok.View):
@@ -30,3 +31,14 @@ class TarifEditionView(grok.View):
             self.request)
         table.update()
         return table.render()
+
+    def update(self):
+        """ Apply tarifs changes """
+        form = self.request.form
+        tarifs_types = TarifsType.get()
+        for tt in tarifs_types:
+            min = form.get('tarif_min_{0}_{1}'.format(tt.type, tt.subtype), None)
+            max = form.get('tarif_max_{0}_{1}'.format(tt.type, tt.subtype), None)
+            if min and max:
+                # vérifier que c'est different aux données DB et les insérer
+                pass

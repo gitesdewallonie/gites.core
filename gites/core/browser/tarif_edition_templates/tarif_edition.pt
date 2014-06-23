@@ -9,6 +9,8 @@
 
   <form method="POST">
     <div tal:content="structure view/get_table" />
+
+    <input type="submit" value="Appliquer les changements" />
   </form>
 
 </div>
