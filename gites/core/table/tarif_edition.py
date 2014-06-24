@@ -19,36 +19,6 @@ from gites.core import interfaces
 from gites.db.content import Tarifs, TarifsType, Hebergement
 from gites.locales import GitesMessageFactory as _
 
-TARIF_MIN_SUBTYPES = [
-    'WEEK',
-    'WEEKEND',
-    '3_NIGHTS',
-    '4_NIGHTS',
-    '1_PERSON',
-    '2_PERSONS',
-    'PERSON_SUP',
-    'WITHOUT_BREAKFAST',
-    'END_OF_YEAR',
-    'GUARANTEE',
-]
-
-TARIF_MAX_SUBTYPES = [
-    'WEEK',
-    'WEEKEND',
-    '3_NIGHTS',
-    '4_NIGHTS',
-    'END_OF_YEAR',
-]
-
-TARIF_CMT_SUBTYPES = [
-    'ACCORDING_TO_CONSUMPTION',
-    'INCLUDED',
-    'INCLUSIVE',
-    'TABLE_HOTES',
-    'OTHER',
-    'SOJOURN_TAX',
-]
-
 
 class TarifEditionTable(table.Table):
     zope.interface.implements(interfaces.ITarifEditionTable)
@@ -58,6 +28,36 @@ class TarifEditionTable(table.Table):
     cssClassOdd = u'even'
     sortOn = None
     startBatchingAt = 9999
+
+    tarif_min_subtypes = [
+        'WEEK',
+        'WEEKEND',
+        '3_NIGHTS',
+        '4_NIGHTS',
+        '1_PERSON',
+        '2_PERSONS',
+        'PERSON_SUP',
+        'WITHOUT_BREAKFAST',
+        'END_OF_YEAR',
+        'GUARANTEE',
+    ]
+
+    tarif_max_subtypes = [
+        'WEEK',
+        'WEEKEND',
+        '3_NIGHTS',
+        '4_NIGHTS',
+        'END_OF_YEAR',
+    ]
+
+    tarif_cmt_subtypes = [
+        'ACCORDING_TO_CONSUMPTION',
+        'INCLUDED',
+        'INCLUSIVE',
+        'TABLE_HOTES',
+        'OTHER',
+        'SOJOURN_TAX',
+    ]
 
     @property
     def values(self):
@@ -151,52 +151,24 @@ class TarifEditionColumnUser(TarifEditionColumn, grok.MultiAdapter):
     weight = 40
 
 
-class TarifEditionColumnMin(TarifEditionColumn, grok.MultiAdapter):
-    grok.name('min')
-    header = u'Minimum'
-    attrName = u'min'
+class TarifEditionColumnValues(TarifEditionColumn, grok.MultiAdapter):
+    grok.name('values')
+    header = u''
     weight = 50
 
     def renderCell(self, item):
-        subtype = getattr(item, 'subtype')
-        if subtype not in TARIF_MIN_SUBTYPES:
+        elements = [self.render_field(item, 'min', after=u' €'),
+                    self.render_field(item, 'max', after=u' €', before=' / '),
+                    self.render_field(item, 'cmt')]
+        return u''.join(elements)
+
+    def render_field(self, item, attr, before=u'', after=u''):
+        subtypes = getattr(self.table, 'tarif_{0}_subtypes'.format(attr))
+        if item.subtype not in subtypes:
             return u''
 
-        min = getattr(item, 'min', '') or ''
-
-        render = u"""<input type="text" class="tarif-min-input" name="tarif_min_{0}_{1}" value="{2}"/>""".format(item.type, item.subtype, min)
-        return render
-
-
-class TarifEditionColumnMax(TarifEditionColumn, grok.MultiAdapter):
-    grok.name('max')
-    header = u'Maximum'
-    attrName = u'max'
-    weight = 60
-
-    def renderCell(self, item):
-        subtype = getattr(item, 'subtype')
-        if subtype not in TARIF_MAX_SUBTYPES:
-            return u''
-
-        max = getattr(item, 'max', '') or ''
-
-        render = u"""<input type="text" class="tarif-max-input" name="tarif_max_{0}_{1}" value="{2}"/>""".format(item.type, item.subtype, max)
-        return render
-
-
-class TarifEditionColumnCmt(TarifEditionColumn, grok.MultiAdapter):
-    grok.name('cmt')
-    header = u'Complément'
-    attrName = u'cmt'
-    weight = 70
-
-    def renderCell(self, item):
-        subtype = getattr(item, 'subtype')
-        if subtype not in TARIF_CMT_SUBTYPES:
-            return u''
-
-        cmt = getattr(item, 'cmt', '') or ''
-
-        render = u"""<input type="text" name="tarif_cmt_{0}_{1}" value="{2}"/>""".format(item.type, item.subtype, cmt)
-        return render
+        value = getattr(item, attr, '') or ''
+        input_text = (u'{0}<input type="text" class="tarif-{1}-input"'
+                      u'name="tarif_{1}_{2}_{3}" value="{4}"/>{5}')
+        return input_text.format(before, attr, item.type, item.subtype, value,
+                                 after)
