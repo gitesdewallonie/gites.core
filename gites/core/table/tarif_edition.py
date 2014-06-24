@@ -10,12 +10,14 @@ Copyright by Affinitic sprl
 import zope.component
 import zope.interface
 import zope.publisher
+from zope.i18n import translate
 from five import grok
 
 from z3c.table import column, interfaces as table_interfaces, table, value
 
 from gites.core import interfaces
 from gites.db.content import Tarifs, TarifsType, Hebergement
+from gites.locales import GitesMessageFactory as _
 
 TARIF_MIN_SUBTYPES = [
     'WEEK',
@@ -105,6 +107,10 @@ class TarifEditionColumn(column.GetAttrColumn):
                 zope.interface.Interface,
                 interfaces.ITarifEditionTable)
 
+    def translate(self, msgid):
+        language = self.request.get('LANGUAGE', 'fr')
+        return translate(_(msgid), target_language=language)
+
 
 class TarifEditionColumnType(TarifEditionColumn, grok.MultiAdapter):
     grok.name('type')
@@ -112,12 +118,20 @@ class TarifEditionColumnType(TarifEditionColumn, grok.MultiAdapter):
     attrName = u'type'
     weight = 10
 
+    def renderCell(self, item):
+        value = getattr(item, 'type', '') or ''
+        return self.translate(value)
+
 
 class TarifEditionColumnSubtype(TarifEditionColumn, grok.MultiAdapter):
     grok.name('subtype')
     header = u'Sous-Type'
     attrName = u'subtype'
     weight = 20
+
+    def renderCell(self, item):
+        value = getattr(item, 'subtype', '') or ''
+        return self.translate(value)
 
 
 class TarifEditionColumnDate(TarifEditionColumn, grok.MultiAdapter):
@@ -173,7 +187,7 @@ class TarifEditionColumnMax(TarifEditionColumn, grok.MultiAdapter):
 
 class TarifEditionColumnCmt(TarifEditionColumn, grok.MultiAdapter):
     grok.name('cmt')
-    header = u'Commentaire'
+    header = u'Complément'
     attrName = u'cmt'
     weight = 70
 
