@@ -5,14 +5,21 @@
 <head>
 </head>
 <body>
-<div metal:fill-slot="main">
+<div metal:fill-slot="main"
+     tal:define="validation view/validate">
 
-  <form method="POST">
-    <div tal:content="structure view/get_table" />
+  <tal:block condition="validation">
+    <form method="POST" tal:define="dummy view/apply_tarifs_changes">
+      <div tal:content="structure view/get_table" />
 
-    <input type="hidden" name="tarif_heb_pk" tal:attributes="value request/heb_pk" />
-    <input type="submit" value="Appliquer les changements" />
-  </form>
+      <input type="hidden" name="tarif_heb_pk" tal:attributes="value request/heb_pk" />
+      <input type="submit" value="Appliquer les changements" />
+    </form>
+  </tal:block>
+
+  <tal:block condition="not: validation">
+    <div class="error" tal:content="view/error" />
+  </tal:block>
 
 </div>
 </body>

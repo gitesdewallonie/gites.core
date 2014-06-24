@@ -35,18 +35,51 @@ class TarifEditionView(grok.View):
         table.update()
         return table.render()
 
-    def update(self):
-        """ Apply tarifs changes """
+    def apply_tarifs_changes(self):
+        """ Apply tarifs changes
+
+        Gite:
+        {'type': 'LOW_SEASON', 'subtype': 'WEEK'}, min max
+        {'type': 'LOW_SEASON', 'subtype': 'WEEKEND'}, min max
+        {'type': 'MEDIUM_SEASON', 'subtype': 'WEEK'}, min max
+        {'type': 'MEDIUM_SEASON', 'subtype': 'WEEKEND'}, min max
+        {'type': 'HIGH_SEASON', 'subtype': 'WEEK'}, min max
+        {'type': 'HIGH_SEASON', 'subtype': 'WEEKEND'}, min max
+        {'type': 'FEAST_WEEKEND', 'subtype': '3_NIGHTS'}, min max
+        {'type': 'FEAST_WEEKEND', 'subtype': '4_NIGHTS'}, min max
+
+        Chambre:
+        {'type': 'ROOM', 'subtype': '1_PERSON'}, min
+        {'type': 'ROOM', 'subtype': '2_PERSONS'}, min
+        {'type': 'ROOM', 'subtype': 'PERSON_SUP'}, min
+
+        Un seul des 3:
+        {'type': 'CHARGES', 'subtype': 'ACCORDING_TO_CONSUMPTION'}, cmt
+        {'type': 'CHARGES', 'subtype': 'INCLUDED'}, cmt
+        {'type': 'CHARGES', 'subtype': 'INCLUSIVE'}, cmt
+
+        Autre:
+        {'type': 'OTHER', 'subtype': 'WITHOUT_BREAKFAST'}, min
+        {'type': 'OTHER', 'subtype': 'TABLE_HOTES'}, cmt
+        {'type': 'OTHER', 'subtype': 'END_OF_YEAR'}, min max
+        {'type': 'OTHER', 'subtype': 'GUARANTEE'}, min
+        {'type': 'OTHER', 'subtype': 'OTHER'}, cmt
+        {'type': 'OTHER', 'subtype': 'SOJOURN_TAX'}, cmt
+        """
         form = self.request.form
         heb_pk = form.get('tarif_heb_pk', None)
+
+        if not heb_pk:
+            return
+
         tarifs_types = TarifsType.get()
         for tt in tarifs_types:
-            min = form.get('tarif_min_{0}_{1}'.format(tt.type, tt.subtype), None)
-            max = form.get('tarif_max_{0}_{1}'.format(tt.type, tt.subtype), None)
-            cmt = form.get('tarif_cmt_{0}_{1}'.format(tt.type, tt.subtype), None)
+            min = form.get('tarif_min_{0}_{1}'.format(tt.type, tt.subtype))
+            max = form.get('tarif_max_{0}_{1}'.format(tt.type, tt.subtype))
+            cmt = form.get('tarif_cmt_{0}_{1}'.format(tt.type, tt.subtype))
 
-            # XXX that condition depend on type/subtype
-            if min and max:
+            # Values are defined and not empty (if not defined: value = None)
+            if min != '' and max != '' and cmt != '':
                 self._update_tarif(heb_pk,
                                    tt.type,
                                    tt.subtype,
@@ -77,3 +110,17 @@ class TarifEditionView(grok.View):
                            user=api.user.get_current().id,
                            valid=True)
             tarif.add()
+
+    def validate(self):
+        """
+        Validate that tarif_min and tarif_max are float if encoded
+        """
+        form = self.request.form
+        # Min/Max with value
+        for param in [form.get(i) for i in form if ((i.startswith('tarif_max_') or i.startswith('tarif_min_')) and form.get(i))]:
+            try:
+                float(param)
+            except:
+                self.error = u'Les valeurs pour Minimum et Maximum doivent être des nombres'
+                return False
+        return True

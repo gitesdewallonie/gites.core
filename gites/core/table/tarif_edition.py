@@ -17,6 +17,36 @@ from z3c.table import column, interfaces as table_interfaces, table, value
 from gites.core import interfaces
 from gites.db.content import Tarifs, TarifsType
 
+TARIF_MIN_SUBTYPES = [
+    'WEEK',
+    'WEEKEND',
+    '3_NIGHTS',
+    '4_NIGHTS',
+    '1_PERSON',
+    '2_PERSONS',
+    'PERSON_SUP',
+    'WITHOUT_BREAKFAST',
+    'END_OF_YEAR',
+    'GUARANTEE',
+]
+
+TARIF_MAX_SUBTYPES = [
+    'WEEK',
+    'WEEKEND',
+    '3_NIGHTS',
+    '4_NIGHTS',
+    'END_OF_YEAR',
+]
+
+TARIF_CMT_SUBTYPES = [
+    'ACCORDING_TO_CONSUMPTION',
+    'INCLUDED',
+    'INCLUSIVE',
+    'TABLE_HOTES',
+    'OTHER',
+    'SOJOURN_TAX',
+]
+
 
 class TarifEditionTable(table.Table):
     zope.interface.implements(interfaces.ITarifEditionTable)
@@ -109,6 +139,10 @@ class TarifEditionColumnMin(TarifEditionColumn, grok.MultiAdapter):
     weight = 50
 
     def renderCell(self, item):
+        subtype = getattr(item, 'subtype')
+        if subtype not in TARIF_MIN_SUBTYPES:
+            return u''
+
         min = getattr(item, 'min', '') or ''
 
         render = u"""<input type="text" class="tarif-min-input" name="tarif_min_{0}_{1}" value="{2}"/>""".format(item.type, item.subtype, min)
@@ -122,6 +156,10 @@ class TarifEditionColumnMax(TarifEditionColumn, grok.MultiAdapter):
     weight = 60
 
     def renderCell(self, item):
+        subtype = getattr(item, 'subtype')
+        if subtype not in TARIF_MAX_SUBTYPES:
+            return u''
+
         max = getattr(item, 'max', '') or ''
 
         render = u"""<input type="text" class="tarif-max-input" name="tarif_max_{0}_{1}" value="{2}"/>""".format(item.type, item.subtype, max)
@@ -135,6 +173,10 @@ class TarifEditionColumnCmt(TarifEditionColumn, grok.MultiAdapter):
     weight = 70
 
     def renderCell(self, item):
+        subtype = getattr(item, 'subtype')
+        if subtype not in TARIF_CMT_SUBTYPES:
+            return u''
+
         cmt = getattr(item, 'cmt', '') or ''
 
         render = u"""<input type="text" name="tarif_cmt_{0}_{1}" value="{2}"/>""".format(item.type, item.subtype, cmt)
