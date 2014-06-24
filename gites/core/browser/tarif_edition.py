@@ -15,6 +15,7 @@ from plone import api
 
 from gites.core.table import tarif_edition
 from gites.db.content import Tarifs, TarifsType
+from gites.locales import GitesMessageFactory as _
 
 
 class TarifEditionView(grok.View):
@@ -92,6 +93,6 @@ class TarifEditionView(grok.View):
             try:
                 float(param)
             except:
-                self.error = u'Les valeurs pour Minimum et Maximum doivent être des nombres.'
+                self.error = _(u'Les valeurs pour Minimum et Maximum doivent être des nombres.')
                 return False
         return True
