@@ -36,36 +36,7 @@ class TarifEditionView(grok.View):
         return table.render()
 
     def apply_tarifs_changes(self):
-        """ Apply tarifs changes
-
-        Gite:
-        {'type': 'LOW_SEASON', 'subtype': 'WEEK'}, min max
-        {'type': 'LOW_SEASON', 'subtype': 'WEEKEND'}, min max
-        {'type': 'MEDIUM_SEASON', 'subtype': 'WEEK'}, min max
-        {'type': 'MEDIUM_SEASON', 'subtype': 'WEEKEND'}, min max
-        {'type': 'HIGH_SEASON', 'subtype': 'WEEK'}, min max
-        {'type': 'HIGH_SEASON', 'subtype': 'WEEKEND'}, min max
-        {'type': 'FEAST_WEEKEND', 'subtype': '3_NIGHTS'}, min max
-        {'type': 'FEAST_WEEKEND', 'subtype': '4_NIGHTS'}, min max
-
-        Chambre:
-        {'type': 'ROOM', 'subtype': '1_PERSON'}, min
-        {'type': 'ROOM', 'subtype': '2_PERSONS'}, min
-        {'type': 'ROOM', 'subtype': 'PERSON_SUP'}, min
-
-        Un seul des 3:
-        {'type': 'CHARGES', 'subtype': 'ACCORDING_TO_CONSUMPTION'}, cmt
-        {'type': 'CHARGES', 'subtype': 'INCLUDED'}, cmt
-        {'type': 'CHARGES', 'subtype': 'INCLUSIVE'}, cmt
-
-        Autre:
-        {'type': 'OTHER', 'subtype': 'WITHOUT_BREAKFAST'}, min
-        {'type': 'OTHER', 'subtype': 'TABLE_HOTES'}, cmt
-        {'type': 'OTHER', 'subtype': 'END_OF_YEAR'}, min max
-        {'type': 'OTHER', 'subtype': 'GUARANTEE'}, min
-        {'type': 'OTHER', 'subtype': 'OTHER'}, cmt
-        {'type': 'OTHER', 'subtype': 'SOJOURN_TAX'}, cmt
-        """
+        """ Apply tarifs changes """
         form = self.request.form
         heb_pk = form.get('tarif_heb_pk', None)
 
@@ -121,6 +92,6 @@ class TarifEditionView(grok.View):
             try:
                 float(param)
             except:
-                self.error = u'Les valeurs pour Minimum et Maximum doivent être des nombres'
+                self.error = u'Les valeurs pour Minimum et Maximum doivent être des nombres.'
                 return False
         return True

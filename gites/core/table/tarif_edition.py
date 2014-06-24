@@ -15,7 +15,7 @@ from five import grok
 from z3c.table import column, interfaces as table_interfaces, table, value
 
 from gites.core import interfaces
-from gites.db.content import Tarifs, TarifsType
+from gites.db.content import Tarifs, TarifsType, Hebergement
 
 TARIF_MIN_SUBTYPES = [
     'WEEK',
@@ -77,12 +77,17 @@ class TarifEditionValues(value.ValuesMixin,
         heb_pk = self.request.get('heb_pk', None)
         if not heb_pk:
             return []
+
+        heb = Hebergement.first(heb_pk=heb_pk)
+        if heb.type.type_heb_type == 'gite':
+            tarifs_types = TarifsType.get(gite=True)
         else:
-            tarifs_types = TarifsType.get()
-            self.tarifs = Tarifs.get_hebergement_tarifs(heb_pk)
-            tarifs_table = []
-            for tarifs_type in tarifs_types:
-                tarifs_table.append(self._get_tarif_line(tarifs_type))
+            tarifs_types = TarifsType.get(chambre=True)
+
+        self.tarifs = Tarifs.get_hebergement_tarifs(heb_pk)
+        tarifs_table = []
+        for tarifs_type in tarifs_types:
+            tarifs_table.append(self._get_tarif_line(tarifs_type))
         return tarifs_table
 
     def _get_tarif_line(self, tarifs_type):
