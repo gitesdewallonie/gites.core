@@ -10,6 +10,8 @@ Copyright by Affinitic sprl
 from datetime import datetime
 
 import zope.interface
+from zope.component import getUtility
+from zope.schema.interfaces import IVocabularyFactory
 from five import grok
 from plone import api
 
@@ -21,12 +23,8 @@ from gites.locales import GitesMessageFactory as _
 class TarifEditionView(grok.View):
     grok.context(zope.interface.Interface)
     grok.name(u'tarif-edition')
-    grok.require('gdw.ViewAdmin')
+    grok.require('cmf.SetOwnPassword')
     grok.template('tarif_edition')
-
-    @property
-    def heb_pk(self):
-        return self.request.get('heb_pk', None)
 
     def get_table(self):
         """ Returns the render of the table """
@@ -42,7 +40,12 @@ class TarifEditionView(grok.View):
         heb_pk = form.get('tarif_heb_pk', None)
 
         if not heb_pk:
-            return
+            return 1
+
+        # new tarif from proprio are not directly valid
+        roles = api.user.get_current().getRoles()
+        is_admin = 'Manager' in roles and True or None
+        valid = is_admin and True or None
 
         tarifs_types = TarifsType.get()
         for tt in tarifs_types:
@@ -57,10 +60,15 @@ class TarifEditionView(grok.View):
                                    tt.subtype,
                                    min,
                                    max,
-                                   cmt)
+                                   cmt,
+                                   valid)
+        if is_admin:
+            return 1
+        else:
+            return 2
 
     @staticmethod
-    def _update_tarif(heb_pk, type, subtype, min, max, cmt):
+    def _update_tarif(heb_pk, type, subtype, min, max, cmt, valid):
         """
         Verify that the values in DB are different then insert new line
         """
@@ -70,6 +78,7 @@ class TarifEditionView(grok.View):
                                      min=min,
                                      max=max,
                                      cmt=cmt)
+
         if not exist:
             # Insert new tarifs line
             tarif = Tarifs(heb_pk=heb_pk,
@@ -80,13 +89,17 @@ class TarifEditionView(grok.View):
                            cmt=cmt,
                            date=datetime.now(),
                            user=api.user.get_current().id,
-                           valid=True)
+                           valid=valid)
             tarif.add()
 
     def validate(self):
         """
         Validate that tarif_min and tarif_max are float if encoded
         """
+        if not self._validate_permission():
+            self.error = _(u"Vous n'avez pas les droits d'accéder à cette page.")
+            return False
+
         form = self.request.form
         # Min/Max with value
         for param in [form.get(i) for i in form if ((i.startswith('tarif_max_') or i.startswith('tarif_min_')) and form.get(i))]:
@@ -96,3 +109,17 @@ class TarifEditionView(grok.View):
                 self.error = _(u'Les valeurs pour Minimum et Maximum doivent être des nombres.')
                 return False
         return True
+
+    def _validate_permission(self):
+        """ User must be Manager or Proprio of heb requested """
+        roles = api.user.get_current().getRoles()
+
+        heb_pk = self.request.get('heb_pk', None)
+        if 'Manager' in roles:
+            return True
+        elif 'Proprietaire' in roles:
+            proprio_hebs = getUtility(IVocabularyFactory, name='proprio.hebergements')(self.context)
+            for proprio_heb in proprio_hebs:
+                if proprio_heb.token == heb_pk:
+                    return True
+        return False

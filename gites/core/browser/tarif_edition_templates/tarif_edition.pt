@@ -9,16 +9,37 @@
      tal:define="validation view/validate">
 
   <tal:block condition="validation">
-    <form method="POST" tal:define="dummy view/apply_tarifs_changes">
-      <div tal:content="structure view/get_table" />
+    <form method="POST" tal:define="status view/apply_tarifs_changes">
 
-      <input type="hidden" name="tarif_heb_pk" tal:attributes="value request/heb_pk" />
-      <input type="submit" value="Appliquer les changements" />
+      <div tal:condition="python: status==1">
+        <div tal:content="structure view/get_table" />
+
+        <input type="hidden" name="tarif_heb_pk" tal:attributes="value request/heb_pk" />
+        <input type="submit" value="Appliquer les changements" />
+      </div>
+
+      <div tal:condition="python: status==2">
+          Vos données sont correctement enregistrées.
+          <br />
+          Elles seront visibles sur le site après vérification et validation par notre équipe.
+          <br />
+          Merci.
+          <br />
+
+         <a href="#" title="Retourner à la zone membre"
+            tal:attributes="href string:${context/@@plone_portal_state/portal_url}/zone-membre">Retourner &agrave; la zone membre</a>
+      </div>
+
+      <div tal:condition="python: status==-1">
+          Un problème est survenu lors de la mise à jour de vos données.
+      </div>
+
     </form>
   </tal:block>
 
   <tal:block condition="not: validation">
     <div class="error" tal:content="view/error" />
+    <a href="javascript:history.back()">Recommencer</a>
   </tal:block>
 
 </div>

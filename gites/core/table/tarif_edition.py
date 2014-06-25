@@ -10,8 +10,11 @@ Copyright by Affinitic sprl
 import zope.component
 import zope.interface
 import zope.publisher
+from zope.component import getUtility
 from zope.i18n import translate
+from zope.schema.interfaces import IVocabularyFactory
 from five import grok
+from plone import api
 
 from z3c.table import column, interfaces as table_interfaces, table, value
 
@@ -76,21 +79,37 @@ class TarifEditionValues(value.ValuesMixin,
 
     @property
     def values(self):
-        heb_pk = self.request.get('heb_pk', None)
-        if not heb_pk:
-            return []
+        heb = self._get_heb()
 
-        heb = Hebergement.first(heb_pk=heb_pk)
         if heb.type.type_heb_type == 'gite':
             tarifs_types = TarifsType.get(gite=True)
         else:
             tarifs_types = TarifsType.get(chambre=True)
 
-        self.tarifs = Tarifs.get_hebergement_tarifs(heb_pk)
+        self.tarifs = Tarifs.get_hebergement_tarifs(heb.heb_pk)
         tarifs_table = []
         for tarifs_type in tarifs_types:
             tarifs_table.append(self._get_tarif_line(tarifs_type))
         return tarifs_table
+
+    def _get_heb(self):
+        roles = api.user.get_current().getRoles()
+        heb = None
+        heb_pk = self.request.get('heb_pk', None)
+
+        # Proprio of heb in the request?
+        if 'Proprietaire' in roles:
+            proprio_hebs = getUtility(IVocabularyFactory, name='proprio.hebergements')(self.context)
+            for proprio_heb in proprio_hebs:
+                if proprio_heb.token == heb_pk:
+                    heb = Hebergement.first(heb_pk=heb_pk)
+                    break
+
+        # Admin
+        elif 'Manager' in roles:
+            heb = Hebergement.first(heb_pk=heb_pk)
+
+        return heb
 
     def _get_tarif_line(self, tarifs_type):
         for tarif in self.tarifs:
