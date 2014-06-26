@@ -63,11 +63,11 @@ class ITarifEditionTable(Interface):
 
 
 class ITarifEditionManager(ITarifEditionTable):
-    """ Marker interface for the tarif edition table to confirm """
+    """ Marker interface for the tarif edition table for manager """
 
 
-class ITarifEditionToConfirm(ITarifEditionTable):
-    """ Marker interface for the tarif edition table to confirm """
+class ITarifEditionProprio(ITarifEditionTable):
+    """ Marker interface for the tarif edition table for proprio """
 
 
 class ITarifToConfirmTable(Interface):

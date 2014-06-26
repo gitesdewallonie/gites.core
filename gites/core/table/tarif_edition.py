@@ -180,7 +180,7 @@ class TarifEditionColumnUser(TarifEditionColumn, grok.MultiAdapter):
 class TarifEditionColumnValues(TarifEditionColumn, grok.MultiAdapter):
     grok.adapts(zope.interface.Interface,
                 zope.interface.Interface,
-                interfaces.ITarifEditionToConfirm)
+                interfaces.ITarifEditionManager)
     grok.name('values')
     header = u'Valeurs actuelles'
     weight = 50
@@ -266,7 +266,7 @@ class TarifEditionColumnInputsMixin(TarifEditionColumn, grok.MultiAdapter):
 class TarifEditionColumnInputsManager(TarifEditionColumnInputsMixin, grok.MultiAdapter):
     grok.adapts(zope.interface.Interface,
                 zope.interface.Interface,
-                interfaces.ITarifEditionManager)
+                interfaces.ITarifEditionProprio)
     grok.name('inputs')
     header = u''
     weight = 60
@@ -278,7 +278,7 @@ class TarifEditionColumnInputsManager(TarifEditionColumnInputsMixin, grok.MultiA
 class TarifEditionColumnInputsToConfirm(TarifEditionColumnInputsMixin, grok.MultiAdapter):
     grok.adapts(zope.interface.Interface,
                 zope.interface.Interface,
-                interfaces.ITarifEditionToConfirm)
+                interfaces.ITarifEditionManager)
     grok.name('inputs')
     header = u''
     weight = 60

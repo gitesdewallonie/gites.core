@@ -33,12 +33,15 @@ class TarifEditionView(grok.View):
             self.context,
             self.request)
 
-        if self.request.get('to_confirm') == '1':
-            zope.interface.alsoProvides(
-                table, interfaces.ITarifEditionToConfirm)
-        else:
+        roles = api.user.get_current().getRoles()
+        is_admin = 'Manager' in roles and True or None
+
+        if is_admin:
             zope.interface.alsoProvides(
                 table, interfaces.ITarifEditionManager)
+        else:
+            zope.interface.alsoProvides(
+                table, interfaces.ITarifEditionProprio)
 
         table.update()
         return table.render()
@@ -172,9 +175,6 @@ class TarifEditionView(grok.View):
         if 'Manager' in roles:
             return True
         elif 'Proprietaire' in roles:
-            if self.request.get('to_confirm', None):
-                return False
-
             proprio_hebs = getUtility(IVocabularyFactory, name='proprio.hebergements')(self.context)
 
             for proprio_heb in proprio_hebs:

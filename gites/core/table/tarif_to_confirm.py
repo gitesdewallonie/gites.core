@@ -72,7 +72,6 @@ class TarifToConfirmColumnButton(TarifToConfirmColumn, grok.MultiAdapter):
         render = """
             <form method="GET" action="tarif-edition">
               <input type="hidden" name="heb_pk" value="{0}" />
-              <input type="hidden" name="to_confirm" value="1" />
               <input type="submit" value="Go">
             </form>""".format(value)
         return render
