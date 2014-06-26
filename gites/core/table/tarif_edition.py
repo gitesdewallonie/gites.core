@@ -238,7 +238,7 @@ class TarifEditionColumnInputsMixin(TarifEditionColumn, grok.MultiAdapter):
 
     def _render_charges(self, item, to_confirm):
         subtype = getattr(item, 'subtype', '')
-        cmt = getattr(item, 'cmt', '')
+        cmt = getattr(item, 'cmt', '') or ''
 
         # We must show only to_confirm check if there is one!
         checked = cmt and 'CHECKED' or ''

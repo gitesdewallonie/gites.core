@@ -63,20 +63,21 @@ class TarifEditionView(grok.View):
         for tt in tarifs_types:
             if tt.type == "CHARGES":
                 min, max, cmt = self._get_charges_values(form, tt)
+                # Do not have to update_tarif CHARGES if not selected
+                if cmt == None:
+                    continue
             else:
-                min = form.get('tarif_min_{0}_{1}'.format(tt.type, tt.subtype))
-                max = form.get('tarif_max_{0}_{1}'.format(tt.type, tt.subtype))
-                cmt = form.get('tarif_cmt_{0}_{1}'.format(tt.type, tt.subtype))
+                min = form.get('tarif_min_{0}_{1}'.format(tt.type, tt.subtype)) or None
+                max = form.get('tarif_max_{0}_{1}'.format(tt.type, tt.subtype)) or None
+                cmt = form.get('tarif_cmt_{0}_{1}'.format(tt.type, tt.subtype)) or None
 
-            # Values are defined and not empty (if not defined: value = None)
-            if min != '' and max != '' and cmt != '':
-                self._update_tarif(heb_pk,
-                                   tt.type,
-                                   tt.subtype,
-                                   min,
-                                   max,
-                                   cmt,
-                                   valid)
+            self._update_tarif(heb_pk,
+                               tt.type,
+                               tt.subtype,
+                               min,
+                               max,
+                               cmt,
+                               valid)
         if is_admin:
             return 1
         else:
@@ -84,7 +85,7 @@ class TarifEditionView(grok.View):
 
     @staticmethod
     def _get_charges_values(form, tt):
-        min, max, cmt = None, None, ''
+        min, max, cmt = None, None, None
         subtype = form.get('tarif_CHARGES_radio')
         if subtype == tt.subtype:
             if subtype in ('INCLUDED', 'ACCORDING_TO_CONSUMPTION'):
