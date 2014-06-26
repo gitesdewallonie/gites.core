@@ -3,5 +3,6 @@
 
    <grok:grok package=".hebcomparison" />
    <grok:grok package=".tarif_edition" />
+   <grok:grok package=".tarif_to_confirm" />
 
 </configure>

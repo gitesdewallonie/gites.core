@@ -60,3 +60,15 @@ class ISearch(Interface):
 
 class ITarifEditionTable(Interface):
     """ Marker interface for the tarif edition table """
+
+
+class ITarifEditionManager(ITarifEditionTable):
+    """ Marker interface for the tarif edition table to confirm """
+
+
+class ITarifEditionToConfirm(ITarifEditionTable):
+    """ Marker interface for the tarif edition table to confirm """
+
+
+class ITarifToConfirmTable(Interface):
+    """ Marker interface for the tarif to confirm table """

@@ -15,6 +15,7 @@ from zope.schema.interfaces import IVocabularyFactory
 from five import grok
 from plone import api
 
+from gites.core import interfaces
 from gites.core.table import tarif_edition
 from gites.db.content import Tarifs, TarifsType
 from gites.locales import GitesMessageFactory as _
@@ -31,6 +32,15 @@ class TarifEditionView(grok.View):
         table = tarif_edition.TarifEditionTable(
             self.context,
             self.request)
+
+        if self.request.get('to_confirm') == '1':
+            zope.interface.alsoProvides(
+                table, interfaces.ITarifEditionToConfirm)
+        else:
+            zope.interface.alsoProvides(
+                table, interfaces.ITarifEditionManager)
+
+
         table.update()
         return table.render()
 
@@ -118,7 +128,11 @@ class TarifEditionView(grok.View):
         if 'Manager' in roles:
             return True
         elif 'Proprietaire' in roles:
+            if self.request.get('to_confirm', None):
+                return False
+
             proprio_hebs = getUtility(IVocabularyFactory, name='proprio.hebergements')(self.context)
+
             for proprio_heb in proprio_hebs:
                 if proprio_heb.token == heb_pk:
                     return True

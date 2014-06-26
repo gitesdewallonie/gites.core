@@ -62,6 +62,10 @@ class TarifEditionTable(table.Table):
         'SOJOURN_TAX',
     ]
 
+    def __init__(self, context, request):
+        super(TarifEditionTable, self).__init__(context, request)
+        self.heb_pk = self.request.get('heb_pk', None)
+
     @property
     def values(self):
         """ Returns the values for an hosting """
@@ -95,19 +99,18 @@ class TarifEditionValues(value.ValuesMixin,
     def _get_heb(self):
         roles = api.user.get_current().getRoles()
         heb = None
-        heb_pk = self.request.get('heb_pk', None)
 
         # Proprio of heb in the request?
         if 'Proprietaire' in roles:
             proprio_hebs = getUtility(IVocabularyFactory, name='proprio.hebergements')(self.context)
             for proprio_heb in proprio_hebs:
-                if proprio_heb.token == heb_pk:
-                    heb = Hebergement.first(heb_pk=heb_pk)
+                if proprio_heb.token == self.table.heb_pk:
+                    heb = Hebergement.first(heb_pk=self.table.heb_pk)
                     break
 
         # Admin
         elif 'Manager' in roles:
-            heb = Hebergement.first(heb_pk=heb_pk)
+            heb = Hebergement.first(heb_pk=self.table.heb_pk)
 
         return heb
 
@@ -171,8 +174,11 @@ class TarifEditionColumnUser(TarifEditionColumn, grok.MultiAdapter):
 
 
 class TarifEditionColumnValues(TarifEditionColumn, grok.MultiAdapter):
+    grok.adapts(zope.interface.Interface,
+                zope.interface.Interface,
+                interfaces.ITarifEditionToConfirm)
     grok.name('values')
-    header = u''
+    header = u'Valeurs actuelles'
     weight = 50
 
     def renderCell(self, item):
@@ -187,7 +193,69 @@ class TarifEditionColumnValues(TarifEditionColumn, grok.MultiAdapter):
             return u''
 
         value = getattr(item, attr, '') or ''
-        input_text = (u'{0}<input type="text" class="tarif-{1}-input"'
-                      u'name="tarif_{1}_{2}_{3}" value="{4}"/>{5}')
-        return input_text.format(before, attr, item.type, item.subtype, value,
-                                 after)
+        input_text = (u'{0}{1}{2}')
+        return input_text.format(before, value, after)
+
+
+class TarifEditionColumnInputsMixin(TarifEditionColumn, grok.MultiAdapter):
+    grok.name('inputs')
+    header = u''
+    weight = 60
+
+    def get_item(self, item):
+        raise NotImplementedError
+
+    def renderCell(self, item):
+        item = self.get_item(item)
+
+        to_confirm = getattr(item, 'valid', '') == None
+        to_confirm = to_confirm and u'tarif-to-confirm' or u''
+
+        elements = [self.render_field(item, 'min', after=u' €', to_confirm=to_confirm),
+                    self.render_field(item, 'max', after=u' €', before=' / ', to_confirm=to_confirm),
+                    self.render_field(item, 'cmt', to_confirm=to_confirm)]
+        return u''.join(elements)
+
+    def render_field(self, item, attr, before=u'', after=u'', to_confirm=u''):
+        subtypes = getattr(self.table, 'tarif_{0}_subtypes'.format(attr))
+        if item.subtype not in subtypes:
+            return u''
+
+        value = getattr(item, attr, '') or ''
+        input_text = (u'{0}<input type="text" class="tarif-{1}-input {2}"'
+                      u'name="tarif_{1}_{3}_{4}" value="{5}"/>{6}')
+        return input_text.format(before, attr, to_confirm, item.type, item.subtype,
+                                 value, after)
+
+
+class TarifEditionColumnInputsManager(TarifEditionColumnInputsMixin, grok.MultiAdapter):
+    grok.adapts(zope.interface.Interface,
+                zope.interface.Interface,
+                interfaces.ITarifEditionManager)
+    grok.name('inputs')
+    header = u''
+    weight = 60
+
+    def get_item(self, item):
+        return item
+
+
+class TarifEditionColumnInputsToConfirm(TarifEditionColumnInputsMixin, grok.MultiAdapter):
+    grok.adapts(zope.interface.Interface,
+                zope.interface.Interface,
+                interfaces.ITarifEditionToConfirm)
+    grok.name('inputs')
+    header = u''
+    weight = 60
+
+    def get_item(self, item):
+        # Get tarif to confirm values
+        type = getattr(item, 'type', '')
+        subtype = getattr(item, 'subtype', '')
+        if not type and not subtype:
+            return u''
+
+        to_confirm_item = Tarifs.get_hebergement_tarif_to_confirm(self.table.heb_pk, type, subtype)
+        # Replace tarif to tarif_to_confirm if exists
+        item = to_confirm_item and to_confirm_item or item
+        return item
