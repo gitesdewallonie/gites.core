@@ -40,7 +40,6 @@ class TarifEditionView(grok.View):
             zope.interface.alsoProvides(
                 table, interfaces.ITarifEditionManager)
 
-
         table.update()
         return table.render()
 
@@ -81,7 +80,35 @@ class TarifEditionView(grok.View):
     def _update_tarif(heb_pk, type, subtype, min, max, cmt, valid):
         """
         Verify that the values in DB are different then insert new line
+
+        If to_confirm with same value
+            valid = True
+            return
+        If to_confirm with different value
+            valid = False
+
+        If tarif exists with same value
+            do nothing
+        If tarif does not exists with same value
+            insert new tarif
         """
+        to_confirm_exist = Tarifs.get_hebergement_tarif_to_confirm_with_value(
+            heb_pk=heb_pk,
+            type=type,
+            subtype=subtype,
+            min=min,
+            max=max,
+            cmt=cmt)
+        if to_confirm_exist:
+            to_confirm_exist.valid = True
+            to_confirm_exist.save()
+            return
+
+        to_confirm = Tarifs.get_hebergement_tarif_to_confirm(heb_pk, type, subtype)
+        if to_confirm:
+            to_confirm.valid = False
+            to_confirm.save()
+
         exist = Tarifs.exists_tarifs(heb_pk=heb_pk,
                                      type=type,
                                      subtype=subtype,
