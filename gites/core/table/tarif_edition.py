@@ -31,6 +31,7 @@ class TarifEditionTable(table.Table):
     cssClassOdd = u'even'
     sortOn = None
     startBatchingAt = 9999
+    charge_already_checked = False
 
     tarif_min_subtypes = [
         'WEEK',
@@ -167,6 +168,9 @@ class TarifEditionColumnDate(TarifEditionColumn, grok.MultiAdapter):
 
 
 class TarifEditionColumnUser(TarifEditionColumn, grok.MultiAdapter):
+    grok.adapts(zope.interface.Interface,
+                zope.interface.Interface,
+                interfaces.ITarifEditionManager)
     grok.name('user')
     header = u'Utilisateur'
     attrName = u'user'
@@ -211,12 +215,17 @@ class TarifEditionColumnInputsMixin(TarifEditionColumn, grok.MultiAdapter):
         to_confirm = getattr(item, 'valid', '') == None
         to_confirm = to_confirm and u'tarif-to-confirm' or u''
 
-        elements = [self.render_field(item, 'min', after=u' €', to_confirm=to_confirm),
-                    self.render_field(item, 'max', after=u' €', before=' / ', to_confirm=to_confirm),
-                    self.render_field(item, 'cmt', to_confirm=to_confirm)]
+        type = getattr(item, 'type', '')
+        if type == 'CHARGES':
+            return self._render_charges(item, to_confirm)
+
+        elements = [self._render_field(item, 'min', after=u' €', to_confirm=to_confirm),
+                    self._render_field(item, 'max', after=u' €', before=' / ', to_confirm=to_confirm),
+                    self._render_field(item, 'cmt', to_confirm=to_confirm)]
         return u''.join(elements)
 
-    def render_field(self, item, attr, before=u'', after=u'', to_confirm=u''):
+    def _render_field(self, item, attr, before=u'', after=u'', to_confirm=u''):
+
         subtypes = getattr(self.table, 'tarif_{0}_subtypes'.format(attr))
         if item.subtype not in subtypes:
             return u''
@@ -226,6 +235,32 @@ class TarifEditionColumnInputsMixin(TarifEditionColumn, grok.MultiAdapter):
                       u'name="tarif_{1}_{3}_{4}" value="{5}"/>{6}')
         return input_text.format(before, attr, to_confirm, item.type, item.subtype,
                                  value, after)
+
+    def _render_charges(self, item, to_confirm):
+        subtype = getattr(item, 'subtype', '')
+        cmt = getattr(item, 'cmt', '')
+
+        # We must show only to_confirm check if there is one!
+        checked = cmt and 'CHECKED' or ''
+        if checked and to_confirm:
+            self.table.charge_already_checked = True
+        if self.table.charge_already_checked and not to_confirm:
+            checked = u''
+
+        if subtype in ('INCLUDED', 'ACCORDING_TO_CONSUMPTION'):
+            render = """
+                <span class="{0}">
+                  <input type="radio" name="tarif_CHARGES_radio" value="{1}" {2}>
+                </span>
+            """.format(to_confirm, subtype, checked)
+        elif subtype == 'INCLUSIVE':
+            render = """
+                <span class="{0}">
+                  <input type="radio" name="tarif_CHARGES_radio" value="{1}" {2}>
+                </span>
+                <textarea class="tarif-cmt-textarea {0}" name="tarif_CHARGES_INCLUSIVE_cmt">{3}</textarea>
+            """.format(to_confirm, subtype, checked, cmt)
+        return render
 
 
 class TarifEditionColumnInputsManager(TarifEditionColumnInputsMixin, grok.MultiAdapter):

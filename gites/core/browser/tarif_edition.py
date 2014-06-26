@@ -58,9 +58,12 @@ class TarifEditionView(grok.View):
 
         tarifs_types = TarifsType.get()
         for tt in tarifs_types:
-            min = form.get('tarif_min_{0}_{1}'.format(tt.type, tt.subtype))
-            max = form.get('tarif_max_{0}_{1}'.format(tt.type, tt.subtype))
-            cmt = form.get('tarif_cmt_{0}_{1}'.format(tt.type, tt.subtype))
+            if tt.type == "CHARGES":
+                min, max, cmt = self._get_charges_values(form, tt)
+            else:
+                min = form.get('tarif_min_{0}_{1}'.format(tt.type, tt.subtype))
+                max = form.get('tarif_max_{0}_{1}'.format(tt.type, tt.subtype))
+                cmt = form.get('tarif_cmt_{0}_{1}'.format(tt.type, tt.subtype))
 
             # Values are defined and not empty (if not defined: value = None)
             if min != '' and max != '' and cmt != '':
@@ -75,6 +78,17 @@ class TarifEditionView(grok.View):
             return 1
         else:
             return 2
+
+    @staticmethod
+    def _get_charges_values(form, tt):
+        min, max, cmt = None, None, ''
+        subtype = form.get('tarif_CHARGES_radio')
+        if subtype == tt.subtype:
+            if subtype in ('INCLUDED', 'ACCORDING_TO_CONSUMPTION'):
+                cmt = 'CHECKED'
+            elif subtype == 'INCLUSIVE':
+                cmt = form.get('tarif_CHARGES_INCLUSIVE_cmt') or 'CHECKED'
+        return min, max, cmt
 
     @staticmethod
     def _update_tarif(heb_pk, type, subtype, min, max, cmt, valid):
@@ -104,7 +118,10 @@ class TarifEditionView(grok.View):
             to_confirm_exist.save()
             return
 
-        to_confirm = Tarifs.get_hebergement_tarif_to_confirm(heb_pk, type, subtype)
+        if type == 'CHARGES':
+            to_confirm = Tarifs.get_hebergement_tarif_to_confirm(heb_pk, type)
+        else:
+            to_confirm = Tarifs.get_hebergement_tarif_to_confirm(heb_pk, type, subtype)
         if to_confirm:
             to_confirm.valid = False
             to_confirm.save()
