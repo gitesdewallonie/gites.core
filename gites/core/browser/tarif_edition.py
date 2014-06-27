@@ -17,7 +17,7 @@ from plone import api
 
 from gites.core import interfaces
 from gites.core.table import tarif_edition
-from gites.db.content import Tarifs, TarifsType
+from gites.db.content import Tarifs, TarifsType, Hebergement
 from gites.locales import GitesMessageFactory as _
 
 
@@ -46,6 +46,10 @@ class TarifEditionView(grok.View):
         table.update()
         return table.render()
 
+    @property
+    def heb_pk(self):
+        return self.request.get('heb_pk', None)
+
     def apply_tarifs_changes(self):
         """ Apply tarifs changes """
         form = self.request.form
@@ -59,7 +63,13 @@ class TarifEditionView(grok.View):
         is_admin = 'Manager' in roles and True or None
         valid = is_admin and True or None
 
-        tarifs_types = TarifsType.get()
+        heb = Hebergement.first(heb_pk=heb_pk)
+
+        if heb.type.type_heb_type == 'gite':
+            tarifs_types = TarifsType.get(gite=True)
+        else:
+            tarifs_types = TarifsType.get(chambre=True)
+
         for tt in tarifs_types:
             if tt.type == "CHARGES":
                 min, max, cmt = self._get_charges_values(form, tt)
@@ -172,7 +182,7 @@ class TarifEditionView(grok.View):
         """ User must be Manager or Proprio of heb requested """
         roles = api.user.get_current().getRoles()
 
-        heb_pk = self.request.get('heb_pk', None)
+        heb_pk = self.heb_pk
         if 'Manager' in roles:
             return True
         elif 'Proprietaire' in roles:
