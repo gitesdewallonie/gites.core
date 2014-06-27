@@ -23,10 +23,12 @@ from gites.db.content import Tarifs, TarifsType, Hebergement
 from gites.locales import GitesMessageFactory as _
 
 
-class TarifEditionTable(table.Table):
-    zope.interface.implements(interfaces.ITarifEditionTable)
+class TarifTable(table.Table):
 
-    cssClasses = {'table': 'z3c-listing percent100 listing nosort'}
+    zope.interface.implements(interfaces.ITarifTable)
+
+    cssClasses = {'table': 'hebergement-tarif-display',
+                  'thead': 'tarif-periode'}
     cssClassEven = u'odd'
     cssClassOdd = u'even'
     sortOn = None
@@ -63,9 +65,9 @@ class TarifEditionTable(table.Table):
         'SOJOURN_TAX',
     ]
 
-    def __init__(self, context, request):
-        super(TarifEditionTable, self).__init__(context, request)
-        self.heb_pk = self.request.get('heb_pk', None)
+    def __init__(self, context, request, heb_pk):
+        super(TarifTable, self).__init__(context, request)
+        self.heb_pk = heb_pk
 
     @property
     def values(self):
@@ -75,12 +77,18 @@ class TarifEditionTable(table.Table):
         return adapter.values
 
 
-class TarifEditionValues(value.ValuesMixin,
-                         grok.MultiAdapter):
+class TarifEditionTable(TarifTable):
+    zope.interface.implements(interfaces.ITarifEditionTable)
+
+    cssClasses = {'table': 'z3c-listing percent100 listing nosort'}
+
+
+class TarifValues(value.ValuesMixin,
+                  grok.MultiAdapter):
     grok.provides(table_interfaces.IValues)
     grok.adapts(zope.interface.Interface,
                 zope.publisher.interfaces.browser.IBrowserRequest,
-                interfaces.ITarifEditionTable)
+                interfaces.ITarifTable)
 
     @property
     def values(self):
@@ -96,6 +104,23 @@ class TarifEditionValues(value.ValuesMixin,
         for tarifs_type in tarifs_types:
             tarifs_table.append(self._get_tarif_line(tarifs_type))
         return tarifs_table
+
+    def _get_heb(self):
+        return Hebergement.first(heb_pk=self.table.heb_pk)
+
+    def _get_tarif_line(self, tarifs_type):
+        for tarif in self.tarifs:
+            if (tarif.type == tarifs_type.type and
+               tarif.subtype == tarifs_type.subtype):
+                return tarif
+        return tarifs_type
+
+
+class TarifEditionValues(TarifValues):
+    grok.provides(table_interfaces.IValues)
+    grok.adapts(zope.interface.Interface,
+                zope.publisher.interfaces.browser.IBrowserRequest,
+                interfaces.ITarifEditionTable)
 
     def _get_heb(self):
         roles = api.user.get_current().getRoles()
@@ -115,20 +140,13 @@ class TarifEditionValues(value.ValuesMixin,
 
         return heb
 
-    def _get_tarif_line(self, tarifs_type):
-        for tarif in self.tarifs:
-            if (tarif.type == tarifs_type.type and
-               tarif.subtype == tarifs_type.subtype):
-                return tarif
-        return tarifs_type
-
 
 class TarifEditionColumn(column.GetAttrColumn):
     """ Base class for the comparison columns """
     grok.provides(table_interfaces.IColumn)
     grok.adapts(zope.interface.Interface,
                 zope.interface.Interface,
-                interfaces.ITarifEditionTable)
+                interfaces.ITarifTable)
 
     def translate(self, msgid):
         language = self.request.get('LANGUAGE', 'fr')
@@ -158,6 +176,9 @@ class TarifEditionColumnSubtype(TarifEditionColumn, grok.MultiAdapter):
 
 
 class TarifEditionColumnDate(TarifEditionColumn, grok.MultiAdapter):
+    grok.adapts(zope.interface.Interface,
+                zope.interface.Interface,
+                interfaces.ITarifEditionManager)
     grok.name('date')
     header = u'Date'
     weight = 30
@@ -177,13 +198,10 @@ class TarifEditionColumnUser(TarifEditionColumn, grok.MultiAdapter):
     weight = 40
 
 
-class TarifEditionColumnValues(TarifEditionColumn, grok.MultiAdapter):
-    grok.adapts(zope.interface.Interface,
-                zope.interface.Interface,
-                interfaces.ITarifEditionManager)
+class TarifColumnValues():
     grok.name('values')
-    header = u'Valeurs actuelles'
     weight = 50
+    header = u'Valeurs'
 
     def renderCell(self, item):
         elements = [self.render_field(item, 'min', after=u' €'),
@@ -201,7 +219,23 @@ class TarifEditionColumnValues(TarifEditionColumn, grok.MultiAdapter):
         return input_text.format(before, value, after)
 
 
+class TarifDisplayColumnValues(TarifColumnValues, TarifEditionColumn, grok.MultiAdapter):
+    grok.adapts(zope.interface.Interface,
+                zope.interface.Interface,
+                interfaces.ITarifDisplayTable)
+
+
+class TarifEditionColumnValues(TarifColumnValues, TarifEditionColumn, grok.MultiAdapter):
+    grok.adapts(zope.interface.Interface,
+                zope.interface.Interface,
+                interfaces.ITarifEditionManager)
+    header = u'Valeurs actuelles'
+
+
 class TarifEditionColumnInputsMixin(TarifEditionColumn, grok.MultiAdapter):
+    grok.adapts(zope.interface.Interface,
+                zope.interface.Interface,
+                interfaces.ITarifEditionTable)
     grok.name('inputs')
     header = u''
     weight = 60

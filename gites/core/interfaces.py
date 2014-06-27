@@ -58,7 +58,15 @@ class ISearch(Interface):
     """ Marker interface for search context """
 
 
-class ITarifEditionTable(Interface):
+class ITarifTable(Interface):
+    """ Marker interface for the tarif table """
+
+
+class ITarifDisplayTable(ITarifTable):
+    """ Marker interface for the tarif display table """
+
+
+class ITarifEditionTable(ITarifTable):
     """ Marker interface for the tarif edition table """
 
 

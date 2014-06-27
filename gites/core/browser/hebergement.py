@@ -21,6 +21,7 @@ from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from z3c.sqlalchemy import getSAWrapper
 from plone import api
 from plone.memoize.instance import memoize
+import zope.interface
 import sqlalchemy as sa
 
 from affinitic.db.cache import FromCache
@@ -34,6 +35,8 @@ from gites.map.browser.interfaces import IMappableView
 from gites.core.interfaces import IMapRequest
 from gites.core.browser.interfaces import (IHebergementView,
                                            IHebergementIconsView)
+from gites.core.table import tarif
+from gites.core import interfaces
 
 from gites.locales import GitesMessageFactory as _
 
@@ -328,6 +331,21 @@ class HebergementView(BrowserView):
                                 commune,
                                 hebId,
                                 )
+
+    def get_tarif_table(self):
+        """
+        Return render of tarif table
+        """
+        table = tarif.TarifTable(
+            self.context,
+            self.request,
+            self.context.heb_pk)
+
+        zope.interface.alsoProvides(
+            table, interfaces.ITarifDisplayTable)
+
+        table.update()
+        return table.render()
 
 
 class HebergementIconsView(BrowserView):

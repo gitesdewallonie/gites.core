@@ -16,7 +16,7 @@ from five import grok
 from plone import api
 
 from gites.core import interfaces
-from gites.core.table import tarif_edition
+from gites.core.table import tarif
 from gites.db.content import Tarifs, TarifsType, Hebergement
 from gites.locales import GitesMessageFactory as _
 
@@ -29,12 +29,17 @@ class TarifEditionView(grok.View):
 
     def get_table(self):
         """ Returns the render of the table """
-        table = tarif_edition.TarifEditionTable(
+        heb_pk = self.request.get('heb_pk', None)
+        table = tarif.TarifEditionTable(
             self.context,
-            self.request)
+            self.request,
+            heb_pk)
 
         roles = api.user.get_current().getRoles()
         is_admin = 'Manager' in roles and True or None
+
+        zope.interface.alsoProvides(
+            table, interfaces.ITarifEditionTable)
 
         if is_admin:
             zope.interface.alsoProvides(
