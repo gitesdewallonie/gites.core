@@ -67,7 +67,7 @@ class TarifEditionView(grok.View):
 
         if heb.type.type_heb_type == 'gite':
             tarifs_types = TarifsType.get(gite=True)
-        else:
+        elif heb.type.type_heb_type == 'chambre':
             tarifs_types = TarifsType.get(chambre=True)
 
         for tt in tarifs_types:
