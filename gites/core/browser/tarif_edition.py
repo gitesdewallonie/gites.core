@@ -72,7 +72,7 @@ class TarifEditionView(grok.View):
 
         if heb.type.type_heb_type == 'gite':
             tarifs_types = TarifsType.get(gite=True)
-        else:
+        elif heb.type.type_heb_type == 'chambre':
             tarifs_types = TarifsType.get(chambre=True)
 
         for tt in tarifs_types:
@@ -191,9 +191,12 @@ class TarifEditionView(grok.View):
         if 'Manager' in roles:
             return True
         elif 'Proprietaire' in roles:
-            proprio_hebs = getUtility(IVocabularyFactory, name='proprio.hebergements')(self.context)
+            proprio_hebs = self._get_proprio_hebs()
 
             for proprio_heb in proprio_hebs:
                 if proprio_heb.token == heb_pk:
                     return True
         return False
+
+    def _get_proprio_hebs(self):
+        return getUtility(IVocabularyFactory, name='proprio.hebergements')(self.context)

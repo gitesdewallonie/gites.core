@@ -54,6 +54,11 @@ setup(name='gites.core',
           'zope.ramcache',
           'gites.skin'],
       extras_require=dict(
+          test=[
+              'affinitic.testing',
+              'unittest2',
+              'zope.testing',
+              'plone.app.testing'],
           scripts=[]),
       entry_points={
           'console_scripts': [
