@@ -46,6 +46,8 @@ class TarifTable(table.Table):
         'WITHOUT_BREAKFAST',
         'END_OF_YEAR',
         'GUARANTEE',
+        'SOJOURN_TAX',
+        'TABLE_HOTES',
     ]
 
     tarif_max_subtypes = [
@@ -255,7 +257,7 @@ class TarifColumnValues():
         elements = [self.render_field(item, 'min', after=u' €'),
                     self.render_field(item, 'max', after=u' €', before=' / '),
                     self.render_field(item, 'cmt')]
-        return u''.join(elements)
+        return u' '.join(elements)
 
     def render_field(self, item, attr, before=u'', after=u''):
         subtypes = getattr(self.table, 'tarif_{0}_subtypes'.format(attr))
@@ -304,7 +306,7 @@ class TarifEditionColumnInputsMixin(TarifColumn, grok.MultiAdapter):
         elements = [self._render_field(item, 'min', after=u' €', to_confirm=to_confirm),
                     self._render_field(item, 'max', after=u' €', before=' / ', to_confirm=to_confirm),
                     self._render_field(item, 'cmt', to_confirm=to_confirm)]
-        return u''.join(elements)
+        return u' '.join(elements)
 
     def _render_field(self, item, attr, before=u'', after=u'', to_confirm=u''):
 
