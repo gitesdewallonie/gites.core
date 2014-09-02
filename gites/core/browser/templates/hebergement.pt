@@ -215,7 +215,11 @@
                     <!--TABLE TARIFICATION GITES-->
 
                     <div id="tarification-hebergement">
-                        <div tal:content="structure view/get_tarif_table" />
+                        <div>
+                            <span tal:replace="structure view/get_season_tarif_table" />
+                            <br />
+                            <span tal:replace="structure view/get_other_tarif_table" />
+                        </div>
                     </div>
 
                         <div class="break-float"></div>

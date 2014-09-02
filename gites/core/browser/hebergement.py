@@ -332,14 +332,15 @@ class HebergementView(BrowserView):
                                 hebId,
                                 )
 
-    def get_tarif_table(self):
+    def get_tarif_table(self, section=None):
         """
         Return render of tarif table
         """
         table = tarif.TarifTable(
             self.context,
             self.request,
-            self.context.heb_pk)
+            self.context.heb_pk,
+            section)
 
         zope.interface.alsoProvides(
             table, interfaces.ITarifDisplayTable)
@@ -347,6 +348,11 @@ class HebergementView(BrowserView):
         table.update()
         return table.render()
 
+    def get_season_tarif_table(self):
+        return self.get_tarif_table('SEASON')
+
+    def get_other_tarif_table(self):
+        return self.get_tarif_table('OTHER')
 
 class HebergementIconsView(BrowserView):
     """

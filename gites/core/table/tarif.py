@@ -21,6 +21,7 @@ from z3c.table import column, interfaces as table_interfaces, table, value
 from gites.core import interfaces
 from gites.db.content import Tarifs, TarifsType, Hebergement
 from gites.locales import GitesMessageFactory as _
+from gites.core.table.interfaces import IValuesSeason, IValuesOther
 
 
 class TarifTable(table.Table):
@@ -65,15 +66,23 @@ class TarifTable(table.Table):
         'SOJOURN_TAX',
     ]
 
-    def __init__(self, context, request, heb_pk):
+    def __init__(self, context, request, heb_pk, section=None):
         super(TarifTable, self).__init__(context, request)
         self.heb_pk = heb_pk
+        self.section = section
 
     @property
     def values(self):
         """ Returns the values for an hosting """
-        adapter = zope.component.getMultiAdapter(
-            (self.context, self.request, self), table_interfaces.IValues)
+        if self.section == 'SEASON':
+            adapter = zope.component.getMultiAdapter(
+                (self.context, self.request, self), IValuesSeason)
+        elif self.section == 'OTHER':
+            adapter = zope.component.getMultiAdapter(
+                (self.context, self.request, self), IValuesOther)
+        else:
+            adapter = zope.component.getMultiAdapter(
+                (self.context, self.request, self), table_interfaces.IValues)
         return adapter.values
 
 
@@ -90,6 +99,8 @@ class TarifValues(value.ValuesMixin,
                 zope.publisher.interfaces.browser.IBrowserRequest,
                 interfaces.ITarifTable)
 
+    section_types = []
+
     @property
     def values(self):
         heb = self._get_heb()
@@ -102,6 +113,8 @@ class TarifValues(value.ValuesMixin,
         self.tarifs = Tarifs.get_hebergement_tarifs(heb.heb_pk)
         tarifs_table = []
         for tarifs_type in tarifs_types:
+            if self.section_types and tarifs_type.type not in self.section_types:
+                continue
             line = self._get_tarif_line(tarifs_type)
             if line:
                 tarifs_table.append(line)
@@ -119,6 +132,23 @@ class TarifValues(value.ValuesMixin,
         if tarifs_type.type == "CHARGES":
             return None
         return tarifs_type
+
+
+class TarifValuesSeason(TarifValues):
+    grok.provides(IValuesSeason)
+
+    section_types = ['LOW_SEASON',
+                     'MEDIUM_SEASON',
+                     'HIGH_SEASON',
+                     'FEAST_WEEKEND']
+
+
+class TarifValuesOther(TarifValues):
+    grok.provides(IValuesOther)
+
+    section_types = ['CHARGES',
+                     'ROOM',
+                     'OTHER']
 
 
 class TarifEditionValues(TarifValues):
