@@ -218,6 +218,8 @@
                         <div>
                             <span tal:replace="structure view/get_season_tarif_table" />
                             <br />
+                            <span tal:replace="structure view/get_not_season_tarif_table" />
+                            <br />
                             <span tal:replace="structure view/get_other_tarif_table" />
                         </div>
                     </div>

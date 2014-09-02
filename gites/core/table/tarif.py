@@ -21,7 +21,6 @@ from z3c.table import column, interfaces as table_interfaces, table, value
 from gites.core import interfaces
 from gites.db.content import Tarifs, TarifsType, Hebergement
 from gites.locales import GitesMessageFactory as _
-from gites.core.table.interfaces import IValuesSeason, IValuesOther
 
 
 class TarifTable(table.Table):
@@ -76,10 +75,13 @@ class TarifTable(table.Table):
         """ Returns the values for an hosting """
         if self.section == 'SEASON':
             adapter = zope.component.getMultiAdapter(
-                (self.context, self.request, self), IValuesSeason)
+                (self.context, self.request, self), interfaces.IValuesSeason)
+        elif self.section == 'NOT_SEASON':
+            adapter = zope.component.getMultiAdapter(
+                (self.context, self.request, self), interfaces.IValuesNotSeason)
         elif self.section == 'OTHER':
             adapter = zope.component.getMultiAdapter(
-                (self.context, self.request, self), IValuesOther)
+                (self.context, self.request, self), interfaces.IValuesOther)
         else:
             adapter = zope.component.getMultiAdapter(
                 (self.context, self.request, self), table_interfaces.IValues)
@@ -135,7 +137,7 @@ class TarifValues(value.ValuesMixin,
 
 
 class TarifValuesSeason(TarifValues):
-    grok.provides(IValuesSeason)
+    grok.provides(interfaces.IValuesSeason)
 
     section_types = ['LOW_SEASON',
                      'MEDIUM_SEASON',
@@ -143,8 +145,15 @@ class TarifValuesSeason(TarifValues):
                      'FEAST_WEEKEND']
 
 
+class TarifValuesNotSeason(TarifValues):
+    grok.provides(interfaces.IValuesNotSeason)
+
+    section_types = ['CHARGES',
+                     'ROOM']
+
+
 class TarifValuesOther(TarifValues):
-    grok.provides(IValuesOther)
+    grok.provides(interfaces.IValuesOther)
 
     section_types = ['CHARGES',
                      'ROOM',
@@ -189,6 +198,9 @@ class TarifEditionColumn(column.GetAttrColumn):
 
 
 class TarifEditionColumnType(TarifEditionColumn, grok.MultiAdapter):
+    grok.adapts(zope.interface.Interface,
+                zope.interface.Interface,
+                interfaces.ITarifDisplayType)
     grok.name('type')
     header = u'Type'
     attrName = u'type'

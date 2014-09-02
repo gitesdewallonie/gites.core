@@ -342,6 +342,9 @@ class HebergementView(BrowserView):
             self.context.heb_pk,
             section)
 
+        if section != 'OTHER':
+            zope.interface.alsoProvides(
+                table, interfaces.ITarifDisplayType)
         zope.interface.alsoProvides(
             table, interfaces.ITarifDisplayTable)
 
@@ -351,8 +354,12 @@ class HebergementView(BrowserView):
     def get_season_tarif_table(self):
         return self.get_tarif_table('SEASON')
 
+    def get_not_season_tarif_table(self):
+        return self.get_tarif_table('NOT_SEASON')
+
     def get_other_tarif_table(self):
         return self.get_tarif_table('OTHER')
+
 
 class HebergementIconsView(BrowserView):
     """
