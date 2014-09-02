@@ -224,6 +224,31 @@
                         </div>
                     </div>
 
+                    <!-- TYPE TABLE D'HOTE-->
+                    <div id="tarification-table-hote"
+                         tal:define="tables_hotes view/getTablesHotes"
+                         tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR' and tables_hotes">
+                        <table>
+                            <tr>
+                                <td class="tarif-saison" i18n:translate="type_table_hotes">
+                                    Type de table d'hôtes
+                                </td>
+                                <td>
+                                    <tal:blc tal:repeat="table_hote tables_hotes">
+                                        <img src=""
+                                             title=""
+                                             alt=""
+                                             tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${table_hote/id}.png;
+                                                             alt table_hote/title;
+                                                             title table_hote/title" />
+                                        <span class="discreet-info" tal:content="table_hote/title">Titre</span>
+                                        <br />
+                                    </tal:blc>
+                                </td>
+                            </tr>
+                        </table>
+                    </div><!--tarif table hote-->
+
                         <div class="break-float"></div>
                     </div><!--accueil-bloc-droite-->
                 </li>
