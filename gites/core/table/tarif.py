@@ -186,7 +186,7 @@ class TarifEditionValues(TarifValues):
         return heb
 
 
-class TarifEditionColumn(column.GetAttrColumn):
+class TarifColumn(column.GetAttrColumn):
     """ Base class for the comparison columns """
     grok.provides(table_interfaces.IColumn)
     grok.adapts(zope.interface.Interface,
@@ -198,7 +198,7 @@ class TarifEditionColumn(column.GetAttrColumn):
         return translate(_(msgid), target_language=language)
 
 
-class TarifEditionColumnType(TarifEditionColumn, grok.MultiAdapter):
+class TarifColumnType(TarifColumn, grok.MultiAdapter):
     grok.adapts(zope.interface.Interface,
                 zope.interface.Interface,
                 interfaces.ITarifDisplayType)
@@ -212,7 +212,7 @@ class TarifEditionColumnType(TarifEditionColumn, grok.MultiAdapter):
         return self.translate(value)
 
 
-class TarifEditionColumnSubtype(TarifEditionColumn, grok.MultiAdapter):
+class TarifColumnSubtype(TarifColumn, grok.MultiAdapter):
     grok.name('subtype')
     header = u'Sous-Type'
     attrName = u'subtype'
@@ -223,7 +223,7 @@ class TarifEditionColumnSubtype(TarifEditionColumn, grok.MultiAdapter):
         return self.translate(value)
 
 
-class TarifEditionColumnDate(TarifEditionColumn, grok.MultiAdapter):
+class TarifEditionColumnDate(TarifColumn, grok.MultiAdapter):
     grok.adapts(zope.interface.Interface,
                 zope.interface.Interface,
                 interfaces.ITarifEditionManager)
@@ -236,7 +236,7 @@ class TarifEditionColumnDate(TarifEditionColumn, grok.MultiAdapter):
         return tarif_date and tarif_date.strftime('%d-%m-%Y') or ''
 
 
-class TarifEditionColumnUser(TarifEditionColumn, grok.MultiAdapter):
+class TarifEditionColumnUser(TarifColumn, grok.MultiAdapter):
     grok.adapts(zope.interface.Interface,
                 zope.interface.Interface,
                 interfaces.ITarifEditionManager)
@@ -267,20 +267,20 @@ class TarifColumnValues():
         return input_text.format(before, value, after)
 
 
-class TarifDisplayColumnValues(TarifColumnValues, TarifEditionColumn, grok.MultiAdapter):
+class TarifDisplayColumnValues(TarifColumnValues, TarifColumn, grok.MultiAdapter):
     grok.adapts(zope.interface.Interface,
                 zope.interface.Interface,
                 interfaces.ITarifDisplayTable)
 
 
-class TarifEditionColumnValues(TarifColumnValues, TarifEditionColumn, grok.MultiAdapter):
+class TarifEditionColumnValues(TarifColumnValues, TarifColumn, grok.MultiAdapter):
     grok.adapts(zope.interface.Interface,
                 zope.interface.Interface,
                 interfaces.ITarifEditionManager)
     header = u'Valeurs actuelles'
 
 
-class TarifEditionColumnInputsMixin(TarifEditionColumn, grok.MultiAdapter):
+class TarifEditionColumnInputsMixin(TarifColumn, grok.MultiAdapter):
     grok.adapts(zope.interface.Interface,
                 zope.interface.Interface,
                 interfaces.ITarifEditionTable)
