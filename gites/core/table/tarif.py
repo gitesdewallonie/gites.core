@@ -246,7 +246,7 @@ class TarifEditionColumnInputsMixin(TarifEditionColumn, grok.MultiAdapter):
     def renderCell(self, item):
         item = self.get_item(item)
 
-        to_confirm = getattr(item, 'valid', '') == None
+        to_confirm = getattr(item, 'valid', '') is None
         to_confirm = to_confirm and u'tarif-to-confirm' or u''
 
         type = getattr(item, 'type', '')
