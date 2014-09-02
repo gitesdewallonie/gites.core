@@ -102,7 +102,9 @@ class TarifValues(value.ValuesMixin,
         self.tarifs = Tarifs.get_hebergement_tarifs(heb.heb_pk)
         tarifs_table = []
         for tarifs_type in tarifs_types:
-            tarifs_table.append(self._get_tarif_line(tarifs_type))
+            line = self._get_tarif_line(tarifs_type)
+            if line:
+                tarifs_table.append(line)
         return tarifs_table
 
     def _get_heb(self):
@@ -113,6 +115,9 @@ class TarifValues(value.ValuesMixin,
             if (tarif.type == tarifs_type.type and
                tarif.subtype == tarifs_type.subtype):
                 return tarif
+        # Dont want to render empty CHARGES
+        if tarifs_type.type == "CHARGES":
+            return None
         return tarifs_type
 
 
