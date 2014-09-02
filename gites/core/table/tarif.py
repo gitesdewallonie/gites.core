@@ -102,6 +102,7 @@ class TarifValues(value.ValuesMixin,
                 interfaces.ITarifTable)
 
     section_types = []
+    hide_empty_charges = False
 
     @property
     def values(self):
@@ -131,7 +132,7 @@ class TarifValues(value.ValuesMixin,
                tarif.subtype == tarifs_type.subtype):
                 return tarif
         # Dont want to render empty CHARGES
-        if tarifs_type.type == "CHARGES":
+        if self.hide_empty_charges and tarifs_type.type == "CHARGES":
             return None
         return tarifs_type
 
@@ -151,13 +152,13 @@ class TarifValuesNotSeason(TarifValues):
     section_types = ['CHARGES',
                      'ROOM']
 
+    hide_empty_charges = True
+
 
 class TarifValuesOther(TarifValues):
     grok.provides(interfaces.IValuesOther)
 
-    section_types = ['CHARGES',
-                     'ROOM',
-                     'OTHER']
+    section_types = ['OTHER']
 
 
 class TarifEditionValues(TarifValues):
