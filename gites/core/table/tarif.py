@@ -78,9 +78,18 @@ class TarifTable(table.Table):
         if self.section == 'SEASON':
             adapter = zope.component.getMultiAdapter(
                 (self.context, self.request, self), interfaces.IValuesSeason)
-        elif self.section == 'NOT_SEASON':
+        elif self.section == 'WEEK':
             adapter = zope.component.getMultiAdapter(
-                (self.context, self.request, self), interfaces.IValuesNotSeason)
+                (self.context, self.request, self), interfaces.IValuesWeek)
+        elif self.section == 'WEEKEND':
+            adapter = zope.component.getMultiAdapter(
+                (self.context, self.request, self), interfaces.IValuesWeekend)
+        elif self.section == 'ROOM':
+            adapter = zope.component.getMultiAdapter(
+                (self.context, self.request, self), interfaces.IValuesRoom)
+        elif self.section == 'CHARGES':
+            adapter = zope.component.getMultiAdapter(
+                (self.context, self.request, self), interfaces.IValuesCharges)
         elif self.section == 'OTHER':
             adapter = zope.component.getMultiAdapter(
                 (self.context, self.request, self), interfaces.IValuesOther)
@@ -104,6 +113,7 @@ class TarifValues(value.ValuesMixin,
                 interfaces.ITarifTable)
 
     section_types = []
+    section_subtypes = []
     hide_empty_charges = False
 
     @property
@@ -119,6 +129,8 @@ class TarifValues(value.ValuesMixin,
         tarifs_table = []
         for tarifs_type in tarifs_types:
             if self.section_types and tarifs_type.type not in self.section_types:
+                continue
+            if self.section_subtypes and tarifs_type.subtype not in self.section_subtypes:
                 continue
             line = self._get_tarif_line(tarifs_type)
             if line:
@@ -148,11 +160,38 @@ class TarifValuesSeason(TarifValues):
                      'FEAST_WEEKEND']
 
 
-class TarifValuesNotSeason(TarifValues):
-    grok.provides(interfaces.IValuesNotSeason)
+class TarifValuesWeek(TarifValues):
+    grok.provides(interfaces.IValuesWeek)
 
-    section_types = ['CHARGES',
-                     'ROOM']
+    section_types = ['LOW_SEASON',
+                     'MEDIUM_SEASON',
+                     'HIGH_SEASON',
+                     'FEAST_WEEKEND']
+    section_subtypes = ['WEEK']
+
+
+class TarifValuesWeekend(TarifValues):
+    grok.provides(interfaces.IValuesWeekend)
+
+    section_types = ['LOW_SEASON',
+                     'MEDIUM_SEASON',
+                     'HIGH_SEASON',
+                     'FEAST_WEEKEND']
+    section_subtypes = ['WEEKEND',
+                        '3_NIGHTS',
+                        '4_NIGHTS']
+
+
+class TarifValuesRoom(TarifValues):
+    grok.provides(interfaces.IValuesRoom)
+
+    section_types = ['ROOM']
+
+
+class TarifValuesCharges(TarifValues):
+    grok.provides(interfaces.IValuesCharges)
+
+    section_types = ['CHARGES']
 
     hide_empty_charges = True
 
@@ -215,6 +254,9 @@ class TarifColumnType(TarifColumn, grok.MultiAdapter):
 
 
 class TarifColumnSubtype(TarifColumn, grok.MultiAdapter):
+    grok.adapts(zope.interface.Interface,
+                zope.interface.Interface,
+                interfaces.ITarifDisplaySubtype)
     grok.name('subtype')
     header = u'Sous-Type'
     attrName = u'subtype'

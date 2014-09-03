@@ -35,6 +35,11 @@ class TarifEditionView(grok.View):
             self.request,
             heb_pk)
 
+        zope.interface.alsoProvides(
+            table, interfaces.ITarifDisplayType)
+        zope.interface.alsoProvides(
+            table, interfaces.ITarifDisplaySubtype)
+
         roles = api.user.get_current().getRoles()
         is_admin = 'Manager' in roles and True or None
 

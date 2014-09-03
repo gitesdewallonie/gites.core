@@ -71,6 +71,10 @@ class ITarifDisplayType(ITarifTable):
     """ Marker interface for the tarif type column display """
 
 
+class ITarifDisplaySubtype(ITarifTable):
+    """ Marker interface for the tarif type column display """
+
+
 class ITarifEditionTable(ITarifTable):
     """ Marker interface for the tarif edition table """
 
@@ -93,9 +97,27 @@ class IValuesSeason(IValues):
     """
 
 
-class IValuesNotSeason(IValues):
+class IValuesWeek(IValues):
     """
-    Not season section table values marker interface
+    Week section table values marker interface
+    """
+
+
+class IValuesWeekend(IValues):
+    """
+    Weekend section table values marker interface
+    """
+
+
+class IValuesRoom(IValues):
+    """
+    Room section table values marker interface
+    """
+
+
+class IValuesCharges(IValues):
+    """
+    Charges section table values marker interface
     """
 
 
