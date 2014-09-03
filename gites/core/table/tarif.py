@@ -296,17 +296,22 @@ class TarifColumnValues():
     header = u'Valeurs'
 
     def renderCell(self, item):
-        elements = [self.render_field(item, 'min', after=u' €'),
-                    self.render_field(item, 'max', after=u' €', before=' / '),
+        elements = [self.render_field(item, 'min', after=u' €', default=u'-'),
+                    self.render_field(item, 'max', after=u' €', before=u' / ', default=u'-'),
                     self.render_field(item, 'cmt')]
+
         return u' '.join(elements)
 
-    def render_field(self, item, attr, before=u'', after=u''):
+    def render_field(self, item, attr, before=u'', after=u'', default=u''):
         subtypes = getattr(self.table, 'tarif_{0}_subtypes'.format(attr))
         if item.subtype not in subtypes:
             return u''
 
         value = getattr(item, attr, '') or ''
+        if not value:
+            value = default
+            after = ''
+
         input_text = (u'{0}{1}{2}')
         return input_text.format(before, value, after)
 
