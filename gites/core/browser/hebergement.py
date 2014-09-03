@@ -342,7 +342,7 @@ class HebergementView(BrowserView):
             self.context.heb_pk,
             section)
 
-        if section in ['OTHER', 'CHARGES', 'ROOM']:
+        if section in ['OTHER', 'CHARGES', 'ROOM', 'CHRISTMAS']:
             zope.interface.alsoProvides(
                 table, interfaces.ITarifDisplaySubtype)
         else:
@@ -365,6 +365,9 @@ class HebergementView(BrowserView):
 
     def get_room_tarif_table(self):
         return self.get_tarif_table('ROOM')
+
+    def get_christmas_tarif_table(self):
+        return self.get_tarif_table('CHRISTMAS')
 
     def get_charges_tarif_table(self):
         return self.get_tarif_table('CHARGES')

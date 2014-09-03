@@ -228,6 +228,8 @@
                                     <h3 i18n:translate="Chambres">Chambres</h3>
                                     <span tal:replace="structure view/get_room_tarif_table" />
                                 </span>
+                                <h3 i18n:translate="Noel_nouvel_an">Noël / Nouvel an</h3>
+                                <span tal:replace="structure view/get_christmas_tarif_table" />
                                 <h3 i18n:translate="Charges">Charges</h3>
                                 <span tal:replace="structure view/get_charges_tarif_table" />
                                 <h3 i18n:translate="Autre">Autre</h3>

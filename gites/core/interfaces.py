@@ -115,6 +115,12 @@ class IValuesRoom(IValues):
     """
 
 
+class IValuesChristmas(IValues):
+    """
+    Christmas section table values marker interface
+    """
+
+
 class IValuesCharges(IValues):
     """
     Charges section table values marker interface
