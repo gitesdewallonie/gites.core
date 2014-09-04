@@ -7,6 +7,7 @@ Copyright by Affinitic sprl
 
 $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
+import zope.interface
 from embedly import Embedly
 from plone.memoize import instance, forever
 from zope.i18n import translate
@@ -21,7 +22,6 @@ from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from z3c.sqlalchemy import getSAWrapper
 from plone import api
 from plone.memoize.instance import memoize
-import zope.interface
 import sqlalchemy as sa
 
 from affinitic.db.cache import FromCache
@@ -35,8 +35,10 @@ from gites.map.browser.interfaces import IMappableView
 from gites.core.interfaces import IMapRequest
 from gites.core.browser.interfaces import (IHebergementView,
                                            IHebergementIconsView)
+from gites.core.browser.tarif import TarifTableMixin
 from gites.core.table import tarif
 from gites.core import interfaces
+
 
 from gites.locales import GitesMessageFactory as _
 
@@ -52,7 +54,7 @@ def getIframeForVideo(videoUrl):
     return embed.html
 
 
-class HebergementView(BrowserView):
+class HebergementView(BrowserView, TarifTableMixin):
     """
     View for the full description of an hebergement
     """
@@ -353,27 +355,6 @@ class HebergementView(BrowserView):
 
         table.update()
         return table.render()
-
-    def get_week_tarif_table(self):
-        return self.get_tarif_table('WEEK')
-
-    def get_weekend_tarif_table(self):
-        return self.get_tarif_table('WEEKEND')
-
-    def get_season_tarif_table(self):
-        return self.get_tarif_table('SEASON')
-
-    def get_room_tarif_table(self):
-        return self.get_tarif_table('ROOM')
-
-    def get_christmas_tarif_table(self):
-        return self.get_tarif_table('CHRISTMAS')
-
-    def get_charges_tarif_table(self):
-        return self.get_tarif_table('CHARGES')
-
-    def get_other_tarif_table(self):
-        return self.get_tarif_table('OTHER')
 
 
 class HebergementIconsView(BrowserView):

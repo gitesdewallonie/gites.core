@@ -205,6 +205,17 @@ class TarifValuesCharges(TarifValues):
     hide_empty_charges = True
 
 
+class TarifEditionValuesCharges(TarifValues):
+    grok.provides(interfaces.IValuesCharges)
+    grok.adapts(zope.interface.Interface,
+                zope.publisher.interfaces.browser.IBrowserRequest,
+                interfaces.ITarifEditionTable)
+
+    section_types = ['CHARGES']
+
+    hide_empty_charges = False
+
+
 class TarifValuesOther(TarifValues):
     grok.provides(interfaces.IValuesOther)
 

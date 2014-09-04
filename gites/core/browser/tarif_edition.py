@@ -19,21 +19,25 @@ from gites.core import interfaces
 from gites.core.table import tarif
 from gites.db.content import Tarifs, TarifsType, Hebergement
 from gites.locales import GitesMessageFactory as _
+from gites.core.browser.tarif import TarifTableMixin
 
 
-class TarifEditionView(grok.View):
+class TarifEditionView(grok.View, TarifTableMixin):
     grok.context(zope.interface.Interface)
     grok.name(u'tarif-edition')
     grok.require('cmf.SetOwnPassword')
     grok.template('tarif_edition')
 
-    def get_table(self):
-        """ Returns the render of the table """
+    def get_tarif_table(self, section=None):
+        """
+        Return render of tarif table
+        """
         heb_pk = self.request.get('heb_pk', None)
         table = tarif.TarifEditionTable(
             self.context,
             self.request,
-            heb_pk)
+            heb_pk,
+            section)
 
         zope.interface.alsoProvides(
             table, interfaces.ITarifDisplayType)
@@ -59,6 +63,10 @@ class TarifEditionView(grok.View):
     @property
     def heb_pk(self):
         return self.request.get('heb_pk', None)
+
+    @property
+    def heb(self):
+        return Hebergement.first(heb_pk=self.heb_pk)
 
     def apply_tarifs_changes(self):
         """ Apply tarifs changes """
