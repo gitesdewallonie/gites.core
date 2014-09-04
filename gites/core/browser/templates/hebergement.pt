@@ -222,16 +222,16 @@
                                     <span tal:replace="structure view/get_week_tarif_table" />
                                     <h3 i18n:translate="Week_end">Week end</h3>
                                     <span tal:replace="structure view/get_weekend_tarif_table" />
+                                    <h3 i18n:translate="Noel_nouvel_an">Noël / Nouvel an</h3>
+                                    <span tal:replace="structure view/get_christmas_tarif_table" />
+                                    <h3 i18n:translate="Charges">Charges</h3>
+                                    <span tal:replace="structure view/get_charges_tarif_table" />
                                 </span>
 
                                 <span tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR' and tables_hotes">
                                     <h3 i18n:translate="Chambres">Chambres</h3>
                                     <span tal:replace="structure view/get_room_tarif_table" />
                                 </span>
-                                <h3 i18n:translate="Noel_nouvel_an">Noël / Nouvel an</h3>
-                                <span tal:replace="structure view/get_christmas_tarif_table" />
-                                <h3 i18n:translate="Charges">Charges</h3>
-                                <span tal:replace="structure view/get_charges_tarif_table" />
                                 <h3 i18n:translate="Autre">Autre</h3>
                                 <span tal:replace="structure view/get_other_tarif_table" />
                             </div>
