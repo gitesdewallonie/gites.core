@@ -5,12 +5,14 @@ Changelog
 ------------------
 
 - Fix special character in tarif-edition : #5977
+  [francoibr]
 
 
 0.1.1 (2014-09-16)
 ------------------
 
 - Fix lodging prices tables : #5839
+  [mpeeters]
 
 
 0.1 (2014-09-15)
