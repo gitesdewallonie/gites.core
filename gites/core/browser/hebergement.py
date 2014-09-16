@@ -7,7 +7,6 @@ Copyright by Affinitic sprl
 
 $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
-import zope.interface
 from embedly import Embedly
 from plone.memoize import instance, forever
 from zope.i18n import translate
@@ -35,10 +34,6 @@ from gites.map.browser.interfaces import IMappableView
 from gites.core.interfaces import IMapRequest
 from gites.core.browser.interfaces import (IHebergementView,
                                            IHebergementIconsView)
-from gites.core.browser.tarif import TarifTableMixin
-from gites.core.table import tarif
-from gites.core import interfaces
-
 
 from gites.locales import GitesMessageFactory as _
 
@@ -54,7 +49,7 @@ def getIframeForVideo(videoUrl):
     return embed.html
 
 
-class HebergementView(BrowserView, TarifTableMixin):
+class HebergementView(BrowserView):
     """
     View for the full description of an hebergement
     """
@@ -333,28 +328,6 @@ class HebergementView(BrowserView, TarifTableMixin):
                                 commune,
                                 hebId,
                                 )
-
-    def get_tarif_table(self, section=None):
-        """
-        Return render of tarif table
-        """
-        table = tarif.TarifTable(
-            self.context,
-            self.request,
-            self.context.heb_pk,
-            section)
-
-        if section in ['OTHER', 'CHARGES', 'ROOM', 'CHRISTMAS']:
-            zope.interface.alsoProvides(
-                table, interfaces.ITarifDisplaySubtype)
-        else:
-            zope.interface.alsoProvides(
-                table, interfaces.ITarifDisplayType)
-        zope.interface.alsoProvides(
-            table, interfaces.ITarifDisplayTable)
-
-        table.update()
-        return table.render()
 
 
 class HebergementIconsView(BrowserView):
