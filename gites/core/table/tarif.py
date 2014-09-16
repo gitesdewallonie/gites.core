@@ -23,10 +23,12 @@ from gites.db.content import Tarifs, TarifsType, Hebergement
 from gites.locales import GitesMessageFactory as _
 
 
-class TarifEditionTable(table.Table):
-    zope.interface.implements(interfaces.ITarifEditionTable)
+class TarifTable(table.Table):
 
-    cssClasses = {'table': 'z3c-listing percent100 listing nosort'}
+    zope.interface.implements(interfaces.ITarifTable)
+
+    cssClasses = {'table': 'hebergement-tarif-display',
+                  'thead': 'tarif-periode'}
     cssClassEven = u'odd'
     cssClassOdd = u'even'
     sortOn = None
@@ -44,6 +46,8 @@ class TarifEditionTable(table.Table):
         'WITHOUT_BREAKFAST',
         'END_OF_YEAR',
         'GUARANTEE',
+        'SOJOURN_TAX',
+        'TABLE_HOTES',
     ]
 
     tarif_max_subtypes = [
@@ -63,24 +67,57 @@ class TarifEditionTable(table.Table):
         'SOJOURN_TAX',
     ]
 
-    def __init__(self, context, request):
-        super(TarifEditionTable, self).__init__(context, request)
-        self.heb_pk = self.request.get('heb_pk', None)
+    def __init__(self, context, request, heb_pk, section=None):
+        super(TarifTable, self).__init__(context, request)
+        self.heb_pk = heb_pk
+        self.section = section
 
     @property
     def values(self):
         """ Returns the values for an hosting """
-        adapter = zope.component.getMultiAdapter(
-            (self.context, self.request, self), table_interfaces.IValues)
+        if self.section == 'SEASON':
+            adapter = zope.component.getMultiAdapter(
+                (self.context, self.request, self), interfaces.IValuesSeason)
+        elif self.section == 'WEEK':
+            adapter = zope.component.getMultiAdapter(
+                (self.context, self.request, self), interfaces.IValuesWeek)
+        elif self.section == 'WEEKEND':
+            adapter = zope.component.getMultiAdapter(
+                (self.context, self.request, self), interfaces.IValuesWeekend)
+        elif self.section == 'ROOM':
+            adapter = zope.component.getMultiAdapter(
+                (self.context, self.request, self), interfaces.IValuesRoom)
+        elif self.section == 'CHRISTMAS':
+            adapter = zope.component.getMultiAdapter(
+                (self.context, self.request, self), interfaces.IValuesChristmas)
+        elif self.section == 'CHARGES':
+            adapter = zope.component.getMultiAdapter(
+                (self.context, self.request, self), interfaces.IValuesCharges)
+        elif self.section == 'OTHER':
+            adapter = zope.component.getMultiAdapter(
+                (self.context, self.request, self), interfaces.IValuesOther)
+        else:
+            adapter = zope.component.getMultiAdapter(
+                (self.context, self.request, self), table_interfaces.IValues)
         return adapter.values
 
 
-class TarifEditionValues(value.ValuesMixin,
-                         grok.MultiAdapter):
+class TarifEditionTable(TarifTable):
+    zope.interface.implements(interfaces.ITarifEditionTable)
+
+    cssClasses = {'table': 'z3c-listing percent100 listing nosort'}
+
+
+class TarifValues(value.ValuesMixin,
+                  grok.MultiAdapter):
     grok.provides(table_interfaces.IValues)
     grok.adapts(zope.interface.Interface,
                 zope.publisher.interfaces.browser.IBrowserRequest,
-                interfaces.ITarifEditionTable)
+                interfaces.ITarifTable)
+
+    section_types = []
+    section_subtypes = []
+    hide_empty_charges = False
 
     @property
     def values(self):
@@ -94,8 +131,107 @@ class TarifEditionValues(value.ValuesMixin,
         self.tarifs = Tarifs.get_hebergement_tarifs(heb.heb_pk)
         tarifs_table = []
         for tarifs_type in tarifs_types:
-            tarifs_table.append(self._get_tarif_line(tarifs_type))
+            if self.section_types and tarifs_type.type not in self.section_types:
+                continue
+            if self.section_subtypes and tarifs_type.subtype not in self.section_subtypes:
+                continue
+            line = self._get_tarif_line(tarifs_type)
+            if line:
+                tarifs_table.append(line)
         return tarifs_table
+
+    def _get_heb(self):
+        return Hebergement.first(heb_pk=self.table.heb_pk)
+
+    def _get_tarif_line(self, tarifs_type):
+        for tarif in self.tarifs:
+            if (tarif.type == tarifs_type.type and
+               tarif.subtype == tarifs_type.subtype):
+                return tarif
+        # Dont want to render empty CHARGES
+        if self.hide_empty_charges and tarifs_type.type == "CHARGES":
+            return None
+        return tarifs_type
+
+
+class TarifValuesSeason(TarifValues):
+    grok.provides(interfaces.IValuesSeason)
+
+    section_types = ['LOW_SEASON',
+                     'MEDIUM_SEASON',
+                     'HIGH_SEASON',
+                     'FEAST_WEEKEND']
+
+
+class TarifValuesWeek(TarifValues):
+    grok.provides(interfaces.IValuesWeek)
+
+    section_types = ['LOW_SEASON',
+                     'MEDIUM_SEASON',
+                     'HIGH_SEASON']
+    section_subtypes = ['WEEK']
+
+
+class TarifValuesWeekend(TarifValues):
+    grok.provides(interfaces.IValuesWeekend)
+
+    section_types = ['LOW_SEASON',
+                     'MEDIUM_SEASON',
+                     'HIGH_SEASON',
+                     'FEAST_WEEKEND']
+    section_subtypes = ['WEEKEND',
+                        '3_NIGHTS',
+                        '4_NIGHTS']
+
+
+class TarifValuesRoom(TarifValues):
+    grok.provides(interfaces.IValuesRoom)
+
+    section_types = ['ROOM']
+
+
+class TarifValuesChristmas(TarifValues):
+    grok.provides(interfaces.IValuesChristmas)
+
+    section_types = ['OTHER']
+    section_subtypes = ['END_OF_YEAR']
+
+
+class TarifValuesCharges(TarifValues):
+    grok.provides(interfaces.IValuesCharges)
+
+    section_types = ['CHARGES']
+
+    hide_empty_charges = True
+
+
+class TarifEditionValuesCharges(TarifValues):
+    grok.provides(interfaces.IValuesCharges)
+    grok.adapts(zope.interface.Interface,
+                zope.publisher.interfaces.browser.IBrowserRequest,
+                interfaces.ITarifEditionTable)
+
+    section_types = ['CHARGES']
+
+    hide_empty_charges = False
+
+
+class TarifValuesOther(TarifValues):
+    grok.provides(interfaces.IValuesOther)
+
+    section_types = ['OTHER']
+    section_subtypes = ['TABLE_HOTES',
+                        'WITHOUT_BREAKFAST',
+                        'GUARANTEE',
+                        'SOJOURN_TAX',
+                        'OTHER']
+
+
+class TarifEditionValues(TarifValues):
+    grok.provides(table_interfaces.IValues)
+    grok.adapts(zope.interface.Interface,
+                zope.publisher.interfaces.browser.IBrowserRequest,
+                interfaces.ITarifEditionTable)
 
     def _get_heb(self):
         roles = api.user.get_current().getRoles()
@@ -115,27 +251,23 @@ class TarifEditionValues(value.ValuesMixin,
 
         return heb
 
-    def _get_tarif_line(self, tarifs_type):
-        for tarif in self.tarifs:
-            if (tarif.type == tarifs_type.type and
-               tarif.subtype == tarifs_type.subtype):
-                return tarif
-        return tarifs_type
 
-
-class TarifEditionColumn(column.GetAttrColumn):
+class TarifColumn(column.GetAttrColumn):
     """ Base class for the comparison columns """
     grok.provides(table_interfaces.IColumn)
     grok.adapts(zope.interface.Interface,
                 zope.interface.Interface,
-                interfaces.ITarifEditionTable)
+                interfaces.ITarifTable)
 
     def translate(self, msgid):
         language = self.request.get('LANGUAGE', 'fr')
         return translate(_(msgid), target_language=language)
 
 
-class TarifEditionColumnType(TarifEditionColumn, grok.MultiAdapter):
+class TarifColumnType(TarifColumn, grok.MultiAdapter):
+    grok.adapts(zope.interface.Interface,
+                zope.interface.Interface,
+                interfaces.ITarifDisplayType)
     grok.name('type')
     header = u'Type'
     attrName = u'type'
@@ -146,7 +278,10 @@ class TarifEditionColumnType(TarifEditionColumn, grok.MultiAdapter):
         return self.translate(value)
 
 
-class TarifEditionColumnSubtype(TarifEditionColumn, grok.MultiAdapter):
+class TarifColumnSubtype(TarifColumn, grok.MultiAdapter):
+    grok.adapts(zope.interface.Interface,
+                zope.interface.Interface,
+                interfaces.ITarifDisplaySubtype)
     grok.name('subtype')
     header = u'Sous-Type'
     attrName = u'subtype'
@@ -157,7 +292,10 @@ class TarifEditionColumnSubtype(TarifEditionColumn, grok.MultiAdapter):
         return self.translate(value)
 
 
-class TarifEditionColumnDate(TarifEditionColumn, grok.MultiAdapter):
+class TarifEditionColumnDate(TarifColumn, grok.MultiAdapter):
+    grok.adapts(zope.interface.Interface,
+                zope.interface.Interface,
+                interfaces.ITarifEditionManager)
     grok.name('date')
     header = u'Date'
     weight = 30
@@ -167,7 +305,7 @@ class TarifEditionColumnDate(TarifEditionColumn, grok.MultiAdapter):
         return tarif_date and tarif_date.strftime('%d-%m-%Y') or ''
 
 
-class TarifEditionColumnUser(TarifEditionColumn, grok.MultiAdapter):
+class TarifEditionColumnUser(TarifColumn, grok.MultiAdapter):
     grok.adapts(zope.interface.Interface,
                 zope.interface.Interface,
                 interfaces.ITarifEditionManager)
@@ -177,31 +315,49 @@ class TarifEditionColumnUser(TarifEditionColumn, grok.MultiAdapter):
     weight = 40
 
 
-class TarifEditionColumnValues(TarifEditionColumn, grok.MultiAdapter):
-    grok.adapts(zope.interface.Interface,
-                zope.interface.Interface,
-                interfaces.ITarifEditionManager)
+class TarifColumnValues():
     grok.name('values')
-    header = u'Valeurs actuelles'
     weight = 50
+    header = u'Valeurs'
 
     def renderCell(self, item):
-        elements = [self.render_field(item, 'min', after=u' €'),
-                    self.render_field(item, 'max', after=u' €', before=' / '),
+        elements = [self.render_field(item, 'min', after=u' €', default=u'-'),
+                    self.render_field(item, 'max', after=u' €', before=u' / ', default=u'-'),
                     self.render_field(item, 'cmt')]
-        return u''.join(elements)
 
-    def render_field(self, item, attr, before=u'', after=u''):
+        return u' '.join(elements)
+
+    def render_field(self, item, attr, before=u'', after=u'', default=u''):
         subtypes = getattr(self.table, 'tarif_{0}_subtypes'.format(attr))
         if item.subtype not in subtypes:
             return u''
 
         value = getattr(item, attr, '') or ''
+        if not value:
+            value = default
+            after = ''
+
         input_text = (u'{0}{1}{2}')
         return input_text.format(before, value, after)
 
 
-class TarifEditionColumnInputsMixin(TarifEditionColumn, grok.MultiAdapter):
+class TarifDisplayColumnValues(TarifColumnValues, TarifColumn, grok.MultiAdapter):
+    grok.adapts(zope.interface.Interface,
+                zope.interface.Interface,
+                interfaces.ITarifDisplayTable)
+
+
+class TarifEditionColumnValues(TarifColumnValues, TarifColumn, grok.MultiAdapter):
+    grok.adapts(zope.interface.Interface,
+                zope.interface.Interface,
+                interfaces.ITarifEditionManager)
+    header = u'Valeurs actuelles'
+
+
+class TarifEditionColumnInputsMixin(TarifColumn, grok.MultiAdapter):
+    grok.adapts(zope.interface.Interface,
+                zope.interface.Interface,
+                interfaces.ITarifEditionTable)
     grok.name('inputs')
     header = u''
     weight = 60
@@ -212,7 +368,7 @@ class TarifEditionColumnInputsMixin(TarifEditionColumn, grok.MultiAdapter):
     def renderCell(self, item):
         item = self.get_item(item)
 
-        to_confirm = getattr(item, 'valid', '') == None
+        to_confirm = getattr(item, 'valid', '') is None
         to_confirm = to_confirm and u'tarif-to-confirm' or u''
 
         type = getattr(item, 'type', '')
@@ -222,7 +378,7 @@ class TarifEditionColumnInputsMixin(TarifEditionColumn, grok.MultiAdapter):
         elements = [self._render_field(item, 'min', after=u' €', to_confirm=to_confirm),
                     self._render_field(item, 'max', after=u' €', before=' / ', to_confirm=to_confirm),
                     self._render_field(item, 'cmt', to_confirm=to_confirm)]
-        return u''.join(elements)
+        return u' '.join(elements)
 
     def _render_field(self, item, attr, before=u'', after=u'', to_confirm=u''):
 
