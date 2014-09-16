@@ -315,46 +315,54 @@ class TarifEditionColumnUser(TarifColumn, grok.MultiAdapter):
     weight = 40
 
 
-class TarifColumnValues():
+class TarifColumnValuesMixin(object):
     grok.name('values')
     weight = 50
     header = u'Valeurs'
 
     def renderCell(self, item):
-        elements = [self.render_field(item, 'min', after=u' €', default=u'-'),
-                    self.render_field(item, 'max', after=u' €', before=u' / ', default=u'-'),
-                    self.render_field(item, 'cmt')]
+        elements = [
+            self.render_field(item, 'min', after=u' €', default=u'-'),
+            self.render_field(item, 'max', before=u' / ', after=u' €', default=u'-'),
+            self.render_field(item, 'cmt'),
+        ]
 
         return u' '.join(elements)
 
+    def get_subtypes(self, name):
+        return getattr(self.table, 'tarif_{0}_subtypes'.format(name))
+
     def render_field(self, item, attr, before=u'', after=u'', default=u''):
-        subtypes = getattr(self.table, 'tarif_{0}_subtypes'.format(attr))
-        if item.subtype not in subtypes:
+        if item.subtype not in self.get_subtypes(attr):
             return u''
-
-        value = getattr(item, attr, '') or ''
+        value = getattr(item, attr, u'') or u''
         if not value:
-            value = default
-            after = ''
+            return u'{0}{1}'.format(before, default)
+        return u'{0}{1}'.format(self.format_value(value), after)
 
-        input_text = (u'{0}{1}{2}')
-        return input_text.format(before, value, after)
+    def format_value(self, value):
+        if isinstance(value, float):
+            return u'{0:0.2f}'.format(value)
+        return value
 
 
-class TarifDisplayColumnValues(TarifColumnValues, TarifColumn, grok.MultiAdapter):
+class TarifDisplayColumnValues(TarifColumnValuesMixin, TarifColumn,
+                               grok.MultiAdapter):
     grok.adapts(zope.interface.Interface,
                 zope.interface.Interface,
                 interfaces.ITarifDisplayTable)
 
 
-class TarifEditionColumnValues(TarifColumnValues, TarifColumn, grok.MultiAdapter):
+class TarifEditionColumnValues(TarifColumnValuesMixin, TarifColumn,
+                               grok.MultiAdapter):
     grok.adapts(zope.interface.Interface,
                 zope.interface.Interface,
                 interfaces.ITarifEditionManager)
     header = u'Valeurs actuelles'
 
 
-class TarifEditionColumnInputsMixin(TarifColumn, grok.MultiAdapter):
+class TarifEditionColumnInputsMixin(TarifColumnValuesMixin, TarifColumn,
+                                    grok.MultiAdapter):
     grok.adapts(zope.interface.Interface,
                 zope.interface.Interface,
                 interfaces.ITarifEditionTable)
@@ -375,22 +383,22 @@ class TarifEditionColumnInputsMixin(TarifColumn, grok.MultiAdapter):
         if type == 'CHARGES':
             return self._render_charges(item, to_confirm)
 
-        elements = [self._render_field(item, 'min', after=u' €', to_confirm=to_confirm),
-                    self._render_field(item, 'max', after=u' €', before=' / ', to_confirm=to_confirm),
-                    self._render_field(item, 'cmt', to_confirm=to_confirm)]
+        elements = [
+            self.render_input(item, 'min', after=u' €', cls=to_confirm),
+            self.render_input(item, 'max', after=u' €', before=' / ', cls=to_confirm),
+            self.render_input(item, 'cmt', cls=to_confirm)]
         return u' '.join(elements)
 
-    def _render_field(self, item, attr, before=u'', after=u'', to_confirm=u''):
-
-        subtypes = getattr(self.table, 'tarif_{0}_subtypes'.format(attr))
-        if item.subtype not in subtypes:
+    def render_input(self, item, attr, cls=u'', before=u'', after=u''):
+        if item.subtype not in self.get_subtypes(attr):
             return u''
-
-        value = getattr(item, attr, '') or ''
-        input_text = (u'{0}<input type="text" class="tarif-{1}-input {2}"'
-                      u'name="tarif_{1}_{3}_{4}" value="{5}"/>{6}')
-        return input_text.format(before, attr, to_confirm, item.type, item.subtype,
-                                 value, after)
+        value = self.render_field(item, attr)
+        input_text = (u'{before}<input type="text" class="tarif-{attr}-input '
+                      u'{cls}" name="tarif_{attr}_{type}_{subtype}" '
+                      u'value="{value}"/>{after}')
+        return input_text.format(before=before, attr=attr, cls=cls,
+                                 type=item.type, subtype=item.subtype,
+                                 value=value, after=after)
 
     def _render_charges(self, item, to_confirm):
         subtype = getattr(item, 'subtype', '')
