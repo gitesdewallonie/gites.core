@@ -4,7 +4,7 @@ Changelog
 0.1.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix special character in tarif-edition : #5977
 
 
 0.1.1 (2014-09-16)

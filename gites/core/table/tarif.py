@@ -404,13 +404,13 @@ class TarifEditionColumnInputsMixin(TarifColumn, grok.MultiAdapter):
             checked = u''
 
         if subtype in ('INCLUDED', 'ACCORDING_TO_CONSUMPTION'):
-            render = """
+            render = u"""
                 <span class="{0}">
                   <input type="radio" name="tarif_CHARGES_radio" value="{1}" {2}>
                 </span>
             """.format(to_confirm, subtype, checked)
         elif subtype == 'INCLUSIVE':
-            render = """
+            render = u"""
                 <span class="{0}">
                   <input type="radio" name="tarif_CHARGES_radio" value="{1}" {2}>
                 </span>
