@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.1'
+version = '0.1.4.dev0'
 
 setup(name='gites.core',
       version=version,
@@ -54,6 +54,11 @@ setup(name='gites.core',
           'zope.ramcache',
           'gites.skin'],
       extras_require=dict(
+          test=[
+              'affinitic.testing',
+              'unittest2',
+              'zope.testing',
+              'plone.app.testing'],
           scripts=[]),
       entry_points={
           'console_scripts': [

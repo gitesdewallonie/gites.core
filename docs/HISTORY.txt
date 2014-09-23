@@ -1,8 +1,34 @@
 Changelog
 =========
 
-0.1 - Unreleased
+0.1.4 (unreleased)
+------------------
+
+- Nothing changed yet.
+
+
+0.1.3 (2014-09-16)
+------------------
+
+- Update price to display 2 digits after the comma : #5978
+  [mpeeters]
+
+
+0.1.2 (2014-09-16)
+------------------
+
+- Fix special character in tarif-edition : #5977
+  [francoibr]
+
+
+0.1.1 (2014-09-16)
+------------------
+
+- Fix lodging prices tables : #5839
+  [mpeeters]
+
+
+0.1 (2014-09-15)
 ----------------
 
-* Initial release
-
+- Initial release
