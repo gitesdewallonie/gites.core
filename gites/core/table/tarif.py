@@ -63,7 +63,7 @@ class TarifTable(table.Table):
         'INCLUDED',
         'INCLUSIVE',
         'TABLE_HOTES',
-        'OTHER',
+        'OTHER_CLEAN',
         'SOJOURN_TAX',
     ]
 
@@ -224,7 +224,7 @@ class TarifValuesOther(TarifValues):
                         'WITHOUT_BREAKFAST',
                         'GUARANTEE',
                         'SOJOURN_TAX',
-                        'OTHER']
+                        'OTHER_CLEAN']
 
 
 class TarifEditionValues(TarifValues):
