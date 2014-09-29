@@ -4,7 +4,17 @@ Changelog
 0.1.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Show min/max in some column header : #5984
+  [schminitz]
+
+- Ajout phrase points et non virgules : #5984
+  [schminitz]
+
+- Check changes for OTHER_CLEAN : #5984
+  [schminitz]
+
+- Add new columns for tarif to confirm : #5982
+  [schminitz]
 
 
 0.1.3 (2014-09-16)
