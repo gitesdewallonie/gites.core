@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.1.4 (unreleased)
+0.1.4 (2014-09-29)
 ------------------
 
 - Show min/max in some column header : #5984
