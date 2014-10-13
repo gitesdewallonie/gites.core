@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.1.5 (unreleased)
+0.1.5 (2014-10-13)
 ------------------
 
 - Display prices from the new table.
