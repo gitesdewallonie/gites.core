@@ -4,7 +4,8 @@ Changelog
 0.1.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Display prices from the new table.
+  [schminitz, francoisb]
 
 
 0.1.3 (2014-09-16)
