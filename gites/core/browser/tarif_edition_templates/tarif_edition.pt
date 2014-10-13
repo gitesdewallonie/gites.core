@@ -13,6 +13,9 @@
     <form method="POST" tal:define="status view/apply_tarifs_changes"
           tal:condition="heb_pk">
 
+      <h3>Merci d'utiliser un point pour les décimales (et non une virgule) par exemple: 10.00 et pas 10,00</h3>
+      <br />
+
       <div tal:condition="python: status==1" tal:define="heb view/heb">
         <span tal:condition="python:heb.type.type_heb_code not in 'CH, MH, CHECR'">
             <h3 i18n:translate="Semaine">Semaine</h3>

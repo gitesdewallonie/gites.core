@@ -367,7 +367,7 @@ class TarifEditionColumnInputsMixin(TarifColumnValuesMixin, TarifColumn,
                 zope.interface.Interface,
                 interfaces.ITarifEditionTable)
     grok.name('inputs')
-    header = u''
+    header = u'Min. / Max.'
     weight = 60
 
     def get_item(self, item):
@@ -426,13 +426,19 @@ class TarifEditionColumnInputsMixin(TarifColumnValuesMixin, TarifColumn,
             """.format(to_confirm, subtype, checked, cmt)
         return render
 
+    def renderHeadCell(self):
+        """Header cell content."""
+        if self.table.section in ("OTHER", "CHARGES"):
+            return u""
+
+        return super(TarifEditionColumnInputsMixin, self).renderHeadCell()
+
 
 class TarifEditionColumnInputsManager(TarifEditionColumnInputsMixin, grok.MultiAdapter):
     grok.adapts(zope.interface.Interface,
                 zope.interface.Interface,
                 interfaces.ITarifEditionProprio)
     grok.name('inputs')
-    header = u''
     weight = 60
 
     def get_item(self, item):
@@ -444,7 +450,6 @@ class TarifEditionColumnInputsToConfirm(TarifEditionColumnInputsMixin, grok.Mult
                 zope.interface.Interface,
                 interfaces.ITarifEditionManager)
     grok.name('inputs')
-    header = u''
     weight = 60
 
     def get_item(self, item):
