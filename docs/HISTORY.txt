@@ -4,7 +4,8 @@ Changelog
 0.1.6 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Translate value fix CHECKED translation affinitic refs #6039
+  [schminitz]
 
 
 0.1.5 (2014-10-13)
