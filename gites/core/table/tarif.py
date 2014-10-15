@@ -343,7 +343,7 @@ class TarifColumnValuesMixin(object):
     def format_value(self, value):
         if isinstance(value, float):
             return u'{0:0.2f}'.format(value)
-        return value
+        return self.translate(value)
 
 
 class TarifDisplayColumnValues(TarifColumnValuesMixin, TarifColumn,
