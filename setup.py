@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.1.8.dev0'
+version = '0.1.8'
 
 setup(name='gites.core',
       version=version,
