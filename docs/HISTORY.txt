@@ -4,7 +4,8 @@ Changelog
 0.1.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Separate feast weekend tarif, so numbers of nights is displayed affinitic refs #6057
+  [schminitz]
 
 
 0.1.6 (2014-10-15)
