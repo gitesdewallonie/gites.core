@@ -7,6 +7,9 @@ Changelog
 - Separate feast weekend tarif, so numbers of nights is displayed affinitic refs #6057
   [schminitz]
 
+- Show warning message only when completing the form affinitic refs #6060
+  [schminitz]
+
 
 0.1.6 (2014-10-15)
 ------------------
