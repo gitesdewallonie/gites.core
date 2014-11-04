@@ -84,6 +84,9 @@ class TarifTable(table.Table):
         elif self.section == 'WEEKEND':
             adapter = zope.component.getMultiAdapter(
                 (self.context, self.request, self), interfaces.IValuesWeekend)
+        elif self.section == 'FEAST_WEEKEND':
+            adapter = zope.component.getMultiAdapter(
+                (self.context, self.request, self), interfaces.IValuesFeastWeekend)
         elif self.section == 'ROOM':
             adapter = zope.component.getMultiAdapter(
                 (self.context, self.request, self), interfaces.IValuesRoom)
@@ -159,8 +162,7 @@ class TarifValuesSeason(TarifValues):
 
     section_types = ['LOW_SEASON',
                      'MEDIUM_SEASON',
-                     'HIGH_SEASON',
-                     'FEAST_WEEKEND']
+                     'HIGH_SEASON']
 
 
 class TarifValuesWeek(TarifValues):
@@ -177,11 +179,14 @@ class TarifValuesWeekend(TarifValues):
 
     section_types = ['LOW_SEASON',
                      'MEDIUM_SEASON',
-                     'HIGH_SEASON',
-                     'FEAST_WEEKEND']
-    section_subtypes = ['WEEKEND',
-                        '3_NIGHTS',
-                        '4_NIGHTS']
+                     'HIGH_SEASON']
+    section_subtypes = ['WEEKEND']
+
+
+class TarifValuesFeastWeekend(TarifValues):
+    grok.provides(interfaces.IValuesFeastWeekend)
+
+    section_types = ['FEAST_WEEKEND']
 
 
 class TarifValuesRoom(TarifValues):

@@ -344,7 +344,7 @@ class HebergementView(BrowserView, TarifTableMixin):
             self.context.heb_pk,
             section)
 
-        if section in ['OTHER', 'CHARGES', 'ROOM', 'CHRISTMAS']:
+        if section in ['OTHER', 'CHARGES', 'ROOM', 'CHRISTMAS', 'FEAST_WEEKEND']:
             zope.interface.alsoProvides(
                 table, interfaces.ITarifDisplaySubtype)
         else:

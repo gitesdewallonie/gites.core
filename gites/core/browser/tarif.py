@@ -17,6 +17,9 @@ class TarifTableMixin(object):
     def get_weekend_tarif_table(self):
         return self.get_tarif_table('WEEKEND')
 
+    def get_feast_weekend_tarif_table(self):
+        return self.get_tarif_table('FEAST_WEEKEND')
+
     def get_season_tarif_table(self):
         return self.get_tarif_table('SEASON')
 

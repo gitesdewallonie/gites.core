@@ -109,6 +109,12 @@ class IValuesWeekend(IValues):
     """
 
 
+class IValuesFeastWeekend(IValues):
+    """
+    Feast Weekend section table values marker interface
+    """
+
+
 class IValuesRoom(IValues):
     """
     Room section table values marker interface
