@@ -342,8 +342,10 @@ class TarifColumnValuesMixin(object):
             return u''
         value = getattr(item, attr, u'') or u''
         if not value:
+            if attr == 'max':
+                return u''
             return u'{0}{1}'.format(before, default)
-        return u'{0}{1}'.format(self.format_value(value), after)
+        return u'{0}{1}{2}'.format(before, self.format_value(value), after)
 
     def format_value(self, value):
         if isinstance(value, float):
