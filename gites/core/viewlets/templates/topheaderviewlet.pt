@@ -6,7 +6,7 @@
            href="" tal:attributes="href string:${context/portal_url}/"
            i18n:domain="plone" i18n:translate="">Home</a>
         &nbsp;&nbsp;
-        Les Gîtes de Wallonie
+        Les Gîtes et Chambres d'hôtes de Wallonie
     </div>
     
     <div id="icone-reseaux-sociaux"

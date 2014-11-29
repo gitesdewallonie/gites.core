@@ -4,7 +4,8 @@ Changelog
 0.1.9 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Change title text : #6084
+  [laulaz]
 
 
 0.1.8 (2014-11-04)
