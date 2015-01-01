@@ -226,7 +226,7 @@
                                     <span tal:replace="structure view/get_feast_weekend_tarif_table" />
                                     <h3 i18n:translate="Noel_nouvel_an">Noël / Nouvel an</h3>
                                     <span tal:replace="structure view/get_christmas_tarif_table" />
-                                    <h3 i18n:translate="Charges">Charges</h3>
+                                    <h3 i18n:translate="Charges">Chargessssssss</h3>
                                     <span tal:replace="structure view/get_charges_tarif_table" />
                                 </span>
 
@@ -237,7 +237,13 @@
                                 <h3 i18n:translate="Autre">Autre</h3>
                                 <span tal:replace="structure view/get_other_tarif_table" />
                             </div>
+                            <div id="lien-tarification">
+    -                           <a href=""
+    -                              tal:attributes="href python:translate('tarification')"
+    -                              i18n:translate="rates_for_gites">Tarification des Gîtes et Meublés</a>
+-                           </div>
                         </div>
+
 
                         <!-- TYPE TABLE D'HOTE-->
                         <div id="tarification-table-hote"
@@ -388,7 +394,7 @@
                             </span>
                             <div class="break-float"></div>
                         </div><!--icone-literie-->
-                        
+
                     </div>
                 </li>
                 <!-- DISPONIBILITE -->
