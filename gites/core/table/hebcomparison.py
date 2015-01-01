@@ -158,6 +158,7 @@ class HebComparisonValues(value.ValuesMixin,
         self.comparison_list.add_element(ComparisonColumn(
             u'calendar', self.translate('calendrier')))
         self.heb_columns = self.comparison_list.get_columns_keys('hebergement')
+        self.metadatas_columns = self.comparison_list.get_columns_keys('metadata')
 
         return self.rows_to_cols(self.rows)
 
@@ -172,6 +173,9 @@ class HebComparisonValues(value.ValuesMixin,
             # Tarifs columns
             criteria.update(self.get_tarifs(result.heb_pk))
             # Metadatas columns
+            # Set default value
+            for c in self.metadatas_columns:
+                criteria[c] = False
             criteria.update(self.get_metadatas(result.heb_pk))
             # Calculated columns
             criteria['heb_nombre_epis'] = result.heb_nombre_epis
@@ -225,7 +229,8 @@ class HebComparisonValues(value.ValuesMixin,
         query = query.order_by(mappers.Metadata.metadata_type_id)
         for metadata in query.all():
             self.comparison_list.add_element(ComparisonColumn(
-                u'met_%s' % metadata.met_pk, metadata.getTitre(self.language)))
+                u'met_%s' % metadata.met_pk, metadata.getTitre(self.language),
+                table="metadata"))
 
     def add_tarifs_columns(self):
         query = session().query(mappers.TarifsType)
@@ -265,11 +270,10 @@ class HebComparisonValues(value.ValuesMixin,
         dict = {}
         for tarif in query.all():
             type = u'%s_%s' % (tarif.type, tarif.subtype)
-            prix = [
-                self.render_tarif_field(tarif, 'min', after=u' €', default=u'-'),
-                self.render_tarif_field(tarif, 'max', before=u' / ', after=u' €', default=u'-'),
-                self.render_tarif_field(tarif, 'cmt'),
-            ]
+            prix = []
+            prix.extend(self.render_tarif_field(tarif, 'min', after=u' €', default=u'-').split())
+            prix.extend(self.render_tarif_field(tarif, 'max', before=u' / ', after=u' €', default=u'-').split())
+            prix.extend(self.render_tarif_field(tarif, 'cmt').split())
             prix = u' '.join(prix)
             if tarif.cmt == 'CHECKED':
                 prix = True
