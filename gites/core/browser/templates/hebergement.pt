@@ -226,7 +226,7 @@
                                     <span tal:replace="structure view/get_feast_weekend_tarif_table" />
                                     <h3 i18n:translate="Noel_nouvel_an">Noël / Nouvel an</h3>
                                     <span tal:replace="structure view/get_christmas_tarif_table" />
-                                    <h3 i18n:translate="Charges">Chargessssssss</h3>
+                                    <h3 i18n:translate="Charges">Charges</h3>
                                     <span tal:replace="structure view/get_charges_tarif_table" />
                                 </span>
 
