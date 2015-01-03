@@ -237,7 +237,8 @@
                                 <h3 i18n:translate="Autre">Autre</h3>
                                 <span tal:replace="structure view/get_other_tarif_table" />
                             </div>
-                            <div id="lien-tarification">
+                            <div id="lien-tarification"
+                                 tal:condition="python:heb.type.type_heb_code not in 'CH, MH, CHECR'">
     -                           <a href=""
     -                              tal:attributes="href python:translate('tarification')"
     -                              i18n:translate="rates_for_gites">Tarification des Gîtes et Meublés</a>
