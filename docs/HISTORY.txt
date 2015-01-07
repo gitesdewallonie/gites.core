@@ -4,7 +4,8 @@ Changelog
 0.1.10 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Update prices from comparison table : #6112
+  [francoisb]
 
 
 0.1.9 (2014-11-29)

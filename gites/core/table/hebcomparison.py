@@ -140,87 +140,9 @@ class HebComparisonValues(value.ValuesMixin,
             ComparisonColumn(u'heb_cgt_nbre_chmbre',
                              self.translate('Chambres'),
                              table='hebergement'),
-            ComparisonColumn(u'heb_tarif_we_bs',
-                             u'%s (%s)' % (self.translate('basse_saison'),
-                                           self.translate('week-end')),
-                             table='hebergement',
-                             type='gites'),
-            ComparisonColumn(u'heb_tarif_sem_bs',
-                             self.translate('basse_saison'),
-                             table='hebergement',
-                             type='gites'),
-            ComparisonColumn(u'heb_tarif_we_ms',
-                             u'%s (%s)' % (self.translate('moyenne_saison'),
-                                           self.translate('week-end')),
-                             table='hebergement',
-                             type='gites'),
-            ComparisonColumn(u'heb_tarif_sem_ms',
-                             self.translate('moyenne_saison'),
-                             table='hebergement',
-                             type='gites'),
-            ComparisonColumn(u'heb_tarif_we_hs',
-                             u'%s (%s)' % (self.translate('haute_saison'),
-                                           self.translate('week-end')),
-                             table='hebergement',
-                             type='gites'),
-            ComparisonColumn(u'heb_tarif_sem_hs',
-                             self.translate('haute_saison'),
-                             table='hebergement',
-                             type='gites'),
-            ComparisonColumn(u'heb_tarif_we_3n', self.translate('3_nuits'),
-                             table='hebergement',
-                             type='gites'),
-            ComparisonColumn(u'heb_tarif_we_4n', self.translate('4_nuits'),
-                             table='hebergement',
-                             type='gites'),
-            ComparisonColumn(u'heb_tarif_semaine_fin_annee',
-                             self.translate('fin_d_annee'),
-                             table='hebergement',
-                             type='gites'),
-            ComparisonColumn(u'heb_tarif_garantie', self.translate('garantie'),
-                             table='hebergement',
-                             type='gites'),
-            ComparisonColumn(u'heb_tarif_chmbr_avec_dej_1p',
-                             u'%s (%s)' % (self.translate('nuit_avec_petit_dejeuner'),
-                                           self.translate('1_p')),
-                             table='hebergement',
-                             type='chambres'),
-            ComparisonColumn(u'heb_tarif_chmbr_avec_dej_2p',
-                             u'%s (%s)' % (self.translate('nuit_avec_petit_dejeuner'),
-                                           self.translate('2_p')),
-                             table='hebergement',
-                             type='chambres'),
-            ComparisonColumn(u'heb_tarif_chmbr_avec_dej_3p',
-                             u'%s (%s)' % (self.translate('nuit_avec_petit_dejeuner'),
-                                           self.translate('p_plus')),
-                             table='hebergement',
-                             type='chambres'),
-            ComparisonColumn(u'heb_tarif_chmbr_sans_dej_1p',
-                             u'%s (%s)' % (self.translate('deduction_si_pas_petit_dejeuner'),
-                                           self.translate('1_p')),
-                             table='hebergement',
-                             type='chambres'),
-            ComparisonColumn(u'heb_tarif_chmbr_sans_dej_2p',
-                             u'%s (%s)' % (self.translate('deduction_si_pas_petit_dejeuner'),
-                                           self.translate('2_p')),
-                             table='hebergement',
-                             type='chambres'),
-            ComparisonColumn(u'heb_tarif_chmbr_sans_dej_3p',
-                             u'%s (%s)' % (self.translate('deduction_si_pas_petit_dejeuner'),
-                                           self.translate('p_plus')),
-                             table='hebergement',
-                             type='chambres'),
             ComparisonColumn(u'heb_table_hote',
                              self.translate('table_hotes'),
                              type='chambres'),
-            ComparisonColumn(u'heb_tarif_chmbr_table_hote_1p',
-                             u'%s (%s)' % (self.translate('table_hotes'),
-                                           self.translate('tarif')),
-                             table='hebergement',
-                             type='chambres'),
-            ComparisonColumn(u'heb_taxe_montant',
-                             self.translate('taxe_sejour'),
-                             table='hebergement'),
             ComparisonColumn(u'pro_langue', self.translate('langue'),
                              table='proprio'))
 
@@ -231,6 +153,7 @@ class HebComparisonValues(value.ValuesMixin,
 
         for heb_type in self.heb_types:
             self.comparison_list.add_type(heb_type)
+        self.add_tarifs_columns()
         self.add_metadata_columns()
         self.comparison_list.add_element(ComparisonColumn(
             u'calendar', self.translate('calendrier')))
@@ -246,6 +169,8 @@ class HebComparisonValues(value.ValuesMixin,
             # Hebergement columns
             for c in self.heb_columns:
                 criteria[c] = getattr(result, c)
+            # Tarifs columns
+            criteria.update(self.get_tarifs(result.heb_pk))
             # Metadatas columns
             criteria.update(self.get_metadatas(result.heb_pk))
             # Calculated columns
@@ -301,6 +226,66 @@ class HebComparisonValues(value.ValuesMixin,
         for metadata in query.all():
             self.comparison_list.add_element(ComparisonColumn(
                 u'met_%s' % metadata.met_pk, metadata.getTitre(self.language)))
+
+    def add_tarifs_columns(self):
+        query = session().query(mappers.TarifsType)
+        # Query Gite
+        querygite = query.filter(mappers.TarifsType.gite == True)
+        querygite = querygite.filter(mappers.TarifsType.chambre == False)
+        # Query Chambre
+        querychambre = query.filter(mappers.TarifsType.chambre == True)
+        querychambre = querychambre.filter(mappers.TarifsType.gite == False)
+        # Query Both
+        queryboth = query.filter(mappers.TarifsType.gite == True)
+        queryboth = queryboth.filter(mappers.TarifsType.chambre == True)
+        for tarifstype in querygite.all():
+            self.comparison_list.add_element(ComparisonColumn(
+                u'%s_%s' % (tarifstype.type, tarifstype.subtype),
+                u'%s (%s)' % (self.translate(tarifstype.type),
+                              self.translate(tarifstype.subtype)),
+                type="gites"))
+        for tarifstype in querychambre.all():
+            self.comparison_list.add_element(ComparisonColumn(
+                u'%s_%s' % (tarifstype.type, tarifstype.subtype),
+                u'%s (%s)' % (self.translate(tarifstype.type),
+                              self.translate(tarifstype.subtype)),
+                type="chambres"))
+        for tarifstype in queryboth.all():
+            self.comparison_list.add_element(ComparisonColumn(
+                u'%s_%s' % (tarifstype.type, tarifstype.subtype),
+                u'%s (%s)' % (self.translate(tarifstype.type),
+                              self.translate(tarifstype.subtype))))
+
+    def get_tarifs(self, heb_pk):
+        """ Adds the tarifs for the given heb pk """
+        query = session().query(mappers.Tarifs)
+        query = query.filter(sa.and_(
+            mappers.Tarifs.heb_pk == heb_pk,
+            mappers.Tarifs.valid == True))
+        dict = {}
+        for tarif in query.all():
+            type = u'%s_%s' % (tarif.type, tarif.subtype)
+            prix = [
+                self.render_tarif_field(tarif, 'min', after=u' €', default=u'-'),
+                self.render_tarif_field(tarif, 'max', before=u' / ', after=u' €', default=u'-'),
+                self.render_tarif_field(tarif, 'cmt'),
+            ]
+            prix = u' '.join(prix)
+            if tarif.cmt == 'CHECKED':
+                prix = True
+            dict[type] = prix
+        return dict
+
+    def render_tarif_field(self, item, attr, before=u'', after=u'', default=u''):
+        value = getattr(item, attr, u'') or u''
+        if not value:
+            return u''
+        return u'{0}{1}{2}'.format(before, self.format_value(value), after)
+
+    def format_value(self, value):
+        if isinstance(value, float):
+            return u'{0:0.2f}'.format(value)
+        return self.translate(value)
 
     def get_metadatas(self, heb_pk):
         """ Adds the metadatas for the given heb pk """
