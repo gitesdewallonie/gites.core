@@ -5,8 +5,10 @@ Changelog
 -------------------
 
 - Update default metadatas value : #6112
+  [francoisb]
 
 - Update tarif value when empty : #6112
+  [francoisb]
 
 
 0.1.10 (2015-01-07)
