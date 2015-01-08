@@ -4,7 +4,9 @@ Changelog
 0.1.11 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Update default metadatas value : #6112
+
+- Update tarif value when empty : #6112
 
 
 0.1.10 (2015-01-07)
