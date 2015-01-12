@@ -4,7 +4,11 @@ Changelog
 0.1.12 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- lien vers tarification dans description gites : #6047
+  [Alain]
+
+- supression de s ssss de test : ##
+  [Alain]
 
 
 0.1.11 (2015-01-08)
