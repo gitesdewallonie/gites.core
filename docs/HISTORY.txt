@@ -4,7 +4,8 @@ Changelog
 0.1.13 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- boutons liens tarification pas pour les chambres CH, MH, CHECR
+  [Alain]
 
 
 0.1.12 (2015-01-12)
