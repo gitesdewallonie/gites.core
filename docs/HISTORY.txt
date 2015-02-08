@@ -4,7 +4,8 @@ Changelog
 0.1.14 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Change Google Analytics code : #6125
+  [laulaz]
 
 
 0.1.13 (2015-01-15)
