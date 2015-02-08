@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.1.14 (unreleased)
+0.1.14 (2015-02-08)
 -------------------
 
 - Change Google Analytics code : #6125
