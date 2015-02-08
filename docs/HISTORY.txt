@@ -7,6 +7,9 @@ Changelog
 - Change Google Analytics code : #6125
   [laulaz]
 
+- Add Google remarketing code : #6126
+  [laulaz]
+
 
 0.1.13 (2015-01-15)
 -------------------
