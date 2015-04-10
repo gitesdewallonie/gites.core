@@ -4,7 +4,8 @@ Changelog
 0.1.15 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Remove carrousel arrows when only one photo : #6164
+  [laulaz]
 
 
 0.1.14 (2015-02-08)

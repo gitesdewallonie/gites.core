@@ -436,6 +436,7 @@
                     <div class="slide_content">
                         <h2 i18n:translate="photos">Photos</h2>
                         <div tal:define="vignettesUrls view/getVignettesUrl;
+                                         multiplePhotos python: len(vignettesUrls) > 1;
                                          video heb/video">
 
                             <div id="hebergement-carousel" class="slide" tal:condition="python: vignettesUrls and isMobile">
@@ -465,8 +466,8 @@
                                     </div>
                                   </tal:bcl>
                                 </div>
-                                <a class="left carousel-control" href="#hebergement-carousel" data-slide="prev">&lsaquo;</a>
-                                <a class="right carousel-control" href="#hebergement-carousel" data-slide="next">&rsaquo;</a>
+                                <a tal:condition="multiplePhotos" class="left carousel-control" href="#hebergement-carousel" data-slide="prev">&lsaquo;</a>
+                                <a tal:condition="multiplePhotos" class="right carousel-control" href="#hebergement-carousel" data-slide="next">&rsaquo;</a>
                             </div>
 
                         </div>
