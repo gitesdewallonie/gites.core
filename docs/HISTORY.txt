@@ -4,7 +4,8 @@ Changelog
 0.1.16 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Do not show '-' when comment is not empty : #6177
+  [schminitz]
 
 
 0.1.15 (2015-04-10)
