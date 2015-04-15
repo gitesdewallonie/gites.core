@@ -326,10 +326,16 @@ class TarifColumnValuesMixin(object):
     header = u'Valeurs'
 
     def renderCell(self, item):
+        cmt = self.render_field(item, 'cmt')
+        if cmt:
+            default = u''
+        else:
+            default = u'-'
+
         elements = [
-            self.render_field(item, 'min', after=u' €', default=u'-'),
-            self.render_field(item, 'max', before=u' / ', after=u' €', default=u'-'),
-            self.render_field(item, 'cmt'),
+            self.render_field(item, 'min', after=u' €', default=default),
+            self.render_field(item, 'max', before=u' / ', after=u' €', default=default),
+            cmt,
         ]
 
         return u' '.join(elements)
