@@ -309,7 +309,6 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
         jQuery("#spin").show().spin(opts);
     };
 
-
     // initialize values
     $scope.init();
 
@@ -384,6 +383,14 @@ app.directive('datepick', function() {
                     buttonImage: "++theme++gites.theme/images/icon_calendrier.png",
                     buttonImageOnly: true,
                     showOn: "both",
+                    onSelect: function(date) {
+                      var obj = jQuery(this);
+                      scope.$apply(function() {
+                        scope.parameters[obj.attr('ng-model')] = date;
+                        scope[obj.attr('ng-model')] = date;
+                        scope.updateKeywords();
+                      });
+                    }
                 });
             });
         }

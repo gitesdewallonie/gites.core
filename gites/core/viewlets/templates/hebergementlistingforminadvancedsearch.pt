@@ -36,6 +36,7 @@
                 <input type="text"
                        placeholder="Stay from"
                        size="14"
+                       class="datepicker-advanced"
                        datepick
                        i18n:attributes="placeholder"
                        name="form.widgets.fromDateAvancee"
@@ -46,6 +47,7 @@
                 <input type="text"
                        placeholder="Stay to"
                        size="14"
+                       class="datepicker-advanced"
                        datepick
                        i18n:attributes="placeholder"
                        name="form.widgets.toDateAvancee"
