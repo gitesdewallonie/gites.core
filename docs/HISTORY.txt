@@ -4,6 +4,9 @@ Changelog
 0.1.17 (unreleased)
 -------------------
 
+- Patch LanguageTool before traverse hook to prevent setting the language cookie : #5189
+  [francois]
+
 - Invalidate all cache when hebergement/update is called : #5915
   [laulaz]
 
