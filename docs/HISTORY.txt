@@ -4,7 +4,8 @@ Changelog
 0.1.17 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Invalidate all cache when hebergement/update is called : #5915
+  [laulaz]
 
 
 0.1.16 (2015-04-15)
