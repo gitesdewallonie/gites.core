@@ -4,7 +4,8 @@ Changelog
 0.1.17 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Patch LanguageTool before traverse hook to prevent setting the language cookie : #5189
+  [francois]
 
 
 0.1.16 (2015-04-15)
