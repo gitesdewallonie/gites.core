@@ -15,6 +15,8 @@ from Products.CMFCore.utils import getToolByName
 from z3c.sqlalchemy import getSAWrapper
 from persistent.dict import PersistentDict
 
+from affinitic.caching.memcached import memcachedClient
+
 from gites.core.config import PROJECTNAME
 from gites.core.interfaces import IHebergementFolder
 from gites.map.browser.interfaces import IMappableContent
@@ -186,6 +188,8 @@ class HebergementFolder(ATFolder):
         self.updateHebergement()
         self.updateCommune()
         self.updateType()
+        memcache = memcachedClient()
+        memcache.invalidateAll()
 
     def view(self, REQUEST):
         """

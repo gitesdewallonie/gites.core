@@ -7,6 +7,9 @@ Changelog
 - Patch LanguageTool before traverse hook to prevent setting the language cookie : #5189
   [francois]
 
+- Invalidate all cache when hebergement/update is called : #5915
+  [laulaz]
+
 
 0.1.16 (2015-04-15)
 -------------------
