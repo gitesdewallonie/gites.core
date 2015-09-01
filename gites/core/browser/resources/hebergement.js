@@ -31,7 +31,6 @@ jQuery(document).ready(function($) {
                            function(e) {
                 loadDatePicker();
               });
-              return false;
             },
             config: {
               onBeforeLoad : function (e) {
