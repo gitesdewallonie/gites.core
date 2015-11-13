@@ -4,7 +4,7 @@
   <include package="collective.monkeypatcher" />
 
   <monkey:patch
-    description="Patch for ticket #5140 trac affinitic"
+    description="Patch for ticket #5140 and #6237 trac affinitic"
     class="Products.SQLAlchemyDA.da.SAWrapper"
     original="query"
     replacement=".patch.SQLAlchemyDA_query_patch" />
