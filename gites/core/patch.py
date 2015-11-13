@@ -18,10 +18,13 @@ def jQueryPackPatch(self, content):
     return content
 
 
-def SQLAlchemyDA_query_patch(self, query_string, max_rows=None, query_data=None):
+def SQLAlchemyDA_query_patch(self, query_string, max_rows=None, query_data=None, reconnect=False):
     """ *The* query() method as used by the internal ZSQL
         machinery.
     """
+    if not self.connected() and not reconnect:
+        self.query('COMMIT', reconnect=True)
+
     c = self._wrapper.connection
     cursor = c.cursor()
 
