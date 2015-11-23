@@ -9,6 +9,8 @@ $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
 from zope.component import getUtility
 from Products.CMFCore.utils import getToolByName
+from affinitic.pwmanager.interfaces import IPasswordManager
+from hashlib import md5
 from plone.memoize import forever
 from plone.portlets.interfaces import IPortletManager
 from plone.portlets.interfaces import IPortletAssignmentMapping
@@ -107,3 +109,13 @@ def getGeocodedLocation(location, language='en'):
         else:
             raise e
     return locations[0]
+
+
+def calculate_md5(value):
+    return md5('%s%s' % (value, get_md5_salt())).hexdigest()
+
+
+@forever.memoize
+def get_md5_salt():
+    pw_manager = getUtility(IPasswordManager, 'md5')
+    return pw_manager.getLoginPassWithSeparator('')

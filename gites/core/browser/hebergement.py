@@ -23,6 +23,7 @@ from z3c.sqlalchemy import getSAWrapper
 from plone import api
 from plone.memoize.instance import memoize
 import sqlalchemy as sa
+import urllib
 
 from affinitic.db.cache import FromCache
 from affinitic.pwmanager.interfaces import IPasswordManager
@@ -38,6 +39,7 @@ from gites.core.browser.interfaces import (IHebergementView,
 from gites.core.browser.tarif import TarifTableMixin
 from gites.core.table import tarif
 from gites.core import interfaces
+from gites.core import utils
 
 
 from gites.locales import GitesMessageFactory as _
@@ -355,6 +357,21 @@ class HebergementView(BrowserView, TarifTableMixin):
 
         table.update()
         return table.render()
+
+    def heb_url(self):
+        url = 'http://%s' % self.context.heb_url
+        portal_url = api.portal.get().absolute_url()
+        if portal_url.startswith('https'):
+            portal_url = 'http%s' % portal_url[5:]
+        return '%(base)s/@@l?u=%(url)s&m=%(md5)s' % {
+            'base': portal_url,
+            'url': urllib.quote(url),
+            'md5': self.heb_url_md5(url),
+        }
+
+    def heb_url_md5(self, url):
+        """Return the md5 associated to the hebergement url"""
+        return utils.calculate_md5(url)
 
 
 class HebergementIconsView(BrowserView):
