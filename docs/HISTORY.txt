@@ -4,7 +4,8 @@ Changelog
 0.2.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add a redirection for external links to fix https > http issue : #6310
+  [mpeeters]
 
 
 0.2.2 (2015-11-13)
