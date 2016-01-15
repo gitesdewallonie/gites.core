@@ -8,6 +8,7 @@ from Products.Archetypes.atapi import process_types
 from Products.CMFCore import utils as cmfutils
 from config import PROJECTNAME, DEFAULT_ADD_CONTENT_PERMISSION
 from gites.core.permissions import initialize as initialize_permissions
+from gites.core import monkey
 
 
 def initialize(context):
