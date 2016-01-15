@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.4 (unreleased)
+0.2.4 (2016-01-15)
 ------------------
 
 - Override cookiecuttr JS call to display message at the bottom : #6358
