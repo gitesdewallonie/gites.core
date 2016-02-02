@@ -4,7 +4,8 @@ Changelog
 0.2.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Change carousel behavior to include both packages and links : #6383
+  [laulaz]
 
 
 0.2.4 (2016-01-15)
