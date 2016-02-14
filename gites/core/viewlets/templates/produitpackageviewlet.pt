@@ -3,47 +3,29 @@
     <div id="zone-photo"
          tal:condition="not: context/@@isMobile | nothing">
 
-     <tal:def tal:define="imageInfos viewlet/getVisualImage;
-                          shouldShowCarousel not: imageInfos">
-
-      <tal:if-images tal:condition="not: shouldShowCarousel">
-
-        <div id="visuel-photo">
-            <a href=""
-               tal:attributes="href imageInfos/linkhref">
-                <img src=""
-                     alt=""
-                     tal:attributes="src string: ${imageInfos/imagesrc}">
-            </a>
-        </div>
-
-      </tal:if-images>
-
-      <tal:else tal:condition="shouldShowCarousel">
-
         <div id="package-carousel" class="carousel slide"
-             tal:define="packages viewlet/getCarouselPackages"
-             tal:condition="packages">
+             tal:define="carouselInfos viewlet/getCarouselInfos"
+             tal:condition="carouselInfos">
             <ol class="carousel-indicators">
-              <tal:bcl tal:repeat="package packages">
+              <tal:bcl tal:repeat="carouselInfo carouselInfos">
                 <li data-target="#package-carousel"
                     data-slide-to=""
-                    class="active" tal:attributes="data-slide-to repeat/package/index"></li>
+                    class="active" tal:attributes="data-slide-to repeat/carouselInfo/index"></li>
               </tal:bcl>
             </ol>
             <div class="carousel-inner">
-              <tal:bcl tal:repeat="package packages">
+              <tal:bcl tal:repeat="carouselInfo carouselInfos">
                 <div class=""
-                     tal:define="index repeat/package/index"
+                     tal:define="index repeat/carouselInfo/index"
                      tal:attributes="class python: int(index) == 0 and 'item active' or 'item'">
                     <a href=""
-                       tal:attributes="href package/absolute_url">
+                       tal:attributes="href carouselInfo/href">
                         <img src=""
                              alt=""
-                             tal:attributes="src string: ${package/absolute_url}/largePhoto">
+                             tal:attributes="src carouselInfo/imagesrc">
                         <div class="carousel-caption">
-                            <h4><span tal:replace="package/Title" /></h4>
-                            <p><span tal:replace="package/Description" /></p>
+                            <h4><span tal:replace="carouselInfo/title" /></h4>
+                            <p><span tal:replace="carouselInfo/description" /></p>
                         </div>
                     </a>
                 </div>
@@ -52,11 +34,6 @@
             <a class="left carousel-control" href="#package-carousel" data-slide="prev">&lsaquo;</a>
             <a class="right carousel-control" href="#package-carousel" data-slide="next">&rsaquo;</a>
         </div>
-
-      </tal:else>
-
-     </tal:def>
-
 
         <div id="zone-packperm-membre"
              tal:define="translate nocall:here/@@getTranslatedObjectUrl">

@@ -16,7 +16,7 @@ class ProduitPackageViewletManager(grok.ViewletManager):
 class ProduitPackageViewlet(grok.Viewlet):
 
     @memoize
-    def getVisualImage(self):
+    def getVisualImages(self):
         utool = getToolByName(self.context, 'portal_url')
         portal = utool.getPortalObject()
         carouselFolder = getattr(portal, 'carousel', None)
@@ -47,11 +47,11 @@ class ProduitPackageViewlet(grok.Viewlet):
                 linkLang = relatedItem.getLanguage()
                 if linkLang == '' or linkLang == currentLanguage:
                     visualImage = {'imagesrc': image.getURL(),
-                                   'linkhref': relatedItem.remoteUrl}
+                                   'href': relatedItem.remoteUrl,
+                                   'title': relatedItem.Title(),
+                                   'description': relatedItem.Description()}
                     results.append(visualImage)
-        if results:
-            random.shuffle(results)
-            return results[0]
+        return results
 
     def getCarouselPackages(self):
         cat = getToolByName(self.context, 'portal_catalog')
@@ -61,10 +61,17 @@ class ProduitPackageViewlet(grok.Viewlet):
             package = brain.getObject()
             showInCarousel = getattr(package, 'showInCarousel', False)
             if showInCarousel:
-                results.append(package)
-        random.shuffle(results)
+                url = package.absolute_url()
+                results.append({'imagesrc': "%s/largePhoto" % url,
+                                'href': url,
+                                'title': package.Title(),
+                                'description': package.Description()})
         return results
 
+    def getCarouselInfos(self):
+        results = self.getCarouselPackages() + self.getVisualImages()
+        random.shuffle(results)
+        return results
 
 # register all viewlets in this viewlet manager:
 grok.viewletmanager(ProduitPackageViewletManager)
