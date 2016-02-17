@@ -124,6 +124,25 @@
                 <div class="break-float"></div>
             </div><!--info-sup-->
 
+            <!-- widget formulaire alliance-->
+            <div id="reservation-chambre"
+                 tal:condition="python: heb.heb_pk==2050 and heb.heb_commercialisation_actif==True" >
+                <br />
+                <span i18n="texte-commercialisation-chambre">Réservez en ligne dès maintenant via un paiement sécurisé</span>
+                <div id="formulaire-reservation">
+                        <script type="text/javascript"
+                                src="http://gadget.open-system.fr/widgets-libs/rel/noyau-1.0.min.js"></script>
+                        <script type="text/javascript" >
+                    	( function() {
+                    		var widgetProduit = AllianceReseaux.Widget.Instance( "Produit", { idPanier:"dEh1dHQ", idIntegration:690, langue:"fr", ui:"OSCH-44430" } );
+                    		widgetProduit.Initialise();
+                    	})();
+                    	</script>
+                    	<div id="widget-produit-OSCH-44430"  class="WidgetDirect"></div>
+                </div>
+            </div>
+            <!--reservation-->
+
             <div id="accordeon-spin"></div>
             <script language="javascript" tal:condition="not: isMobile">
                 var opts = {
@@ -188,51 +207,7 @@
                             </div>
                         </tal:for>
                     </div>
-                    <div id="reservation">
-                        reservation ici
-                        <div id="formulaire-reservation">
-                            <script src="http://gadget.open-system.fr/widgets-libs/rel/noyau-1.0.min.js"
-                                    type="text/javascript"></script>
 
-                            <!-- widget calendrier -->
-                            <!--
-                            <script type="text/javascript">
-                            // <![CDATA[
-                                ( function() {
-                                    var widgetProduit = AllianceReseaux.Widget.Instance( "Produit", { idPanier:"aBxoaGg", idIntegration:282, langue:"fr", ui:"OSMB-43678-1" } );
-                                    widgetProduit.PreApp("planning.largeurMax", 500 );
-                                    widgetProduit.Initialise();
-                                    })();
-                            // ]]></script>
-                            <div id="widget-produit-OSMB-43678-1"></div>
-                            <div></div>
-                            <div></div>
-                            -->
-
-
-                            <!-- widget formulaire -->
-                            <script src="http://gadget.open-system.fr/widgets-libs/rel/noyau-1.0.min.js"
-                                    type="text/javascript"></script>
-                            <script type="text/javascript">
-                            // <![CDATA[
-                                ( function() {
-                                    var widgetProduit = AllianceReseaux.Widget.Instance( "Produit", { idPanier:"aBxoaGg", idIntegration:282, langue:"fr", ui:"OSMB-43678" } );
-                                    widgetProduit.Initialise();
-                                })();
-
-                            // ]]></script>
-                            <div id="formulaire-reservation-box">
-                                <h2>Reservation</h2>
-                                <div id="widget-produit-OSMB-43678"></div>
-                                <div></div>
-                            </div>
-                            <!--
-                            <div id="bouton-reservation">
-                                <a href="http://demo-open-pro-meuble.for-system.com/f43678_fr-.aspx">Rechercher</a>
-                            </div>
-                            -->
-                        </div><!--formulaire-reservation-->
-                    </div><!--reservation-->
 
                     <div id="accueil-bloc-gauche">
                         <div id="description-photo-heb">
@@ -262,6 +237,24 @@
                                    value=""
                                    id="end" />
                         </div>
+
+                        <!-- widget alliance-reseau calendrier -->
+                        <!--
+                        <div id="reservation-gite">
+                            <script type="text/javascript"
+                                    src="http://gadget.open-system.fr/widgets-libs/rel/noyau-1.0.min.js"></script>
+                            <script type="text/javascript" >
+                            ( function() {
+                                var widgetProduit = AllianceReseaux.Widget.Instance( "Produit", { idPanier:"dEh1dHQ", idIntegration:690, langue:"fr", ui:"OSMB-44430-1" } );
+                                widgetProduit.Initialise();
+                            })();
+                            </script>
+                            <div id="widget-produit-OSMB-44430-1"  class="WidgetDirect"></div>
+                         </div>
+                         -->
+
+
+
                     </div><!--accueil-bloc-gauche-->
 
 
@@ -614,7 +607,6 @@
         </div><!--define-->
 
     </div>
-
 </div><!--metal-->
 </body>
 </html>
