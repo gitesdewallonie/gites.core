@@ -131,7 +131,7 @@
                 <span i18n="texte-commercialisation-chambre">Réservez en ligne dès maintenant via un paiement sécurisé</span>
                 <div id="formulaire-reservation">
                         <script type="text/javascript"
-                                src="http://gadget.open-system.fr/widgets-libs/rel/noyau-1.0.min.js"></script>
+                                src="https://gadget.open-system.fr/widgets-libs/rel/noyau-1.0.min.js"></script>
                         <script type="text/javascript" >
                     	( function() {
                     		var widgetProduit = AllianceReseaux.Widget.Instance( "Produit", { idPanier:"dEh1dHQ", idIntegration:690, langue:"fr", ui:"OSCH-44430" } );
@@ -242,7 +242,7 @@
                         <!--
                         <div id="reservation-gite">
                             <script type="text/javascript"
-                                    src="http://gadget.open-system.fr/widgets-libs/rel/noyau-1.0.min.js"></script>
+                                    src="https://gadget.open-system.fr/widgets-libs/rel/noyau-1.0.min.js"></script>
                             <script type="text/javascript" >
                             ( function() {
                                 var widgetProduit = AllianceReseaux.Widget.Instance( "Produit", { idPanier:"dEh1dHQ", idIntegration:690, langue:"fr", ui:"OSMB-44430-1" } );
