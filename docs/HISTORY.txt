@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.6 (unreleased)
+0.2.6 (2016-03-07)
 ------------------
 
 - Avoid CSRF protection on /hebergement/update to make it work again : #6398
