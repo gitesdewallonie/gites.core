@@ -128,7 +128,7 @@
             <div id="reservation-chambre"
                  tal:condition="python: heb.heb_pk==2050 and heb.heb_commercialisation_actif==True" >
                 <br />
-                <span i18n="texte-commercialisation-chambre">Réservez en ligne dès maintenant via un paiement sécurisé</span>
+                <span i18n="texte-commercialisation-chambre">Réservez en ligne</span>
                 <div id="formulaire-reservation">
                         <script type="text/javascript"
                                 src="https://gadget.open-system.fr/widgets-libs/rel/noyau-1.0.min.js"></script>
