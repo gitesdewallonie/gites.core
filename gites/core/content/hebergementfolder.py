@@ -10,10 +10,11 @@ $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.atapi import Schema, BaseSchema, registerType
 from Products.ATContentTypes.content.folder import ATFolder
-from zope.interface import implements
+from zope.interface import implements, alsoProvides
 from Products.CMFCore.utils import getToolByName
 from z3c.sqlalchemy import getSAWrapper
 from persistent.dict import PersistentDict
+from plone.protect.interfaces import IDisableCSRFProtection
 
 from affinitic.caching.memcached import memcachedClient
 
@@ -185,6 +186,7 @@ class HebergementFolder(ATFolder):
     def update(self, REQUEST=None):
         """
         """
+        alsoProvides(REQUEST, IDisableCSRFProtection)
         self.updateHebergement()
         self.updateCommune()
         self.updateType()

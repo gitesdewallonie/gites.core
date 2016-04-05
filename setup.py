@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.2.6.dev0'
+version = '0.2.7.dev0'
 
 setup(name='gites.core',
       version=version,
@@ -31,6 +31,7 @@ setup(name='gites.core',
           'Products.LocalFS',
           'affinitic.caching',
           'affinitic.pwmanager',
+          'collective.cookiecuttr',
           'collective.fb',
           'collective.js.jqueryui',
           'collective.monkeypatcher',
