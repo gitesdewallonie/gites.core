@@ -128,6 +128,7 @@
             <div id="reservation-chambre"
                  tal:condition="python: heb.heb_pk==2050 and heb.heb_commercialisation_actif==True" >
                      <a href="http://reservation.belholidays.com/?_wos=OSCH-44430"
+                        target="_blanck"
                         i18n="texte-commercialisation-chambre">Réservez en ligne</a>
             </div><!--reservation-->
                 <!--
