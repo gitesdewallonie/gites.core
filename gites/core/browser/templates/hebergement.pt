@@ -227,7 +227,6 @@
 
                         <div id="description-calendrier"
                              tal:condition="hasCalendar">
-                             xxxxxx
                             <div id="calendars"></div>
                             <input type="hidden"
                                    id="reset" />
