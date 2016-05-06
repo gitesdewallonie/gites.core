@@ -127,9 +127,10 @@
             <!-- widget formulaire alliance-->
             <div id="reservation-chambre"
                  tal:condition="python: heb.heb_pk==2050 and heb.heb_commercialisation_actif==True" >
-                     <a href="http://reservation.belholidays.com/?_wos=OSCH-44430"
-                        target="_blanck"
-                        i18n="texte-commercialisation-chambre">Réservez en ligne</a>
+                     <a href=""
+                        tal:attributes="href string: http://reservation.belholidays.com/?_wos=${heb/heb_commercialisation_id}"
+                        i18n="texte-commercialisation-chambre"
+                        target="_blanck">Réservez en ligne</a>
             </div><!--reservation-->
                 <!--
                 <div id="formulaire-reservation">
