@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.7 (unreleased)
+0.2.7 (2016-05-10)
 ------------------
 
 - Fix INVALID_REQUEST google error when no location is sent : #6424
