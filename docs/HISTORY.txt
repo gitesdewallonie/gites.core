@@ -1,10 +1,17 @@
 Changelog
 =========
 
-0.2.7 (unreleased)
+0.2.8 (unreleased)
 ------------------
 
 - Nothing changed yet.
+
+
+0.2.7 (2016-05-10)
+------------------
+
+- Fix INVALID_REQUEST google error when no location is sent : #6424
+  [laulaz]
 
 
 0.2.6 (2016-03-07)
