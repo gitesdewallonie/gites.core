@@ -101,6 +101,11 @@ class IHebergementIconsView(Interface):
         return the url of the signaletique
         """
 
+class ICommercialisationView(Interface):
+    """
+    View for the commercialisation of an hebergement
+    """
+
 
 class ITypeHebView(Interface):
     """

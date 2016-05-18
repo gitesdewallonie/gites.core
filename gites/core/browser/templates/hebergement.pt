@@ -70,6 +70,7 @@
 
 <div metal:fill-slot="main"
      tal:define="hasCalendar view/showCalendar;
+                 commercialisation context/@@commercialisation;
                  isMobile context/@@isMobile | nothing">
 
     <div id="content-core"
@@ -128,7 +129,7 @@
             <div id="reservation-chambre"
                  tal:condition="python: heb.heb_commercialisation_actif==True" >
                      <a href=""
-                        tal:attributes="href string: http://reservation.belholidays.com/?_wos=${heb/heb_commercialisation_id}"
+                        tal:attributes="href python: commercialisation.getUrlCommercialisation(heb.heb_commercialisation_id)"
                         i18n:translate="texte-commercialisation-chambre"
                         target="_blanck">Réservez en ligne</a>
             </div><!--reservation-->

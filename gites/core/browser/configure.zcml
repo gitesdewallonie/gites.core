@@ -9,6 +9,14 @@
 
    <browser:page
       for="*"
+      name="commercialisation"
+      allowed_interface=".interfaces.ICommercialisationView"
+      class=".commercialisation.CommercialisationView"
+      permission="zope.Public"
+      />
+
+   <browser:page
+      for="*"
       name="sejour-a-bois-ouvert"
       template="templates/metro/bois_ouvert_fr.pt"
       permission="zope.Public"
