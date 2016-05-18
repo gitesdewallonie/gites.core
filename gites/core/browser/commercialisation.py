@@ -25,7 +25,6 @@ class CommercialisationView(BrowserView):
         http://reservation.belholidays.com/z11593_nl-.aspx?_wos=
         """
         language = self.request.get('LANGUAGE', 'en')
-        import pdb; pdb.set_trace()
         url = ''
         if language == "nl":
             url = "http://reservation.belholidays.com/z11593_nl-.aspx?_wos=%s" % (hebCommercialisationId)
