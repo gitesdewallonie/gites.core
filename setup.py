@@ -54,7 +54,9 @@ setup(name='gites.core',
           'z3c.unconfigure',
           'beautifulsoup4',
           'zope.ramcache',
-          'gites.skin'],
+          'gites.skin',
+          'requests[security]',
+      ],
       extras_require=dict(
           test=[
               'affinitic.testing',

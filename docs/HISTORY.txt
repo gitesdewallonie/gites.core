@@ -4,7 +4,10 @@ Changelog
 0.2.8 (unreleased)
 ------------------
 
-- Use the google api key for geocode api calls
+- Get security extra requirements for requests : #6449
+  [mpeeters]
+
+- Use the google api key for geocode api calls : #6449
   [mpeeters]
 
 
