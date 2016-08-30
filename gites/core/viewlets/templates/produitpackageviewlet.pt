@@ -40,7 +40,7 @@
               <div id="zone-package-permanent">
                   <ul>
                       <li id="produit-mice">
-                          <a href="" i18n:translate="mice" tal:attributes="href python:translate('idee-sejour/mice')">MICE</a>
+                          <a href="" i18n:translate="mice" tal:attributes="href python:translate('idee-sejour/salles-et-seminaires')">MICE</a>
                       </li>
                       <li id="produit-city-trip">
                           <a href="" i18n:translate="city_trip" tal:attributes="href python:translate('idee-sejour/city-trip')">CITY-TRIP</a>
