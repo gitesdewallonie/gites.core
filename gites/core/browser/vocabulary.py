@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from sqlalchemy import select, distinct
+from sqlalchemy import select, distinct, and_
 from zope.schema.vocabulary import SimpleVocabulary, SimpleTerm
 from z3c.sqlalchemy import getSAWrapper
 from zope.interface import implements
@@ -160,6 +160,8 @@ class CitiesVocabulary(object):
         query = session().query(distinct(Commune.com_nom).label('com_nom'))
         query = query.join('relatedHebergement', 'proprio')
         query = query.options(FromCache('gdw'))
+        query = query.filter(and_(Commune.com_nom != None,
+                                  Commune.com_nom != 'None'))
         query = query.filter(Hebergement.heb_site_public == '1')
         query = query.filter(Proprio.pro_etat == True)
         return [city.com_nom for city in query.all()]
@@ -168,6 +170,8 @@ class CitiesVocabulary(object):
         query = session().query(distinct(Hebergement.heb_localite).label('heb_localite'))
         query = query.join('proprio')
         query = query.options(FromCache('gdw'))
+        query = query.filter(and_(Hebergement.heb_localite != None,
+                                  Hebergement.heb_localite != 'None'))
         query = query.filter(Hebergement.heb_site_public == '1')
         query = query.filter(Proprio.pro_etat == True)
         return [heb.heb_localite for heb in query.all()]

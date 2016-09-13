@@ -4,6 +4,9 @@ Changelog
 0.2.8 (unreleased)
 ------------------
 
+- Fix problem with 'None' values in DB : #6472
+  [laulaz]
+
 - Get security extra requirements for requests : #6449
   [mpeeters]
 
