@@ -43,11 +43,11 @@
     </div>
     <div class="break-float"></div>
     <div id="listing-result-count"
-         i18n:translate="heb_count">Hébergement 
+         i18n:translate="heb_count">Hébergement
     <span i18n:name="heb_start"
-          tal:replace="viewlet/batch_start" /> à 
+          tal:replace="viewlet/batch_start" /> à
     <span i18n:name="heb_number"
-          tal:replace="viewlet/batch_end" /> sur un total de 
+          tal:replace="viewlet/batch_end" /> sur un total de
     <span i18n:name="heb_number_total"
           tal:replace="viewlet/count" /></div>
   </div>
@@ -57,6 +57,7 @@
        i18n:domain="gites">
     <tal:def define="heb_view nocall:hebergement/@@view">
       <div tal:define="type_heb heb_view/heb_type_type"
+           class=""
            tal:attributes="class python: type_heb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
         <div id="typetype">
           <span tal:content="type_heb"
@@ -209,7 +210,8 @@
              id="groupelist"
              collapse="!isCollapsed"
              class="{{(data[0].type_heb == 'gite') && 'collapse-gite-listing-detail' || 'collapse-chambre-listing-detail'}}">
-         <div id="titre-groupe" i18n:translate="gite-groupes">Groupement</div>
+
+        <div id="titre-groupe" i18n:translate="gite-groupes">Groupement</div>
           <div data-ng-repeat="groupe in data">
             <div class="{{(groupe.type_heb == 'gite') && 'hebergement-gite-listing-detail' || 'hebergement-chambre-listing-detail'}}">
               <div id="typetype">
@@ -352,11 +354,11 @@
     </div>
     <div class="break-float"></div>
     <div id="listing-result-count"
-         i18n:translate="heb_count">Hébergement 
+         i18n:translate="heb_count">Hébergement
     <span i18n:name="heb_start"
-          tal:replace="viewlet/batch_start" /> à 
+          tal:replace="viewlet/batch_start" /> à
     <span i18n:name="heb_number"
-          tal:replace="viewlet/batch_end" /> sur un total de 
+          tal:replace="viewlet/batch_end" /> sur un total de
     <span i18n:name="heb_number_total"
           tal:replace="viewlet/count" /></div>
   </div>
