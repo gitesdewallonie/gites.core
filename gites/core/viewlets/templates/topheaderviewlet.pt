@@ -1,59 +1,7 @@
 <div id="top-header"
      i18n:domain="gites">
     <div id="titre-site">
-        <a href="" tal:attributes="href string:${context/portal_url}/"><img src="++theme++gites.theme/images/btn_home.png"></a>
-        <a class="home-link"
-           href="" tal:attributes="href string:${context/portal_url}/"
-           i18n:domain="plone" i18n:translate="">Home</a>
-        &nbsp;&nbsp;
         Les Gîtes et Chambres d'hôtes de Wallonie
-    </div>
-    
-    <div id="icone-reseaux-sociaux"
-         tal:condition="not: context/@@isMobile | nothing">
-        <ul>
-            <li>
-                <a href="https://play.google.com/store/apps/details?id=be.gitesdewallonie.allochambredhotes"
-                   id="android"
-                   target="_blank"></a>
-            </li>
-            <li>
-                <a href="http://itunes.apple.com/be/app/allo-chambre-dhotes/id509470840?mt=8"
-                   id="apple"
-                   target="_blank"></a>
-            </li>
-            <li>
-                <a href="https://www.youtube.com/channel/UCgvYj4ev_tlUedjJ1Pf1VDg"
-                   id="iconyoutube"
-                   target="_blank"></a>
-            </li>
-            <li>
-                <a href="https://plus.google.com/101294589232969727782"
-                   id="google"
-                   target="_blank"></a>
-            </li>
-            <li>
-                <a href="http://twitter.com/GitesWallonie"
-                   id="twitter"
-                   target="_blank"></a>
-            </li>
-            <li>
-                <a href="https://www.facebook.com/GitesdeWallonie"
-                   id="facebook"
-                   target="_blank"></a>
-            </li>
-            <li>
-                <a href="http://pinterest.com/gitesdewallonie"
-                   id="Pinterest"
-                   target="_blank"></a>
-            </li>
-            <li>
-                <a href=""
-                   id="mail"
-                   tal:attributes="href string:${context/@@plone_portal_state/portal_url}/sendto_form">
-                </a>
-            </li>
-        </ul>
     </div>
 <div class="break-float"></div>
 </div>
