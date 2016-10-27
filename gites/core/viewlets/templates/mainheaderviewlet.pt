@@ -7,5 +7,17 @@
     <!-- je-cherche -->
     <!--div tal:content="structure viewlet/form/render" /-->
 
+    <div id="header-lien">
+        <div id="header-derniere-minute">
+            Dernières minutes
+        </div>
+        <div id="reserver-en-ligne">
+            Réservez en ligne
+        </div>
+        <div id="header-shop">
+            shop
+        </div>
+    </div>
+
     <div class="break-float"></div>
 </div><!--main-header-->
