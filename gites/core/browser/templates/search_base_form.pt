@@ -8,17 +8,6 @@
      i18n:domain="gites">
     <h2 i18n:translate="label_recherche">Je cherche</h2>
     <div class="break-float"></div>
-        <div id="recherche-avancee">
-            <h3><a href=""
-                   tal:attributes="href string:${context/@@plone_portal_state/portal_url}/search"
-                   i18n:translate="recherche_avancee">Recherche avanc&eacute;e</a></h3>
-        </div>
-        <div id="recherche-cartographique">
-            <h3><a href=""
-                   tal:attributes="href python:translate('map-search')"
-                   i18n:translate="recherche_cartographique">Recherche cartographique</a></h3>
-        </div>
-    <div class="break-float"></div>
 
     <div id="form-je-cherche">
         <form action=""
