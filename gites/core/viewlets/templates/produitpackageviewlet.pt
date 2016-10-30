@@ -35,8 +35,11 @@
             <a class="right carousel-control" href="#package-carousel" data-slide="next">&rsaquo;</a>
         </div>
 
+        <!--
         <div id="zone-packperm-membre"
              tal:define="translate nocall:here/@@getTranslatedObjectUrl">
+        -->
+
 
             <!--
             <div id="zone-package-permanent">
@@ -57,8 +60,9 @@
                  tal:attributes="href python:translate('devenir-gites-de-wallonie')"
                  i18n:translate="devenir_membre">Devenir membre</a>
             </div>
-            -->
             <div class="break-float"></div>
-        </div>
+        </div>-->
+
     </div>
+
 </div>
