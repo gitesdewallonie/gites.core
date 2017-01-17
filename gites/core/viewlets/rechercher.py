@@ -17,6 +17,7 @@ class RechercherViewlet(grok.Viewlet):
     grok.order(10)
 
     def update(self):
+
         self.form = BasicForm(self.context, self.request)
         self.form.update()
 
