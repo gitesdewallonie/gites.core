@@ -64,7 +64,7 @@
                 i18n:translate=""
                 class="texte-vertical">
           </span>
-          <div class="btn-loupe-listing">
+          <div>
             <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
               <a href=""
                  tal:attributes="ng-click string:getGroupement(${hebergement/heb_groupement_pk})"></a>
@@ -74,6 +74,7 @@
                  tal:attributes="href hebergement/@@url_heb"></a>
             </tal:groupe>
           </div>
+          <!--
           <div class="comparer"
                tal:condition="python:heb_view.heb_type() != 'gite-groupes' and viewlet.count() > 1">
             <input type="checkbox"
@@ -88,6 +89,7 @@
                    i18n:attributes="title selectionner-pour-comparer"
                    tal:attributes="for repeat/hebergement/number"></label>
           </div>
+          -->
         </div>
         <div id="vignette">
             <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
@@ -110,12 +112,14 @@
             </tal:groupe>
         </div>
         <div id="info-bloc-sup">
+          <!--
           <div class="digit"
                tal:attributes="id string:map_picto_${hebergement/heb_pk}_${heb_view/heb_type}">
             <img src=""
                  alt=""
                  tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/${type_heb}_${repeat/hebergement/number}.png" />
           </div>
+          -->
           <div tal:condition="viewlet/is_geolocalized"
                id="distance">
             <span tal:define="dist python:viewlet.heb_distance(hebergement)"
@@ -364,8 +368,9 @@
   </div>
   <!--repeat-->
   <div id="break-float"></div>
+  <!--
   <div tal:condition="python: viewlet.count() > 1">
-    <!--listing-result-block-->
+    listing-result-block
     <input type="button"
            value="Comparer"
            id="comparison-button"
@@ -374,4 +379,5 @@
            ng-click="compareHeb()" />
     <div id="overlay-container"></div>
   </div>
+  -->
 </div>
