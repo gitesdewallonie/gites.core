@@ -7,5 +7,4 @@ jQuery(document).ready(function($) {
     $("#form-widgets-toDate").datepicker('option', 'onSelect', function(date) {
         $("#form-widgets-fromDate").datepicker("option", "maxDate", date);
     });
-
 });
