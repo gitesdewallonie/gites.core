@@ -56,6 +56,7 @@
             </div>
             <div id="nbre-personne">
                 <input type="text"
+                       placeholder="Nbr"
                        value=""
                        class="text-widget int-field"
                        name="form.widgets.capacityMin"
