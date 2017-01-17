@@ -32,7 +32,7 @@
         disponible ce soir à proximité de votre destination
         en Wallonie.</span>
     </p>
-    <div class="plus-info">
+    <div class="plus-info info-chambre">
         <a href="http://www.allochambredhotes.be"
            tal:attributes="href string:http://www.allochambredhotes.be?set_language=${allo_lang}"
            target="_blank">
