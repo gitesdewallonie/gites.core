@@ -33,17 +33,21 @@
                 src=""
                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/signalerprobleme.js"></script>
 
+        <!--
         <script type="text/javascript"
                 src=""
                 charset="utf-8"
                 tal:condition="not: isMobile"
                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/accordeon/jquery.accordionza.min.js"></script>
+        -->
 
+        <!--
         <script type="text/javascript"
                 src=""
                 charset="utf-8"
                 tal:condition="not: isMobile"
                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++theme++gites.theme/accordeon/script.js"></script>
+        -->
 
         <script type="text/javascript"
                 src=""
@@ -67,6 +71,13 @@
               charset="utf-8"
               tal:attributes="href string:${context/@@plone_portal_state/portal_url}/++resource++timeframe.css" />
     </metal:css>
+
+
+
+
+
+
+
 
 <div metal:fill-slot="main"
      tal:define="hasCalendar view/showCalendar;
@@ -147,7 +158,8 @@
                 </div>
                 -->
 
-            <div id="accordeon-spin"></div>
+            <!--<div id="accordeon-spin"></div>-->
+            <!--
             <script language="javascript" tal:condition="not: isMobile">
                 var opts = {
                     lines: 12,      // The number of lines to draw
@@ -162,175 +174,160 @@
                 var target = document.getElementById('accordeon-spin');
                 var spinner = new Spinner(opts).spin(target);
             </script>
+            -->
 
-            <ul id="descriptif-accordeon"
+            <div id="descriptif-accordeon"
                 tal:define="lang request/LANGUAGE | fr;
                             languageAwareClass string:slide_handle_${lang}">
 
-                <script language="javascript" tal:condition="not: isMobile">
+                <!--<script language="javascript" tal:condition="not: isMobile">
                     jQuery("#descriptif-accordeon").hide();
-                </script>
+                </script>-->
 
                 <!-- ACCUEIL -->
-                <li class="slide slide1">
+                <section class="slide slide1">
+                    <!--
                     <div class="slide_handle"
-                         tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
+                         tal:attributes="class string: slide_handle ${languageAwareClass}"></div>
+                    -->
                     <div class="slide_content">
                         <h2 i18n:translate="accueil">Accueil</h2>
-                    <div>
-                     <div id="description-icone-theme-giteplus">
-                        <tal:for repeat="metadata python:view.getHebMetadatasByType('themes')">
-                            <div class="button-theme">
+                        <div id="description-icone-theme-giteplus">
+                            <tal:for repeat="metadata python:view.getHebMetadatasByType('themes')">
+                                <div class="button-theme">
+                                    <img src=""
+                                         title=""
+                                         alt=""
+                                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
+                                                         alt metadata/title;
+                                                         title metadata/title" />
+                                </div>
+                              </tal:for>
+
+                            <tal:for repeat="metadata python:view.getHebMetadatasByType('gitesplus')">
+                                <div class="button-theme">
+                                    <img src=""
+                                         title=""
+                                         alt=""
+                                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
+                                                         alt metadata/title;
+                                                         title metadata/title" />
+                                </div>
+                            </tal:for>
+                            <tal:for repeat="metadata python:view.getHebMetadatasByType('iconedescription')">
+                                <div class="button-theme">
+                                    <img src=""
+                                         title=""
+                                         alt=""
+                                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
+                                                         alt metadata/title;
+                                                         title metadata/title" />
+                                </div>
+                            </tal:for>
+                        </div>
+
+
+                        <div id="accueil-bloc-gauche">
+                            <div id="description-photo-heb">
                                 <img src=""
-                                     title=""
-                                     alt=""
-                                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
-                                                     alt metadata/title;
-                                                     title metadata/title" />
+                                     alt="Photo hébergement"
+                                     tal:attributes="src string:${here/photos_heb/absolute_url}/${heb/heb_code_gdw}00.jpg" />
                             </div>
-                          </tal:for>
 
-                        <tal:for repeat="metadata python:view.getHebMetadatasByType('gitesplus')">
-                            <div class="button-theme">
-                                <img src=""
-                                     title=""
-                                     alt=""
-                                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
-                                                     alt metadata/title;
-                                                     title metadata/title" />
+                            <div id="description-adresse-hebergement">
+                                <span tal:content="heb/heb_adresse" /><br/>
+                                <span tal:content="heb/commune/com_cp" />
+                                <span tal:content="heb/heb_localite" />
+                                (<span tal:content="heb/commune/com_nom" />)
                             </div>
-                        </tal:for>
-                        <tal:for repeat="metadata python:view.getHebMetadatasByType('iconedescription')">
-                            <div class="button-theme">
-                                <img src=""
-                                     title=""
-                                     alt=""
-                                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
-                                                     alt metadata/title;
-                                                     title metadata/title" />
+
+                            <div id="description-calendrier"
+                                 tal:condition="hasCalendar">
+                                <div id="calendars"></div>
+                                <input type="hidden"
+                                       id="reset" />
+                                <input type="hidden"
+                                       name="start"
+                                       value=""
+                                       id="start" />
+                                <input type="hidden"
+                                       name="end"
+                                       value=""
+                                       id="end" />
                             </div>
-                        </tal:for>
-                    </div>
+
+                        </div><!--accueil-bloc-gauche-->
 
 
-                    <div id="accueil-bloc-gauche">
-                        <div id="description-photo-heb">
-                            <img src="" width="300" height="195"
-                                 alt="Photo hébergement"
-                                 tal:attributes="src string:${here/photos_heb/absolute_url}/${heb/heb_code_gdw}00.jpg" />
-                        </div>
+                        <div id="accueil-bloc-droite"
+                             tal:define="tables_hotes view/getTablesHotes">
+                        <!--TABLE TARIFICATION GITES-->
 
-                        <div id="description-adresse-hebergement">
-                            <span tal:content="heb/heb_adresse" /><br/>
-                            <span tal:content="heb/commune/com_cp" />
-                            <span tal:content="heb/heb_localite" />
-                            (<span tal:content="heb/commune/com_nom" />)
-                        </div>
+                            <div id="tarification-hebergement">
+                                <div>
+                                    <span tal:condition="python:heb.type.type_heb_code not in 'CH, MH, CHECR'">
+                                        <h3 i18n:translate="Semaine">Semaine</h3>
+                                        <span tal:replace="structure view/get_week_tarif_table" />
+                                        <h3 i18n:translate="Week_end">Week end</h3>
+                                        <span tal:replace="structure view/get_weekend_tarif_table" />
+                                        <h3 i18n:translate="FEAST_WEEKEND">Week end de fête</h3>
+                                        <span tal:replace="structure view/get_feast_weekend_tarif_table" />
+                                        <h3 i18n:translate="Noel_nouvel_an">Noël / Nouvel an</h3>
+                                        <span tal:replace="structure view/get_christmas_tarif_table" />
+                                        <h3 i18n:translate="Charges">Charges</h3>
+                                        <span tal:replace="structure view/get_charges_tarif_table" />
+                                    </span>
 
-                        <div id="description-calendrier"
-                             tal:condition="hasCalendar">
-                            <div id="calendars"></div>
-                            <input type="hidden"
-                                   id="reset" />
-                            <input type="hidden"
-                                   name="start"
-                                   value=""
-                                   id="start" />
-                            <input type="hidden"
-                                   name="end"
-                                   value=""
-                                   id="end" />
-                        </div>
-
-                        <!-- widget alliance-reseau calendrier -->
-                        <!--
-                        <div id="reservation-gite">
-                            <script type="text/javascript"
-                                    src="https://gadget.open-system.fr/widgets-libs/rel/noyau-1.0.min.js"></script>
-                            <script type="text/javascript" >
-                            ( function() {
-                                var widgetProduit = AllianceReseaux.Widget.Instance( "Produit", { idPanier:"dEh1dHQ", idIntegration:690, langue:"fr", ui:"OSMB-44430-1" } );
-                                widgetProduit.Initialise();
-                            })();
-                            </script>
-                            <div id="widget-produit-OSMB-44430-1"  class="WidgetDirect"></div>
-                         </div>
-                         -->
-
-
-
-                    </div><!--accueil-bloc-gauche-->
-
-
-                    <div id="accueil-bloc-droite"
-                         tal:define="tables_hotes view/getTablesHotes">
-                    <!--TABLE TARIFICATION GITES-->
-
-                        <div id="tarification-hebergement">
-                            <div>
-                                <span tal:condition="python:heb.type.type_heb_code not in 'CH, MH, CHECR'">
-                                    <h3 i18n:translate="Semaine">Semaine</h3>
-                                    <span tal:replace="structure view/get_week_tarif_table" />
-                                    <h3 i18n:translate="Week_end">Week end</h3>
-                                    <span tal:replace="structure view/get_weekend_tarif_table" />
-                                    <h3 i18n:translate="FEAST_WEEKEND">Week end de fête</h3>
-                                    <span tal:replace="structure view/get_feast_weekend_tarif_table" />
-                                    <h3 i18n:translate="Noel_nouvel_an">Noël / Nouvel an</h3>
-                                    <span tal:replace="structure view/get_christmas_tarif_table" />
-                                    <h3 i18n:translate="Charges">Charges</h3>
-                                    <span tal:replace="structure view/get_charges_tarif_table" />
-                                </span>
-
-                                <span tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR'">
-                                    <h3 i18n:translate="Chambres">Chambres</h3>
-                                    <span tal:replace="structure view/get_room_tarif_table" />
-                                </span>
-                                <h3 i18n:translate="Autre">Autre</h3>
-                                <span tal:replace="structure view/get_other_tarif_table" />
+                                    <span tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR'">
+                                        <h3 i18n:translate="Chambres">Chambres</h3>
+                                        <span tal:replace="structure view/get_room_tarif_table" />
+                                    </span>
+                                    <h3 i18n:translate="Autre">Autre</h3>
+                                    <span tal:replace="structure view/get_other_tarif_table" />
+                                </div>
+                                <div id="lien-tarification"
+                                     tal:condition="python:heb.type.type_heb_code not in 'CH, MH, CHECR'">
+                                    <a href=""
+                                       tal:attributes="href python:translate('tarification')"
+                                       i18n:translate="rates_for_gites">Tarification des Gîtes et Meublés</a>
+                                </div>
                             </div>
-                            <div id="lien-tarification"
-                                 tal:condition="python:heb.type.type_heb_code not in 'CH, MH, CHECR'">
-                                <a href=""
-                                   tal:attributes="href python:translate('tarification')"
-                                   i18n:translate="rates_for_gites">Tarification des Gîtes et Meublés</a>
-                            </div>
-                        </div>
 
 
-                        <!-- TYPE TABLE D'HOTE-->
-                        <div id="tarification-table-hote"
-                             tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR' and tables_hotes">
-                            <table>
-                                <tr>
-                                    <td class="tarif-saison" i18n:translate="type_table_hotes">
-                                        Type de table d'hôtes
-                                    </td>
-                                    <td>
-                                        <tal:blc tal:repeat="table_hote tables_hotes">
-                                            <img src=""
-                                                 title=""
-                                                 alt=""
-                                                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${table_hote/id}.png;
-                                                                 alt table_hote/title;
-                                                                 title table_hote/title" />
-                                            <span class="discreet-info" tal:content="table_hote/title">Titre</span>
-                                            <br />
-                                        </tal:blc>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div><!--tarif table hote-->
-
+                            <!-- TYPE TABLE D'HOTE-->
+                            <div id="tarification-table-hote"
+                                 tal:condition="python:heb.type.type_heb_code in 'CH, MH, CHECR' and tables_hotes">
+                                <table>
+                                    <tr>
+                                        <td class="tarif-saison" i18n:translate="type_table_hotes">
+                                            Type de table d'hôtes
+                                        </td>
+                                        <td>
+                                            <tal:blc tal:repeat="table_hote tables_hotes">
+                                                <img src=""
+                                                     title=""
+                                                     alt=""
+                                                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${table_hote/id}.png;
+                                                                     alt table_hote/title;
+                                                                     title table_hote/title" />
+                                                <span class="discreet-info" tal:content="table_hote/title">Titre</span>
+                                                <br />
+                                            </tal:blc>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div><!--tarif table hote-->
+                        </div><!--accueil-bloc-droite-->
                         <div class="break-float"></div>
-                    </div><!--accueil-bloc-droite-->
-                    </div>
                     </div><!-- slide_content -->
-                </li>
+                </section>
 
                 <!-- DESCRIPTION -->
-                <li class="slide slide2">
+                <section class="slide slide2">
+                    <!--
                     <div class="slide_handle"
-                         tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
+                         tal:attributes="class string: slide_handle ${languageAwareClass}"></div>
+                    -->
                     <div class="slide_content">
                         <h2 i18n:translate="description">Description</h2>
                         <div id="description-bloc-gauche">
@@ -448,12 +445,14 @@
                         </div><!--icone-literie-->
 
                     </div>
-                </li>
+                </section>
                 <!-- DISPONIBILITE -->
-                <li class="slide slide3"
+                <section class="slide slide3"
                     tal:attributes="class python: hasCalendar and 'slide slide3 used' or 'slide slide3 unused'">
+                    <!--
                     <div class="slide_handle"
-                         tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
+                         tal:attributes="class string: slide_handle ${languageAwareClass}"></div>
+                    -->
                     <div class="slide_content">
                         <h2 i18n:translate="disponibilites">Disponibilités</h2>
                         <div>
@@ -479,11 +478,13 @@
                         </div>
                         <br />
                     </div>
-                </li>
+                </section>
                 <!-- PHOTOS -->
-                <li class="slide slide4">
+                <section class="slide slide4">
+                    <!--
                     <div class="slide_handle"
-                         tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
+                         tal:attributes="class string: slide_handle ${languageAwareClass}"></div>
+                    -->
                     <div class="slide_content">
                         <h2 i18n:translate="photos">Photos</h2>
                         <div tal:define="vignettesUrls view/getVignettesUrl;
@@ -524,21 +525,25 @@
                         </div>
                         <br />
                     </div>
-                </li>
+                </section>
                 <!-- LOCALISATION -->
-                <li class="slide slide5">
+                <section class="slide slide5">
+                    <!--
                     <div class="slide_handle"
-                         tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
+                         tal:attributes="class string: slide_handle ${languageAwareClass}"></div>
+                    -->
                     <div class="slide_content">
                         <h2 i18n:translate="localisation">Localisation</h2>
                         <div id="description-map" tal:content="structure provider:gites.mapviewlet" />
                         <div class="break-float"></div>
                     </div>
-                </li>
+                </section>
                 <!-- CONTACT -->
-                <li class="slide slide6">
+                <section class="slide slide6">
+                    <!--
                     <div class="slide_handle"
-                         tal:attributes="class string: slide_handle ${languageAwareClass}"><div></div></div>
+                         tal:attributes="class string: slide_handle ${languageAwareClass}"></div>
+                    -->
                     <div class="slide_content">
                         <h2 i18n:translate="contact">Contact</h2>
                         <div id="description-coordonnee">
@@ -599,18 +604,19 @@
                         </div><!-- descriptif photo proprio-->
                         <div class="break-float"></div>
                     </div>
-                </li>
-            </ul>
-            <div id="signaler-un-probleme-button">
-                <a href="#"
-                   tal:attributes="href string:${request/ACTUAL_URL}/signaler_probleme"
-                   i18n:translate="signaler-un-probleme"> Signaler un problème </a>
+                </section>
             </div>
             <div class="break-float"></div>
-
         </div><!--define-->
-
+        <!--
+        <div id="signaler-un-probleme-button">
+            <a href="#"
+               tal:attributes="href string:${request/ACTUAL_URL}/signaler_probleme"
+               i18n:translate="signaler-un-probleme"> Signaler un problème </a>
+        </div>
+        -->
     </div>
 </div><!--metal-->
+<div class="break-float"></div>
 </body>
 </html>
