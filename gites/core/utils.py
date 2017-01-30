@@ -106,7 +106,9 @@ def getGeocodedLocation(location, language='en'):
     try:
         google_api = getUtility(IPasswordManager, 'googleapi')
         geocoder = Geocoder(api_key=google_api.password)
-        locations = geocoder.geocode(location, language=language)
+        locations = geocoder.geocode(location,
+                                     region='be',
+                                     language=language)
     except GeocoderError, e:
         if e.status == u'ZERO_RESULTS':
             return None

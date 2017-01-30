@@ -4,6 +4,9 @@ Changelog
 0.2.8 (unreleased)
 ------------------
 
+- Change parameters to allow use of Google autocomplete : #6533
+  [laulaz]
+
 - Fix problem with 'None' values in DB : #6472
   [laulaz]
 
