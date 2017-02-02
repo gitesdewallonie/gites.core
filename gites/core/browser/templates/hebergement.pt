@@ -601,6 +601,7 @@
                             <img src="" width="196" height="170" alt=""
                                  tal:condition="photocontact"
                                  tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_proprio/${heb/proprio/pro_pk}.jpg" />
+                            <div class="break-float"></div>
                         </div><!-- descriptif photo proprio-->
                         <div class="break-float"></div>
                     </div>
