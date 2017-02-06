@@ -34,22 +34,18 @@
             </div>
             <div id="date-start-advanced">
                 <input type="text"
-                       placeholder="Stay from"
                        size="14"
                        class="datepicker-advanced"
                        datepick
-                       i18n:attributes="placeholder"
                        name="form.widgets.fromDateAvancee"
                        ng-model="fromDate"
                        id="form-widgets-fromDateAvancee" />
             </div>
             <div id="date-end-advanced">
                 <input type="text"
-                       placeholder="Stay to"
                        size="14"
                        class="datepicker-advanced"
                        datepick
-                       i18n:attributes="placeholder"
                        name="form.widgets.toDateAvancee"
                        ng-model="toDate"
                        id="form-widgets-toDateAvancee"/>
@@ -59,6 +55,7 @@
                        placeholder="Nbr"
                        value=""
                        class="text-widget int-field"
+                       i18n:attributes="placeholder"
                        name="form.widgets.capacityMin"
                        id="form-widgets-capacityMin"
                        ng-change="updateKeywords()"
@@ -71,8 +68,10 @@
             </div>
             <div id="nbre-chambre">
                 <input type="text"
+                       placeholder="Nbr"
                        value=""
                        class="text-widget int-field"
+                       i18n:attributes="placeholder"
                        name="form.widgets.roomAmount"
                        id="form-widgets-roomAmount"
                        ng-change="updateKeywords()"
