@@ -448,7 +448,8 @@
                 </section>
                 <!-- DISPONIBILITE -->
                 <section class="slide slide3"
-                    tal:attributes="class python: hasCalendar and 'slide slide3 used' or 'slide slide3 unused'">
+                         id="description-disponibilite"
+                         tal:attributes="class python: hasCalendar and 'slide slide3 used' or 'slide slide3 unused'">
                     <!--
                     <div class="slide_handle"
                          tal:attributes="class string: slide_handle ${languageAwareClass}"></div>
@@ -513,7 +514,9 @@
                                     <div class=""
                                          tal:define="index repeat/vignetteUrl/index"
                                          tal:attributes="class python: int(index) == 0 and 'item active' or 'item'">
-                                        <img src="" title="" alt=""
+                                        <img src=""
+                                             title=""
+                                             alt=""
                                              tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${vignetteUrl}">
                                     </div>
                                   </tal:bcl>
@@ -582,7 +585,7 @@
                                 <img src="icon_lien.gif" alt="Site web" />
                                 <a href=""
                                    tal:attributes="href view/heb_url;
-                                                   onclick string:ga('send','event','Outgoing Links','${heb/heb_url}')"
+                                                   onclick string:$('send','event','Outgoing Links','${heb/heb_url}')"
                                    tal:content="string:http://${heb/heb_url}"
                                    target="_blank" />
                             </div>
@@ -609,6 +612,7 @@
             </div>
             <div class="break-float"></div>
         </div><!--define-->
+        <div class="break-float"></div>
         <!--
         <div id="signaler-un-probleme-button">
             <a href="#"

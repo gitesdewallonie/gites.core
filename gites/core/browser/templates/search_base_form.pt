@@ -6,7 +6,7 @@
 <div id="je-recherche"
      tal:define="translate nocall:here/@@getTranslatedObjectUrl"
      i18n:domain="gites">
-    <div id="wrapper">
+    <div class="wrapper-theme">
         <div id="form-je-cherche">
             <form action=""
                   method="get"
@@ -70,6 +70,10 @@
                 </div>
             </form>
             <div class="break-float"></div>
+            <div id="btn-reserver-en-ligne-mob">
+                <a href="www.belholidays.com/"
+                   target="_blanck">Réserver en ligne</a>
+            </div>
         </div>
     </div>
 </div><!--je cherche-->

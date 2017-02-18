@@ -1,5 +1,5 @@
 <html>
-    
+
 <head>
 <meta charset="UTF-8" /><title>Les Gites de Wallonie</title>
 <link rel="shortcut icon"
@@ -13,7 +13,7 @@ background-image:url(http://www.gitesdewallonie.be/++theme++gites.theme/images/b
 margin:0px;
 padding:0px;
 }
-#wrapper-search-by-code{
+.wrapper-theme-search-by-code{
 position:absolute;
 top:50%;
 left:50%;
