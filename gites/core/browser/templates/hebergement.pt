@@ -73,12 +73,6 @@
     </metal:css>
 
 
-
-
-
-
-
-
 <div metal:fill-slot="main"
      tal:define="hasCalendar view/showCalendar;
                  commercialisation context/@@commercialisation;
@@ -89,7 +83,6 @@
 
         <div tal:replace="structure provider:gites.hebergement" />
 
-        <div class="break-float"></div>
 
         <div id="description-heb"
              tal:define="heb context;
@@ -547,8 +540,10 @@
                     <div class="slide_handle"
                          tal:attributes="class string: slide_handle ${languageAwareClass}"></div>
                     -->
+
                     <div class="slide_content">
                         <h2 i18n:translate="contact">Contact</h2>
+                        <!--descriptif coordonnee-->
                         <div id="description-coordonnee">
                             <div id="nom-proprio">
                                 <span tal:content="heb/proprio/civilite/civ_titre" />
@@ -595,7 +590,9 @@
                                    tal:attributes="href string:${context/@@plone_portal_state/portal_url}/form_contact_proprio?heb_pk=${heb/heb_pk}"
                                    i18n:translate="contactez_le_proprietaire">Contactez le propri&eacute;taire</a>
                             </div>
-                        </div><!--descriptif coordonnee-->
+                        </div>
+                        <!-- descriptif photo proprio-->
+                        <!--
                         <div id="description-photo-proprio"
                              tal:define="photocontact view/getPhotoContact">
                             <img src="" width="196" height="170" alt=""
@@ -605,23 +602,14 @@
                                  tal:condition="photocontact"
                                  tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_proprio/${heb/proprio/pro_pk}.jpg" />
                             <div class="break-float"></div>
-                        </div><!-- descriptif photo proprio-->
+                        </div>
+                        -->
                         <div class="break-float"></div>
                     </div>
                 </section>
             </div>
-            <div class="break-float"></div>
         </div><!--define-->
-        <div class="break-float"></div>
-        <!--
-        <div id="signaler-un-probleme-button">
-            <a href="#"
-               tal:attributes="href string:${request/ACTUAL_URL}/signaler_probleme"
-               i18n:translate="signaler-un-probleme"> Signaler un problème </a>
-        </div>
-        -->
     </div>
 </div><!--metal-->
-<div class="break-float"></div>
 </body>
 </html>

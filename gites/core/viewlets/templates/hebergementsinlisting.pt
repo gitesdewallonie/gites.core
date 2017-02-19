@@ -96,16 +96,12 @@
                         <a href=""
                            tal:attributes="ng-click string:getGroupement(${hebergement/heb_groupement_pk})">
                             <img src=""
-                                 width="181"
-                                 height="115"
                                  tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/heb_code_gdw}00.jpg" /></a>
                     </tal:groupe>
                     <tal:groupe condition="python:heb_view.heb_type() != 'gite-groupes'">
                         <a href=""
                            tal:attributes="href hebergement/@@url_heb">
                             <img src=""
-                                 width="181"
-                                 height="115"
                                  tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/heb_code_gdw}00.jpg" /></a>
                     </tal:groupe>
                 </div>
@@ -317,29 +313,34 @@
          tal:condition="viewlet/show_batch">
         <div id="listing-result-batch">
             <a href=""
+               class="btn-listing-resultat"
                tal:condition="not:viewlet/is_first_page"
                ng-click="goToPreviousPage()"
                i18n:translate="precedent">Précédent</a>
-            <tal:pages tal:repeat="page_number viewlet/previous_items">
-            <a href=""
-               tal:content="python:page_number+1"
-               tal:attributes="ng-click string:goToPage(${page_number})"
-               ng-click="goToPage(2)" />
-            </tal:pages>
 
-            <span tal:replace="python:viewlet.current_page() + 1" />
+            <span id="batch-numero-page">
+                <tal:pages tal:repeat="page_number viewlet/previous_items">
+                <a href=""
+                   tal:content="python:page_number+1"
+                   tal:attributes="ng-click string:goToPage(${page_number})"
+                   ng-click="goToPage(2)" />
+                </tal:pages>
 
-            <tal:pages tal:repeat="page_number viewlet/next_items">
-            <a href=""
-               tal:content="python:page_number + 1"
-               tal:attributes="ng-click string:goToPage(${page_number})"
-               ng-click="goToPage(2)" />
-            </tal:pages>
+                <span tal:replace="python:viewlet.current_page() + 1" />
+
+                <tal:pages tal:repeat="page_number viewlet/next_items">
+                <a href=""
+                   tal:content="python:page_number + 1"
+                   tal:attributes="ng-click string:goToPage(${page_number})"
+                   ng-click="goToPage(2)" />
+                </tal:pages>
+            </span>
 
             <a href=""
-             tal:condition="not:viewlet/is_last_page"
-             ng-click="goToNextPage()"
-             i18n:translate="suivant">Suivant</a>
+               class="btn-listing-resultat"
+               tal:condition="not:viewlet/is_last_page"
+               ng-click="goToNextPage()"
+               i18n:translate="suivant">Suivant</a>
         </div>
         <div id="sort-bottom">
             <label for="input-sort"
