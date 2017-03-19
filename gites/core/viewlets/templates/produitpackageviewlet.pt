@@ -35,27 +35,34 @@
             <a class="right carousel-control" href="#package-carousel" data-slide="next">&rsaquo;</a>
         </div>
 
+        <!--
         <div id="zone-packperm-membre"
              tal:define="translate nocall:here/@@getTranslatedObjectUrl">
-              <div id="zone-package-permanent">
-                  <ul>
-                      <li id="produit-mice">
-                          <a href="" i18n:translate="mice" tal:attributes="href python:translate('idee-sejour/salles-et-seminaires')">MICE</a>
-                      </li>
-                      <li id="produit-city-trip">
-                          <a href="" i18n:translate="city_trip" tal:attributes="href python:translate('idee-sejour/city-trip')">CITY-TRIP</a>
-                      </li>
-                      <li id="produit-insolite">
-                          <a href="" i18n:translate="insolite" tal:attributes="href python:translate('idee-sejour/insolite')">INSOLITE</a>
-                      </li>
-                  </ul>
-              </div>
-              <div id="bouton-devenir-membre">
-                  <a href=""
-                     tal:attributes="href python:translate('devenir-gites-de-wallonie')"
-                     i18n:translate="devenir_membre">Devenir membre</a>
-              </div>
-              <div class="break-float"></div>
-        </div>
+        -->
+
+
+            <!--
+            <div id="zone-package-permanent">
+              <ul>
+                  <li id="produit-mice">
+                      <a href="" i18n:translate="mice" tal:attributes="href python:translate('idee-sejour/salles-et-seminaires')">MICE</a>
+                  </li>
+                  <li id="produit-city-trip">
+                      <a href="" i18n:translate="city_trip" tal:attributes="href python:translate('idee-sejour/city-trip')">CITY-TRIP</a>
+                  </li>
+                  <li id="produit-insolite">
+                      <a href="" i18n:translate="insolite" tal:attributes="href python:translate('idee-sejour/insolite')">INSOLITE</a>
+                  </li>
+              </ul>
+            </div>
+            <div id="bouton-devenir-membre">
+              <a href=""
+                 tal:attributes="href python:translate('devenir-gites-de-wallonie')"
+                 i18n:translate="devenir_membre">Devenir membre</a>
+            </div>
+            <div class="break-float"></div>
+        </div>-->
+
     </div>
+    <div class="break-float"></div>
 </div>

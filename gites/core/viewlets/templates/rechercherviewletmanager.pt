@@ -1,0 +1,5 @@
+<div id="rechercher">
+    <tal:viewlets repeat="viewlet viewletmanager/viewlets">
+        <tal:viewlet tal:replace="structure python:viewlet.render()" />
+    </tal:viewlets>
+</div>

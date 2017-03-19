@@ -38,7 +38,7 @@
       Nous n'avons pas trouv&eacute; votre localisation <tal:near_to i18n:name="localisation" tal:replace="nearToNotFound" />. Merci de v&eacute;rifier le nom. Voici les h&eacute;bergements r&eacute;pondant &agrave; vos autres crit&egrave;res.
   </div>
 
-  <h1>
+  <h1 id="nbr-heb-trouve">
     <span tal:replace="nbr" />
     <span i18n:translate="hebergements_correspondent" tal:condition="python: int(nbr)>1"> h&eacute;bergements correspondent &agrave; votre recherche.</span>
     <span i18n:translate="hebergement_correspond" tal:condition="python: int(nbr)<=1"> h&eacute;bergement correspond &agrave; votre recherche.</span>
@@ -49,8 +49,10 @@
          tal:content="structure provider:gites.heblisting"></div>
     <div class="break-float"></div>
 
+    <!--
     <div id="viewlet-map"
          tal:content="structure provider:gites.mapviewlet"></div>
+    -->
 
     <div class="break-float"></div>
   </div>

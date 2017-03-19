@@ -92,29 +92,29 @@ class ChambreHotes(grok.Viewlet):
     grok.order(30)
 
 
-class Boutique(grok.Viewlet):
-    grok.order(40)
+# class Boutique(grok.Viewlet):
+#     #grok.order(40)
 
-    def getRandomBoutiqueItem(self):
-        """
-        Get one random boutiqueItem
-        """
-        cat = getToolByName(self.context, 'portal_catalog')
-        results = cat.searchResults(portal_type=['BoutiqueItem'],
-                                    review_state='published')
-        results = list(results)
-        random.shuffle(results)
-        for boutiqueItem in results:
-            if "%s/" % boutiqueItem.getURL() not in self.request.URL and  boutiqueItem.getURL() != self.request.URL:
-                return boutiqueItem.getObject()
-        return None
+#     def getRandomBoutiqueItem(self):
+#         """
+#         Get one random boutiqueItem
+#         """
+#         cat = getToolByName(self.context, 'portal_catalog')
+#         results = cat.searchResults(portal_type=['BoutiqueItem'],
+#                                     review_state='published')
+#         results = list(results)
+#         random.shuffle(results)
+#         for boutiqueItem in results:
+#             if "%s/" % boutiqueItem.getURL() not in self.request.URL and  boutiqueItem.getURL() != self.request.URL:
+#                 return boutiqueItem.getObject()
+#         return None
 
-    def getAllBoutiqueItemsView(self):
-        """
-        Get the link to all boutique items
-        """
-        utool = getToolByName(self.context, 'portal_url')
-        return '%s/shop' % utool()
+#     def getAllBoutiqueItemsView(self):
+#         """
+#         Get the link to all boutique items
+#         """
+#         utool = getToolByName(self.context, 'portal_url')
+#         return '%s/shop' % utool()
 
 
 # register all viewlets in this viewlet manager:

@@ -62,7 +62,7 @@
 
             <div class="break-float"></div>
         </div>
-        <div class="plus-info">
+        <div class="plus-info info-derniere-minute">
             <a tal:attributes="href viewlet/getAllDerniereMinuteLink"><span i18n:translate="toutes_nos_dernieres_minutes">Toutes nos dernières minutes</span>...</a>
         </div>
     </div>

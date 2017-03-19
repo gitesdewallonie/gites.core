@@ -7,19 +7,31 @@
 <div id="je-recherche"
      tal:define="translate nocall:here/@@getTranslatedObjectUrl"
      i18n:domain="gites">
-    <h2 i18n:translate="label_recherche">Je cherche</h2>
-    <div class="break-float"></div>
-        <div id="recherche-avancee">
-            <h3><a href=""
-                   tal:attributes="href string:${context/@@plone_portal_state/portal_url}/search"
-                   i18n:translate="recherche_avancee">Recherche avanc&eacute;e</a></h3>
-        </div>
-        <div id="recherche-cartographique">
-            <h3><a href=""
-                   tal:attributes="href python:translate('map-search')"
-                   i18n:translate="recherche_cartographique">Recherche cartographique</a></h3>
-        </div>
-    <div class="break-float"></div>
+    <div class="wrapper-theme">
+        <div id="form-je-cherche">
+            <form action=""
+                  method="get"
+                  tal:attributes="action string:${context/@@plone_portal_state/portal_url}/moteur_recherche_view/getBasicSearch">
+                <div id="select-type-hebergement">
+                    <div id="zone-chambre-hote">
+                        <input type="checkbox"
+                               name="form.widgets.hebergementType:list"
+                               tal:attributes="checked view/selected_chambre"
+                               id="chambre-hote"
+                               value="chambre-hote" />
+                        <label for="chambre-hote"
+                               i18n:translate="chambre_hotes">Chambre d'h&ocirc;tes</label>
+                    </div>
+                    <div id="zone-gite-meuble">
+                        <input type="checkbox"
+                               name="form.widgets.hebergementType:list"
+                               id="gite-meuble"
+                               tal:attributes="checked view/selected_gite"
+                               value="gite-meuble"/>
+                        <label for="gite-meuble"
+                               i18n:translate="gites_et_meubles">G&icirc;tes et meubl&eacute;s</label>
+                    </div>
+                </div>
 
     <div id="form-je-cherche">
         <form action=""
@@ -73,11 +85,31 @@
                        placeholder="A proximité de"/>
             </div>
 
-            <input type="submit"
-                       value="Je trouve"
-                       class="trouver"
-                       i18n:attributes="value je_trouve" />
+                <div id="proximite"
+                     tal:define="lang request/LANGUAGE | fr">
+                    <i class="fa fa-map-o" aria-hidden="true"></i>
+                    <input name="form.widgets.nearTo"
+                           id="form-widgets-nearTo"
+                           type="text"
+                           autocomplete="off"
+                           class=""
+                           value=""
+                           tal:attributes="class string:geocode_autocomplete_${lang};
+                                           value request/form.widgets.nearTo | nothing"/>
+                </div>
 
-        </form>
+                <div id="trouver-homepage">
+                    <input type="submit"
+                           value="RECHERCHER"
+                           class="trouver"
+                           i18n:attributes="value je_trouve" />
+                </div>
+            </form>
+            <div class="break-float"></div>
+            <div id="btn-reserver-en-ligne-mob">
+                <a href="www.belholidays.com/"
+                   target="_blanck">Réserver en ligne</a>
+            </div>
+        </div>
     </div>
 </div><!--je cherche-->

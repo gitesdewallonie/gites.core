@@ -1,0 +1,8 @@
+<div id="rechercherviewlet"
+     i18n:domain="gites">
+
+    <!-- je-cherche -->
+    <div tal:content="structure viewlet/form/render" />
+
+    <div class="break-float"></div>
+</div><!--main-header-->
