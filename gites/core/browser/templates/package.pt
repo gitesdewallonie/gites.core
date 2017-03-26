@@ -50,7 +50,7 @@
                 </h1>
                 <div id="aside-info">
                     <span i18n:translate="nombre_hebergements">
-                    Il y a <span i18n:name="nombre" tal:content="view/getHebCount"></span> 
+                    Il y a <span i18n:name="nombre" tal:content="view/getHebCount"></span>
                     hébergements</span>
                 </div>
                 <div id="aside-menu">
