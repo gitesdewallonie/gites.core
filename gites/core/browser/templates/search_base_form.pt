@@ -45,6 +45,7 @@
 
                 <div id="nbre-personne"
                      tal:define="widget view/widgets/capacityMin">
+                    <span class="texte-placeholder">Nbr</span>
                     <i class="fa fa-user-o" aria-hidden="true">
                     <tal:block replace="structure widget/render" /></i>
                 </div>
@@ -58,6 +59,7 @@
                            autocomplete="off"
                            value=""
                            lang=""
+                           placeholder="A proximité de"
                            tal:attributes="lang lang;
                                            value request/form.widgets.nearTo | nothing"/>
                 </div>
