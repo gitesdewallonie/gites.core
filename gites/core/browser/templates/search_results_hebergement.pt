@@ -50,10 +50,6 @@
     <div class="break-float"></div>
 
 
-    <div id="viewlet-map"
-         tal:content="structure provider:gites.mapviewlet"></div>
-
-
     <div class="break-float"></div>
   </div>
 

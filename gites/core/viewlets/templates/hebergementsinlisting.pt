@@ -3,14 +3,18 @@
 <div id="listing-result-block" i18n:domain="gites">
     <div id="viewlet-map"
          tal:content="structure provider:gites.mapviewlet"></div>
+
     <div id="listing-result-info-top">
         <div id="listing-result-batch"
              tal:condition="viewlet/show_batch">
-            <!--
+
             <a href=""
+               class="btn-listing-resultat"
                tal:condition="not:viewlet/is_first_page"
                ng-click="goToPreviousPage()"
                i18n:translate="precedent">Précédent</a>
+
+            <!--
             <tal:pages tal:repeat="page_number viewlet/previous_items">
             <a href=""
                tal:content="python:page_number+1"
@@ -28,9 +32,10 @@
             </tal:pages>
             -->
             <a href=""
-             tal:condition="not:viewlet/is_last_page"
-             ng-click="goToNextPage()"
-             i18n:translate="suivant">Suivant</a>
+               class="btn-listing-resultat"
+               tal:condition="not:viewlet/is_last_page"
+               ng-click="goToNextPage()"
+               i18n:translate="suivant">Suivant</a>
         </div>
         <div id="sort-top">
           <label for="input-sort"
@@ -111,7 +116,6 @@
                     </tal:groupe>
                 </div>
                 <div id="info-bloc-sup">
-
                     <div class="digit"
                        tal:attributes="id string:map_picto_${hebergement/heb_pk}_${heb_view/heb_type}">
                     <img src=""
