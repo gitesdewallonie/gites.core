@@ -1,12 +1,16 @@
+
+
 <div id="listing-result-block" i18n:domain="gites">
+    <div id="viewlet-map"
+         tal:content="structure provider:gites.mapviewlet"></div>
     <div id="listing-result-info-top">
         <div id="listing-result-batch"
              tal:condition="viewlet/show_batch">
+            <!--
             <a href=""
                tal:condition="not:viewlet/is_first_page"
                ng-click="goToPreviousPage()"
                i18n:translate="precedent">Précédent</a>
-            <!--
             <tal:pages tal:repeat="page_number viewlet/previous_items">
             <a href=""
                tal:content="python:page_number+1"
@@ -107,14 +111,14 @@
                     </tal:groupe>
                 </div>
                 <div id="info-bloc-sup">
-                    <!--
+
                     <div class="digit"
                        tal:attributes="id string:map_picto_${hebergement/heb_pk}_${heb_view/heb_type}">
                     <img src=""
                          alt=""
                          tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/${type_heb}_${repeat/hebergement/number}.png" />
                     </div>
-                    -->
+
                     <div tal:condition="viewlet/is_geolocalized"
                            id="distance">
                         <span tal:define="dist python:viewlet.heb_distance(hebergement)"
