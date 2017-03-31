@@ -32,6 +32,14 @@
                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/heb_code_gdw}00.jpg" />
             </a>
         </div>
+        <div id="date-promotion">
+              <span tal:content="promotion_view/getNiceEventStartDate" />
+              &nbsp;&#8594;&nbsp;
+              <span tal:content="promotion_view/getNiceEventEndDate" />
+              &nbsp;&nbsp;::&nbsp;&nbsp;
+              <span tal:content="structure promotion_view/getText" />
+              <div class="break-float"></div>
+        </div>
         <div id="info-bloc-sup">
           <div id="nom-hebergement">
               <a href=""
@@ -44,14 +52,6 @@
                tal:content="heb_view/heb_type_trad"></div>
           <div class="break-float"></div>
 
-          <div id="date-promotion">
-              <span tal:content="promotion_view/getNiceEventStartDate" />
-              &nbsp;&#8594;&nbsp;
-              <span tal:content="promotion_view/getNiceEventEndDate" />
-              &nbsp;&nbsp;::&nbsp;&nbsp;
-              <span tal:content="structure promotion_view/getText" />
-              <div class="break-float"></div>
-          </div>
         </div>
         <!--info-bloc-sup-->
         <div id="info-bloc-inf">
@@ -151,23 +151,23 @@
                     tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/heb_code_gdw}00.jpg" />
             </a>
         </div>
-        <div id="info-bloc-sup">
-          <div id="nom-hebergement">
-              <a href=""
-                 class=""
-                 tal:attributes="href hebergement/@@url_heb;
-                                 class python: type_heb=='gite' and 'gite-nom' or 'chambre-nom'"
-                 tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
-          </div>
-          <div id="type"
-               tal:content="heb_view/heb_type_trad"></div>
-          <div class="break-float"></div>
-          <div id="date-promotion">
+        <div id="date-promotion">
               <span tal:content="lastminute_view/getNiceEventStartDate" />
               &nbsp;&#8594;&nbsp;
               <span tal:content="lastminute_view/getNiceEventEndDate" />
               <div class="break-float"></div>
-          </div>
+        </div>
+        <div id="info-bloc-sup">
+            <div id="nom-hebergement">
+                <a href=""
+                   class=""
+                   tal:attributes="href hebergement/@@url_heb;
+                                   class python: type_heb=='gite' and 'gite-nom' or 'chambre-nom'"
+                   tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
+            </div>
+            <div id="type"
+                 tal:content="heb_view/heb_type_trad"></div>
+            <div class="break-float"></div>
         </div>
         <!--info-bloc-sup-->
         <div id="info-bloc-inf">

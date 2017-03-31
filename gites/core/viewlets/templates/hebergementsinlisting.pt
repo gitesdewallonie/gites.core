@@ -101,6 +101,12 @@
                     </div>
                     -->
                 </div>
+                <div class="digit"
+                     tal:attributes="id string:map_picto_${hebergement/heb_pk}_${heb_view/heb_type}">
+                        <img src=""
+                             alt=""
+                             tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/${type_heb}_${repeat/hebergement/number}.png" />
+                </div>
                 <div id="vignette">
                     <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
                         <a href=""
@@ -116,13 +122,6 @@
                     </tal:groupe>
                 </div>
                 <div id="info-bloc-sup">
-                    <div class="digit"
-                       tal:attributes="id string:map_picto_${hebergement/heb_pk}_${heb_view/heb_type}">
-                    <img src=""
-                         alt=""
-                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/${type_heb}_${repeat/hebergement/number}.png" />
-                    </div>
-
                     <div tal:condition="viewlet/is_geolocalized"
                            id="distance">
                         <span tal:define="dist python:viewlet.heb_distance(hebergement)"
