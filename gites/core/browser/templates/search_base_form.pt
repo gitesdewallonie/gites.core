@@ -19,7 +19,7 @@
                                id="chambre-hote"
                                value="chambre-hote" />
                         <label for="chambre-hote"
-                               i18n:translate="chambre_hotes">Chambre d'h&ocirc;tes</label>
+                               i18n:translate="chambre_hotes">Chambres d'h&ocirc;tes</label>
                     </div>
                     <div id="zone-gite-meuble">
                         <input type="checkbox"
