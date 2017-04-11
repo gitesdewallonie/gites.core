@@ -10,10 +10,12 @@
 
     <div id="header-lien">
         <div id="header-derniere-minute">
-            <a href="dernieres-minutes">Dernières minutes</a>
+            <a href="dernieres-minutes"
+               i18n:translate="dernieres_minutes">Dernières minutes</a>
         </div>
         <div id="reserver-en-ligne">
             <a href="http://www.belholidays.com/fr/il4-accueil.aspx"
+               i18n:translate="texte-commercialisation-chambre"
                target="_blanck">Réservez en ligne</a>
         </div>
     </div>
