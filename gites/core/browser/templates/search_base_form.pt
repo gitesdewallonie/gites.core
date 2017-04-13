@@ -47,7 +47,7 @@
                      tal:define="widget view/widgets/capacityMin">
                     <span class="texte-placeholder"
                           i18n:attributes="alt nombre_personnes;
-                                           title nombre_personnes">Nbr</span>
+                                           title nombre_personnes"></span>
                     <i class="fa fa-user-o" aria-hidden="true">
                     <!--<tal:block replace="structure widget/render" />-->
                     <select id="form-widgets-capacityMin"
