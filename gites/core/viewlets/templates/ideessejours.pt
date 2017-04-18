@@ -23,9 +23,10 @@
                 <span class="bordeaux" tal:replace="offre/pretty_title_or_id"/>
             </a>
         </div>
-        <p>
+        <div class="contenu-offre">
             <tal:desc tal:replace="offre/Description"/>
-        </p>
+            <div class="break-float"></div>
+        </div>
     </div>
         <div class="plus-info info-idee-sejour">
             <a tal:attributes="href viewlet/getAllIdeesSejoursView">

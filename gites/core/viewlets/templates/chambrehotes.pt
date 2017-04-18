@@ -27,11 +27,12 @@
            target="_blank"
            i18n:translate="allo_chambre_question">A la recherche d'une chambre d'hôtes pour cette nuit?</a>
     </div>
-    <p>
+    <div class="contenu-offre">
         <span i18n:translate="allo_chambre_description">Avec Allo chambre d'hôtes, trouvez une chambre d'hôtes
         disponible ce soir à proximité de votre destination
         en Wallonie.</span>
-    </p>
+        <div class="break-float"></div>
+    </div>
     <div class="plus-info info-chambre">
         <a href="http://www.allochambredhotes.be"
            tal:attributes="href string:http://www.allochambredhotes.be?set_language=${allo_lang}"
