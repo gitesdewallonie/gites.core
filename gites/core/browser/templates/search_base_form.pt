@@ -84,20 +84,19 @@
 
                     </i>
                 </div>
-
                 <div id="proximite"
                      tal:define="lang request/LANGUAGE | fr">
-                    <i class="fa fa-map-o" aria-hidden="true"></i>
-                    <input name="form.widgets.nearTo"
-                           id="form-widgets-nearTo"
-                           type="text"
-                           autocomplete="on"
-                           value=""
-                           lang=""
-                           tal:attributes="lang lang;
-                                           value request/form.widgets.nearTo | nothing"
-                           placeholder="A proximité de"
-                           i18n:attributes="placeholder a_proximite_de"/>
+                     <i class="fa fa-map-o" aria-hidden="true"></i>
+                     <input name="form.widgets.nearTo"
+                            id="form-widgets-nearTo"
+                            type="text"
+                            autocomplete="off"
+                            class=""
+                            value=""
+                            tal:attributes="class string:geocode_autocomplete_${lang};
+                                            value request/form.widgets.nearTo | nothing"
+                            i18n:attributes="placeholder a_proximite_de"
+                            placeholder="A proximité de" />
                 </div>
 
                 <div id="trouver-homepage">
