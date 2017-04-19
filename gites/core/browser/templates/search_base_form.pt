@@ -87,25 +87,7 @@
                 <div id="proximite"
                      tal:define="lang request/LANGUAGE | fr">
                      <i class="fa fa-map-o" aria-hidden="true"></i>
-                     <!-- fonctionne en local et pas en prod -->
-
                      <input name="form.widgets.nearTo"
-                            id="form-widgets-nearTo"
-                            type="text"
-                            autocomplete="off"
-                            class=""
-                            value=""
-                            tal:attributes="class string:geocode_autocomplete_${lang} ui-autocomplete-input;
-                                            value request/form.widgets.nearTo | nothing"
-                            i18n:attributes="placeholder a_proximite_de"
-                            placeholder="A proximité de"
-                            aria-autocomplete="list"
-                            aria-hashpopup="true"
-                            role="textbox" />
-
-                    <!-- version du 30-01-2017 fonctionne pas en local et pas en prod -->
-                    <!--
-                    <input name="form.widgets.nearTo"
                             id="form-widgets-nearTo"
                             type="text"
                             autocomplete="off"
@@ -114,7 +96,7 @@
                                             value request/form.widgets.nearTo | nothing"
                             i18n:attributes="placeholder a_proximite_de"
                             placeholder="A proximité de" />
-                    -->
+
                 </div>
 
                 <div id="trouver-homepage">
