@@ -88,7 +88,7 @@
                      tal:define="lang request/LANGUAGE | fr">
                      <i class="fa fa-map-o" aria-hidden="true"></i>
                      <input name="form.widgets.nearTo"
-                            id="form-widgets-nearTo"
+                            id="nearto-autocomplete"
                             type="text"
                             autocomplete="off"
                             value=""
