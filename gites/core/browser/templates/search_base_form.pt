@@ -51,42 +51,41 @@
                                            title nombre_personnes">nbr</span>
                     -->
                     <i class="fa fa-user-o" aria-hidden="true">
-                    <!--<tal:block replace="structure widget/render" />-->
-                    <select id="form-widgets-capacityMin"
-                            name="form.widgets.capacityMin">
-                        <option value="1">1 personne</option>
-                        <option value="2">2 personne</option>
-                        <option value="3">3 personne</option>
-                        <option value="4">4 personne</option>
-                        <option value="5">5 personne</option>
-                        <option value="6">6 personne</option>
-                        <option value="7">7 personne</option>
-                        <option value="8">8 personne</option>
-                        <option value="9">9 personne</option>
-                        <option value="10">10 personnes</option>
-                        <option value="11">11 personnes</option>
-                        <option value="12">12 personnes</option>
-                        <option value="13">13 personnes</option>
-                        <option value="14">14 personnes</option>
-                        <option value="15">15 personnes</option>
-                        <option value="16">16 personnes</option>
-                        <option value="17">17 personnes</option>
-                        <option value="18">18 personnes</option>
-                        <option value="19">19 personnes</option>
-                        <option value="20">20 personnes</option>
-                        <option value="30">30 personnes</option>
-                        <option value="40">40 personnes</option>
-                        <option value="50">50 personnes</option>
-                        <option value="60">60 personnes</option>
-                        <option value="70">70 personnes</option>
-                    </select>
-
-
+                        <!--<tal:block replace="structure widget/render" />-->
+                        <select id="form-widgets-capacityMin"
+                                name="form.widgets.capacityMin">
+                            <option value="1">1 personne</option>
+                            <option value="2">2 personne</option>
+                            <option value="3">3 personne</option>
+                            <option value="4">4 personne</option>
+                            <option value="5">5 personne</option>
+                            <option value="6">6 personne</option>
+                            <option value="7">7 personne</option>
+                            <option value="8">8 personne</option>
+                            <option value="9">9 personne</option>
+                            <option value="10">10 personnes</option>
+                            <option value="11">11 personnes</option>
+                            <option value="12">12 personnes</option>
+                            <option value="13">13 personnes</option>
+                            <option value="14">14 personnes</option>
+                            <option value="15">15 personnes</option>
+                            <option value="16">16 personnes</option>
+                            <option value="17">17 personnes</option>
+                            <option value="18">18 personnes</option>
+                            <option value="19">19 personnes</option>
+                            <option value="20">20 personnes</option>
+                            <option value="30">30 personnes</option>
+                            <option value="40">40 personnes</option>
+                            <option value="50">50 personnes</option>
+                            <option value="60">60 personnes</option>
+                            <option value="70">70 personnes</option>
+                        </select>
                     </i>
                 </div>
                 <div id="proximite"
                      tal:define="lang request/LANGUAGE | fr">
                      <i class="fa fa-map-o" aria-hidden="true"></i>
+                     <!--nearto-autocomplete-->
                      <input name="form.widgets.nearTo"
                             id="nearto-autocomplete"
                             type="text"
