@@ -66,7 +66,6 @@
 
         <div tal:replace="structure provider:gites.hebergement" />
 
-
         <div id="description-heb"
              tal:define="heb context;
                          hebergementIcons context/@@hebergement_icons;
@@ -131,40 +130,6 @@
                 <section class="slide1">
                     <div class="slide_content">
                         <h2 i18n:translate="accueil">Accueil</h2>
-                        <div id="description-icone-theme-giteplus">
-                            <tal:for repeat="metadata python:view.getHebMetadatasByType('themes')">
-                                <div class="button-theme">
-                                    <img src=""
-                                         title=""
-                                         alt=""
-                                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
-                                                         alt metadata/title;
-                                                         title metadata/title" />
-                                </div>
-                              </tal:for>
-
-                            <tal:for repeat="metadata python:view.getHebMetadatasByType('gitesplus')">
-                                <div class="button-theme">
-                                    <img src=""
-                                         title=""
-                                         alt=""
-                                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
-                                                         alt metadata/title;
-                                                         title metadata/title" />
-                                </div>
-                            </tal:for>
-                            <tal:for repeat="metadata python:view.getHebMetadatasByType('iconedescription')">
-                                <div class="button-theme">
-                                    <img src=""
-                                         title=""
-                                         alt=""
-                                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/${metadata/id}.png;
-                                                         alt metadata/title;
-                                                         title metadata/title" />
-                                </div>
-                            </tal:for>
-                        </div>
-
                         <div id="accueil-bloc-gauche">
                             <div id="description-photo-heb">
                                 <img src=""
