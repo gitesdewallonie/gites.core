@@ -19,22 +19,23 @@
             <tal:def tal:define="lastminutes view/getLastDernieresMinutes">
                 <metal:macro use-macro="here/hebergement_macro/macros/lastminutes_table" />
             </tal:def>
+            <div class="visualClear"></div>
         </div>
-
 
         <div id="listing-promotions">
             <h2 i18n:translate="promotions">Promotions</h2>
             <tal:def tal:define="promotions view/getLastPromotions">
                 <metal:macro use-macro="here/hebergement_macro/macros/promotions_table" />
             </tal:def>
+            <div class="visualClear"></div>
         </div>
-
 
         <div id="listing-nouveaux-hebergements">
             <h2 i18n:translate="nouveaux_hebergements">Nouveaux hebergements</h2>
             <tal:def tal:define="hebergements view/getLastHebergements">
                 <metal:macro use-macro="here/hebergement_table/macros/hebergement_table" />
             </tal:def>
+            <div class="visualClear"></div>
         </div>
 
     </div>
