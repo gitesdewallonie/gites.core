@@ -61,7 +61,7 @@
                  commercialisation context/@@commercialisation;
                  isMobile context/@@isMobile | nothing">
 
-    <div id="content-core"
+    <div id="content-core-description"
          tal:define="translate nocall:here/@@getTranslatedObjectUrl">
 
         <div tal:replace="structure provider:gites.hebergement" />
@@ -122,10 +122,8 @@
                         target="_blanck">Réservez en ligne</a>
             </div><!--reservation-->
 
-
             <div id="descriptif-accordeon"
                 tal:define="lang request/LANGUAGE | fr">
-
                 <!-- ACCUEIL -->
                 <section class="slide1">
                     <div class="slide_content">
@@ -222,7 +220,6 @@
                         <div class="break-float"></div>
                     </div><!-- slide_content -->
                 </section><!--accueil-->
-
 
                 <!-- DESCRIPTION -->
                 <section class="slide2">
@@ -344,7 +341,6 @@
                     </div>
                 </section><!--description-->
 
-
                 <!-- DISPONIBILITE -->
                 <section class="slide3"
                          id="description-disponibilite"
@@ -377,7 +373,6 @@
                     </div>
                 </section><!--disponibilite-->
 
-
                 <!-- PHOTOS -->
                 <section class="slide4">
                     <div class="slide_content">
@@ -386,10 +381,15 @@
                                          multiplePhotos python: len(vignettesUrls) > 1;
                                          video heb/video">
 
-                            <div id="hebergement-carousel" class="slide" tal:condition="python: vignettesUrls and isMobile">
-                                <a id="mobile-gallery-link" href="gallery"
+                            <div id="hebergement-carousel"
+                                 class="slide"
+                                 tal:condition="python: vignettesUrls and isMobile">
+                                <a id="mobile-gallery-link"
+                                   href="gallery"
                                    tal:attributes="href string:${request/ACTUAL_URL}/gallery">
-                                    <img src="" title="" alt=""
+                                    <img src=""
+                                         title=""
+                                         alt=""
                                          tal:define="vignetteUrl python: vignettesUrls[0]"
                                          tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${vignetteUrl}">
                                 </a>
@@ -432,7 +432,6 @@
                     </div>
                 </section><!--photos-->
 
-
                 <!-- LOCALISATION -->
                 <section class="slide slide5">
                     <div class="slide_content">
@@ -442,7 +441,6 @@
                         <div class="break-float"></div>
                     </div>
                 </section><!--localisation-->
-
 
                 <!-- CONTACT -->
                 <section class="slide6">
@@ -509,11 +507,11 @@
                         </div>
                         <div class="visualClear"></div>
                     </div>
-                </section>
+                </section><!--contanct-->
                 <div class="visualClear"></div>
-            </div>
+            </div><!--descriptif-accordeon-->
         </div><!--define-->
-    </div>
+    </div><!--content-core-description-->
 </div><!--metal-->
 </body>
 </html>
