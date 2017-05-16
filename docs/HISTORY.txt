@@ -4,7 +4,8 @@ Changelog
 0.3.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix iframe size for embed videos : #6597
+  [laulaz]
 
 
 0.3 (2017-05-16)

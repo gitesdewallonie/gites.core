@@ -46,7 +46,7 @@ from gites.core.table import tarif
 def getIframeForVideo(videoUrl):
     providers = micawber.bootstrap_basic()
     try:
-        embed = providers.request(videoUrl)
+        embed = providers.request(videoUrl, maxwidth=580, maxheight=377)
     except (InvalidResponseException,
             ProviderException,
             ProviderNotFoundException):
