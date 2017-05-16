@@ -4,6 +4,9 @@ Changelog
 0.2.8 (unreleased)
 ------------------
 
+- Migrate from Embedly to Micawber : #6597
+  [laulaz]
+
 - Change parameters to allow use of Google autocomplete : #6533
   [laulaz]
 

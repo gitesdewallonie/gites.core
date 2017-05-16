@@ -26,7 +26,7 @@ setup(name='gites.core',
       install_requires=[
           'setuptools',
           'lovely.memcached',
-          'Embedly',
+          'micawber',
           'Products.LinguaPlone',
           'Products.LocalFS',
           'affinitic.caching',

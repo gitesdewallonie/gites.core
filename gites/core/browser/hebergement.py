@@ -7,8 +7,11 @@ Copyright by Affinitic sprl
 
 $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
+import micawber
+from micawber.exceptions import InvalidResponseException
+from micawber.exceptions import ProviderException
+from micawber.exceptions import ProviderNotFoundException
 import zope.interface
-from embedly import Embedly
 from plone.memoize import instance, forever
 from zope.i18n import translate
 from zope.traversing.browser.interfaces import IAbsoluteURL
@@ -16,7 +19,6 @@ from Products.Five import BrowserView
 from Acquisition import aq_inner
 from zope.interface import alsoProvides, implements
 from zope.component import queryMultiAdapter
-from zope.component import getUtility
 from Products.CMFCore.utils import getToolByName
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from z3c.sqlalchemy import getSAWrapper
@@ -26,7 +28,6 @@ import sqlalchemy as sa
 import urllib
 
 from affinitic.db.cache import FromCache
-from affinitic.pwmanager.interfaces import IPasswordManager
 
 from gites.db.content import Hebergement, HebergementApp, TypeHebergement, LinkHebergementEpis, Proprio, Commune
 from gites.db.content.hebergement.metadata import Metadata
@@ -47,13 +48,14 @@ from gites.locales import GitesMessageFactory as _
 
 @forever.memoize
 def getIframeForVideo(videoUrl):
-    pwManager = getUtility(IPasswordManager, 'embedly')
-    key = pwManager.username
-    client = Embedly(key)
-    embed = client.oembed(videoUrl, maxheight=377)
-    if embed.error:
+    providers = micawber.bootstrap_basic()
+    try:
+        embed = providers.request(videoUrl)
+    except (InvalidResponseException,
+            ProviderException,
+            ProviderNotFoundException):
         return None
-    return embed.html
+    return embed['html']
 
 
 class HebergementView(BrowserView, TarifTableMixin):
