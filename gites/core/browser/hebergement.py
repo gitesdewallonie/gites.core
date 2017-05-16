@@ -7,43 +7,39 @@ Copyright by Affinitic sprl
 
 $Id: event.py 67630 2006-04-27 00:54:03Z jfroche $
 """
-import micawber
+from Acquisition import aq_inner
+from Products.CMFCore.utils import getToolByName
+from Products.Five import BrowserView
+from affinitic.db.cache import FromCache
 from micawber.exceptions import InvalidResponseException
 from micawber.exceptions import ProviderException
 from micawber.exceptions import ProviderNotFoundException
-import zope.interface
-from plone.memoize import instance, forever
-from zope.i18n import translate
-from zope.traversing.browser.interfaces import IAbsoluteURL
-from Products.Five import BrowserView
-from Acquisition import aq_inner
-from zope.interface import alsoProvides, implements
-from zope.component import queryMultiAdapter
-from Products.CMFCore.utils import getToolByName
-from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
-from z3c.sqlalchemy import getSAWrapper
 from plone import api
+from plone.memoize import instance, forever
 from plone.memoize.instance import memoize
+from z3c.sqlalchemy import getSAWrapper
+from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
+from zope.component import queryMultiAdapter
+from zope.i18n import translate
+from zope.interface import alsoProvides, implements
+from zope.traversing.browser.interfaces import IAbsoluteURL
+import micawber
 import sqlalchemy as sa
 import urllib
-
-from affinitic.db.cache import FromCache
+import zope.interface
 
 from gites.db.content import Hebergement, HebergementApp, TypeHebergement, LinkHebergementEpis, Proprio, Commune
 from gites.db.content.hebergement.metadata import Metadata
-
+from gites.locales import GitesMessageFactory as _
 from gites.map.browser.interfaces import IMappableView
 
-from gites.core.interfaces import IMapRequest
+from gites.core import interfaces
+from gites.core import utils
 from gites.core.browser.interfaces import (IHebergementView,
                                            IHebergementIconsView)
 from gites.core.browser.tarif import TarifTableMixin
+from gites.core.interfaces import IMapRequest
 from gites.core.table import tarif
-from gites.core import interfaces
-from gites.core import utils
-
-
-from gites.locales import GitesMessageFactory as _
 
 
 @forever.memoize
