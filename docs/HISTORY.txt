@@ -4,6 +4,9 @@ Changelog
 0.2.8 (unreleased)
 ------------------
 
+- New design (multiple commits)
+  [ameurant]
+
 - Migrate from Embedly to Micawber : #6597
   [laulaz]
 
