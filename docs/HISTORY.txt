@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.2.8 (unreleased)
-------------------
+0.3 (2017-05-16)
+----------------
 
 - New design (multiple commits)
   [ameurant]
