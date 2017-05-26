@@ -11,13 +11,14 @@
                ng-click="goToPreviousPage()"
                i18n:translate="precedent">Précédent</a>
 
-            <!--
+
             <tal:pages tal:repeat="page_number viewlet/previous_items">
             <a href=""
                tal:content="python:page_number+1"
                tal:attributes="ng-click string:goToPage(${page_number})"
                ng-click="goToPage(2)" />
             </tal:pages>
+
 
             <span tal:replace="python:viewlet.current_page() + 1" />
 
@@ -27,7 +28,7 @@
                tal:attributes="ng-click string:goToPage(${page_number})"
                ng-click="goToPage(2)" />
             </tal:pages>
-            -->
+
             <a href=""
                class="btn-listing-resultat"
                tal:condition="not:viewlet/is_last_page"
@@ -320,7 +321,7 @@
                tal:condition="not:viewlet/is_first_page"
                ng-click="goToPreviousPage()"
                i18n:translate="precedent">Précédent</a>
-            <!--
+
             <span id="batch-numero-page">
                 <tal:pages tal:repeat="page_number viewlet/previous_items">
                 <a href=""
@@ -338,7 +339,7 @@
                    ng-click="goToPage(2)" />
                 </tal:pages>
             </span>
-            -->
+
             <a href=""
                class="btn-listing-resultat"
                tal:condition="not:viewlet/is_last_page"
