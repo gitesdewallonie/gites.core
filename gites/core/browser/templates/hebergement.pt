@@ -78,36 +78,38 @@
                     <span tal:content="heb/heb_nom" />
                 </div>
                 <div id="description-info-sup-detail">
-                    <div id="reference"
-                         class="etiquette-sup">
-                        <span tal:content="heb/heb_pk" />
-                        <tal:bloc i18n:translate="reference">référence</tal:bloc>
-                    </div>
-                    <div id="nbre-chambre"
-                         class="etiquette-sup">
-                        <span tal:content="heb/heb_cgt_nbre_chmbre" />
-                        <tal:bloc i18n:translate="x_chambres">chambres</tal:bloc>
-                    </div>
-                    <div id="nbre-personne"
-                         class="etiquette-sup">
-                        <span tal:condition="python: heb.heb_cgt_cap_min != heb.heb_cgt_cap_max"
-                              tal:content="string: ${heb/heb_cgt_cap_min}/${heb/heb_cgt_cap_max}" />
-                        <span tal:condition="python: heb.heb_cgt_cap_min == heb.heb_cgt_cap_max"
-                              tal:content="string: ${heb/heb_cgt_cap_min}" />
-                        <tal:bloc i18n:translate="x_personnes">personnes</tal:bloc>
-                    </div>
-                    <div id="nbre-cle"
-                         class="etiquette-sup"
-                         tal:condition="python:heb.type.type_heb_code == 'MV'">
-                        <span tal:content="episValue"/>
-                        <tal:bloc i18n:translate="x_cles">cl&eacute;s</tal:bloc>
-                    </div>
-                    <div id="nbre-epis"
-                         class="etiquette-sup"
-                         tal:condition="python:heb.type.type_heb_code != 'MV'">
-                        <span tal:content="episValue"/>
-                        <tal:bloc i18n:translate="x_epis">&eacute;pis</tal:bloc>
-                    </div>
+                    <ul>
+                        <li id="reference"
+                             class="etiquette-sup">
+                            <span tal:content="heb/heb_pk" />
+                            <tal:bloc i18n:translate="reference">référence</tal:bloc>
+                        </li>
+                        <li id="nbre-chambre"
+                             class="etiquette-sup">
+                            <span tal:content="heb/heb_cgt_nbre_chmbre" />
+                            <tal:bloc i18n:translate="x_chambres">chambres</tal:bloc>
+                        </li>
+                        <li id="nbre-personne"
+                             class="etiquette-sup">
+                            <span tal:condition="python: heb.heb_cgt_cap_min != heb.heb_cgt_cap_max"
+                                  tal:content="string: ${heb/heb_cgt_cap_min}/${heb/heb_cgt_cap_max}" />
+                            <span tal:condition="python: heb.heb_cgt_cap_min == heb.heb_cgt_cap_max"
+                                  tal:content="string: ${heb/heb_cgt_cap_min}" />
+                            <tal:bloc i18n:translate="x_personnes">personnes</tal:bloc>
+                        </li>
+                        <li id="nbre-cle"
+                             class="etiquette-sup"
+                             tal:condition="python:heb.type.type_heb_code == 'MV'">
+                            <span tal:content="episValue"/>
+                            <tal:bloc i18n:translate="x_cles">cl&eacute;s</tal:bloc>
+                        </li>
+                        <li id="nbre-epis"
+                             class="etiquette-sup"
+                             tal:condition="python:heb.type.type_heb_code != 'MV'">
+                            <span tal:content="episValue"/>
+                            <tal:bloc i18n:translate="x_epis">&eacute;pis</tal:bloc>
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="break-float"></div>
