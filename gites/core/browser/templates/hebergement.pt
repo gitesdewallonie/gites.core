@@ -121,7 +121,7 @@
                      <a href=""
                         tal:attributes="href python: commercialisation.getUrlCommercialisation(heb.heb_commercialisation_id)"
                         i18n:translate="texte-commercialisation-chambre"
-                        target="_blanck">Réservez en ligne</a>
+                        target="_blank">Réservez en ligne</a>
             </div><!--reservation-->
 
             <div id="descriptif-accordeon"

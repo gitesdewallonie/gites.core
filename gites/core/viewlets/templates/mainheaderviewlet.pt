@@ -16,7 +16,7 @@
         <div id="reserver-en-ligne">
             <a href="http://www.belholidays.com/fr/il4-accueil.aspx"
                i18n:translate="texte-commercialisation-chambre"
-               target="_blanck">Réservez en ligne</a>
+               target="_blank">Réservez en ligne</a>
         </div>
     </div>
 
