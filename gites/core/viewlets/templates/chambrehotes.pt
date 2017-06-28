@@ -37,7 +37,7 @@
         <a href="http://www.allochambredhotes.be"
            tal:attributes="href string:http://www.allochambredhotes.be?set_language=${allo_lang}"
            target="_blank">
-            <span i18n:translate="plus_dinfos">Plus d'infos</span>...
+            <span i18n:translate="plus_dinfos">Plus d'infos</span>
         </a>
     </div>
 </div>
