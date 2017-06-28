@@ -30,7 +30,7 @@
     </div>
         <div class="plus-info info-idee-sejour">
             <a tal:attributes="href viewlet/getAllIdeesSejoursView">
-                <span i18n:translate="toutes_nos_idees_sejour">Toutes nos idées séjours</span>...</a>
+                <span i18n:translate="toutes_nos_idees_sejour">Toutes nos idées séjours</span></a>
         </div>
     </div>
 </tal:viewlet>
