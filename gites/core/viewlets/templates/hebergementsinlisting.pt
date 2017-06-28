@@ -316,11 +316,14 @@
          i18n:domain="gites"
          tal:condition="viewlet/show_batch">
         <div id="listing-result-batch">
+
             <a href=""
                class="btn-listing-resultat"
                tal:condition="not:viewlet/is_first_page"
                ng-click="goToPreviousPage()"
-               i18n:translate="precedent">Précédent</a>
+               i18n:translate="precedent">
+               <i class="fa fa-caret-square-o-left"
+                  aria-hidden="true"></i></a>
 
             <span id="batch-numero-page">
                 <!--
@@ -331,13 +334,13 @@
                        ng-click="goToPage(2)" />
                 </tal:pages>
                 -->
-                &nbsp;&nbsp;
+                &nbsp;
                 <div class="btn-listing-current-page">
                     <span tal:replace="python:viewlet.current_page() + 1" />
                     &nbsp;/&nbsp;
                     <span tal:replace="python:viewlet.count() " />
                 </div>
-                &nbsp;&nbsp;
+                &nbsp;
 
                 <!--
                 <tal:pages tal:repeat="page_number viewlet/next_items">
@@ -348,12 +351,13 @@
                 </tal:pages>
                 -->
             </span>
-
             <a href=""
                class="btn-listing-resultat"
                tal:condition="not:viewlet/is_last_page"
                ng-click="goToNextPage()"
-               i18n:translate="suivant">Suivant</a>
+               i18n:translate="suivant">
+               <i class="fa fa-caret-square-o-right"
+                  aria-hidden="true"></i></a>
         </div>
         <div id="sort-bottom">
             <label for="input-sort"
