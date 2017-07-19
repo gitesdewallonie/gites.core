@@ -29,7 +29,7 @@ class BaseHebergementsFetcher(grok.MultiAdapter):
     grok.baseclass()
     grok.implements(IHebergementsFetcher)
 
-    batch_size = 10
+    batch_size = 12
 
     def __init__(self, context, view, request):
         self.context = context
