@@ -1,6 +1,7 @@
 
 
-<div id="listing-result-block" i18n:domain="gites">
+<div id="listing-result-block"
+     i18n:domain="gites">
     <div id="listing-result-info-top">
         <div id="listing-result-batch"
              tal:condition="viewlet/show_batch">
@@ -320,8 +321,7 @@
             <a href=""
                class="btn-listing-resultat"
                tal:condition="not:viewlet/is_first_page"
-               ng-click="goToPreviousPage()"
-               i18n:translate="precedent">
+               ng-click="goToPreviousPage()">
                <i class="fa fa-caret-square-o-left"
                   aria-hidden="true"></i></a>
 
@@ -338,7 +338,8 @@
                 <div class="btn-listing-current-page">
                     <span tal:replace="python:viewlet.current_page() + 1" />
                     &nbsp;/&nbsp;
-                    <span tal:replace="python:viewlet.count() " />
+                    <span tal:define="nbreHeb python:viewlet.count() "
+                          tal:replace="python: nbreHeb/12" />
                 </div>
                 &nbsp;
 
@@ -354,8 +355,7 @@
             <a href=""
                class="btn-listing-resultat"
                tal:condition="not:viewlet/is_last_page"
-               ng-click="goToNextPage()"
-               i18n:translate="suivant">
+               ng-click="goToNextPage()">
                <i class="fa fa-caret-square-o-right"
                   aria-hidden="true"></i></a>
         </div>
