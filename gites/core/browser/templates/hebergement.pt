@@ -548,7 +548,7 @@
                                 <img src="icon_lien.gif" alt="Site web" />
                                 <a href=""
                                    tal:attributes="href view/heb_url;
-                                                   onclick string:$('send','event','Outgoing Links','${heb/heb_url}')"
+                                                   onclick string:ga('send','event','Outgoing Links','${heb/heb_url}')"
                                    tal:content="string:http://${heb/heb_url}"
                                    target="_blank" />
                             </div>
