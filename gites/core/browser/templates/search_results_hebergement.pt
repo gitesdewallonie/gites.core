@@ -40,8 +40,10 @@
 
   <h1 id="nbr-heb-trouve">
     <span tal:replace="nbr" />
-    <span i18n:translate="hebergements_correspondent" tal:condition="python: int(nbr)>1"> h&eacute;bergements correspondent &agrave; votre recherche.</span>
-    <span i18n:translate="hebergement_correspond" tal:condition="python: int(nbr)<=1"> h&eacute;bergement correspond &agrave; votre recherche.</span>
+    <span i18n:translate="hebergements_correspondent"
+          tal:condition="python: int(nbr)>1"> h&eacute;bergements correspondent &agrave; votre recherche.</span>
+    <span i18n:translate="hebergement_correspond"
+          tal:condition="python: int(nbr)<=1"> h&eacute;bergement correspond &agrave; votre recherche.</span>
   </h1>
 
   <div tal:condition="python: nbr > 0">
