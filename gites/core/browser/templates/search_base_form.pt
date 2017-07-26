@@ -43,42 +43,42 @@
                     <tal:block replace="structure widget/render" />
                 </div>
 
-                <div id="nbre-personne"
+                <div id="nbre-p."
                      tal:define="widget view/widgets/capacityMin">
                     <!--
                     <span class="texte-placeholder"
-                          i18n:attributes="alt nombre_personnes;
-                                           title nombre_personnes">nbr</span>
+                          i18n:attributes="alt nombre_p.;
+                                           title nombre_p.">nbr</span>
                     -->
                     <i class="fa fa-user-o" aria-hidden="true">
                         <!--<tal:block replace="structure widget/render" />-->
                         <select id="form-widgets-capacityMin"
                                 name="form.widgets.capacityMin">
-                            <option value="1">1 personne</option>
-                            <option value="2">2 personnes</option>
-                            <option value="3">3 personnes</option>
-                            <option value="4">4 personnes</option>
-                            <option value="5">5 personnes</option>
-                            <option value="6">6 personnes</option>
-                            <option value="7">7 personnes</option>
-                            <option value="8">8 personnes</option>
-                            <option value="9">9 personnes</option>
-                            <option value="10">10 personnes</option>
-                            <option value="11">11 personnes</option>
-                            <option value="12">12 personnes</option>
-                            <option value="13">13 personnes</option>
-                            <option value="14">14 personnes</option>
-                            <option value="15">15 personnes</option>
-                            <option value="16">16 personnes</option>
-                            <option value="17">17 personnes</option>
-                            <option value="18">18 personnes</option>
-                            <option value="19">19 personnes</option>
-                            <option value="20">20 personnes</option>
-                            <option value="30">30 personnes</option>
-                            <option value="40">40 personnes</option>
-                            <option value="50">50 personnes</option>
-                            <option value="60">60 personnes</option>
-                            <option value="70">70 personnes</option>
+                            <option value="1">1 p.</option>
+                            <option value="2">2 p.</option>
+                            <option value="3">3 p.</option>
+                            <option value="4">4 p.</option>
+                            <option value="5">5 p.</option>
+                            <option value="6">6 p.</option>
+                            <option value="7">7 p.</option>
+                            <option value="8">8 p.</option>
+                            <option value="9">9 p.</option>
+                            <option value="10">10 p.</option>
+                            <option value="11">11 p.</option>
+                            <option value="12">12 p.</option>
+                            <option value="13">13 p.</option>
+                            <option value="14">14 p.</option>
+                            <option value="15">15 p.</option>
+                            <option value="16">16 p.</option>
+                            <option value="17">17 p.</option>
+                            <option value="18">18 p.</option>
+                            <option value="19">19 p.</option>
+                            <option value="20">20 p.</option>
+                            <option value="30">30 p.</option>
+                            <option value="40">40 p.</option>
+                            <option value="50">50 p.</option>
+                            <option value="60">60 p.</option>
+                            <option value="70">70 p.</option>
                         </select>
                     </i>
                 </div>
@@ -107,7 +107,8 @@
             <div class="break-float"></div>
             <div id="btn-reserver-en-ligne-mob">
                 <a href="http://www.belholidays.com/"
-                   target="_blank">Réserver en ligne</a>
+                   target="_blank"
+                   i18n:attributes="texte-commercialisation-chambre">Réservez en ligne</a>
             </div>
         </div>
     </div>
