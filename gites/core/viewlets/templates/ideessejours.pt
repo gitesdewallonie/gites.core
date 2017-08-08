@@ -1,33 +1,34 @@
 <tal:viewlet tal:define="offre viewlet/getRandomIdeesSejours"
-             tal:condition="python:offre is not None">
+             tal:condition="python:offre is not None"
+             i18n:domain="gites">
     <div id="zone-idee-sejour">
-
-    <div id="zone-idee-sejour-contenu"
-         i18n:domain="gites"
-         tal:define="vignettes python:viewlet.getRandomVignette(offre.getPath())">
-        <h3>
-            <a tal:attributes="href viewlet/getAllIdeesSejoursView" i18n:translate="idees_sejours">Idées séjours</a>
-        </h3>
-        <div class="offre-icon">
-            <tal:vign tal:repeat="vignette vignettes">
-                <a tal:attributes="href offre/getURL;
-                                   title offre/pretty_title_or_id">
-                    <img src="" height="156" width="240"
-                         tal:attributes="src string:${vignette/getURL}"/>
-                </a>
-            </tal:vign>
-        </div>
-        <div class="break-float"></div>
-        <div id="titre-promotion">
-            <a tal:attributes="href offre/getURL">
-                <span class="bordeaux" tal:replace="offre/pretty_title_or_id"/>
-            </a>
-        </div>
-        <div class="contenu-offre">
-            <tal:desc tal:replace="offre/Description"/>
+        <div id="zone-idee-sejour-contenu"
+             i18n:domain="gites"
+             tal:define="vignettes python:viewlet.getRandomVignette(offre.getPath())">
+            <h3>
+                <a tal:attributes="href viewlet/getAllIdeesSejoursView"
+                   i18n:translate="idees_sejours">Idées séjours</a>
+            </h3>
+            <div class="offre-icon">
+                <tal:vign tal:repeat="vignette vignettes">
+                    <a tal:attributes="href offre/getURL;
+                                       title offre/pretty_title_or_id">
+                        <img src=""
+                             height="156"
+                             width="240"
+                             tal:attributes="src string:${vignette/getURL}"/></a>
+                </tal:vign>
+            </div>
             <div class="break-float"></div>
+            <div id="titre-promotion">
+                <a tal:attributes="href offre/getURL">
+                    <span class="bordeaux" tal:replace="offre/pretty_title_or_id"/></a>
+            </div>
+            <div class="contenu-offre">
+                <tal:desc tal:replace="offre/Description"/>
+                <div class="break-float"></div>
+            </div>
         </div>
-    </div>
         <div class="plus-info info-idee-sejour">
             <a tal:attributes="href viewlet/getAllIdeesSejoursView">
                 <span i18n:translate="toutes_nos_idees_sejour">Toutes nos idées séjours</span></a>
