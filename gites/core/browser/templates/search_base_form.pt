@@ -108,7 +108,7 @@
             <div id="btn-reserver-en-ligne-mob">
                 <a href="http://www.belholidays.com/"
                    target="_blank"
-                   i18n:attributes="texte-commercialisation-chambre">Réservez en ligne</a>
+                   i18n:translate="texte-commercialisation-chambre">Réservez en ligne</a>
             </div>
         </div>
     </div>
