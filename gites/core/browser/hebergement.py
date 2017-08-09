@@ -251,10 +251,13 @@ class HebergementView(BrowserView, TarifTableMixin):
         else:
             return None
 
-    def getIframeForVideo(self, videoUrl):
+    def getIframeForVideo(self, video):
         """
         Get embedly generated iframe for video
         """
+        if not video:
+            return
+        videoUrl = video.heb_vid_url
         return getIframeForVideo(videoUrl)
 
     def getGroupementByPk(self):
