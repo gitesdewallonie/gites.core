@@ -162,7 +162,6 @@
                                     <div id="hebergement-carousel"
                                          class="carousel slide"
                                          tal:condition="python: (vignettesUrls or video)">
-                                         <!--tal:condition="python: (vignettesUrls or video) and not isMobile"-->
                                         <div class="carousel-inner">
                                             <tal:ifvideo tal:condition="video">
                                                 <div class=""
@@ -432,70 +431,6 @@
                         <div class="break-float"></div>
                     </div>
                 </section><!--disponibilite-->
-
-                <!-- PHOTOS -->
-                <!--
-                <section class="slide4">
-                    <div class="slide_content">
-
-                        <h2 i18n:translate="photos">Photos</h2>
-                        <div tal:define="vignettesUrls view/getVignettesUrl;
-                                         multiplePhotos python: len(vignettesUrls) > 1;
-                                         video heb/video">
-
-                            <div id="hebergement-carousel"
-                                 class="slide"
-                                 tal:condition="python: vignettesUrls and isMobile">
-                                <a id="mobile-gallery-link"
-                                   href="gallery"
-                                   tal:attributes="href string:${request/ACTUAL_URL}/gallery">
-                                    <img src=""
-                                         title=""
-                                         alt=""
-                                         tal:define="vignetteUrl python: vignettesUrls[0]"
-                                         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${vignetteUrl}">
-                                </a>
-                            </div>
-
-                            <div id="hebergement-carousel"
-                                 class="carousel slide"
-                                 tal:condition="python: (vignettesUrls or video) and not isMobile">
-                                <div class="carousel-inner">
-                                    <tal:ifvideo tal:condition="video">
-                                        <div class=""
-                                             tal:define="index python: len(vignettesUrls)"
-                                             tal:attributes="class python: int(index) == 0 and 'video item active' or 'video item'">
-                                            <span tal:replace="structure python: view.getIframeForVideo(video.heb_vid_url)" />
-                                        </div>
-                                    </tal:ifvideo>
-                                    <tal:bcl tal:repeat="vignetteUrl vignettesUrls">
-                                        <div class=""
-                                             tal:define="index repeat/vignetteUrl/index"
-                                             tal:attributes="class python: int(index) == 0 and 'item active' or 'item'">
-                                            <img src=""
-                                                 title=""
-                                                 alt=""
-                                                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${vignetteUrl}">
-                                        </div>
-                                    </tal:bcl>
-                                </div>
-                                <a tal:condition="multiplePhotos"
-                                   class="left carousel-control"
-                                   href="#hebergement-carousel"
-                                   data-slide="prev">&lsaquo;</a>
-                                <a tal:condition="multiplePhotos"
-                                   class="right carousel-control"
-                                   href="#hebergement-carousel"
-                                   data-slide="next">&rsaquo;</a>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="break-float"></div>
-                    </div>
-
-                </section>
-                -->
-                <!--photos-->
 
                 <!-- LOCALISATION -->
                 <section class="slide slide5">
