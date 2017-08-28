@@ -2,11 +2,11 @@
         charset="utf-8"
         src=""
         tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gdwcore/formchoices.js"></script>
-
+<div class="wrapper-theme">
 <div id="je-recherche"
      tal:define="translate nocall:here/@@getTranslatedObjectUrl"
      i18n:domain="gites">
-    <div class="wrapper-theme">
+
         <div id="form-je-cherche">
             <form action=""
                   method="get"
@@ -111,5 +111,5 @@
                    i18n:translate="texte-commercialisation-chambre">Réservez en ligne</a>
             </div>
         </div>
-    </div>
-</div><!--je cherche-->
+    </div><!--je cherche-->
+</div><!-- wrapper -->
