@@ -260,7 +260,70 @@ class HebergementView(BrowserView, TarifTableMixin):
         videoUrl = video.heb_vid_url
         return getIframeForVideo(videoUrl)
 
-    def getGroupementByPk(self):
+    def getGroupementByPk(self, hebPk):
+        wrapper = getSAWrapper('gites_wallons')
+        session = wrapper.session
+        query = session.query(Hebergement.heb_nom.label('heb_nom'),
+                              Hebergement.heb_cgt_nbre_chmbre.label('heb_cgt_nbre_chmbre'),
+                              Hebergement.heb_cgt_cap_min.label('heb_cgt_cap_min'),
+                              Hebergement.heb_cgt_cap_max.label('heb_cgt_cap_max'),
+                              TypeHebergement.type_heb_id.label('heb_type'),
+                              TypeHebergement.type_heb_type.label('heb_type_type'),
+                              TypeHebergement.type_heb_code.label('heb_type_code'),
+                              Hebergement.heb_code_gdw.label('heb_code_gdw'),
+                              Hebergement.heb_pk.label('heb_pk'),
+                              LinkHebergementEpis.heb_nombre_epis.label('heb_nombre_epis'),
+                              Hebergement.heb_localite.label('heb_localite'),
+                              Hebergement.heb_gps_long.label('heb_gps_long'),
+                              Hebergement.heb_gps_lat.label('heb_gps_lat'),
+                              Hebergement.heb_groupement_pk.label('heb_groupement_pk'),
+                              HebergementApp.heb_app_groupement_line_length.label('heb_app_groupement_line_length'),
+                              HebergementApp.heb_app_groupement_angle_start.label('heb_app_groupement_angle_start')
+                              )
+        query = query.join('proprio').outerjoin('epis').join('type').join('app')
+        query = query.options(FromCache('gdw'))
+        query = query.filter(Hebergement.heb_groupement_pk == hebPk)
+        query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
+                                     Proprio.pro_etat == True))
+        groupement = query.all()
+        return groupement
+
+    def getCapaciteTotalGroupementByPk(self, hebPk):
+        wrapper = getSAWrapper('gites_wallons')
+        session = wrapper.session
+        query = session.query(Hebergement.heb_nom.label('heb_nom'),
+                              Hebergement.heb_cgt_nbre_chmbre.label('heb_cgt_nbre_chmbre'),
+                              Hebergement.heb_cgt_cap_min.label('heb_cgt_cap_min'),
+                              Hebergement.heb_cgt_cap_max.label('heb_cgt_cap_max'),
+                              TypeHebergement.type_heb_id.label('heb_type'),
+                              TypeHebergement.type_heb_type.label('heb_type_type'),
+                              TypeHebergement.type_heb_code.label('heb_type_code'),
+                              Hebergement.heb_code_gdw.label('heb_code_gdw'),
+                              Hebergement.heb_pk.label('heb_pk'),
+                              LinkHebergementEpis.heb_nombre_epis.label('heb_nombre_epis'),
+                              Hebergement.heb_localite.label('heb_localite'),
+                              Hebergement.heb_gps_long.label('heb_gps_long'),
+                              Hebergement.heb_gps_lat.label('heb_gps_lat'),
+                              Hebergement.heb_groupement_pk.label('heb_groupement_pk'),
+                              HebergementApp.heb_app_groupement_line_length.label('heb_app_groupement_line_length'),
+                              HebergementApp.heb_app_groupement_angle_start.label('heb_app_groupement_angle_start')
+                              )
+        query = query.join('proprio').outerjoin('epis').join('type').join('app')
+        query = query.options(FromCache('gdw'))
+        query = query.filter(Hebergement.heb_groupement_pk == hebPk)
+        query = query.filter(sa.and_(Hebergement.heb_site_public == '1',
+                                     Proprio.pro_etat == True))
+        groupement = query.all()
+        nbreChambre = 0
+        nbrePersonneMin = 0
+        nbrePersonneMax = 0
+        for heb in groupement:
+            nbreChambre = nbreChambre + heb.heb_cgt_nbre_chmbre
+            nbrePersonneMin = nbrePersonneMin + heb.heb_cgt_cap_min
+            nbrePersonneMax = nbrePersonneMax + heb.heb_cgt_cap_max
+        return (nbreChambre, nbrePersonneMin, nbrePersonneMax)
+
+    def getGroupementByPkJson(self):
         import json
         pk = self.request.form['pk']
         wrapper = getSAWrapper('gites_wallons')

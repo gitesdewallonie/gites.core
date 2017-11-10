@@ -8,12 +8,12 @@
   <grok:grok package="."/>
 
    <browser:page
-      for="*"
-      name="commercialisation"
-      allowed_interface=".interfaces.ICommercialisationView"
-      class=".commercialisation.CommercialisationView"
-      permission="zope.Public"
-      />
+        for="*"
+        name="commercialisation"
+        allowed_interface=".interfaces.ICommercialisationView"
+        class=".commercialisation.CommercialisationView"
+        permission="zope.Public"
+        />
 
    <browser:page
       for="*"
@@ -52,13 +52,27 @@
       permission="zope.Public"
       />
 
-   <browser:page
-      for="*"
-      name="getGroupementByPk"
-      attribute="getGroupementByPk"
-      class=".hebergement.HebergementView"
-      permission="zope.Public"
-      />
+    <browser:page
+        for="*"
+        name="hebergement_view"
+        class=".hebergement.HebergementView"
+        permission="zope.Public"
+        />
+
+    <browser:page
+        for="*"
+        name="getGroupementByPk"
+        attribute="getGroupementByPk"
+        class=".hebergement.HebergementView"
+        permission="zope.Public"
+        />
+
+    <browser:page
+        for="*"
+        name="groupement-hebergements"
+        template="templates/afficher_groupement.pt"
+        permission="zope.Public"
+        />
 
    <browser:page
       for="*"

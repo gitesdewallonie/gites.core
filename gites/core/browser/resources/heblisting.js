@@ -152,7 +152,7 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
                                          'form.widgets.roomAmount': $scope.rooms,
                                          'form.widgets.nearTo': $scope.nearTo});
         var hebTypes = filterValues($scope.parameters.hebergementType);
-	var formHebTypes = $scope.parameters.data['form.widgets.hebergementType'];
+        var formHebTypes = $scope.parameters.data['form.widgets.hebergementType'];
         if (hebTypes.length != 0) {
             $scope.postData = jQuery.extend($scope.parameters.data, {'form.widgets.hebergementType': hebTypes});
         }
@@ -160,10 +160,10 @@ app.controller('SearchCtrl', function($scope, $http, $compile) {
             // If no heb type selected, select both
             $scope.postData = jQuery.extend($scope.parameters.data, {'form.widgets.hebergementType': formHebTypes});
         }
-	else {
-            $scope.postData = jQuery.extend($scope.parameters.data, {'form.widgets.hebergementType': ['gite-meuble', 'chambre-hote']});
-	}
-    }
+            else {
+                $scope.postData = jQuery.extend($scope.parameters.data, {'form.widgets.hebergementType': ['gite-meuble', 'chambre-hote']});
+           }
+        }
 
     var serializeToHTTPPost = function(data){
         return jQuery.param(data);
@@ -325,7 +325,7 @@ app.controller(
                 jQuery(".collapse-chambre-listing-detail").show();
                 if ($scope.isCollapsed == false){
                 $http({
-                        url: "getGroupementByPk",
+                        url: "getGroupementByPkJson",
                         method: "POST",
                         data: "pk="+parseInt(pk),
                         headers: {'Content-Type': 'application/x-www-form-urlencoded'}

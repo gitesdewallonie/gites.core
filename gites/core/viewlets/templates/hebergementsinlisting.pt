@@ -108,8 +108,9 @@
                 </div>
                 <div id="vignette">
                     <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
+                        <!--ng-click string:getGroupement(${hebergement/heb_groupement_pk});-->
                         <a href=""
-                           tal:attributes="ng-click string:getGroupement(${hebergement/heb_groupement_pk})">
+                           tal:attributes="href string:${context/@@plone_portal_state/portal_url}/groupement-hebergements?hebPk=${hebergement/heb_groupement_pk}">
                             <img src=""
                                  tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/heb_code_gdw}00.jpg" /></a>
                     </tal:groupe>
@@ -128,11 +129,19 @@
                     </div>
                     <div id="nom-hebergement">
                         <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
+                            <!--
                             <a href=""
-                             class=""
-                             tal:attributes="ng-click string:getGroupement(${hebergement/heb_groupement_pk});
-                                             class python: type_heb=='gite' and 'gite-nom' or 'chambre-nom'"
-                             tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
+                               class=""
+                               tal:attributes="href string:${context/@@plone_portal_state/portal_url}/groupement-hebergements?hebPk=${hebergement/heb_groupement_pk};
+                                               class python: type_heb=='gite' and 'type-gite' or 'type-chambre';"
+                               tal:content="hebergement/heb_nom">nom hebergement</a>
+                            -->
+                            <div id="afficher-groupement-heb">
+                            <a href=""
+                               tal:attributes="href string:${context/@@plone_portal_state/portal_url}/groupement-hebergements?hebPk=${hebergement/heb_groupement_pk};
+                                               class python: type_heb=='gite' and 'type-gite' or 'type-chambre';"
+                               tal:content="hebergement/heb_nom">Titre de l'hébergement</a></div>
+
                         </tal:groupe>
                         <tal:groupe condition="python:heb_view.heb_type() != 'gite-groupes'">
                             <a href=""
@@ -142,11 +151,17 @@
                              tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
                         </tal:groupe>
                     </div>
+
+
                     <div id="type"
                          style="cursor: pointer;"
-                         tal:condition="python:heb_view.heb_type() == 'gite-groupes'"
-                         tal:attributes="ng-click string:getGroupement(${hebergement/heb_groupement_pk})">
-                        <span tal:content="heb_view/heb_type_trad" />  ▼
+                         tal:condition="python:heb_view.heb_type() == 'gite-groupes'">
+                        <div id="afficher-groupement-heb">
+                        <a href=""
+                           tal:attributes="href string:${context/@@plone_portal_state/portal_url}/groupement-hebergements?hebPk=${hebergement/heb_groupement_pk}">
+                            <span tal:content="heb_view/heb_type_trad" />  ▼
+                        </a>
+                        </div>
                     </div>
                     <div id="type"
                          tal:condition="python:heb_view.heb_type() != 'gite-groupes'">
@@ -210,6 +225,7 @@
                     <div class="break-float"></div>
                 </div><!--info-bloc-inf-->
             </div><!--attributes-->
+
             <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
                 <div style="display:none;"
                      id="groupelist"
@@ -252,8 +268,8 @@
                         <div id="info-bloc-sup">
                             <div id="nom-hebergement">
                                 <a href=""
-                                class="{{(groupe.type_heb == 'gite') && 'gite-nom' || 'chambre-nom'}}"
-                                tal:attributes="href string:{{groupe.url_heb}}">{{groupe.heb_nom}}</a>
+                                   class="{{(groupe.type_heb == 'gite') && 'gite-nom' || 'chambre-nom'}}"
+                                   tal:attributes="href string:{{groupe.url_heb}}">{{groupe.heb_nom}}</a>
                             </div>
                             <div id="type">{{groupe.heb_type_trad}}</div>
                         </div><!--info-bloc-sup-->

@@ -1,0 +1,139 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="fr"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="gites">
+
+<body>
+
+<metal:block fill-slot="top_slot"
+             tal:define="dummy python:request.set('disable_border',1)" />
+
+
+
+<metal:main fill-slot="main"
+            tal:define="hebPk request/hebPk;
+                        hebergementView context/@@hebergement_view;
+                        heb_view python:hebergementView.getGroupementByPk(hebPk);
+                        nbrHebergement python:len(heb_view);
+                        capaciteTotaleGroupement python:hebergementView.getCapaciteTotalGroupementByPk(hebPk)">
+    <div id="back-button"
+             i18n:domain="gites">
+            <a href="javascript:history.back()"
+               title="Previous page"
+               i18n:attributes="title previous_page"></a>
+    </div>
+    <br /><br /><br />
+
+
+    <h1>
+        &nbsp;&nbsp;&nbsp;
+            <span tal:condition="python: capaciteTotaleGroupement[1] != capaciteTotaleGroupement[2]">
+                  <span tal:content="python:capaciteTotaleGroupement[1]" />/<span tal:content="python:capaciteTotaleGroupement[2]" />
+            </span>
+            <span tal:condition="python: capaciteTotaleGroupement[1] == capaciteTotaleGroupement[2]"
+                  tal:content="python:capaciteTotaleGroupement[1]" />
+            <span>personnes</span>
+            dans
+            <span tal:content="nbrHebergement" />
+            <span>hébergements</span>
+    </h1>
+    <div id="listing-result-block"
+         i18n:domain="gites">
+        <div id="info-bloc-sup">
+        </div>
+        <tal:boucle tal:repeat="hebergement heb_view">
+            <div tal:define="type_heb hebergement/heb_type_type"
+                     class=""
+                     tal:attributes="class python: type_heb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
+                <div id="info-bloc-sup">
+                    <div id="typetype">
+                        <span tal:content="type_heb">
+                        </span>
+                    </div>
+                </div>
+                <div id="vignette">
+                        <a href=""
+                           tal:attributes="href hebergement/@@url_heb">
+                            <img src=""
+                                 alt=""
+                                 width="181"
+                                 height="115"
+                                 tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/heb_code_gdw}00.jpg;" /></a>
+                </div>
+
+                <div id="nom-hebergement">
+                    <a href=""
+                       class=""
+                       tal:attributes="href hebergement/@@url_heb;
+                                       class python: type_heb=='gite' and 'type-gite' or 'type-chambre'">
+                        <span tal:content="hebergement/heb_nom" />nom hebergement</a>
+                </div>
+
+                <div id="info-bloc-inf">
+                    <div id="capacite-max">
+                        <span tal:condition="python: hebergement.heb_cgt_cap_min != hebergement.heb_cgt_cap_max"
+                              tal:content="string: ${hebergement/heb_cgt_cap_min}/${hebergement/heb_cgt_cap_max}"
+                              class="nombre" />
+                        <span tal:condition="python: hebergement.heb_cgt_cap_min == hebergement.heb_cgt_cap_max"
+                              tal:content="string: ${hebergement/heb_cgt_cap_min}"
+                              class="nombre" />
+                        <span tal:omit-tag=""
+                              i18n:translate="x_personnes">personnes</span>
+                    </div>
+                    <div id="nbre-chambre">
+                        <span class="nombre">
+                            <span tal:content="hebergement/heb_cgt_nbre_chmbre" />
+                        </span>
+                        <span tal:omit-tag=""
+                              i18n:translate="x_chambres">chambres</span>
+                    </div>
+                    <div id="nbre-cle"
+                         tal:condition="python:hebergement.heb_type_code == 'MV'">
+                        <div id="cle-nbre">
+                            <span tal:content="hebergement/heb_nombre_epis"
+                                  class="nombre" />
+                            <span tal:omit-tag=""
+                                  i18n:translate="x_cles">cl&eacute;s</span>
+                        </div>
+                    </div>
+                    <div id="nbre-epis"
+                         tal:condition="python:hebergement.heb_type_code != 'MV'">
+                        <div id="epis-nbre">
+                            <span tal:content="hebergement/heb_nombre_epis"
+                                  class="nombre" />
+                            <span tal:omit-tag=""
+                                  i18n:translate="x_epis">&eacute;pis</span>
+                        </div>
+                    </div>
+                    <div id="icon-confort">
+                        <div id="icon-confort-dog"
+                             tal:define="dog hebergement/@@accept_dogs"
+                             tal:attributes="class python: dog and 'dog' or 'no-dog'"></div>
+                        <div id="icon-confort-smoker"
+                             tal:condition="not:smoker"
+                             tal:define="smoker hebergement/@@is_smoker"
+                             tal:attributes="class python: smoker and 'smoke' or 'no-smoke'"></div>
+                    </div>
+                    <div id="commune"><span tal:content="hebergement/heb_localite" /></div>
+                </div><!--info-bloc-inf-->
+            </div><!--type_heb-->
+        </tal:boucle>
+        <div id="contacter-proprio"
+             class="break-float">
+            &nbsp;&nbsp;&nbsp;
+            <img src="icon_contact_proprio.png"
+                 alt="Contact" />
+            <a href=""
+               tal:attributes="href string:${context/@@plone_portal_state/portal_url}/form_contact_proprio?heb_pk=${hebPk}"
+               i18n:translate="contactez_le_proprietaire">Contactez le propri&eacute;taire</a>
+            <p><br /></p>
+        </div>
+        <div class="break-float"></div>
+    </div>
+</metal:main>
+</body>
+</html>
+

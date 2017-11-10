@@ -35,7 +35,14 @@ jQuery(document).ready(function($) {
             config: {
               onBeforeLoad : function (e) {
                 loadDatePicker();
-              }
+              },
+              mask: {color: '#000',
+                       opacity: 0.4,
+                       loadSpeed:0,
+                       closeSpeed:0},
+              color: '#ebecff',
+              loadSpeed: 200,
+              opacity: 0.9
             }
         }
     );
@@ -49,8 +56,30 @@ jQuery(document).ready(function($) {
         }
     );
 
-    $('.carousel').carousel({
-      interval: false
-    });
+    $('#afficher-groupement-heb a').prepOverlay(
+        alert("coucou");
+    );
+
+    /*
+    $('#afficher-groupement-heb a').prepOverlay(
+        {
+            subtype: 'ajax',
+            filter: '#content-for-khevine>*:not(div.configlet),dl.portalMessage.error,dl.portalMessage.info',
+            closeselector: '[name=cancel]',
+            noform: 'close'config: {
+                fixed: false,
+                speed: 'fast',
+                mask: {color: '#000',
+                       opacity: 0.4,
+                       loadSpeed:0,
+                       closeSpeed:0},
+                color: '#ebecff',
+                loadSpeed: 200,
+                opacity: 0.9
+            }
+        }
+        alert("coucou");
+    );
+    */
 
 });
