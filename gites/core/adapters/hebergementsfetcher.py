@@ -426,6 +426,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                 sa.func.min(Hebergement.heb_gps_long).label('heb_gps_long'),
                 sa.func.min(Hebergement.heb_gps_lat).label('heb_gps_lat'),
                 sa.func.min(Hebergement.heb_groupement_pk).label('heb_groupement_pk'),
+                sa.func.min(Hebergement.heb_peb_icone).label('heb_peb_icone'),
                 sa.func.min(HebergementApp.heb_app_groupement_line_length).label('heb_app_groupement_line_length'),
                 sa.func.min(HebergementApp.heb_app_groupement_angle_start).label('heb_app_groupement_angle_start'),
             )
@@ -446,6 +447,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                 sa.func.min(Hebergement.heb_gps_long).label('heb_gps_long'),
                 sa.func.min(Hebergement.heb_gps_lat).label('heb_gps_lat'),
                 sa.func.min(Hebergement.heb_groupement_pk).label('heb_groupement_pk'),
+                sa.func.min(Hebergement.heb_peb_icone).label('heb_peb_icone'),
                 sa.func.min(HebergementApp.heb_app_groupement_line_length).label('heb_app_groupement_line_length'),
                 sa.func.min(HebergementApp.heb_app_groupement_angle_start).label('heb_app_groupement_angle_start'),
             )
@@ -489,6 +491,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                 Hebergement.heb_gps_long.label('heb_gps_long'),
                 Hebergement.heb_gps_lat.label('heb_gps_lat'),
                 Hebergement.heb_groupement_pk.label('heb_groupement_pk'),
+                Hebergement.heb_peb_icone.label('heb_peb_icone'),
                 HebergementApp.heb_app_groupement_line_length.label('heb_app_groupement_line_length'),
                 HebergementApp.heb_app_groupement_angle_start.label('heb_app_groupement_angle_start'),
             )
@@ -509,6 +512,7 @@ class SearchHebFetcher(BaseHebergementsFetcher):
                 Hebergement.heb_gps_long.label('heb_gps_long'),
                 Hebergement.heb_gps_lat.label('heb_gps_lat'),
                 Hebergement.heb_groupement_pk.label('heb_groupement_pk'),
+                Hebergement.heb_peb_icone.label('heb_peb_icone'),
                 HebergementApp.heb_app_groupement_line_length.label('heb_app_groupement_line_length'),
                 HebergementApp.heb_app_groupement_angle_start.label('heb_app_groupement_angle_start'),
             )

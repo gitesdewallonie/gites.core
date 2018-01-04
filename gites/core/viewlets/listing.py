@@ -130,6 +130,9 @@ class HebergementInSearchListingView(grok.View):
     def nombre_epis(self):
         return self.context.heb_nombre_epis
 
+    def heb_peb_icone(self):
+        return self.context.heb_peb_icone
+
     def render(self):
         return None
 
@@ -149,6 +152,9 @@ class HebergementInListingView(grok.View):
 
     def nombre_epis(self):
         return self.context.epis_nombre()
+
+    def heb_peb_icone(self):
+        return self.context.heb_peb_icone
 
     def render(self):
         return None

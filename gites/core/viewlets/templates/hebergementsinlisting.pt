@@ -100,6 +100,13 @@
                     </div>
                     -->
                 </div>
+                <div id="icone-peb-listing"
+                     tal:define="icone python:heb_view.heb_peb_icone() or None"
+                     tal:condition="icone">
+                    <img src=""
+                         height="25"
+                         tal:attributes="src string:${icone}" />
+                </div>
                 <div class="digit"
                      tal:attributes="id string:map_picto_${hebergement/heb_pk}_${heb_view/heb_type}">
                         <img src=""
@@ -151,7 +158,6 @@
                              tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
                         </tal:groupe>
                     </div>
-
 
                     <div id="type"
                          style="cursor: pointer;"
