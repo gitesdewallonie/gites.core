@@ -252,7 +252,8 @@
                                        i18n:translate="rates_for_gites">Tarification des Gîtes et Meublés</a>
                                 </div>
                             </div>
-                            <div id="tarification-hebergement">
+                            <div id="tarification-hebergement"
+                                 tal:condition="python: heb.heb_peb_code != None">
                                 <h3 i18n:translate="certificat_peb">Aspects énergétiques</h3>
                                     <img src=""
                                          height="25"
