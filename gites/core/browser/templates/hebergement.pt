@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xml:lang="en"
-      lang="en"
+      xml:lang="fr"
+      lang="fr"
       metal:use-macro="here/main_template/macros/master"
       i18n:domain="gites">
 <body>
@@ -262,10 +262,10 @@
                                     PEB n° : <span tal:content="heb/heb_peb_code" /><br />
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     Energie totale :
-                                    <span tal:content="heb/heb_peb_energie_primaire" /> kWh/an<br />
+                                    <span tal:content="heb/heb_peb_energie_totale" /> kWh/an<br />
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     Energie spécifique :
-                                    <span tal:content="heb/heb_peb_energie_totale" /> kWh/m².an<br />
+                                    <span tal:content="heb/heb_peb_energie_primaire" /> kWh/m².an<br />
                             </div>
 
 
