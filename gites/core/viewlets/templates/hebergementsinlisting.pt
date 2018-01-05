@@ -134,6 +134,21 @@
                         <span tal:define="dist python:viewlet.heb_distance(hebergement)"
                               tal:content="string: ${dist} km">5Km</span>
                     </div>
+                                        <div id="type"
+                         style="cursor: pointer;"
+                         tal:condition="python:heb_view.heb_type() == 'gite-groupes'">
+                        <div id="afficher-groupement-heb">
+                        <a href=""
+                           tal:attributes="href string:${context/@@plone_portal_state/portal_url}/groupement-hebergements?hebPk=${hebergement/heb_groupement_pk}">
+                            <span tal:content="heb_view/heb_type_trad" />  ▼
+                        </a>
+                        </div>
+                    </div>
+                    <div id="type"
+                         tal:condition="python:heb_view.heb_type() != 'gite-groupes'">
+                        <span tal:content="heb_view/heb_type_trad" />
+                    </div>
+
                     <div id="nom-hebergement">
                         <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
                             <!--
@@ -159,20 +174,6 @@
                         </tal:groupe>
                     </div>
 
-                    <div id="type"
-                         style="cursor: pointer;"
-                         tal:condition="python:heb_view.heb_type() == 'gite-groupes'">
-                        <div id="afficher-groupement-heb">
-                        <a href=""
-                           tal:attributes="href string:${context/@@plone_portal_state/portal_url}/groupement-hebergements?hebPk=${hebergement/heb_groupement_pk}">
-                            <span tal:content="heb_view/heb_type_trad" />  ▼
-                        </a>
-                        </div>
-                    </div>
-                    <div id="type"
-                         tal:condition="python:heb_view.heb_type() != 'gite-groupes'">
-                        <span tal:content="heb_view/heb_type_trad" />
-                    </div>
                 </div><!--info-bloc-sup-->
 
 
