@@ -56,10 +56,6 @@ jQuery(document).ready(function($) {
         }
     );
 
-    $('#afficher-groupement-heb a').prepOverlay(
-        alert("coucou");
-    );
-
     /*
     $('#afficher-groupement-heb a').prepOverlay(
         {
@@ -78,7 +74,6 @@ jQuery(document).ready(function($) {
                 opacity: 0.9
             }
         }
-        alert("coucou");
     );
     */
 
