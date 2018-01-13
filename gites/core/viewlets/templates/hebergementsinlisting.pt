@@ -68,6 +68,13 @@
             <div tal:define="type_heb heb_view/heb_type_type"
                  class=""
                  tal:attributes="class python: type_heb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
+                <div id="icone-peb-listing"
+                     tal:define="icone python:heb_view.heb_peb_icone() or None"
+                     tal:condition="icone">
+                    <img src=""
+                         height="25"
+                         tal:attributes="src string:${icone}" />
+                </div>
                 <div id="typetype">
                     <span tal:content="type_heb"
                           i18n:translate="">
@@ -82,29 +89,6 @@
                              tal:attributes="href hebergement/@@url_heb"></a>
                         </tal:groupe>
                     </div>
-                    <!--
-                    <div class="comparer"
-                       tal:condition="python:heb_view.heb_type() != 'gite-groupes' and viewlet.count() > 1">
-                    <input type="checkbox"
-                           value=""
-                           name="heb-comparison:list"
-                           id=""
-                           class="heb-comparaison-check"
-                           tal:attributes="value hebergement/heb_pk;
-                                           id repeat/hebergement/number" />
-                    <label for=""
-                           title="selectionner pour comparer"
-                           i18n:attributes="title selectionner-pour-comparer"
-                           tal:attributes="for repeat/hebergement/number"></label>
-                    </div>
-                    -->
-                </div>
-                <div id="icone-peb-listing"
-                     tal:define="icone python:heb_view.heb_peb_icone() or None"
-                     tal:condition="icone">
-                    <img src=""
-                         height="25"
-                         tal:attributes="src string:${icone}" />
                 </div>
                 <div class="digit"
                      tal:attributes="id string:map_picto_${hebergement/heb_pk}_${heb_view/heb_type}">
@@ -112,6 +96,7 @@
                              alt=""
                              tal:attributes="src string:${context/@@plone_portal_state/portal_url}/++resource++gites.map.images/${type_heb}_${repeat/hebergement/number}.png" />
                 </div>
+
                 <div id="vignette">
                     <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
                         <!--ng-click string:getGroupement(${hebergement/heb_groupement_pk});-->
@@ -127,7 +112,32 @@
                                  tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/heb_code_gdw}00.jpg" /></a>
                     </tal:groupe>
                 </div>
+
                 <div id="info-bloc-sup">
+                    <div id="nom-hebergement">
+                        <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
+                            <!--
+                            <a href=""
+                               class=""
+                               tal:attributes="href string:${context/@@plone_portal_state/portal_url}/groupement-hebergements?hebPk=${hebergement/heb_groupement_pk};
+                                               class python: type_heb=='gite' and 'type-gite' or 'type-chambre';"
+                               tal:content="hebergement/heb_nom">nom hebergement</a>
+                            -->
+                            <div id="afficher-groupement-heb">
+                                <a href=""
+                                   tal:attributes="href string:${context/@@plone_portal_state/portal_url}/groupement-hebergements?hebPk=${hebergement/heb_groupement_pk};
+                                                   class python: type_heb=='gite' and 'type-gite' or 'type-chambre';"
+                                   tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
+                               </div>
+                        </tal:groupe>
+                        <tal:groupe condition="python:heb_view.heb_type() != 'gite-groupes'">
+                            <a href=""
+                             class=""
+                             tal:attributes="href hebergement/@@url_heb;
+                                             class python: type_heb=='gite' and 'gite-nom' or 'chambre-nom'"
+                             tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
+                        </tal:groupe>
+                    </div>
                     <div tal:condition="viewlet/is_geolocalized"
                            id="distance">
                         <span tal:define="dist python:viewlet.heb_distance(hebergement)"
@@ -147,32 +157,8 @@
                          tal:condition="python:heb_view.heb_type() != 'gite-groupes'">
                         <span tal:content="heb_view/heb_type_trad" />
                     </div>
-
-                    <div id="nom-hebergement">
-                        <tal:groupe condition="python:heb_view.heb_type() == 'gite-groupes'">
-                            <!--
-                            <a href=""
-                               class=""
-                               tal:attributes="href string:${context/@@plone_portal_state/portal_url}/groupement-hebergements?hebPk=${hebergement/heb_groupement_pk};
-                                               class python: type_heb=='gite' and 'type-gite' or 'type-chambre';"
-                               tal:content="hebergement/heb_nom">nom hebergement</a>
-                            -->
-                            <div id="afficher-groupement-heb">
-                            <a href=""
-                               tal:attributes="href string:${context/@@plone_portal_state/portal_url}/groupement-hebergements?hebPk=${hebergement/heb_groupement_pk};
-                                               class python: type_heb=='gite' and 'type-gite' or 'type-chambre';"
-                               tal:content="hebergement/heb_nom">Titre de l'hébergement</a></div>
-
-                        </tal:groupe>
-                        <tal:groupe condition="python:heb_view.heb_type() != 'gite-groupes'">
-                            <a href=""
-                             class=""
-                             tal:attributes="href hebergement/@@url_heb;
-                                             class python: type_heb=='gite' and 'gite-nom' or 'chambre-nom'"
-                             tal:content="hebergement/heb_nom">Titre de l'hébergement</a>
-                        </tal:groupe>
-                    </div>
-
+                    <div id="commune"
+                          tal:content="hebergement/heb_localite"></div>
                 </div><!--info-bloc-sup-->
 
 
@@ -226,8 +212,6 @@
                              tal:define="smoker hebergement/@@is_smoker"
                              tal:attributes="class python: smoker and 'smoke' or 'no-smoke'"></div>
                     </div>
-                    <div id="commune"
-                         tal:content="hebergement/heb_localite"></div>
                     <div class="break-float"></div>
                 </div><!--info-bloc-inf-->
             </div><!--attributes-->
@@ -278,6 +262,7 @@
                                    tal:attributes="href string:{{groupe.url_heb}}">{{groupe.heb_nom}}</a>
                             </div>
                             <div id="type">{{groupe.heb_type_trad}}</div>
+                            <div id="commune">{{groupe.heb_localite}}</div>
                         </div><!--info-bloc-sup-->
 
                         <div id="info-bloc-inf">
@@ -325,7 +310,6 @@
                                      ng-hide="groupe.heb_fumeur"
                                      class="{{groupe.heb_fumeur && 'smoke' || 'no-smoke'}}"></div>
                             </div>
-                            <div id="commune">{{groupe.heb_localite}}</div>
                         </div><!--info-bloc-inf-->
                     </div><!--ng repeat-->
                 </div>
@@ -339,14 +323,12 @@
          i18n:domain="gites"
          tal:condition="viewlet/show_batch">
         <div id="listing-result-batch">
-
             <a href=""
                class="btn-listing-resultat"
                tal:condition="not:viewlet/is_first_page"
                ng-click="goToPreviousPage()">
-               <i class="fa fa-caret-square-o-left"
-                  aria-hidden="true"></i></a>
-
+                <i class="fa fa-caret-square-o-left"
+                   aria-hidden="true"></i></a>
             <span id="batch-numero-page">
                 <!--
                 <tal:pages tal:repeat="page_number viewlet/previous_items">
@@ -364,7 +346,6 @@
                           tal:replace="python: nbreHeb/12" />
                 </div>
                 &nbsp;
-
                 <!--
                 <tal:pages tal:repeat="page_number viewlet/next_items">
                     <a href=""
@@ -378,32 +359,33 @@
                class="btn-listing-resultat"
                tal:condition="not:viewlet/is_last_page"
                ng-click="goToNextPage()">
-               <i class="fa fa-caret-square-o-right"
-                  aria-hidden="true"></i></a>
+                <i class="fa fa-caret-square-o-right"
+                   aria-hidden="true"></i></a>
         </div>
         <div id="sort-bottom">
             <label for="input-sort"
-                 i18n:translate="trier_par">Trier les résultats par</label>
+                   i18n:translate="trier_par">Trier les résultats par</label>
             <select id="input-sort"
-                  name="input-sort"
-                  ng-model="sort"
-                  ng-change="updateSort()">
+                    name="input-sort"
+                    ng-model="sort"
+                    ng-change="updateSort()">
                 <tal:sort tal:repeat="sort_item python:viewlet.sort_items().items()">
-                  <option value=""
-                          tal:attributes="value python:sort_item[0]"
-                          tal:content="python:sort_item[1]" />
+                    <option value=""
+                            tal:attributes="value python:sort_item[0]"
+                            tal:content="python:sort_item[1]" />
                 </tal:sort>
             </select>
         </div>
         <div class="break-float"></div>
         <div id="listing-result-count"
              i18n:translate="heb_count">Hébergement
-        <span i18n:name="heb_start"
-              tal:replace="viewlet/batch_start" /> à
-        <span i18n:name="heb_number"
-              tal:replace="viewlet/batch_end" /> sur un total de
-        <span i18n:name="heb_number_total"
-              tal:replace="viewlet/count" /></div>
+            <span i18n:name="heb_start"
+                  tal:replace="viewlet/batch_start" /> à
+            <span i18n:name="heb_number"
+                  tal:replace="viewlet/batch_end" /> sur un total de
+            <span i18n:name="heb_number_total"
+                  tal:replace="viewlet/count" />
+        </div>
     </div>
     <!--repeat-->
     <div id="break-float"></div>
