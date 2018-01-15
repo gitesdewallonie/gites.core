@@ -3,33 +3,35 @@
     <div id="zone-photo"
          tal:condition="not: context/@@isMobile | nothing">
 
-        <div id="package-carousel" class="carousel slide"
+        <div id="package-carousel"
+             class="carousel slide"
              tal:define="carouselInfos viewlet/getCarouselInfos"
              tal:condition="carouselInfos">
             <ol class="carousel-indicators">
-              <tal:bcl tal:repeat="carouselInfo carouselInfos">
-                <li data-target="#package-carousel"
-                    data-slide-to=""
-                    class="active" tal:attributes="data-slide-to repeat/carouselInfo/index"></li>
-              </tal:bcl>
+                <tal:bcl tal:repeat="carouselInfo carouselInfos">
+                    <li data-target="#package-carousel"
+                        data-slide-to=""
+                        class="active"
+                        tal:attributes="data-slide-to repeat/carouselInfo/index"></li>
+                </tal:bcl>
             </ol>
             <div class="carousel-inner">
-              <tal:bcl tal:repeat="carouselInfo carouselInfos">
-                <div class=""
-                     tal:define="index repeat/carouselInfo/index"
-                     tal:attributes="class python: int(index) == 0 and 'item active' or 'item'">
-                    <a href=""
-                       tal:attributes="href carouselInfo/href">
-                        <img src=""
-                             alt=""
-                             tal:attributes="src carouselInfo/imagesrc">
-                        <div class="carousel-caption">
-                            <h4><span tal:replace="carouselInfo/title" /></h4>
-                            <p><span tal:replace="carouselInfo/description" /></p>
-                        </div>
-                    </a>
-                </div>
-              </tal:bcl>
+                <tal:bcl tal:repeat="carouselInfo carouselInfos">
+                    <div class=""
+                         tal:define="index repeat/carouselInfo/index"
+                         tal:attributes="class python: int(index) == 0 and 'item active' or 'item'">
+                        <a href=""
+                           tal:attributes="href carouselInfo/href">
+                            <img src=""
+                                 alt=""
+                                 tal:attributes="src carouselInfo/imagesrc">
+                            <div class="carousel-caption">
+                                <h4><span tal:replace="carouselInfo/title" /></h4>
+                                <p><span tal:replace="carouselInfo/description" /></p>
+                            </div>
+                        </a>
+                    </div>
+                </tal:bcl>
             </div>
             <a class="left carousel-control" href="#package-carousel" data-slide="prev">&lsaquo;</a>
             <a class="right carousel-control" href="#package-carousel" data-slide="next">&rsaquo;</a>
