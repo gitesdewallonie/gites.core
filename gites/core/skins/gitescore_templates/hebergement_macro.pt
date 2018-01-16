@@ -1,9 +1,3 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-      lang="en"
-      i18n:domain="gites">
-
-<body>
-
 <tal:main metal:define-macro="promotions_table">
 
     <div tal:condition="promotions"
@@ -129,6 +123,7 @@
                          heb_view nocall:hebergement/@@view">
             <div tal:define="type_heb heb_view/heb_type_type"
                  tal:attributes="class python: type_heb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
+                <!--
                 <div id="icone-peb-listing"
                      tal:define="icone python:heb_view.heb_peb_icone() or None"
                      tal:condition="icone">
@@ -136,6 +131,7 @@
                          height="25"
                          tal:attributes="src string:${icone}" />
                 </div>
+                -->
                 <div id="typetype">
                     <span tal:content="type_heb"
                          class="texte-vertical" />
@@ -236,6 +232,3 @@
          tal:condition="not:lastminutes">Il n'y a aucune derni&egrave;re minute</div>
 
 </tal:main>
-
-</body>
-</html>
