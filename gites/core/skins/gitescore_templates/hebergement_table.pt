@@ -5,6 +5,7 @@
         <tal:def define="heb_view nocall:hebergement/@@view">
             <div tal:define="type_heb heb_view/heb_type_type"
                  tal:attributes="class python: type_heb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
+                <!--
                 <div id="icone-peb-listing"
                      tal:define="icone python:heb_view.heb_peb_icone() or None"
                      tal:condition="icone">
@@ -12,6 +13,7 @@
                          height="25"
                          tal:attributes="src string:${icone}" />
                 </div>
+                -->
                 <div id="typetype">
                     <span tal:content="type_heb"
                           class="texte-vertical" />
