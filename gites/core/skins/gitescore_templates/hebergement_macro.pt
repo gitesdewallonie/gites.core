@@ -5,18 +5,28 @@
          i18n:domain="gites">
         <tal:def define="hebergement promotion/getHebergement;
                          promotion_view nocall:promotion/@@dernieres_minutes_view;
-                         heb_view nocall:hebergement/@@view">
-            <div tal:define="type_heb heb_view/heb_type_type"
-               tal:attributes="class python: type_heb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
+                         heb_view nocall:hebergement/@@view;
+                         type_heb heb_view/heb_type_type;
+                         icone heb_view/heb_peb_icone">
+
+            <div tal:attributes="class python: type_heb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
+
+                <div id="icone-peb-listing"
+                     tal:condition="icone">
+                    <img src=""
+                         height="25"
+                         tal:attributes="src string:${icone}" />
+                </div>
 
                 <div id="typetype">
-                  <span tal:content="type_heb"
-                        class="texte-vertical" />
-                  <div class="btn-loupe-listing">
-                    <a href=""
-                       tal:attributes="href hebergement/@@url_heb"></a>
-                  </div>
+                    <span tal:content="type_heb"
+                          class="texte-vertical" />
+                    <div class="btn-loupe-listing">
+                        <a href=""
+                           tal:attributes="href hebergement/@@url_heb"></a>
                 </div>
+                </div>
+
                 <div id="vignette">
                     <a href=""
                        tal:attributes="href hebergement/@@url_heb">
@@ -26,6 +36,7 @@
                             tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/heb_code_gdw}00.jpg" />
                     </a>
                 </div>
+
                 <div id="date-promotion">
                       <span tal:content="promotion_view/getNiceEventStartDate" />
                       &nbsp;&#8594;&nbsp;
@@ -34,6 +45,7 @@
                       <span tal:content="structure promotion_view/getText" />
                       <div class="break-float"></div>
                 </div>
+
                 <div id="info-bloc-sup">
                     <div id="nom-hebergement">
                         <a href=""
@@ -120,18 +132,19 @@
          i18n:domain="gites">
         <tal:def define="lastminute_view nocall:lastminute/@@dernieres_minutes_view;
                          hebergement lastminute/getHebergement;
-                         heb_view nocall:hebergement/@@view">
-            <div tal:define="type_heb heb_view/heb_type_type"
-                 tal:attributes="class python: type_heb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
-                <!--
+                         heb_view nocall:hebergement/@@view;
+                         type_heb heb_view/heb_type_type;
+                         icone heb_view/heb_peb_icone">
+
+            <div tal:attributes="class python: type_heb=='gite' and 'hebergement-gite-listing-detail' or 'hebergement-chambre-listing-detail'">
+
                 <div id="icone-peb-listing"
-                     tal:define="icone python:heb_view.heb_peb_icone() or None"
                      tal:condition="icone">
                     <img src=""
                          height="25"
                          tal:attributes="src string:${icone}" />
                 </div>
-                -->
+
                 <div id="typetype">
                     <span tal:content="type_heb"
                          class="texte-vertical" />
@@ -140,6 +153,7 @@
                            tal:attributes="href hebergement/@@url_heb"></a>
                     </div>
                 </div>
+
                 <div id="vignette">
                     <a href=""
                        tal:attributes="href hebergement/@@url_heb">
@@ -149,12 +163,14 @@
                             tal:attributes="src string:${context/@@plone_portal_state/portal_url}/photos_heb/${hebergement/heb_code_gdw}00.jpg" />
                     </a>
                 </div>
+
                 <div id="date-promotion">
                       <span tal:content="lastminute_view/getNiceEventStartDate" />
                       &nbsp;&#8594;&nbsp;
                       <span tal:content="lastminute_view/getNiceEventEndDate" />
                       <div class="break-float"></div>
                 </div>
+
                 <div id="info-bloc-sup">
                     <div id="nom-hebergement">
                         <a href=""
@@ -230,5 +246,5 @@
     <div i18n:translate="not_lastminute_correspondant"
          class="error"
          tal:condition="not:lastminutes">Il n'y a aucune derni&egrave;re minute</div>
-
+<!-- les nouveaux hebergements sont dans hebergement_table -->
 </tal:main>
