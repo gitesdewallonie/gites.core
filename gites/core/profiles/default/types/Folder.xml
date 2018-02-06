@@ -9,6 +9,7 @@
    <element value="File"/>
    <element value="Image"/>
    <element value="File"/>
+   <element value="Link"/>
    <element value="Package"/>
    <element value="DerniereMinute"/>
    <element value="BoutiqueItem"/>
