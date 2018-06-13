@@ -4,6 +4,9 @@ Changelog
 0.3.1 (unreleased)
 ------------------
 
+- Fix all http://www.gitesdewallonie.be links --> https : #6912
+  [laulaz]
+
 - Allow Link content type in folders : #6631
   [laulaz]
 

@@ -42,10 +42,10 @@ display:none;
 
 <body>
     <div id="portrait">
-        <a href="http://www.gitesdewallonie.be/idee-sejour/sejours-a-bois-ouverts"><img src="gdw_bois_ouvert_768_916_fr_1.jpg" /></a>
+        <a href="https://www.gitesdewallonie.be/idee-sejour/sejours-a-bois-ouverts"><img src="gdw_bois_ouvert_768_916_fr_1.jpg" /></a>
     </div>
     <div id="paysage">
-        <a href="http://www.gitesdewallonie.be/idee-sejour/sejours-a-bois-ouverts"><img src="gdw_bois_ouvert_1024_660_fr_1.jpg" /></a>
+        <a href="https://www.gitesdewallonie.be/idee-sejour/sejours-a-bois-ouverts"><img src="gdw_bois_ouvert_1024_660_fr_1.jpg" /></a>
     </div>
 </body>
 </html>

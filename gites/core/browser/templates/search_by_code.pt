@@ -4,12 +4,12 @@
 <meta charset="UTF-8" /><title>Les Gites de Wallonie</title>
 <link rel="shortcut icon"
       type="image/x-icon"
-      href="http://www.gitesdewallonie.be/favicon.ico" />
+      href="https://www.gitesdewallonie.be/favicon.ico" />
 <link rel="apple-touch-icon"
-      href="http://www.gitesdewallonie.be/touch_icon.png" />
+      href="https://www.gitesdewallonie.be/touch_icon.png" />
 <style>
 body{
-background-image:url(http://www.gitesdewallonie.be/++theme++gites.theme/images/bgessentiel.jpg);
+background-image:url(https://www.gitesdewallonie.be/++theme++gites.theme/images/bgessentiel.jpg);
 margin:0px;
 padding:0px;
 }
