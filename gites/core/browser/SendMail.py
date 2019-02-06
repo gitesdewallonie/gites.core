@@ -127,13 +127,6 @@ Une demande d'inscription a été envoyée via le blog :
         remarque = self.request.get('remarque', '')
 
         fromMail = "info@gitesdewallonie.be"
-        if contactEmail is not None:
-            try:
-                checkEmailAddress(contactEmail)
-                fromMail = contactEmail
-            except EmailAddressInvalid:
-                pass
-
         mailer = Mailer("localhost", fromMail)
         mailer.setSubject("[DEMANDE D'INFORMATION PAR LE SITE DES GITES DE WALLONIE]")
         mailer.setRecipients(proprioMail)
@@ -217,15 +210,7 @@ Il s'agit de :
         hebPk = self.request.get('heb_pk', '')
         remarque = self.request.get('remarque', '')
 
-        fromMail = "info@gitesdewallonie.be"
-        if contactEmail is not None:
-            try:
-                checkEmailAddress(contactEmail)
-                fromMail = contactEmail
-            except EmailAddressInvalid:
-                pass
-
-        mailer = Mailer("localhost", fromMail)
+        mailer = Mailer("localhost", gdwMail)
         mailer.setSubject("[SIGNALER UN PROBLEME PAR LE SITE DES GITES DE WALLONIE]")
         mailer.setRecipients(gdwMail)
         mail = """:: SIGNALER UN PROBLEME ::
