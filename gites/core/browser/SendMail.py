@@ -130,6 +130,7 @@ Une demande d'inscription a été envoyée via le blog :
         mailer = Mailer("localhost", fromMail)
         mailer.setSubject("[DEMANDE D'INFORMATION PAR LE SITE DES GITES DE WALLONIE]")
         mailer.setRecipients(proprioMail)
+        mailer.setReplyTo(contactEmail)
         mail = """:: DEMANDE D'INFORMATION ::
 
 Une demande d'information vient d'être réalisée via le site des Gîtes de Wallonie pour %s (référence %s).

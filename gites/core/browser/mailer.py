@@ -42,6 +42,12 @@ class Mailer:
         recipients = recipients.split(',')
         self.recipients = recipients
 
+    def setReplyTo(self, replyto):
+        self.replyto = replyto
+
+    def getReplyTo(self):
+        return self.replyto
+
     def createMail(self, recipient, text, plaintext=False):
         """
         """
@@ -51,6 +57,7 @@ class Mailer:
             writer = MimeWriter.MimeWriter(out)
             writer.addheader("From", self.sender)
             writer.addheader("To", recipient)
+            writer.addheader("Reply-To", self.replyto)
             writer.addheader("Subject", self.subject)
             writer.addheader("MIME-Version", "1.0")
             writer.startmultipartbody("mixed")
@@ -72,6 +79,7 @@ class Mailer:
             writer = MimeWriter.MimeWriter(out)
             writer.addheader("From", self.sender)
             writer.addheader("To", recipient)
+            writer.addheader("Reply-To", self.replyto)
             writer.addheader("Subject", self.subject)
             writer.addheader("MIME-Version", "1.0")
             writer.startmultipartbody("mixed")
