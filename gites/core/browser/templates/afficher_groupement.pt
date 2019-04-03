@@ -121,16 +121,6 @@
                 </div><!--info-bloc-inf-->
             </div><!--type_heb-->
         </tal:boucle>
-        <div id="contacter-proprio"
-             class="break-float">
-            &nbsp;&nbsp;&nbsp;
-            <img src="icon_contact_proprio.png"
-                 alt="Contact" />
-            <a href=""
-               tal:attributes="href string:${context/@@plone_portal_state/portal_url}/form_contact_proprio?heb_pk=${hebPk}"
-               i18n:translate="contactez_le_proprietaire">Contactez le propri&eacute;taire</a>
-            <p><br /></p>
-        </div>
         <div class="break-float"></div>
     </div>
 </metal:main>

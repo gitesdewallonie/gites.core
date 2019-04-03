@@ -4,6 +4,10 @@ Changelog
 0.3.1 (unreleased)
 ------------------
 
+- Remove buggy contact button on grouping page : it was sending email to a
+  wrong owner ! : #7167
+  [laulaz]
+
 - Don't send emails from visitors addresses and use reply-to instead
   [laulaz]
 
